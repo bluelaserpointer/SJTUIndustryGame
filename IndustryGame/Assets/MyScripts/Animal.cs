@@ -1,22 +1,19 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public class Animal : MonoBehaviour
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Animal")]
+public class Animal : ScriptableObject
 {
     public string animalName;
     [TextArea]
     public string description;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject model;
+    [Serializable]
+    public struct SpeciesAffect
     {
-        
+        public Animal target;
+        public int change;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<SpeciesAffect> speciesAffects;
 }
