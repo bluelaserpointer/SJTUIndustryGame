@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionProgress : MonoBehaviour
+public class Event : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public string eventName;
+    [TextArea]
+    public string description;
+    public List<EventInfo> infos = new List<EventInfo>();
     void Start()
     {
         
