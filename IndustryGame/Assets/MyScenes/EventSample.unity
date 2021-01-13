@@ -255,52 +255,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &797810929
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 797810931}
-  - component: {fileID: 797810930}
-  m_Layer: 0
-  m_Name: SampleEventInfo1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &797810930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797810929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c16cd2bf6a10c45830dea7443f3207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoName: "\u751F\u606F\u5730\u6536\u96C6"
-  description: "\u6211\u4EEC\u9700\u8981\u5148\u77E5\u9053\u85CF\u7F9A\u7F8A\u7684\u6700\u65B0\u5206\u5E03\u60C5\u51B5"
-  descriptionAfterFinish: 
---- !u!4 &797810931
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797810929}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1350811216}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &990694751
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,52 +338,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1193700976
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1193700978}
-  - component: {fileID: 1193700977}
-  m_Layer: 0
-  m_Name: SampleEventInfo2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1193700977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193700976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c16cd2bf6a10c45830dea7443f3207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoName: 
-  description: 
-  descriptionAfterFinish: 
---- !u!4 &1193700978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193700976}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1350811216}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1273894540
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,8 +416,20 @@ MonoBehaviour:
   eventName: "\u85CF\u7F9A\u7F8A\u7FA4\u4F53\u6570\u91CF\u6BD4\u8F83\u5C11"
   description: "\u201C\u8FD9\u91CC\u662F\u4E00\u7247\u9AD8\u5C71\u8352\u6F20\u8349\u539F\uFF0C\u8FD9\u4E2A\u533A\u57DF\u690D\u88AB\u7A00\u5C11\uFF0C\u6C14\u6E29\u8F83\u4F4E\u3002\u5728\u8FD9\u91CC\u751F\u6D3B\u7684\u85CF\u7F9A\u7F8A\u7FA4\u96C6\u539F\u672C\u5C31\u7A00\u5C11\uFF0C\u7136\u800C\u6700\u8FD1\u7684\u8C03\u7814\u5374\u53D1\u73B0\u5B83\u4EEC\r\u7684\u6570\u91CF\u6B63\u5728\u6025\u5267\u51CF\u5C11\u3002\u73B0\u5728\u4F60\u9700\u8981\u627E\u51FA\u6B64\u5F02\u5E38\u53D1\u751F\u7684\u539F\u56E0\uFF0C\u5E76\u9009\u62E9\u76F8\u5E94\u7684\u63AA\u65BD\u6765\u8BA9\u4ED6\u4EEC\u7684\u6570\u91CF\u9010\u6B65\u6062\u590D\u539F\u72B6\u3002\u201D"
   infos:
-  - {fileID: 797810930}
-  - {fileID: 1193700977}
+  - infoName: 
+    description: "\u201C\u73B0\u5728\u5E94\u8BE5\u53EA\u6709\u73AF\u5883\u662F\u6CA1\u6709\u88AB\u8C03\u67E5\u8FC7\u7684\u4E86\uFF0C\u6216\u8BB8\u85CF\u7F9A\u7F8A\u6570\u91CF\u51CF\u5C11\u7684\u539F\u56E0\u662F\u73AF\u5883\u53D8\u5316\u5BFC\u81F4\u7684\uFF1F\u73B0\u5728\u65F6\u7740\u6D3E\u9063\r\n\u4E13\u5BB6\u6765\u5BF9\u8BE5\u5730\u533A\u7684\u73AF\u5883\u8FDB\u884C\u8C03\u67E5\u5427"
+    descriptionAfterFinish: 
+    successCondition: {fileID: 0}
+    buff: {fileID: 0}
+    givenActionsBeforeSolve: []
+    givenActionsAfterSolve: []
+  - infoName: 
+    description: 
+    descriptionAfterFinish: 
+    successCondition: {fileID: 0}
+    buff: {fileID: 0}
+    givenActionsBeforeSolve: []
+    givenActionsAfterSolve: []
 --- !u!4 &1350811216
 Transform:
   m_ObjectHideFlags: 0
@@ -520,9 +440,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5155954, y: 0.85001385, z: -11.374774}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 797810931}
-  - {fileID: 1193700978}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
