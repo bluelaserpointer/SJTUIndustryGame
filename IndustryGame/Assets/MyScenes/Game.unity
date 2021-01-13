@@ -167,6 +167,55 @@ MonoBehaviour:
   infoName: 
   description: 
   descriptionAfterFinish: 
+--- !u!1 &696935760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696935762}
+  - component: {fileID: 696935761}
+  m_Layer: 0
+  m_Name: Guide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &696935761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696935760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2609be4b09f94418dfdf89e99bb620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infos:
+  - "\"\u8FD9\u91CC\u5C31\u662F\u85CF\u7F9A\u7F8A\u7FA4\u96C6\u751F\u6D3B\u7684\u5730\u6BB5\uFF0C\u8BF7\u70B9\u51FB\u8FD9\u91CC\u67E5\u770B\u8BE6\u60C5"
+  - "\u8FD9\u91CC\u663E\u793A\u4E86\u8BE5\u5730\u6BB5\u7684\u8BE6\u7EC6\u4FE1\u606F\uFF0C\u76EE\u524D\u8FD8\u672A\u89E3\u9501\uFF0C\u8BF7\u914D\u4E13\u5BB6\u8C03\u67E5\u6765\u89E3\u9501\u4FE1\u606F"
+  - "\u70B9\u51FB\u8FD9\u91CC\u53EF\u4EE5\u67E5\u770B\u4E13\u5BB6\u7684\u4FE1\u606F"
+  - "\u8FD9\u91CC\u662F\u5BF9\u4E13\u5BB6\u8FDB\u884C\u7BA1\u7406\u7684\u5730\u65B9\uFF0C\u4F60\u53EF\u4EE5\u5728\u6211\u7684\u4E13\u5BB6\u9875\u9762\u5BF9\u76EE\u524D\u5DF2\u96C7\u4F63\u7684\u4E13\u5BB6\u8FDB\u884C\u67E5\u770B\u4E0E\u7BA1\u7406\uFF0C\u5728\u9700\u8981\u96C7\u4F63\u65B0\r\n\u7684\u4E13\u5BB6\u65F6\u70B9\u51FB\u96C7\u4F63\u4E13\u5BB6\u6765\u96C7\u4F63\u65B0\u7684\u4E13\u5BB6"
+  - "\u70B9\u51FB\u8FD9\u91CC\u53EF\u4EE5\u67E5\u770B\u4E13\u5BB6\u7684\u4FE1\u606F"
+--- !u!4 &696935762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696935760}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.919526, y: -0.6003971, z: -7.693424}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
