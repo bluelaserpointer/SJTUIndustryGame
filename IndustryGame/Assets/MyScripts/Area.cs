@@ -8,6 +8,7 @@ public class Area : MonoBehaviour
     public string areaName;
     [TextArea]
     public string description;
+    public EnvironmentType environmentType;
     private Dictionary<Animal, int> animalAmounts = new Dictionary<Animal, int>();
     // Start is called before the first frame update
     void Start()

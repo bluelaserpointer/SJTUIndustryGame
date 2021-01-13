@@ -20,6 +20,10 @@ public class EventInfo : MonoBehaviour
     {
         return _isFinished;
     }
+    public string getDescription()
+    {
+        return _isFinished ? descriptionAfterFinish : description;
+    }
     // Start is called before the first frame update
     void Start()
     {

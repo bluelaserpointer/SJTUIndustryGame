@@ -30,7 +30,14 @@ public class Guide : MonoBehaviour
             //TODO: judge currentIndex should increment and show should be true / false
         }
     }
-
+    public int getCurrentIndex()
+    {
+        return currentIndex;
+    }
+    public void incCurrentIndex()
+    {
+        ++currentIndex;
+    }
     public string currentInfo()
     {
         return currentIndex >= infos.Count ? null : infos[currentIndex];
@@ -39,5 +46,9 @@ public class Guide : MonoBehaviour
     public bool finished()
     {
         return currentInfo() == null;
+    }
+    public void finish()
+    {
+        currentIndex = infos.Count;
     }
 }
