@@ -13,7 +13,7 @@ public class BuffAnimalAmount : Buff
     {
         foreach(Area area in Stage.getAreas())
         {
-            area.changeSpecieAmount(animal, change);
+            area.changeSpeciesAmount(animal, change);
         }
     }
 

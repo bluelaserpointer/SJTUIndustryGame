@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Event - Info")]
+[CreateAssetMenu(menuName = "Add ScriptableObjects/EventInfo")]
 public class EventInfo : ScriptableObject
 {
     public string infoName;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Condition - CheckActionFinish")]
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - ActionFinish")]
 public class CheckActionFinish : Condition
 {
     public List<Action> targetActions;

@@ -35,4 +35,21 @@ public class Stage : MonoBehaviour
     {
         return instance.areas;
     }
+    public static int getSpeciesAmount(Animal species)
+    {
+        int total = 0;
+        foreach(Area area in instance.areas) {
+            total += area.getSpeciesAmount(species);
+        }
+        return total;
+    }
+    public static int getSpeciesChange(Animal species)
+    {
+        int total = 0;
+        foreach (Area area in instance.areas)
+        {
+            total += area.getSpeciesChange(species);
+        }
+        return total;
+    }
 }

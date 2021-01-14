@@ -18,5 +18,9 @@ public class Animal : ScriptableObject
     public List<SpeciesAffect> speciesAffects;
     public void idle(Area area, int amount)
     {
+        foreach(SpeciesAffect affect in speciesAffects)
+        {
+            area.changeSpeciesAmount(affect.target, affect.change);
+        }
     }
 }
