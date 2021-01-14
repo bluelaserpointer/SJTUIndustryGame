@@ -13,8 +13,10 @@ public class EventInfo : ScriptableObject
     public List<EventInfo> preFinishInfos;
     [Header("完成条件")]
     public Condition successCondition;
-    [Header("完成后能去除的环境效果")]
-    public Buff buff;
+    [Header("完成前的环境效果")]
+    public Buff buffBeforeFinish;
+    [Header("完成后的环境效果")]
+    public Buff buffAfterFinish;
     [Header("完成前提供的可用措施")]
     public List<Action> givenActionsBeforeSolve;
     [Header("完成后提供的可用措施")]
@@ -25,7 +27,8 @@ public class EventInfo : ScriptableObject
     public void finish()
     {
         _isFinished = true;
-        buff.removed();
+        buffAfterFinish.removed();
+        buffBeforeFinish.applied();
     }
     public bool isFinished()
     {
@@ -51,9 +54,12 @@ public class EventInfo : ScriptableObject
             if (shouldAppear)
                 _isAppeared = true;
         }
-        if (!_isFinished && buff != null)
-        {
-            buff.idle();
+        if (_isFinished) {
+            if (buffBeforeFinish != null)
+                buffBeforeFinish.idle();
+        } else {
+            if (buffAfterFinish != null)
+                buffAfterFinish.idle();
         }
     }
 }
