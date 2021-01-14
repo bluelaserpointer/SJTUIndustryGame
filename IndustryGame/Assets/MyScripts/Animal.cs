@@ -8,6 +8,7 @@ public class Animal : ScriptableObject
     public string animalName;
     [TextArea]
     public string description;
+    public EnvironmentType environment;
     public GameObject model;
     [Serializable]
     public struct SpeciesAffect

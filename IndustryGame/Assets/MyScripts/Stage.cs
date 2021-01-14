@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -16,14 +17,47 @@ public class Stage : MonoBehaviour
     [Header("Time allowed for this stage")]
     public int stageTime;
     public List<Event> events;
+    [Serializable]
+    public struct AnimalInitialAmount
+    {
+        public Animal animal;
+        public int amount;
+    }
+    [Header("初始物种数")]
+    public List<AnimalInitialAmount> animalInitialAmounts;
 
     void Awake()
     {
         if (instance == null)
             instance = this;
     }
-
-    // Update is called once per frame
+    void Start()
+    {
+        foreach(AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
+        {
+            EnvironmentType environment = animalInitialAmount.animal.environment;
+            int count = 0;
+            foreach(Area area in areas)
+            {
+                if(area.environmentType == environment)
+                {
+                    ++count;
+                }
+            }
+            if (count > 0)
+            {
+                int baseAmount = animalInitialAmount.amount / count;
+                System.Random random = new System.Random();
+                foreach (Area area in areas)
+                {
+                    if (area.environmentType == environment)
+                    {
+                        area.changeSpeciesAmount(animalInitialAmount.animal, (int)(baseAmount * (0.95 + 0.10 * random.NextDouble())));
+                    }
+                }
+            }
+        }
+    }
     void Update()
     {
         foreach(Event eachEvent in events) {
