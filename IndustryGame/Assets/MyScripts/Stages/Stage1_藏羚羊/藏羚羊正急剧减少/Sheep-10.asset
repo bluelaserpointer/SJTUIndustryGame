@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6229496605910841916ad14bc15ba66, type: 3}
-  m_Name: Weed
+  m_Script: {fileID: 11500000, guid: 41c85bddbcf02854482b1fe3ab814105, type: 3}
+  m_Name: Sheep-10
   m_EditorClassIdentifier: 
-  animalName: "\u6742\u8349"
-  description: "\u6DF7\u5408\u7684\u591A\u79CD\u6742\u8349\uFF0C\u8986\u76D6\u5730\u7403\u5927\u90E8\u5206\u533A\u57DF"
-  model: {fileID: 0}
-  speciesAffects: []
+  animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
+  change: -10

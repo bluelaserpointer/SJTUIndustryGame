@@ -18,6 +18,7 @@ MonoBehaviour:
   preFinishInfos:
   - {fileID: 11400000, guid: 33ae6edafb4971546886af03dcc3b315, type: 2}
   successCondition: {fileID: 0}
-  buff: {fileID: 0}
+  buffBeforeFinish: {fileID: 11400000, guid: f09cfcf0cd686594a87bd053185efd3a, type: 2}
+  buffAfterFinish: {fileID: 0}
   givenActionsBeforeSolve: []
   givenActionsAfterSolve: []

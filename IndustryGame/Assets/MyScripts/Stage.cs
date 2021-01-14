@@ -5,6 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Stage : MonoBehaviour
 {
+    private static Stage instance;
+
     private LinkedList<Area> areas = new LinkedList<Area>();
 
     public string stageName;
@@ -16,15 +18,20 @@ public class Stage : MonoBehaviour
     public int stageTime;
     public List<Event> events;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //TODO: collect Area links
+        if (instance == null)
+            instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public static LinkedList<Area> getAreas()
+    {
+        return instance.areas;
     }
 }

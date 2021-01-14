@@ -19,4 +19,15 @@ public class Area : MonoBehaviour
             animalAndAmount.Key.idle(this, animalAndAmount.Value);
         }
     }
+
+    public void changeSpecieAmount(Animal animal, int change)
+    {
+        if(animalAmounts.ContainsKey(animal))
+        {
+            animalAmounts[animal] = Mathf.Max(0, animalAmounts[animal] + change);
+        } else if(change > 0)
+        {
+            animalAmounts.Add(animal, change);
+        }
+    }
 }
