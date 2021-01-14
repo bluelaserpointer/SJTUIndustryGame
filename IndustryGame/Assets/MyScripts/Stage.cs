@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -27,7 +26,9 @@ public class Stage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        foreach(Event eachEvent in events) {
+            eachEvent.idle();
+        }
     }
 
     public static LinkedList<Area> getAreas()

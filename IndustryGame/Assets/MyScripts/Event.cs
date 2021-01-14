@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Event")]
@@ -13,7 +12,7 @@ public class Event : ScriptableObject
 
     [Header("出现的所有Info")]
     public List<EventInfo> includedInfos = new List<EventInfo>();
-    void idle()
+    public void idle()
     {
         foreach(EventInfo info in includedInfos) {
             info.idle();

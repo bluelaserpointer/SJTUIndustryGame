@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Buff - AnimalAmount")]
 public class BuffAnimalAmount : Buff
