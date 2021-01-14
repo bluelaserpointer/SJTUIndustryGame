@@ -16,4 +16,7 @@ public class Animal : ScriptableObject
         public int change;
     }
     public List<SpeciesAffect> speciesAffects;
+    public void idle(Area area, int amount)
+    {
+    }
 }

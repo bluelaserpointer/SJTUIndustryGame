@@ -5,7 +5,6 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Stage : MonoBehaviour
 {
-    private LinkedList<Event> events = new LinkedList<Event>();
     private LinkedList<Area> areas = new LinkedList<Area>();
 
     public string stageName;
@@ -13,6 +12,9 @@ public class Stage : MonoBehaviour
     public string description;
     [Header("Money allowed for this stage")]
     public int stageMoney;
+    [Header("Time allowed for this stage")]
+    public int stageTime;
+    public List<Event> events;
 
     // Start is called before the first frame update
     void Start()

@@ -11,6 +11,8 @@ public abstract class Action : ScriptableObject
     public string actionName;
     [TextArea]
     public string description;
+    [TextArea]
+    public string descriptionAfterFinish;
     [Min(0)]
     public int timeCost, moneyCost;
 

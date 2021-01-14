@@ -10,15 +10,13 @@ public class Area : MonoBehaviour
     public string description;
     public EnvironmentType environmentType;
     private Dictionary<Animal, int> animalAmounts = new Dictionary<Animal, int>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        foreach(KeyValuePair<Animal, int> animalAndAmount in animalAmounts)
+        {
+            animalAndAmount.Key.idle(this, animalAndAmount.Value);
+        }
     }
 }

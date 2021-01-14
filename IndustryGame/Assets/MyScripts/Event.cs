@@ -2,56 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Event : MonoBehaviour
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Event")]
+public class Event : ScriptableObject
 {
     public string eventName;
     [TextArea]
     public string description;
+    [TextArea]
+    public string descriptionAfterFinish;
 
-    [Serializable]
-    public struct EventInfo
+    [Header("出现的所有Info")]
+    public List<EventInfo> includedInfos = new List<EventInfo>();
+    void idle()
     {
-        public string infoName;
-        [TextArea]
-        public string description;
-        [TextArea]
-        public string descriptionAfterFinish;
-        [Header("解决条件")]
-        public Condition successCondition;
-        [Header("解决后能去除的环境效果")]
-        public Buff buff;
-        [Header("解决前提供的可用措施")]
-        public List<Action> givenActionsBeforeSolve;
-        [Header("解决后提供的可用措施")]
-        public List<Action> givenActionsAfterSolve;
-
-        private bool _isFinished;
-        public void finish()
-        {
-            _isFinished = true;
-            buff.removed();
-        }
-        public bool isFinished()
-        {
-            return _isFinished;
-        }
-        public string getDescription()
-        {
-            return _isFinished ? descriptionAfterFinish : description;
-        }
-    }
-    public List<EventInfo> infos = new List<EventInfo>();
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        foreach(EventInfo info in infos) {
-            if(!info.isFinished() && info.buff != null)
-                info.buff.idle();
+        foreach(EventInfo info in includedInfos) {
+            info.idle();
         }
     }
 }
