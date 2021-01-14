@@ -11,8 +11,6 @@ public abstract class Action : ScriptableObject
     public string actionName;
     [TextArea]
     public string description;
-    [TextArea]
-    public string descriptionAfterFinish;
     [Min(0)]
     public int timeCost, moneyCost;
 
@@ -36,7 +34,11 @@ public abstract class Action : ScriptableObject
         finishedActions.AddFirst(this);
         effect();
     }
-    public abstract void effect();
+    public void effect()
+    {
+        effect(null);
+    }
+    public abstract void effect(Area area);
     public bool isFinished()
     {
         return progressedTime == timeCost;

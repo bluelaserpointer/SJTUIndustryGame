@@ -9,6 +9,7 @@ public class Area : MonoBehaviour
     [TextArea]
     public string description;
     public EnvironmentType environmentType;
+    public List<Building> buildings;
     private struct AmountChange
     {
         public int old;
@@ -25,9 +26,20 @@ public class Area : MonoBehaviour
     }
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
 
+    private void Start()
+    {
+        foreach (Building building in buildings)
+        {
+            building.applied();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
+        foreach(Building building in buildings)
+        {
+            building.idle();
+        }
         foreach(KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
             animalAndAmount.Value.recordChange();

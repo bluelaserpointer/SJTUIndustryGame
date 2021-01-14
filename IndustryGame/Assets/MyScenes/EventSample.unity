@@ -427,6 +427,7 @@ MonoBehaviour:
   areaName: 
   description: 
   environmentType: 0
+  buildings: []
 --- !u!4 &1273894542
 Transform:
   m_ObjectHideFlags: 0
