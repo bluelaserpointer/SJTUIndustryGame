@@ -428,7 +428,9 @@ MonoBehaviour:
   description: 
   environmentType: 0
   buildings: []
-  stat: []
+  stat:
+  - statType: 0
+    value: 0
 --- !u!4 &1273894542
 Transform:
   m_ObjectHideFlags: 0
