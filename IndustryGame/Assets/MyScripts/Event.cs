@@ -18,4 +18,17 @@ public class Event : ScriptableObject
             info.idle();
         }
     }
+    public bool isFinished()
+    {
+        bool judge = true;
+        foreach (EventInfo info in includedInfos)
+        {
+            if(!info.isFinished())
+            {
+                judge = false;
+                break;
+            }
+        }
+        return judge;
+    }
 }
