@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,13 @@ public class Area : MonoBehaviour
     public string description;
     public EnvironmentType environmentType;
     public List<Building> buildings;
+    [Serializable]
+    public struct Stat
+    {
+        public AreaStat statType;
+        public double value;
+    }
+    public List<Stat> stat;
     private struct AmountChange
     {
         public int old;
