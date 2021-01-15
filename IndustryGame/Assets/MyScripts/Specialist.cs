@@ -1,23 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public class Specialist : MonoBehaviour
+public class Specialist
 {
-    string specialistName;
+    public SpecialistTemplate specialistTemplate;
     int hireCost;
     Dictionary<Ability, int> abilities = new Dictionary<Ability, int>();
+
     Area currentArea;
     Action currentAction;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
