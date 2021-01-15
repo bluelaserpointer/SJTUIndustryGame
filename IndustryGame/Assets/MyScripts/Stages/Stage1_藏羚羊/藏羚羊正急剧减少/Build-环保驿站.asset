@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6c8e8f3d95dcc94c925fd87ffb32424, type: 3}
-  m_Name: New Action Build
+  m_Name: "Build-\u73AF\u4FDD\u9A7F\u7AD9"
   m_EditorClassIdentifier: 
   actionName: 
   description: 
@@ -21,4 +21,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   buildType: 0
-  building: {fileID: 0}
+  building: {fileID: 11400000, guid: f7015e49155e1b648be05e243efa7394, type: 2}

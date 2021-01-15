@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb17cdf795c526f47b6f5328f39c0de5, type: 3}
   m_Name: "Check-\u4FDD\u62A4\u7AD9"
   m_EditorClassIdentifier: 
-  targetActions: []
+  targetActions:
+  - {fileID: 11400000, guid: 0b06d8a1ab23b9e429cc0123c79ac943, type: 2}

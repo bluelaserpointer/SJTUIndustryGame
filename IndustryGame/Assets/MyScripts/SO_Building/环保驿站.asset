@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac14564763373c44c9d30481e0b2768d, type: 3}
-  m_Name: ProtectionStation
+  m_Name: "\u73AF\u4FDD\u9A7F\u7AD9"
   m_EditorClassIdentifier: 
-  buildingName: 
-  description: 
+  buildingName: "\u73AF\u4FDD\u9A7F\u7AD9"
+  description: "\u8FD9\u91CC\u7684\u5DE5\u4F5C\u4EBA\u5458\u65F6\u5E38\u5DE1\u903B\u8BE5\u533A\u57DF\uFF0C\u6709\u6548\u51CF\u5C11\u5468\u56F4\u7684\u5783\u573E\u4E22\u5F03"
   model: {fileID: 0}
   buffs: []
