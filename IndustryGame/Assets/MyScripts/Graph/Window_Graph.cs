@@ -28,7 +28,7 @@ public class Window_Graph : MonoBehaviour
         List<int> valueList = new List<int>() { 5, 98, 22, 34, 52, 12, 56, 45, 22, 11, 77, 99};
         // List<int> valueList = new List<int>() { 5};
 
-        ShowGraph(valueList, (int _i) => "Day " + (_i + 1), (float _f) => "$" + Mathf.RoundToInt(_f));
+        ShowGraph(valueList, -1, (int _i) => "Day " + (_i + 1), (float _f) => "$" + Mathf.RoundToInt(_f));
     }
 
     private GameObject CreateCircle(Vector2 anchoredPosition){
@@ -48,7 +48,7 @@ public class Window_Graph : MonoBehaviour
         return gameObject;
     }
 
-    private void ShowGraph(List<int> valueList, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null) {
+    private void ShowGraph(List<int> valueList, int maxVisibleValueAmount = -1, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null) {
 
         if(getAxisLabelX == null)
         {
@@ -60,6 +60,11 @@ public class Window_Graph : MonoBehaviour
             getAxisLabelY = delegate(float _f) {return Mathf.RoundToInt(_f).ToString();};
         }
 
+        if(maxVisibleValueAmount <= 0)
+        {
+            maxVisibleValueAmount = valueList.Count;
+        }
+
         foreach(GameObject gameObject in gameObjectList)
         {
             Destroy(gameObject);
@@ -67,9 +72,8 @@ public class Window_Graph : MonoBehaviour
 
         gameObjectList.Clear();
 
+        float graphWidth = graphContainer.sizeDelta.x;
         float graphHeight = graphContainer.sizeDelta.y;
-
-        int maxVisibleValueAmount = 5;
 
         float yMinimum = valueList[0];
         float yMaximum = valueList[0];
@@ -92,7 +96,7 @@ public class Window_Graph : MonoBehaviour
         yMinimum = 0f;
         // yMinimum -= (yMaximum - yMinimum) * 0.2f;
 
-        float xSize = 50f; // size distance between each point on the x axis
+        float xSize = graphWidth / (maxVisibleValueAmount + 1); // size distance between each point on the x axis
         int xIndex = 0;
 
         GameObject lastCircleGameObject = null;
