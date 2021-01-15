@@ -8,6 +8,7 @@ public class Animal : ScriptableObject
     public string animalName;
     [TextArea]
     public string description;
+    public EnvironmentType environment;
     public GameObject model;
     [Serializable]
     public struct SpeciesAffect
@@ -16,4 +17,11 @@ public class Animal : ScriptableObject
         public int change;
     }
     public List<SpeciesAffect> speciesAffects;
+    public void idle(Area area, int amount)
+    {
+        foreach(SpeciesAffect affect in speciesAffects)
+        {
+            area.changeSpeciesAmount(affect.target, affect.change);
+        }
+    }
 }

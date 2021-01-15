@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Guide : MonoBehaviour
 {
     [TextArea]
     public List<string> infos = new List<string>();
-    bool show = true;
 
     private int currentIndex = 0;
     // Start is called before the first frame update
@@ -20,12 +18,12 @@ public class Guide : MonoBehaviour
         switch(currentIndex)
         {
             case 0:
-                // judge if user clicked XXX
+                /* judge if user clicked XXX
                 if (false)
                 {
                     ++currentIndex;
                     show = true;
-                }
+                }*/
                 break;
             //TODO: judge currentIndex should increment and show should be true / false
         }

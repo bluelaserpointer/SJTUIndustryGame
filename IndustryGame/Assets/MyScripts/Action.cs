@@ -34,7 +34,11 @@ public abstract class Action : ScriptableObject
         finishedActions.AddFirst(this);
         effect();
     }
-    public abstract void effect();
+    public void effect()
+    {
+        effect(null);
+    }
+    public abstract void effect(Area area);
     public bool isFinished()
     {
         return progressedTime == timeCost;
