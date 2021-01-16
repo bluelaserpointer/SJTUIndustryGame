@@ -9,6 +9,7 @@ public class Area : MonoBehaviour
     [TextArea]
     public string description;
     public EnvironmentType environmentType;
+
     public List<Building> buildings;
     [Serializable]
     public struct Stat
@@ -32,6 +33,11 @@ public class Area : MonoBehaviour
         }
     }
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
+
+
+    // Weather
+    private Weather weather;
+    private float temperature;
 
     private void Start()
     {
