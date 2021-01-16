@@ -7,7 +7,8 @@ public class Stage : MonoBehaviour
 {
     private static Stage instance;
 
-    private LinkedList<Area> areas = new LinkedList<Area>();
+    private Area[] areas;
+    private Area baseArea;
 
     public string stageName;
     [TextArea]
@@ -29,13 +30,20 @@ public class Stage : MonoBehaviour
     //基地资源
     private int lastDay;
     int lestMoney;
-    LinkedList<Specialist> specialists = new LinkedList<Specialist>();
-    LinkedList<Action> enabledActions = new LinkedList<Action>();
+    List<Specialist> specialists = new List<Specialist>();
+    List<Action> enabledActions = new List<Action>();
 
     void Awake()
     {
         if (instance == null)
             instance = this;
+        //collect all Area Components in children gameObject
+        areas = GetComponentsInChildren<Area>();
+        //pick random area as basement area
+        if(areas.Length > 0)
+        {
+            baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
+        }
     }
     void Start()
     {
@@ -85,7 +93,7 @@ public class Stage : MonoBehaviour
         }
     }
 
-    public static LinkedList<Area> getAreas()
+    public static Area[] getAreas()
     {
         return instance.areas;
     }
@@ -105,5 +113,13 @@ public class Stage : MonoBehaviour
             total += area.getSpeciesChange(species);
         }
         return total;
+    }
+    public static Area getBaseArea()
+    {
+        return instance.baseArea;
+    }
+    public static List<Specialist> GetSpecialists()
+    {
+        return instance.specialists;
     }
 }

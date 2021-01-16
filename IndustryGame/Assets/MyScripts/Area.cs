@@ -79,4 +79,16 @@ public class Area : MonoBehaviour
     {
         weather.judgeWeather();
     }
+    public List<Specialist> getSpecialistsInArea()
+    {
+        List<Specialist> list = new List<Specialist>();
+        foreach(Specialist specialist in Stage.GetSpecialists())
+        {
+            if(specialist.getCurrentArea().Equals(this))
+            {
+                list.Add(specialist);
+            }
+        }
+        return list;
+    }
 }

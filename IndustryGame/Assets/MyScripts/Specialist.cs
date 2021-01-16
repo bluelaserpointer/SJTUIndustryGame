@@ -49,4 +49,8 @@ public class Specialist
     {
         currentArea = area;
     }
+    public Area getCurrentArea()
+    {
+        return currentArea;
+    }
 }

@@ -31,6 +31,7 @@ public class SpecialistEmployList : MonoBehaviour {
                 specialist.name = "randomName";
                 specialist.birthday = "randomBirthDay";
                 specialist.birthplace = "randomCity";
+                specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
                 int abilityLevelTotal = 0;
                 if (random.NextDouble() < 0.5f) { //indoor
                     specialist.specialistTemplate = instance.indoorSpecialistTemplates[random.Next(0, instance.indoorSpecialistTemplates.Count)];
