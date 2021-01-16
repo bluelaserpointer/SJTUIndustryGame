@@ -3,6 +3,8 @@
 public class Timer
 {
     public static float oneDay = 1f; //更改游戏速度 (1 sec = 1 game day)
+    public static int dayInMonth = 30;
+    public static int monthInYear = 12;
     private static float currentTime = 0f;
     private static int currentYear, currentMonth, currentDay;
 
@@ -60,5 +62,4 @@ public class Timer
     {
         return currentYear;
     }
-
 }
