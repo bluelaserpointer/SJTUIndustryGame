@@ -11,7 +11,7 @@ public class SpecialistEmployList : MonoBehaviour {
     private static SpecialistEmployList instance;
     public List<SpecialistTemplate> indoorSpecialistTemplates;
     public List<SpecialistTemplate> outdoorSpecialistTemplates;
-    private Dictionary<Ability, LinkedList<Specialist>> specialists = new Dictionary<Ability, LinkedList<Specialist>>();
+    private Dictionary<Ability, List<Specialist>> specialists = new Dictionary<Ability, List<Specialist>>();
 
     public void Awake()
     {
@@ -22,7 +22,7 @@ public class SpecialistEmployList : MonoBehaviour {
     public static void refresh()
     {
         System.Random random = new System.Random();
-        foreach(KeyValuePair<Ability, LinkedList<Specialist>> specialityAndSpecialist in instance.specialists) {
+        foreach(KeyValuePair<Ability, List<Specialist>> specialityAndSpecialist in instance.specialists) {
             Ability speciality = specialityAndSpecialist.Key;
             specialityAndSpecialist.Value.Clear();
             for(int i = 0; i < 3; ++i)
@@ -49,13 +49,22 @@ public class SpecialistEmployList : MonoBehaviour {
                     }
                 }
                 specialist.hireCost = abilityLevelTotal * 20; //level * 20 = cost
-                specialityAndSpecialist.Value.AddLast(specialist);
+                specialityAndSpecialist.Value.Add(specialist);
             }
         }
        
     }
-    public static LinkedList<Specialist> getSpecialists(Ability specality)
+    public static List<Specialist> getSpecialists(Ability specality)
     {
         return instance.specialists[specality];
+    }
+    public static void hireSpecialist(Ability specality, int indexInList)
+    {
+        List<Specialist> list = instance.specialists[specality];
+        if (indexInList < list.Count) {
+            Specialist specialist = list[indexInList];
+            Stage.GetSpecialists().Add(specialist);
+            list.RemoveAt(indexInList);
+        }
     }
 }
