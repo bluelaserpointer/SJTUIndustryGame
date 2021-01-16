@@ -73,7 +73,11 @@ public class Stage : MonoBehaviour
             lastDay = Timer.GetDay();
             foreach (Area area in areas)
             {
-                area.dayChanged();
+                area.dayIdle();
+            }
+            foreach(Specialist specialist in specialists)
+            {
+                specialist.dayIdle();
             }
         }
         foreach(Event eachEvent in events) {

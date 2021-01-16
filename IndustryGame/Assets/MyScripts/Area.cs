@@ -75,7 +75,7 @@ public class Area : MonoBehaviour
             animalAmounts.Add(animal, new AmountChange(change));
         }
     }
-    public void dayChanged()
+    public void dayIdle()
     {
         weather.judgeWeather();
     }
