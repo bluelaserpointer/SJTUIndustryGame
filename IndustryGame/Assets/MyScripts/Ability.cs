@@ -32,5 +32,7 @@ public enum Ability
     [Description("昆虫")]
     Insects,
     [Description("甲壳动物")]
-    Crustaceans
+    Crustaceans,
+    [Description("(终止符)")]
+    End
 }

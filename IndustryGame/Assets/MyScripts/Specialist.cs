@@ -5,6 +5,7 @@ public class Specialist
 {
     public string name;
     public string birthday;
+    public string birthplace;
     public SpecialistTemplate specialistTemplate; //icon, jender, indoor/outdoor
     public int hireCost;
     public Ability speciality;
@@ -15,8 +16,7 @@ public class Specialist
 
     public int addSpeciality_range(Ability ability, int minValueInclude, int maxValueInclude)
     {
-        System.Random random = new System.Random();
-        int level = random.Next(minValueInclude, maxValueInclude + 1);
+        int level = Random.Range(minValueInclude, maxValueInclude + 1);
         if(level <= 0) {
             return 0;
         }
