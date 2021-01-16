@@ -91,4 +91,8 @@ public class Area : MonoBehaviour
         }
         return list;
     }
+    public bool isBasement()
+    {
+        return Stage.getBaseArea().Equals(this);
+    }
 }
