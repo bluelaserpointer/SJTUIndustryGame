@@ -65,6 +65,7 @@ public class SpecialistEmployList : MonoBehaviour {
             Specialist specialist = list[indexInList];
             Stage.GetSpecialists().Add(specialist);
             list.RemoveAt(indexInList);
+            Stage.subMoney(specialist.hireCost);
         }
     }
 }

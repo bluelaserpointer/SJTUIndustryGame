@@ -44,6 +44,7 @@ public class Specialist
     {
         currentAction = action;
         actionProgress = 0;
+        Stage.subMoney(action.moneyCost);
     }
     public void moveToArea(Area area)
     {

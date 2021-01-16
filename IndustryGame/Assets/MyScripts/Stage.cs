@@ -37,6 +37,8 @@ public class Stage : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        //set stage money objective
+        lestMoney = stageMoney;
         //collect all Area Components in children gameObject
         areas = GetComponentsInChildren<Area>();
         //pick random area as basement area
@@ -121,5 +123,13 @@ public class Stage : MonoBehaviour
     public static List<Specialist> GetSpecialists()
     {
         return instance.specialists;
+    }
+    public static void subMoney(int value)
+    {
+        instance.lestMoney -= value;
+    }
+    public static int GetLestMoney()
+    {
+        return instance.lestMoney;
     }
 }
