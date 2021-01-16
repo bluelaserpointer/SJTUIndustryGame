@@ -19,4 +19,8 @@ public class ActionBuild : Action
                 building.removed();
         }
     }
+    public override bool requireArea()
+    {
+        return true;
+    }
 }

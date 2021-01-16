@@ -33,6 +33,7 @@ public class Area : MonoBehaviour
         }
     }
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
+    private LinkedList<Dictionary<Animal, AmountChange>> animalAmountsRecords = new LinkedList<Dictionary<Animal, AmountChange>>();
 
     // Weather
     private Weather weather = new Weather();
@@ -90,5 +91,20 @@ public class Area : MonoBehaviour
     public bool isBasement()
     {
         return Stage.getBaseArea().Equals(this);
+    }
+    public void addReservation()
+    {
+        Dictionary<Animal, AmountChange> copy = new Dictionary<Animal, AmountChange>(animalAmounts);
+        animalAmountsRecords.AddLast(copy);
+    }
+    public int getSpeciesAmountInLatestRecord(Animal animal)
+    {
+        Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
+        return latestRecord.ContainsKey(animal) ? latestRecord[animal].old : 0;
+    }
+    public int getSpeciesChangeInLatestRecord(Animal animal)
+    {
+        Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
+        return latestRecord.ContainsKey(animal) ? latestRecord[animal].change : 0;
     }
 }

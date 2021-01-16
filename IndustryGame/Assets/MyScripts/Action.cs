@@ -38,6 +38,7 @@ public abstract class Action : ScriptableObject
         effect(null);
     }
     public abstract void effect(Area area);
+    public abstract bool requireArea();
     public Area getArea()
     {
         return area;

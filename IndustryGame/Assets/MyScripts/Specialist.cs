@@ -53,4 +53,12 @@ public class Specialist
     {
         return currentArea;
     }
+    public double getActionProgressRate()
+    {
+        return currentAction != null ? actionProgress / currentAction.timeCost : 0.0f;
+    }
+    public bool hasCurrentAction()
+    {
+        return currentAction != null;
+    }
 }

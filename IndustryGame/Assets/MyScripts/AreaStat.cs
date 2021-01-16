@@ -1,4 +1,4 @@
 ﻿public enum AreaStat
 {
-    NOx, SOx, CO2, Temperature, Rainfall
+    NOx, SOx, CO2
 }
