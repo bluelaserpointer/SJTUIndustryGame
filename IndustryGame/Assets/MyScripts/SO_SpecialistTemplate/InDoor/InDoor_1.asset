@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   specialistType: 0
   jender: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4aaaa200689bad44d81f48a9f7044d81, type: 3}
