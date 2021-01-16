@@ -1,29 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Timer
 {
-    public float oneYear = 100000f;
-    private float oneMonth;
-    private float oneDay;
-    private float currentTime = 0f;
-    private float currentYear = 0f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        oneMonth = oneYear / 4f;      
-        oneDay = oneMonth / 30f;
-    }
+    public static float oneDay = 1f; //更改游戏速度 (1 sec = 1 game day)
+    private static float currentTime = 0f;
+    private static int currentYear, currentMonth, currentDay;
 
     // Update is called once per frame
-    void Update()
+    public static void idle()
     {
         currentTime += Time.deltaTime;
+        currentDay = (int)((currentTime % (oneDay * 30 * 12)) % (oneDay * 30)) + 1;
+        currentMonth = (int)((currentTime % (oneDay * 30 * 12)) / (oneDay * 30)) + 1;
+        currentYear = (int)(currentTime / (oneDay * 30 * 12)) + 2021;
     }
 
-    public SeasonType GetSeason()
+    public static SeasonType GetSeason()
     {
         int currentMonth = GetMonth();
         SeasonType currentSeason = SeasonType.Spring;
@@ -54,20 +46,18 @@ public class Timer
         return currentSeason;
     }
 
-    public int GetDay()
+    public static int GetDay()
     {
-        return 0;
+        return currentDay;
     }
 
-    public int GetMonth()
+    public static int GetMonth()
     {
-        int currentMonth = (int)((currentTime % oneYear) / oneMonth) + 1;
         return currentMonth;
     }
 
-    public int GetYear()
+    public static int GetYear()
     {
-        int currentYear = (int)(currentTime / oneYear) + 1;
         return currentYear;
     }
 

@@ -26,6 +26,12 @@ public class Stage : MonoBehaviour
     [Header("初始物种数")]
     public List<AnimalInitialAmount> animalInitialAmounts;
 
+    //基地资源
+    private int lastDay;
+    int lestMoney;
+    LinkedList<Specialist> specialists = new LinkedList<Specialist>();
+    LinkedList<Action> enabledActions = new LinkedList<Action>();
+
     void Awake()
     {
         if (instance == null)
@@ -33,7 +39,8 @@ public class Stage : MonoBehaviour
     }
     void Start()
     {
-        foreach(AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
+        lastDay = Timer.GetDay();
+        foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
         {
             EnvironmentType environment = animalInitialAmount.animal.environment;
             int count = 0;
@@ -60,6 +67,15 @@ public class Stage : MonoBehaviour
     }
     void Update()
     {
+        Timer.idle();
+        if(lastDay != Timer.GetDay()) //day change happened
+        {
+            lastDay = Timer.GetDay();
+            foreach (Area area in areas)
+            {
+                area.dayChanged();
+            }
+        }
         foreach(Event eachEvent in events) {
             eachEvent.idle();
         }

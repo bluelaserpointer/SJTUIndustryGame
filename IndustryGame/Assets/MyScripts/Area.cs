@@ -34,10 +34,8 @@ public class Area : MonoBehaviour
     }
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
 
-
     // Weather
-    private Weather weather;
-    private float temperature;
+    private Weather weather = new Weather();
 
     private void Start()
     {
@@ -76,5 +74,9 @@ public class Area : MonoBehaviour
         {
             animalAmounts.Add(animal, new AmountChange(change));
         }
+    }
+    public void dayChanged()
+    {
+        weather.judgeWeather();
     }
 }
