@@ -44,19 +44,6 @@ public class Area : MonoBehaviour
             building.applied();
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        foreach(Building building in buildings)
-        {
-            building.idle();
-        }
-        foreach(KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
-        {
-            animalAndAmount.Value.recordChange();
-            animalAndAmount.Key.idle(this, animalAndAmount.Value.old);
-        }
-    }
     public int getSpeciesAmount(Animal animal)
     {
         return animalAmounts.ContainsKey(animal) ? animalAmounts[animal].old : 0;
@@ -78,6 +65,15 @@ public class Area : MonoBehaviour
     public void dayIdle()
     {
         weather.judgeWeather();
+        foreach (Building building in buildings)
+        {
+            building.idle();
+        }
+        foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
+        {
+            animalAndAmount.Value.recordChange();
+            animalAndAmount.Key.idle(this, animalAndAmount.Value.old);
+        }
     }
     public List<Specialist> getSpecialistsInArea()
     {
