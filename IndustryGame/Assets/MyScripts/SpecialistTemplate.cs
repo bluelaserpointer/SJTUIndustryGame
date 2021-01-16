@@ -8,5 +8,5 @@ public class SpecialistTemplate : ScriptableObject
     public SpecialistType specialistType;
     public enum Jender { Male, Female }
     public Jender jender;
-    public GameObject icon;
+    public Sprite icon;
 }

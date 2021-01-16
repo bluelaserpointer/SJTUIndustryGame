@@ -12,4 +12,15 @@ public class Specialist
 
     Area currentArea;
     Action currentAction;
+
+    public int addSpeciality_range(Ability ability, int minValueInclude, int maxValueInclude)
+    {
+        System.Random random = new System.Random();
+        int level = random.Next(minValueInclude, maxValueInclude + 1);
+        if(level <= 0) {
+            return 0;
+        }
+        abilities.Add(ability, level);
+        return level;
+    }
 }
