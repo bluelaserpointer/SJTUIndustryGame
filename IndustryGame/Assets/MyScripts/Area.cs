@@ -107,4 +107,8 @@ public class Area : MonoBehaviour
         Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
         return latestRecord.ContainsKey(animal) ? latestRecord[animal].change : 0;
     }
+    public Weather GetWeather()
+    {
+        return weather;
+    }
 }

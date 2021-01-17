@@ -116,4 +116,16 @@
 
         humidity = curr + ratio * diff;
     }
+    public double GetTempreture()
+    {
+        return temperature;
+    }
+    public double GetHumidity()
+    {
+        return humidity;
+    }
+    public WeatherType GetWeatherType()
+    {
+        return weatherType;
+    }
 }
