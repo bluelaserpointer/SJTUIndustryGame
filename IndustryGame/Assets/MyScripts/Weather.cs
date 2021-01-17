@@ -90,10 +90,12 @@
 
     public void handleTemperature(int month, int day, float ratio)
     {
-        float currHigh = temperatureHighStandard[month - 1];
-        float currLow = temperatureLowStandard[month - 1];
-        float nextHigh = temperatureHighStandard[month];
-        float nextLow = temperatureLowStandard[month];
+        int currMonth = month - 1;
+        int nextMonth = currMonth < 11 ? currMonth + 1 : 0;
+        float currHigh = temperatureHighStandard[currMonth];
+        float currLow = temperatureLowStandard[currMonth];
+        float nextHigh = temperatureHighStandard[nextMonth];
+        float nextLow = temperatureLowStandard[nextMonth];
         
         float currAvg = (currHigh + currLow) / 2f; // TODO: Randomize
         float nextAvg = (nextHigh + nextLow) / 2f; // TODO: Randomize
@@ -105,8 +107,10 @@
 
     public void handleHumidity(int month, int day, float ratio)
     {
-        float curr = humidityStandard[month - 1];
-        float next = humidityStandard[month];
+        int currMonth = month - 1;
+        int nextMonth = currMonth < 11 ? currMonth + 1 : 0;
+        float curr = humidityStandard[currMonth];
+        float next = humidityStandard[nextMonth];
 
         float diff = next - curr;
 

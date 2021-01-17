@@ -9,6 +9,7 @@ public class Stage : MonoBehaviour
 
     private Area[] areas;
     private Area baseArea;
+    private Area pointingArea;
 
     public string stageName;
     [TextArea]
@@ -26,6 +27,7 @@ public class Stage : MonoBehaviour
     }
     [Header("初始物种数")]
     public List<AnimalInitialAmount> animalInitialAmounts;
+    private HexGrid hexGrid;
 
     //基地资源
     private int lastDay;
@@ -49,6 +51,7 @@ public class Stage : MonoBehaviour
     }
     void Start()
     {
+        hexGrid = GetComponent<HexGrid>();
         lastDay = Timer.GetDay();
         foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
         {
@@ -93,11 +96,26 @@ public class Stage : MonoBehaviour
         foreach(Event eachEvent in events) {
             eachEvent.idle();
         }
+        //HandleAreaMousePointing
+        Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(inputRay, out hit))
+        {
+            pointingArea = hexGrid.GetCell(hit.point).transform.GetComponent<Area>();
+            InGameLog.AddLog("pointingArea(InstanceID): " + pointingArea.GetInstanceID());
+        } else
+        {
+            pointingArea = null;
+        }
     }
 
     public static Area[] getAreas()
     {
         return instance.areas;
+    }
+    public static Area GetMousePointingArea()
+    {
+        return instance.pointingArea;
     }
     public static int getSpeciesAmount(Animal species)
     {
