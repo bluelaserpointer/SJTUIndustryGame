@@ -10,148 +10,70 @@ public class Animal : ScriptableObject
     public string description;
     public EnvironmentType environment;
     public GameObject model;
-    [Serializable]
-    public struct SpeciesAffect
-    {
-        public Animal target;
-        public int change;
-    }
-    public List<SpeciesAffect> speciesAffects;
+    public int growSpeed;
+    List<Animal> foods;
+    public int energyNeeds;
+    public int energyAsFood;
+    public double minTempreture, maxTempreture;
 
-    private int migrateLimit = 10;
+    public int migrateLimit = 10;
 
     public void idle(Area area, int amount)
     {
         if (amount == 0)
             return;
         //check food requirements satisfied for how many units
-
         handleAnimalCount(area, amount);
     }
 
     public void handleAnimalCount(Area area, int amount)
     {
-        // 1. 无 “不满足情况”
-        // dislikeness >= 0: 直接可迁徙（部分或整体）、无需迁徙，越大越严重
-        // dislikeness < 0: 迁徙, 越小越严重
-        int dislikeness = getAreaDislikeness(area, amount); // migrationNum, dislikeness
-        
-        Area migrateArea = null; // destination
-        List<Area> neighbors = area.GetNeighborAreas();
+        double dislikeness = 0.0;
+        // dislikeness: 0.0 ~ 1.0
+        // reason for increase: foods, tempreture
 
-        int finalMigrationNum = 0;
+        //grow
+        int foodSatisfiedAmount = area.ProvideFood(foods, energyNeeds, amount);
+        area.changeSpeciesAmount(this, foodSatisfiedAmount * growSpeed);
+        dislikeness += (double)foodSatisfiedAmount / amount;
 
-        if(dislikeness >= 0) // 当前地区可养殖动物，effects 生效
+        //TODO: tempreture dislikeness affection
+
+        //decide how many should migrate to other area
+        int migrationAmount = (int)(amount * dislikeness);
+        if (migrationAmount > migrateLimit)
         {
-            int magnitude = amount - dislikeness; // comfortLevel 多，需要迁徙的越多
-            foreach (SpeciesAffect affect in speciesAffects)
-            {
-                area.changeSpeciesAmount(affect.target, affect.change * magnitude); // 可养殖动物数的 effects 生效
-            }
-            
-            if(dislikeness > migrateLimit) // 迁徙流量限制, 判断是否需要迁徙, dislikeness: migrationNum
-                finalMigrationNum = migrateLimit;
-            else
-                finalMigrationNum = dislikeness;
-
+            migrationAmount = migrateLimit;
         }
-        else if(dislikeness < 0) // 当前地区不可养殖动物，直接迁徙，无视 effects, dislikeness: dislikeness,   -9, -1
-            finalMigrationNum = migrateLimit;
-
-        migrateArea = pickMigrateArea(neighbors, finalMigrationNum);
-
-        if(migrateArea != null)
+        if (migrationAmount > 0) // do migration
         {
-            migrate(area, migrateArea, finalMigrationNum);
+            Area migrateDst = null;
+            double leastMigrateDstDislikeness = 1.0;
+            foreach (Area areaIteration in area.GetNeighborAreas())
+            {
+                double newDislikeness = getAreaDislikeness(areaIteration);
+                if (newDislikeness < leastMigrateDstDislikeness)
+                {
+                    migrateDst = areaIteration;
+                    leastMigrateDstDislikeness = newDislikeness;
+                }
+            }
+            if(migrateDst != null)
+            {
+                migrate(area, migrateDst, migrationAmount);
+            }
         }
     }
 
-    public void migrate(Area src, Area dst, int migrationNum)
+    public void migrate(Area src, Area dst, int migrationAmount)
     {
-        src.changeSpeciesAmount(this, src.getSpeciesAmount(this) - migrationNum);
-        dst.changeSpeciesAmount(this, dst.getSpeciesAmount(this) + migrationNum);
+        src.changeSpeciesAmount(this, -migrationAmount);
+        dst.changeSpeciesAmount(this, +migrationAmount);
     }
 
-    public Area pickMigrateArea(List<Area> neighbors, int amount)
+    public double getAreaDislikeness(Area area) //TODO
     {
-        // Iterate through the areas
-
-        // Filter out the unmigratable neigbors, and find migrate areas in migratable neighbors
-
-        int bestHabitat = -100;
-        int bestNonHabitat = 1000000;
-        Area bestHabitatArea = null; // 部分动物满足
-        Area bestNonHabitatArea = null; // 完全不满足
-        
-        foreach(Area area in neighbors)
-        {
-            // dislikeness > 0, habitat
-            // dislikeness < 0, nonHabitat
-
-            int dislikeness = getAreaDislikeness(area, amount);
-            if(dislikeness > 0) // migrationNum
-            {
-                // find smallest
-                // 1*, 2, 3, 5
-                if(bestHabitat > dislikeness)
-                {
-                    bestHabitatArea = area;
-                    bestHabitat = dislikeness;
-                }
-            }
-            else // dislikeness
-            {
-                 // find largest
-                 // -9, -5, -1*
-                if(bestNonHabitat < dislikeness)
-                {
-                    bestNonHabitatArea = area;
-                    bestNonHabitat = dislikeness;
-                }
-            }
-        }
-
-
-
-        // return resultMigration;
-    }
-
-    public float getAreaDislikeness(Area area, int amount)
-    {
-        float dislikeNess = -0f; // Score for sorting the best area for migration(间接迁徙意图)
-
-        int satisfiedAmount = amount;
-
-        foreach (SpeciesAffect affect in speciesAffects)
-        {
-            if(affect.change < 0) //minus change means food requirements
-            {
-                int tmpSatisfiedAmount = area.getSpeciesAmount(affect.target) % (-affect.change); // target num is smaller than one unit of effect
-
-                if(dislikeNess < 0)
-                {
-                    // current Area, 3 effect 无法生效， 和当前animal的匹配程度很低
-                    if(tmpSatisfiedAmount == 0) // sum the effects that don't match
-                    {
-                        dislikeNess -= 1; // dislikeNess = -3
-                    }
-                }else{
-                    if(tmpSatisfiedAmount < satisfiedAmount) //take least magnitude
-                    {
-                        satisfiedAmount = tmpSatisfiedAmount;
-                        if (satisfiedAmount == 0) // If one of the conditions fail, migrate and won't go inside this if statement
-                        {
-                            dislikeNess -= 1;
-                        }
-                    }
-                }
-
-                float satisfiedRatio = tmpSatisfiedAmount / satisfiedAmount;
-            }
-        }
-
-        migrationNum = amount - satisfiedAmount;
-
-        return dislikeNess;
+        double dislikeness = 0.0;
+        return dislikeness;
     }
 }

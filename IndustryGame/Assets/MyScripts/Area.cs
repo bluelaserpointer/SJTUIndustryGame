@@ -160,4 +160,44 @@ public class Area : MonoBehaviour
     {
         return neighbors;
     }
+    //foods - animals as food
+    //energyNeedsForOneEater - energy one eater requires
+    //units - amount of eater
+    //returns - satisfied amount
+    public int ProvideFood(List<Animal> foods, int energyNeedsForOneEater, int units)
+    {
+        if(units <= 0) {
+            return 0;
+        }
+        int sumProvidableAmount = 0;
+        bool satisfied = false;
+        foreach(KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
+        {
+            if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
+                continue;
+            int providableAmount = animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater;
+            if(sumProvidableAmount + providableAmount >= units)
+            {
+                providableAmount = units - sumProvidableAmount;
+                satisfied = true;
+            }
+            sumProvidableAmount += providableAmount;
+            animalAndAmount.Value.addCurrent(-providableAmount); //decrease eaten animals
+            if (satisfied)
+                break;
+        }
+        return sumProvidableAmount;
+    }
+    public int GetProvidableFoodEnergy(List<Animal> foods, int energyNeedsForOneEater)
+    {
+        int sumProvidableAmount = 0;
+        foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
+        {
+            if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
+                continue;
+            int providableAmount = animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater;
+            sumProvidableAmount += providableAmount;
+        }
+        return sumProvidableAmount;
+    }
 }
