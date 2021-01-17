@@ -123,8 +123,7 @@ public class Area : MonoBehaviour
             {
                 InGameLog.AddLog("found a specialist not defiend current area", Color.red);
                 specialist.moveToArea(Stage.getBaseArea());
-            }
-            if(area.Equals(this))
+            } else if(area.Equals(this))
             {
                 list.Add(specialist);
             }
