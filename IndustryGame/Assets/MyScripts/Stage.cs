@@ -35,6 +35,7 @@ public class Stage : MonoBehaviour
     List<Specialist> specialists = new List<Specialist>();
     List<Action> enabledActions = new List<Action>();
 
+    //TODO Delete after test
     private Specialist test = new Specialist();
 
     void Awake()
@@ -84,8 +85,12 @@ public class Stage : MonoBehaviour
         
         test.name = "naomi";
         test.speciality = Ability.Amphibian;
+        //test.birthday = "2000-05-11";
+        //test.birthplace = "Shanghai";
+        //test.specialistTemplate.jender = SpecialistTemplate.Jender.Female;
+        //test.abilities.Add(Ability.Outdoor, 1);
         specialists.Insert(0, test);
-        specialists.Insert(1, test);
+        //specialists.Insert(1, test);
     }
     void Update()
     {
