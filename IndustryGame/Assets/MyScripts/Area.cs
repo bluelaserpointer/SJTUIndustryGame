@@ -18,6 +18,8 @@ public class Area : MonoBehaviour
         public double value;
     }
     public List<Stat> stat;
+    [SerializeField]
+    private List<Action> enabledActions;
     private struct AmountChange
     {
         public int old;
@@ -110,5 +112,13 @@ public class Area : MonoBehaviour
     public Weather GetWeather()
     {
         return weather;
+    }
+    public void AddEnabledAction(Action action)
+    {
+        enabledActions.Add(action);
+    }
+    public List<Action> GetEnabledActions()
+    {
+        return enabledActions;
     }
 }

@@ -74,6 +74,8 @@ MonoBehaviour:
   environmentType: 0
   buildings: []
   stat: []
+  enabledActions:
+  - {fileID: 11400000, guid: 041a31c12c42aa54a9edda4a8164d9bb, type: 2}
 --- !u!1001 &2912920079283460104
 PrefabInstance:
   m_ObjectHideFlags: 0
