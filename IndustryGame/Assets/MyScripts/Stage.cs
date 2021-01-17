@@ -55,6 +55,7 @@ public class Stage : MonoBehaviour
             baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
         }
         hexGrid = GetComponent<HexGrid>();
+        Camera.main.GetComponent<OrthographicCamera>().SetHexGrid(hexGrid);
         lastDay = Timer.GetDay();
         foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
         {
@@ -110,17 +111,11 @@ public class Stage : MonoBehaviour
         foreach(Event eachEvent in events) {
             eachEvent.idle();
         }
-        //HandleAreaMousePointing
-        Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(inputRay, out hit))
-        {
-            HexCell hexCell = hexGrid.GetCell(hit.point);
-            pointingArea = hexCell != null ? hexCell.transform.GetComponent<Area>() : null;
-        } else
-        {
-            pointingArea = null;
-        }
+
+    }
+    public static HexGrid GetHexGrid()
+    {
+        return instance.hexGrid;
     }
 
     public static Area[] getAreas()
