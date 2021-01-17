@@ -35,6 +35,7 @@ public class Stage : MonoBehaviour
     List<Specialist> specialists = new List<Specialist>();
     List<Action> enabledActions = new List<Action>();
 
+    //TODO Delete after test
     private Specialist test = new Specialist();
 
     void Awake()
@@ -43,22 +44,22 @@ public class Stage : MonoBehaviour
             instance = this;
         //set stage money objective
         lestMoney = stageMoney;
-        //collect all Area Components in children gameObject
-        areas = GetComponentsInChildren<Area>();
-        //pick random area as basement area
-        if(areas.Length > 0)
-        {
-            baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
-        }
     }
     void Start()
     {
+        //collect all Area Components in children gameObject
+        areas = GetComponentsInChildren<Area>();
+        //pick random area as basement area
+        if (areas.Length > 0)
+        {
+            baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
+        }
         hexGrid = GetComponent<HexGrid>();
         Camera.main.GetComponent<OrthographicCamera>().SetHexGrid(hexGrid);
         lastDay = Timer.GetDay();
         foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
         {
-            EnvironmentType environment = animalInitialAmount.animal.environment;
+            EnvironmentType environment = animalInitialAmount.animal.bestEnvironmentType;
             int count = 0;
             foreach(Area area in areas)
             {
@@ -85,13 +86,17 @@ public class Stage : MonoBehaviour
         
         test.name = "naomi";
         test.speciality = Ability.Amphibian;
+        //test.birthday = "2000-05-11";
+        //test.birthplace = "Shanghai";
+        //test.specialistTemplate.jender = SpecialistTemplate.Jender.Female;
+        //test.abilities.Add(Ability.Outdoor, 1);
         specialists.Insert(0, test);
-        specialists.Insert(1, test);
+        //specialists.Insert(1, test);
     }
     void Update()
     {
         Timer.idle();
-        if(lastDay != Timer.GetDay()) //day change happened
+        if (lastDay != Timer.GetDay()) //day change happened
         {
             lastDay = Timer.GetDay();
             foreach (Area area in areas)
@@ -108,7 +113,6 @@ public class Stage : MonoBehaviour
         }
 
     }
-
     public static HexGrid GetHexGrid()
     {
         return instance.hexGrid;

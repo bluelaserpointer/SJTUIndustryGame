@@ -80,7 +80,7 @@ public class Area : MonoBehaviour
     public void dayIdle()
     {
         weather.judgeWeather();
-        switch(weather.GetWeatherType())
+        switch (weather.GetWeatherType())
         {
             case Weather.WeatherType.Rainy:
                 rainFX.SetActive(true);
@@ -118,7 +118,12 @@ public class Area : MonoBehaviour
         List<Specialist> list = new List<Specialist>();
         foreach(Specialist specialist in Stage.GetSpecialists())
         {
-            if(specialist.getCurrentArea().Equals(this))
+            Area area = specialist.getCurrentArea();
+            if(area == null)
+            {
+                InGameLog.AddLog("found a specialist not defiend current area", Color.red);
+                specialist.moveToArea(Stage.getBaseArea());
+            } else if(area.Equals(this))
             {
                 list.Add(specialist);
             }
@@ -159,5 +164,52 @@ public class Area : MonoBehaviour
     public List<Area> GetNeighborAreas()
     {
         return neighbors;
+    }
+    //foods - animals as food
+    //energyNeedsForOneEater - energy one eater requires
+    //units - amount of eater
+    //returns - satisfied amount
+    public int ProvideFood(List<Animal> foods, int energyNeedsForOneEater, int units)
+    {
+        if(units <= 0) {
+            return 0;
+        }
+        if(energyNeedsForOneEater <= 0) { //satisfies all
+            return units;
+        }
+        int sumProvidableAmount = 0;
+        bool satisfied = false;
+        foreach(KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
+        {
+            if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
+                continue;
+            int providableAmount = animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater;
+            if(sumProvidableAmount + providableAmount >= units)
+            {
+                providableAmount = units - sumProvidableAmount;
+                satisfied = true;
+            }
+            sumProvidableAmount += providableAmount;
+            animalAndAmount.Value.addCurrent(-providableAmount); //decrease eaten animals
+            if (satisfied)
+                break;
+        }
+        return sumProvidableAmount;
+    }
+    public int GetProvidableFoodEnergy(List<Animal> foods, int energyNeedsForOneEater)
+    {
+        if(energyNeedsForOneEater <= 0)
+        {
+            return 0; // no energy needs means nothing can provide
+        }
+        int sumProvidableAmount = 0;
+        foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
+        {
+            if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
+                continue;
+            int providableAmount = animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater;
+            sumProvidableAmount += providableAmount;
+        }
+        return sumProvidableAmount;
     }
 }

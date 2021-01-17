@@ -8,41 +8,85 @@ public class Animal : ScriptableObject
     public string animalName;
     [TextArea]
     public string description;
-    public EnvironmentType environment;
-    public GameObject model;
+    public EnvironmentType bestEnvironmentType;
     [Serializable]
-    public struct SpeciesAffect
+    public struct EnvironmentPreference
     {
-        public Animal target;
-        public int change;
+        public EnvironmentType environment;
+        public double preference;
     }
-    public List<SpeciesAffect> speciesAffects;
-    public void idle(Area area, int amount)
+    public List<EnvironmentPreference> environmentPreferences;
+    public GameObject model;
+    [Min(0)]
+    public int reproductionSpeed;
+    List<Animal> foods;
+    [Min(0)]
+    public int energyNeeds;
+    [Min(0)]
+    public int energyAsFood;
+    public double minTempreture, maxTempreture;
+    [Min(0)]
+    public int migrateLimit;
+
+    public void idle(Area currentArea, int amount)
     {
         if (amount == 0)
             return;
-        int magnitude = amount;
-        //check food requirements satisfied for how many units
-        foreach (SpeciesAffect affect in speciesAffects)
+        //grow: check food requirements satisfied for how many units
+        int foodSatisfiedAmount = currentArea.ProvideFood(foods, energyNeeds, amount);
+        currentArea.changeSpeciesAmount(this, foodSatisfiedAmount * reproductionSpeed);
+
+        //decide how many should migrate to other area
+        if (migrateLimit > 0)
         {
-            if(affect.change < 0) //minus change means food requirements
+            int migrationAmount = (int)(amount * getAreaDislikeness(currentArea, amount)); // dislikeness: -inf ~ 1.0
+            if (migrationAmount > 0) // do migration
             {
-                int tmpMagnitude = area.getSpeciesAmount(affect.target) % (-affect.change);
-                if(tmpMagnitude < magnitude) //take least magnitude
+                if (migrationAmount > migrateLimit)
                 {
-                    magnitude = tmpMagnitude;
-                    if (magnitude == 0)
-                        break;
+                    migrationAmount = migrateLimit;
+                }
+                Area migrateDst = null;
+                double leastMigrateDstDislikeness = 1.0;
+                foreach (Area area in currentArea.GetNeighborAreas())
+                {
+                    double newDislikeness = getAreaDislikeness(area, migrationAmount);
+                    if (newDislikeness < leastMigrateDstDislikeness)
+                    {
+                        migrateDst = area;
+                        leastMigrateDstDislikeness = newDislikeness;
+                    }
+                }
+                if (migrateDst != null)
+                {
+                    migrate(currentArea, migrateDst, migrationAmount);
                 }
             }
         }
-        //do changes
-        if (magnitude > 0)
+    }
+
+    public void migrate(Area src, Area dst, int migrationAmount)
+    {
+        src.changeSpeciesAmount(this, -migrationAmount);
+        dst.changeSpeciesAmount(this, +migrationAmount);
+    }
+
+    public double getAreaDislikeness(Area area, int amount)
+    {
+        double dislikeness = 0.0;
+        //food affection
+        if(energyNeeds > 0)
+            dislikeness += 1.0 - (double)area.GetProvidableFoodEnergy(foods, energyNeeds) / (amount * energyNeeds);
+        //environmentType affection
+        foreach(EnvironmentPreference environmentAndPreference in environmentPreferences)
         {
-            foreach (SpeciesAffect affect in speciesAffects)
+            if(environmentAndPreference.environment.Equals(area.environmentType))
             {
-                area.changeSpeciesAmount(affect.target, affect.change * magnitude);
+                dislikeness -= environmentAndPreference.preference;
+                break;
             }
         }
+        //TODO: tempreture affection
+        return dislikeness;
     }
 }

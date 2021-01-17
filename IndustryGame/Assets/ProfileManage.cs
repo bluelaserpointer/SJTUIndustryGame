@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class profileUI : MonoBehaviour
+public class ProfileManage : MonoBehaviour
 {
     //[SerializeField]
     public Specialist specialist;
+    public Image Avatar;
+    public Text Name;
+    public Text Birthplace;
+    public Text BirthDate;
+    public Text Speciality;
+    public Text Gender;
 
-    //private Sprite Avatar;
-    private Text Name;
-    private Text Birthplace;
-    private Text BirthDate;
-    private Text Speciality;
-    private Text Gender;
+    public GameObject SingleAbility;
+    public GameObject AbilityList;
 
-    private GameObject SingleAbility;
-    private GameObject AbilityList;
-
-    void Update()
+    void Update ()
     {
-        //Avatar = specialist.specialistTemplate.icon;
+        
+    }
+
+    public void UpdateProfile ()
+    {
+        //Avatar.sprite = specialist.specialistTemplate.icon;
         Name.text = specialist.name;
         Birthplace.text = specialist.birthplace;
         BirthDate.text = specialist.birthday;

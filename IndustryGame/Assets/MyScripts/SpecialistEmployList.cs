@@ -17,7 +17,6 @@ public class SpecialistEmployList : MonoBehaviour {
     {
         if(instance == null)
             instance = this;
-        refresh();
     }
     public static void refresh()
     {
@@ -31,7 +30,6 @@ public class SpecialistEmployList : MonoBehaviour {
                 specialist.name = "randomName";
                 specialist.birthday = "randomBirthDay";
                 specialist.birthplace = "randomCity";
-                specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
                 int abilityLevelTotal = 0;
                 if (random.NextDouble() < 0.5f) { //indoor
                     specialist.specialistTemplate = instance.indoorSpecialistTemplates[random.Next(0, instance.indoorSpecialistTemplates.Count)];
@@ -64,6 +62,7 @@ public class SpecialistEmployList : MonoBehaviour {
         if (indexInList < list.Count) {
             Specialist specialist = list[indexInList];
             Stage.GetSpecialists().Add(specialist);
+            specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
             list.RemoveAt(indexInList);
             Stage.subMoney(specialist.hireCost);
         }
