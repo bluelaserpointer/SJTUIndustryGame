@@ -9,6 +9,10 @@ public class EventInfo : ScriptableObject
     public string description;
     [TextArea]
     public string descriptionAfterFinish;
+    [Header("出现在以下动物报告")]
+    public List<Animal> showInAnimalsReport;
+    [Header("出现在环境报告")]
+    public bool showInEnvironmentReport;
     [Header("出现前需完成的EventInfo")]
     public List<EventInfo> preFinishInfos;
     [Header("完成条件")]
@@ -33,6 +37,10 @@ public class EventInfo : ScriptableObject
     public bool isFinished()
     {
         return _isFinished;
+    }
+    public bool isAppeared()
+    {
+        return _isAppeared;
     }
     public string getDescription()
     {

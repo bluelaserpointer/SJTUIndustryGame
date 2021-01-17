@@ -31,4 +31,20 @@ public class Event : ScriptableObject
         }
         return judge;
     }
+    public List<EventInfo> GetInfos()
+    {
+        return includedInfos;
+    }
+    public List<EventInfo> GetRevealedInfos()
+    {
+        return includedInfos.FindAll(info => info.isAppeared());
+    }
+    public List<EventInfo> GetRevealedInfosRelatedToAnimal(Animal animal)
+    {
+        return includedInfos.FindAll(info => info.isAppeared() && info.showInAnimalsReport.Contains(animal));
+    }
+    public List<EventInfo> GetRevealedInfosRelatedToEnvironment()
+    {
+        return includedInfos.FindAll(info => info.isAppeared() && info.showInEnvironmentReport);
+    }
 }

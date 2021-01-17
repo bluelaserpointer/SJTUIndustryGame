@@ -164,4 +164,20 @@ public class Stage : MonoBehaviour
     {
         return instance.lestMoney;
     }
+    public static List<Event> GetEvents()
+    {
+        return instance.events;
+    }
+    public static List<EventInfo> GetEventInfosRelatedToAnimal(Animal animal) //TODO: optimize this code
+    {
+        List<EventInfo> eventInfos = new List<EventInfo>();
+        instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToAnimal(animal)));
+        return eventInfos;
+    }
+    public static List<EventInfo> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
+    {
+        List<EventInfo> eventInfos = new List<EventInfo>();
+        instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToEnvironment()));
+        return eventInfos;
+    }
 }
