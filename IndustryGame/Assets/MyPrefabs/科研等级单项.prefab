@@ -167,8 +167,9 @@ GameObject:
   - component: {fileID: 8102240029922663511}
   - component: {fileID: 8102240029922663509}
   - component: {fileID: 8102240029922663508}
+  - component: {fileID: 3852175733884190579}
   m_Layer: 5
-  m_Name: "\u9C7C\u7C7B"
+  m_Name: "\u79D1\u7814\u7B49\u7EA7\u5355\u9879"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,6 +234,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3852175733884190579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8102240029922663510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907f8a49728144a48a881a5037fc600b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityName: {fileID: 8102240029115470778}
+  abilityLevel: {fileID: 8102240029544162352}
 --- !u!1 &8102240030237237356
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,8 @@ public class Stage : MonoBehaviour
     List<Specialist> specialists = new List<Specialist>();
     List<Action> enabledActions = new List<Action>();
 
+    private Specialist test = new Specialist();
+
     void Awake()
     {
         if (instance == null)
@@ -77,6 +79,13 @@ public class Stage : MonoBehaviour
                 }
             }
         }
+
+        // TODO: Delete after testing
+        
+        test.name = "naomi";
+        test.speciality = Ability.Amphibian;
+        specialists.Insert(0, test);
+        specialists.Insert(1, test);
     }
     void Update()
     {
