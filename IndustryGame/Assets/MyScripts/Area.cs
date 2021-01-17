@@ -5,6 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Area : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject rainFX, snowFX;
     public string areaName;
     [TextArea]
     public string description;
@@ -77,6 +79,21 @@ public class Area : MonoBehaviour
     public void dayIdle()
     {
         weather.judgeWeather();
+        switch(weather.GetWeatherType())
+        {
+            case Weather.WeatherType.Rainy:
+                rainFX.SetActive(true);
+                snowFX.SetActive(false);
+                break;
+            case Weather.WeatherType.Snowy:
+                rainFX.SetActive(false);
+                snowFX.SetActive(true);
+                break;
+            default:
+                rainFX.SetActive(false);
+                snowFX.SetActive(false);
+                break;
+        }
         foreach (Building building in buildings)
         {
             building.idle();
