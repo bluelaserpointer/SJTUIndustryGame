@@ -59,7 +59,7 @@ public class HexGrid : MonoBehaviour {
 		position = transform.InverseTransformPoint(position);
 		HexCoordinates coordinates = HexCoordinates.FromPosition(position);
 		int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
-		return cells[index];
+		return (0 <= index && index < cells.Length) ? cells[index] : null;
 	}
 
 	public void Refresh () {

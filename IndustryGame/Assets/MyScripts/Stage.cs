@@ -115,7 +115,8 @@ public class Stage : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(inputRay, out hit))
         {
-            pointingArea = hexGrid.GetCell(hit.point).transform.GetComponent<Area>();
+            HexCell hexCell = hexGrid.GetCell(hit.point);
+            pointingArea = hexCell != null ? hexCell.transform.GetComponent<Area>() : null;
         } else
         {
             pointingArea = null;
