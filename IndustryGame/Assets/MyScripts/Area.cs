@@ -174,6 +174,9 @@ public class Area : MonoBehaviour
         if(units <= 0) {
             return 0;
         }
+        if(energyNeedsForOneEater <= 0) { //satisfies all
+            return units;
+        }
         int sumProvidableAmount = 0;
         bool satisfied = false;
         foreach(KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
@@ -195,6 +198,10 @@ public class Area : MonoBehaviour
     }
     public int GetProvidableFoodEnergy(List<Animal> foods, int energyNeedsForOneEater)
     {
+        if(energyNeedsForOneEater <= 0)
+        {
+            return 0; // no energy needs means nothing can provide
+        }
         int sumProvidableAmount = 0;
         foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {

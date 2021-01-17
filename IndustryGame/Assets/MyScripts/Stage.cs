@@ -58,7 +58,7 @@ public class Stage : MonoBehaviour
         lastDay = Timer.GetDay();
         foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
         {
-            EnvironmentType environment = animalInitialAmount.animal.environment;
+            EnvironmentType environment = animalInitialAmount.animal.bestEnvironmentType;
             int count = 0;
             foreach(Area area in areas)
             {
