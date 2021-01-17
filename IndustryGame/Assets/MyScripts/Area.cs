@@ -5,6 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Area : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject rainFX, snowFX, markSpecialist, markBasement;
     public string areaName;
     [TextArea]
     public string description;
@@ -55,6 +57,7 @@ public class Area : MonoBehaviour
         {
             building.applied();
         }
+        markBasement.SetActive(isBasement());
     }
     public int getSpeciesAmount(Animal animal)
     {
@@ -77,6 +80,21 @@ public class Area : MonoBehaviour
     public void dayIdle()
     {
         weather.judgeWeather();
+        switch(weather.GetWeatherType())
+        {
+            case Weather.WeatherType.Rainy:
+                rainFX.SetActive(true);
+                snowFX.SetActive(false);
+                break;
+            case Weather.WeatherType.Snowy:
+                rainFX.SetActive(false);
+                snowFX.SetActive(true);
+                break;
+            default:
+                rainFX.SetActive(false);
+                snowFX.SetActive(false);
+                break;
+        }
         foreach (Building building in buildings)
         {
             building.idle();
@@ -85,6 +103,14 @@ public class Area : MonoBehaviour
         {
             animalAndAmount.Value.recordChange();
             animalAndAmount.Key.idle(this, animalAndAmount.Value.old);
+        }
+        //show specialist mark // will be upgraded to show count in future
+        if(getSpecialistsInArea().Count > 0)
+        {
+            markSpecialist.SetActive(true);
+        } else
+        {
+            markSpecialist.SetActive(false);
         }
     }
     public List<Specialist> getSpecialistsInArea()
