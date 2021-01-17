@@ -18,6 +18,8 @@ public class Area : MonoBehaviour
         public double value;
     }
     public List<Stat> stat;
+
+    List<Area> neighbors = new List<Area>();
     [SerializeField]
     private List<Action> enabledActions;
     private struct AmountChange
@@ -42,6 +44,13 @@ public class Area : MonoBehaviour
 
     private void Start()
     {
+        HexCell myCell = transform.GetComponent<HexCell>();
+        for (int direction = (int)HexDirection.NE; direction <= (int)HexDirection.NW; ++direction)
+        {
+            HexCell neighborCell = myCell.GetNeighbor((HexDirection)direction);
+            if(neighborCell != null)
+                neighbors.Add(neighborCell.transform.GetComponent<Area>());
+        }
         foreach (Building building in buildings)
         {
             building.applied();
@@ -120,5 +129,9 @@ public class Area : MonoBehaviour
     public List<Action> GetEnabledActions()
     {
         return enabledActions;
+    }
+    public List<Area> GetNeighborAreas()
+    {
+        return neighbors;
     }
 }
