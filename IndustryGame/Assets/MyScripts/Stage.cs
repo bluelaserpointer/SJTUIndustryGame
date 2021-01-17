@@ -54,6 +54,7 @@ public class Stage : MonoBehaviour
     void Start()
     {
         hexGrid = GetComponent<HexGrid>();
+        Camera.main.GetComponent<OrthographicCamera>().SetHexGrid(hexGrid);
         lastDay = Timer.GetDay();
         foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
         {
@@ -105,17 +106,12 @@ public class Stage : MonoBehaviour
         foreach(Event eachEvent in events) {
             eachEvent.idle();
         }
-        //HandleAreaMousePointing
-        Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(inputRay, out hit))
-        {
-            pointingArea = hexGrid.GetCell(hit.point).transform.GetComponent<Area>();
-            InGameLog.AddLog("pointingArea(InstanceID): " + pointingArea.GetInstanceID());
-        } else
-        {
-            pointingArea = null;
-        }
+
+    }
+
+    public static HexGrid GetHexGrid()
+    {
+        return instance.hexGrid;
     }
 
     public static Area[] getAreas()
