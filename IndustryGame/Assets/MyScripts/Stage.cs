@@ -43,16 +43,16 @@ public class Stage : MonoBehaviour
             instance = this;
         //set stage money objective
         lestMoney = stageMoney;
-        //collect all Area Components in children gameObject
-        areas = GetComponentsInChildren<Area>();
-        //pick random area as basement area
-        if(areas.Length > 0)
-        {
-            baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
-        }
     }
     void Start()
     {
+        //collect all Area Components in children gameObject
+        areas = GetComponentsInChildren<Area>();
+        //pick random area as basement area
+        if (areas.Length > 0)
+        {
+            baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
+        }
         hexGrid = GetComponent<HexGrid>();
         lastDay = Timer.GetDay();
         foreach (AnimalInitialAmount animalInitialAmount in animalInitialAmounts)
@@ -90,7 +90,7 @@ public class Stage : MonoBehaviour
     void Update()
     {
         Timer.idle();
-        if(lastDay != Timer.GetDay()) //day change happened
+        if (lastDay != Timer.GetDay()) //day change happened
         {
             lastDay = Timer.GetDay();
             foreach (Area area in areas)
@@ -111,7 +111,6 @@ public class Stage : MonoBehaviour
         if (Physics.Raycast(inputRay, out hit))
         {
             pointingArea = hexGrid.GetCell(hit.point).transform.GetComponent<Area>();
-            InGameLog.AddLog("pointingArea(InstanceID): " + pointingArea.GetInstanceID());
         } else
         {
             pointingArea = null;

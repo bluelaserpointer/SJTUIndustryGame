@@ -80,7 +80,7 @@ public class Area : MonoBehaviour
     public void dayIdle()
     {
         weather.judgeWeather();
-        switch(weather.GetWeatherType())
+        switch (weather.GetWeatherType())
         {
             case Weather.WeatherType.Rainy:
                 rainFX.SetActive(true);
@@ -118,7 +118,13 @@ public class Area : MonoBehaviour
         List<Specialist> list = new List<Specialist>();
         foreach(Specialist specialist in Stage.GetSpecialists())
         {
-            if(specialist.getCurrentArea().Equals(this))
+            Area area = specialist.getCurrentArea();
+            if(area == null)
+            {
+                InGameLog.AddLog("found a specialist not defiend current area", Color.red);
+                specialist.moveToArea(Stage.getBaseArea());
+            }
+            if(area.Equals(this))
             {
                 list.Add(specialist);
             }
