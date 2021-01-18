@@ -11,7 +11,9 @@ public class OrthographicCamera : MonoBehaviour
     private Camera mainCamera;
     private float currentSize;
     private float originalSize;
-    private float orthographicSize = 6.5f;
+    public float mouseOrthographicSize = 7f;
+    public float keyOrthographicSize = 9f;
+    public float maskOrthographicSize = 15f;
 
     // private Vector3 originalPosition;
     private Transform originalTransform;
@@ -29,8 +31,9 @@ public class OrthographicCamera : MonoBehaviour
 
     private float orthographicRotationX;
     private Vector3 orthographicPosition;
+    private HexCell currentHexCell;
 
-
+    private int focusMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +44,14 @@ public class OrthographicCamera : MonoBehaviour
         currentPosition = originalPosition = originalTransform.position;
         currentRotation = originalRotation = originalTransform.rotation;
         orthographicRotation = currentRotation * Quaternion.Euler(-cameraParam, 0, 0);
+
+        focusMask = LayerMask.GetMask("FocusMask");
     }
     void Update () {
+        if(cameraFocus && mainCamera.orthographicSize <= maskOrthographicSize)
+            mainCamera.cullingMask &= ~(1 << 8); // 关闭层x
+        else
+            mainCamera.cullingMask |= (1 << 8);
         handleCameraFocus();
     }
 
@@ -77,21 +86,55 @@ public class OrthographicCamera : MonoBehaviour
     private void handleCameraFocus() {
         Area pointingArea = Stage.GetMousePointingArea();
 
+        if(cameraFocus)
+        {
+            // NSWE: WSAD
+            HexCell focusHexCell = null;
+            if(Input.GetKeyDown(KeyCode.W))
+            {
+                focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.NW);
+                if(focusHexCell == null)
+                    focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.NE);
+            }
+            if(Input.GetKeyDown(KeyCode.S))
+            {
+                focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.SE);
+                if(focusHexCell == null)
+                    focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.SW);
+            }
+            if(Input.GetKeyDown(KeyCode.A))
+                focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.W);
+            if(Input.GetKeyDown(KeyCode.D))
+                focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.E);
+            
+            if(focusHexCell != null)
+            {
+                currentHexCell = focusHexCell;
+                Vector3 focusPosition = focusHexCell.transform.position;
+                focusOnHexCell(focusPosition, keyOrthographicSize);
+            }
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                currentSize = mouseOrthographicSize;
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+                currentSize = keyOrthographicSize;
+
+
+        }
+
+
         if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && cameraFocus == false)
         {
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
             {
-                HexCell hexCell = hexGrid.GetCell(hit.point);
-                pointingArea = hexCell.transform.GetComponent<Area>();
+                currentHexCell = hexGrid.GetCell(hit.point);
+                pointingArea = currentHexCell.transform.GetComponent<Area>();
                 Vector3 pointingAreaPosition = pointingArea.transform.position;
 
-                cameraFocus = true;
-
-                currentSize = orthographicSize;
-                currentPosition = new Vector3(pointingAreaPosition.x, pointingAreaPosition.y + 12.8f, pointingAreaPosition.z - 14.5f);
-                currentRotation = orthographicRotation;
+                focusOnHexCell(pointingAreaPosition, mouseOrthographicSize);
+                
             }else{
                 pointingArea = null;
             }
@@ -105,5 +148,13 @@ public class OrthographicCamera : MonoBehaviour
 
             cameraFocus = false;
         }
+    }
+    public void focusOnHexCell(Vector3 focusPosition, float orthographicSize)
+    {
+        cameraFocus = true;
+
+        currentSize = orthographicSize;
+        currentPosition = new Vector3(focusPosition.x, focusPosition.y + 12.8f, focusPosition.z - 14.5f);
+        currentRotation = orthographicRotation;
     }
 }
