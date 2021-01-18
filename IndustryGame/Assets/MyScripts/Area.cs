@@ -126,7 +126,11 @@ public class Area : MonoBehaviour
         if(!weatherFX.activeInHierarchy && active)
             weatherFX.SetActive(true);
 
-        weatherFX.GetComponent<Animator>().SetBool("active", active);
+        Animator animator = weatherFX.GetComponent<Animator>();
+        if(animator.gameObject.activeSelf){
+            if(active != animator.GetBool("active"))
+                animator.SetBool("active", active);
+        }
     }
 
     public List<Specialist> getSpecialistsInArea()
