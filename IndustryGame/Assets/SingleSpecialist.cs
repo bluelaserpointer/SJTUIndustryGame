@@ -26,6 +26,7 @@ public class SingleSpecialist : MonoBehaviour
 
     public void DisplayProfile ()
     {
+        profile = GameObject.FindGameObjectWithTag("MyProfile").GetComponent<ProfileManage>();
         profile.specialist = this.specialist;
         profile.clearAbilityList();
         profile.UpdateProfile();
