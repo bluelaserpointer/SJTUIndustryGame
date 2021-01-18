@@ -1484,6 +1484,7 @@ GameObject:
   - component: {fileID: 1754014677}
   - component: {fileID: 1754014680}
   - component: {fileID: 1754014681}
+  - component: {fileID: 1754014682}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1568,6 +1569,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c633ffe9af7ceff4d90abd0340846c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1754014682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754014676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50efbd28208a7304ab5a3a5fe17e74e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icons:
+  - ability: 0
+    icon: {fileID: 21300000, guid: 9588ee73452b38447b260c4de9aadeec, type: 3}
+  - ability: 1
+    icon: {fileID: 21300000, guid: 1049e681d6aa11a41b144a13ca1dda53, type: 3}
+  - ability: 2
+    icon: {fileID: 21300000, guid: 0ec56c22832d3c74da66309468027995, type: 3}
+  - ability: 3
+    icon: {fileID: 21300000, guid: db81f4128feec614096180b4e7b7eb32, type: 3}
+  - ability: 4
+    icon: {fileID: 21300000, guid: 3c7a38322cfa10d41b5048fd409aa1c5, type: 3}
+  - ability: 5
+    icon: {fileID: 21300000, guid: 7cd5567692e820e4dbd5e0f33646ce34, type: 3}
+  - ability: 6
+    icon: {fileID: 21300000, guid: af8fb3db93928504ca52cb98acefcb2e, type: 3}
+  - ability: 7
+    icon: {fileID: 21300000, guid: 2d37e351f22577f4ba0557ed34c49125, type: 3}
+  - ability: 8
+    icon: {fileID: 21300000, guid: ca253cb8f3303e64b8d7c5dde47f9962, type: 3}
+  - ability: 9
+    icon: {fileID: 21300000, guid: a09223babd5636240a7941c6da3dddbc, type: 3}
+  - ability: 10
+    icon: {fileID: 21300000, guid: 271a02adf2e979e4fa383968f95a3ca8, type: 3}
+  - ability: 11
+    icon: {fileID: 21300000, guid: b735ba75945fdbe4ba7a6d81c9530c8f, type: 3}
 --- !u!1001 &1960063886
 PrefabInstance:
   m_ObjectHideFlags: 0
