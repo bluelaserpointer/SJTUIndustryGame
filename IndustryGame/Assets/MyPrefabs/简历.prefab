@@ -1303,6 +1303,8 @@ MonoBehaviour:
   BirthDate: {fileID: 0}
   Speciality: {fileID: 0}
   Gender: {fileID: 0}
+  HireCost: {fileID: 0}
+  HireMode: 1
   SingleAbility: {fileID: 0}
   AbilityList: {fileID: 0}
 --- !u!1 &3819386670565910174
