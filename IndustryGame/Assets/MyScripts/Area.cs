@@ -132,7 +132,8 @@ public class Area : MonoBehaviour
     }
     public bool isBasement()
     {
-        return Stage.getBaseArea().Equals(this);
+        Area area = Stage.getBaseArea();
+        return area == null ? false : area.Equals(this);
     }
     public void addReservation()
     {
