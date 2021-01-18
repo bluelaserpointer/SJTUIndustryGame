@@ -13,13 +13,16 @@ public class ProfileManage : MonoBehaviour
     public Text BirthDate;
     public Text Speciality;
     public Text Gender;
+    public Text HireCost;
+    public bool Hired = false;
 
     public GameObject SingleAbility;
     public GameObject AbilityList;
 
     void Update ()
     {
-        
+        clearAbilityList();
+        UpdateProfile();
     }
 
     public void UpdateProfile ()
@@ -30,14 +33,24 @@ public class ProfileManage : MonoBehaviour
         BirthDate.text = specialist.birthday;
         Speciality.text = specialist.speciality.ToString();
         Gender.text = specialist.specialistTemplate.jender.ToString();
+        //if (!Hired)
+        //{
+        //    HireCost.text = specialist.hireCost.ToString();
+        //}
 
-        IDictionaryEnumerator enumerator = specialist.abilities.GetEnumerator();
-        while (enumerator.MoveNext())
+        foreach (KeyValuePair<Ability, int> pair in specialist.abilities)
         {
             GameObject clone = Instantiate(SingleAbility, AbilityList.transform, false);
-            clone.GetComponent<abilitiesUI>().abilityName.text = enumerator.Key.ToString();
-            clone.GetComponent<abilitiesUI>().abilityLevel.text = enumerator.Value.ToString();
+            clone.GetComponent<abilitiesUI>().abilityName.text = AbilityDescription.GetAbilityDescription(pair.Key);
+            clone.GetComponent<abilitiesUI>().abilityLevel.text = pair.Value.ToString();
+            InGameLog.AddLog(pair.Key.ToString() + ": " + pair.Value.ToString());
         }
+
+        //IDictionaryEnumerator enumerator = specialist.abilities.GetEnumerator();
+        //while (enumerator.MoveNext())
+        //{
+            
+        //}
     }
 
     public void clearAbilityList ()
