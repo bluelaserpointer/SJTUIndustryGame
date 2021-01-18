@@ -41,12 +41,18 @@ public class Area : MonoBehaviour
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
     private LinkedList<Dictionary<Animal, AmountChange>> animalAmountsRecords = new LinkedList<Dictionary<Animal, AmountChange>>();
 
-    // Weather
-    private Weather weather = new Weather();
-
+    // Weather params
+    private Weather weather;
+    public float totalWater = 1000f;
+    public float groundSkyRatio = 0.7f;
+    public float rainSnowRatio = 0.4f;
+    public float rainFallRatio = 0.3f;
     private void Start()
     {
         HexCell myCell = transform.GetComponent<HexCell>();
+
+        weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
+
         for (int direction = (int)HexDirection.NE; direction <= (int)HexDirection.NW; ++direction)
         {
             HexCell neighborCell = myCell.GetNeighbor((HexDirection)direction);
@@ -83,16 +89,16 @@ public class Area : MonoBehaviour
         switch (weather.GetWeatherType())
         {
             case Weather.WeatherType.Rainy:
-                rainFX.SetActive(true);
-                snowFX.SetActive(false);
+                setWeatherFX(rainFX, true);
+                setWeatherFX(snowFX, false);
                 break;
             case Weather.WeatherType.Snowy:
-                rainFX.SetActive(false);
-                snowFX.SetActive(true);
+                setWeatherFX(rainFX, false);
+                setWeatherFX(snowFX, true);
                 break;
             default:
-                rainFX.SetActive(false);
-                snowFX.SetActive(false);
+                setWeatherFX(rainFX, false);
+                setWeatherFX(snowFX, false);
                 break;
         }
         foreach (Building building in buildings)
@@ -113,6 +119,16 @@ public class Area : MonoBehaviour
             markSpecialist.SetActive(false);
         }
     }
+
+    public void setWeatherFX(GameObject weatherFX, bool active)
+    {
+        // weatherFX
+        if(!weatherFX.activeInHierarchy && active)
+            weatherFX.SetActive(true);
+
+        weatherFX.GetComponent<Animator>().SetBool("active", active);
+    }
+
     public List<Specialist> getSpecialistsInArea()
     {
         List<Specialist> list = new List<Specialist>();

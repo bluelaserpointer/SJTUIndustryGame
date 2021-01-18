@@ -83,6 +83,10 @@ MonoBehaviour:
   stat: []
   enabledActions:
   - {fileID: 11400000, guid: 041a31c12c42aa54a9edda4a8164d9bb, type: 2}
+  totalWater: 1000
+  groundSkyRatio: 0.7
+  rainSnowRatio: 0.4
+  rainFallRatio: 0.3
 --- !u!1 &511595936897048316
 GameObject:
   m_ObjectHideFlags: 0
