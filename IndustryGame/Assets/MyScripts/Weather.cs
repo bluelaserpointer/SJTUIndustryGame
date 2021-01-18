@@ -20,66 +20,91 @@
     private float groundWater; // 地面储水量
     private float skyWater; // 云朵储水量
 
-    private float waterFallLimit = 70f;
+    private float rainFallLimit;
+
+    private float totalWater; // 总储水量
+    private int elevation; // 海拔
+    private int waterChange; // 储水改变量
+    private float rainSnowRatio;
 
     public Weather(){
-        temperature = 25.0f;
-        humidity = 77.0f;
+        elevation = 2;
         groundWater = 75f;
         skyWater = 25f;
     }
 
-    public Weather(float t, float h){
-        temperature = t;
-        humidity = h;
+    public Weather(int e, float t, float gsR, float rsR, float rfR){
+        // gsR: groundSkyRatio
+        // rsR: rainSnowRatio
+        // rfR: rainFallRatio
+
+        elevation = e;
+        totalWater = t;
+        rainSnowRatio = rsR;
+        float groundSkyRatio = gsR;
+
+        rainFallLimit = rfR * totalWater;
+        groundWater = totalWater * groundSkyRatio;
+        skyWater = totalWater - groundWater;
+        waterChange = (int)(totalWater * 0.03f * (float)e);
     }
 
     public void judgeWeather() //TODO
     {
         int day = Timer.GetDay();
         int month = Timer.GetMonth();
-        float ratio = (float)day / (float)(Timer.oneDay * Timer.dayInMonth);
+        float dayMonthRatio = (float)day / (float)(Timer.oneDay * Timer.dayInMonth);
         SeasonType season = Timer.GetSeason();
 
-        handleTemperature(month, day, ratio);
-        handleHumidity(month, day, ratio);
+        handleTemperature(month, day, dayMonthRatio);
+        handleHumidity(month, day, dayMonthRatio);
         
         // 根据 WeatherType 设置地面云朵储水量
+        float snowyChange = (float)waterChange / 8;
+        float rainyChange = (float)waterChange / 4;
+        float sunnyChange = (float)waterChange / 2;
         switch (weatherType)
         {
             // 降雨、降雪
             case WeatherType.Rainy:
+                skyWater -= rainyChange;
+                groundWater += rainyChange;
+                break;
             case WeatherType.Snowy:
-                skyWater -= 20;
-                groundWater += 20;
+                skyWater -= snowyChange;
+                groundWater += snowyChange;
                 break;
             
             // 蒸发
             case WeatherType.Sunny:
-                skyWater += 10;
-                groundWater -= 10;
+                skyWater += sunnyChange;
+                groundWater -= sunnyChange;
                 break;
         }
 
         // 根据 季节、云朵储水量设置天气
-        if(skyWater < 30f || season == SeasonType.Autumn)
+        if(skyWater <= 2 * waterChange || season == SeasonType.Autumn)
             weatherType = WeatherType.Sunny;
         else
             switch(season)
             {
                 case SeasonType.Spring:
+                    if(skyWater > (rainFallLimit + totalWater / 2))
+                        weatherType = WeatherType.Rainy;
+                break;
+
                 case SeasonType.Summer:
                     // 云朵储水量大于90
-                    if(skyWater > waterFallLimit)
+                    if(skyWater > rainFallLimit)
                         weatherType = WeatherType.Rainy;
                 break;
 
                 case SeasonType.Winter:
                     // 云朵储水量大于90
-                    if(skyWater > waterFallLimit)
+                    if(skyWater > rainFallLimit)
                     {
                         // 初冬降雨，深冬降雪
-                        if(ratio > 0.5f)
+                        if(dayMonthRatio > rainSnowRatio)
                             weatherType = WeatherType.Snowy;
                         else
                             weatherType = WeatherType.Rainy;
