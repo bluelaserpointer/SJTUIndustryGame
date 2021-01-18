@@ -72,15 +72,33 @@ public class SpecialistEmployList : MonoBehaviour {
     {
         return instance.specialists[specality];
     }
-    public static void hireSpecialist(Ability specality, int indexInList)
+    public static void hireSpecialist(Specialist specialist)
     {
-        List<Specialist> list = instance.specialists[specality];
-        if (indexInList < list.Count) {
-            Specialist specialist = list[indexInList];
-            Stage.GetSpecialists().Add(specialist);
-            specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
-            list.RemoveAt(indexInList);
-            Stage.subMoney(specialist.hireCost);
+        //List<Specialist> list = instance.specialists[specality];
+        //if (indexInList < list.Count) {
+        //    Specialist specialist = list[indexInList];
+        //    Stage.GetSpecialists().Add(specialist);
+        //    specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
+        //    list.RemoveAt(indexInList);
+        //    Stage.subMoney(specialist.hireCost);
+        //}
+
+        foreach (KeyValuePair<Ability, List<Specialist>> keyValuePair in instance.specialists)
+        {
+            Ability ability = keyValuePair.Key;
+            int index = 0;
+            foreach (Specialist specialistValue in keyValuePair.Value)
+            {
+                if (specialistValue == specialist)
+                {
+                    Stage.GetSpecialists().Add(specialist);
+                    specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
+                    keyValuePair.Value.RemoveAt(index);
+                    Stage.subMoney(specialist.hireCost);
+                    return;
+                }
+                index++;
+            }
         }
     }
 }

@@ -12,7 +12,9 @@ public class SpecialistUI : MonoBehaviour
     // Start is called before the first frame update
     void Start ()
     {
-       
+        specialists = Stage.GetSpecialists();
+
+        InstantiateSpecialistList();
     }
 
     void Update()
@@ -23,6 +25,8 @@ public class SpecialistUI : MonoBehaviour
     private void OnEnable ()
     {
         InstantiateSpecialistList();
+        InGameLog.AddLog("In SpecialistUI OnEnable");
+
     }
 
     void InstantiateSpecialistList ()

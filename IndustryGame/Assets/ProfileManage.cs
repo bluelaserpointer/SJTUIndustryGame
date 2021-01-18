@@ -14,7 +14,7 @@ public class ProfileManage : MonoBehaviour
     public Text Speciality;
     public Text Gender;
     public Text HireCost;
-    public bool Hired = false;
+    public bool HireMode = true;
 
     public GameObject SingleAbility;
     public GameObject AbilityList;
@@ -28,15 +28,20 @@ public class ProfileManage : MonoBehaviour
     public void UpdateProfile ()
     {
         //Avatar.sprite = specialist.specialistTemplate.icon;
+        if (specialist == null)
+        {
+            return;
+        }
+        gameObject.SetActive(true);
         Name.text = specialist.name;
         Birthplace.text = specialist.birthplace;
         BirthDate.text = specialist.birthday;
         Speciality.text = specialist.speciality.ToString();
         Gender.text = specialist.specialistTemplate.jender.ToString();
-        //if (!Hired)
-        //{
-        //    HireCost.text = specialist.hireCost.ToString();
-        //}
+        if (HireMode)
+        {
+            HireCost.text = specialist.hireCost.ToString();
+        }
 
         foreach (KeyValuePair<Ability, int> pair in specialist.abilities)
         {
@@ -60,5 +65,13 @@ public class ProfileManage : MonoBehaviour
         {
             list[i].delete();
         }
+    }
+
+    public void HireSpecialist ()
+    {
+        SpecialistEmployList.hireSpecialist(specialist);
+        specialist = null;
+        gameObject.SetActive(false);
+
     }
 }
