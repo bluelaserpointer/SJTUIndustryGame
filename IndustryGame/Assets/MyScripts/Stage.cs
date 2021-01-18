@@ -54,6 +54,8 @@ public class Stage : MonoBehaviour
         {
             baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
         }
+        //generate specialist employment list
+        SpecialistEmployList.refresh();
         hexGrid = GetComponent<HexGrid>();
         Camera.main.GetComponent<OrthographicCamera>().SetHexGrid(hexGrid);
         lastDay = Timer.GetDay();

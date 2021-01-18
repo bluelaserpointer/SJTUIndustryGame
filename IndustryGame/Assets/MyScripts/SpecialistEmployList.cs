@@ -15,13 +15,19 @@ public class SpecialistEmployList : MonoBehaviour {
 
     public void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
+        //init specialists
+        for(int i = 0; i < (int)Ability.End; ++i)
+        {
+            specialists.Add((Ability)i, new List<Specialist>());
+        }
     }
     public static void refresh()
     {
         System.Random random = new System.Random();
-        foreach(KeyValuePair<Ability, List<Specialist>> specialityAndSpecialist in instance.specialists) {
+        foreach (KeyValuePair<Ability, List<Specialist>> specialityAndSpecialist in instance.specialists)
+        {
             Ability speciality = specialityAndSpecialist.Key;
             specialityAndSpecialist.Value.Clear();
             for(int i = 0; i < 3; ++i)
@@ -50,7 +56,17 @@ public class SpecialistEmployList : MonoBehaviour {
                 specialityAndSpecialist.Value.Add(specialist);
             }
         }
-       
+        //iteration print sample
+        /*
+        foreach(KeyValuePair<Ability, List<Specialist>> keyValuePair in instance.specialists)
+        {
+            Ability ability = keyValuePair.Key;
+            foreach(Specialist specialist in keyValuePair.Value)
+            {
+                InGameLog.AddLog(AbilityDescription.GetAbilityDescription(ability) + " $" + specialist.hireCost);
+            }
+        }
+        */
     }
     public static List<Specialist> getSpecialists(Ability specality)
     {

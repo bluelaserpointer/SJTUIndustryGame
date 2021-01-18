@@ -33,6 +33,8 @@ public class Specialist
      */
     public int addSpeciality_range(Ability ability, int minValueInclude, int maxValueInclude)
     {
+        if (abilities.ContainsKey(ability))
+            return 0;
         int level = Random.Range(minValueInclude, maxValueInclude + 1);
         if(level <= 0) {
             return 0;
