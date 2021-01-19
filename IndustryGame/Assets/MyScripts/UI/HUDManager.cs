@@ -11,6 +11,5 @@ public class HUDManager : MonoBehaviour
     void Update()
     {
         Date.text = Timer.GetYear().ToString() + " " + Timer.GetMonth().ToString() + " " + Timer.GetDay().ToString() + " " + Timer.GetSeason().ToString();
-        Money.text = Stage.GetLestMoney().ToString();
     }
 }

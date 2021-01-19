@@ -9,6 +9,7 @@ public class SpecialistUI : MonoBehaviour
     public GameObject SingleSpecialistPrefab;
     private List<Specialist> specialists;
 
+    // Start is called before the first frame update
     void Start ()
     {
         specialists = Stage.GetSpecialists();
