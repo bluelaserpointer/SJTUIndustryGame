@@ -9,30 +9,27 @@ public class OrthographicCamera : MonoBehaviour
     public float cameraParam = 1.5f;
     public float transitionSpeed = 0.25f; 
     private Camera mainCamera;
-    private float currentSize;
-    private float originalSize;
+
+    // Orthographic Sizes
     public float mouseOrthographicSize = 7f;
     public float keyOrthographicSize = 9f;
     public float maskOrthographicSize = 15f;
+    private float currentSize;
+    private float originalSize;
 
-    // private Vector3 originalPosition;
+
     private Transform originalTransform;
     private Vector3 currentPosition;
     private Quaternion currentRotation;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
-
-    // private Quaternion originalRotation;
     private Quaternion orthographicRotation;
 
     private bool cameraFocus = false;
     private HexGrid hexGrid;
-    
-
     private float orthographicRotationX;
     private Vector3 orthographicPosition;
     private HexCell currentHexCell;
-
     private int focusMask;
     // Start is called before the first frame update
     void Start()
@@ -48,10 +45,6 @@ public class OrthographicCamera : MonoBehaviour
         focusMask = LayerMask.GetMask("FocusMask");
     }
     void Update () {
-        if(cameraFocus && mainCamera.orthographicSize <= maskOrthographicSize)
-            mainCamera.cullingMask &= ~(1 << 8); // 关闭层x
-        else
-            mainCamera.cullingMask |= (1 << 8);
         handleCameraFocus();
     }
 
@@ -84,11 +77,34 @@ public class OrthographicCamera : MonoBehaviour
     }
 
     private void handleCameraFocus() {
-        Area pointingArea = Stage.GetMousePointingArea();
+        if(mainCamera.orthographicSize <= maskOrthographicSize)
+        {
 
+            mainCamera.cullingMask &= ~(1 << 8); // 关闭层x
+        }
+        else
+        {
+            mainCamera.cullingMask |= (1 << 8);
+        }
+
+        handleCameraControl();
+    }
+
+    private void handleCameraControl()
+    {
         if(cameraFocus)
         {
-            // NSWE: WSAD
+            // Exiting with esc
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                currentSize = originalSize;
+                currentPosition = originalPosition;
+                currentRotation = originalRotation;
+
+                cameraFocus = false;
+            }
+
+            // Moving with WASD
             HexCell focusHexCell = null;
             if(Input.GetKeyDown(KeyCode.W))
             {
@@ -119,12 +135,11 @@ public class OrthographicCamera : MonoBehaviour
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
                 currentSize = keyOrthographicSize;
 
-
-        }
-
-
-        if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && cameraFocus == false)
+        }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
+            // Focusing with mouse
+
+            Area pointingArea = Stage.GetMousePointingArea();
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
@@ -134,21 +149,12 @@ public class OrthographicCamera : MonoBehaviour
                 Vector3 pointingAreaPosition = pointingArea.transform.position;
 
                 focusOnHexCell(pointingAreaPosition, mouseOrthographicSize);
-                
             }else{
                 pointingArea = null;
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape) && cameraFocus == true)
-        {
-            currentSize = originalSize;
-            currentPosition = originalPosition;
-            currentRotation = originalRotation;
-
-            cameraFocus = false;
-        }
     }
+
     public void focusOnHexCell(Vector3 focusPosition, float orthographicSize)
     {
         cameraFocus = true;
