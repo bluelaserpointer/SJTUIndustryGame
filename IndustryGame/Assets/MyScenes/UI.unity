@@ -388,8 +388,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7085e11b0737e440bd13022a2246b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParam: 1.5
+  cameraParam: 1
   transitionSpeed: 0.25
+  mouseOrthographicSize: 7
+  keyOrthographicSize: 11
 --- !u!1 &699173862
 GameObject:
   m_ObjectHideFlags: 0
