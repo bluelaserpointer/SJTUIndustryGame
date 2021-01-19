@@ -12,10 +12,10 @@ public class Event : ScriptableObject
 
     [Header("出现的所有Info")]
     public List<EventInfo> includedInfos = new List<EventInfo>();
-    public void idle()
+    public void dayIdle()
     {
         foreach(EventInfo info in includedInfos) {
-            info.idle();
+            info.dayIdle();
         }
     }
     public bool isFinished()

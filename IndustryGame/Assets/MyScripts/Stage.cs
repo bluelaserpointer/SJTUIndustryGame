@@ -109,9 +109,10 @@ public class Stage : MonoBehaviour
             {
                 specialist.dayIdle();
             }
-        }
-        foreach(Event eachEvent in events) {
-            eachEvent.idle();
+            foreach (Event eachEvent in events)
+            {
+                eachEvent.dayIdle();
+            }
         }
 
     }
