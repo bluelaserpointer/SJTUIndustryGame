@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using UnityEngine;
 
 /*
  * 广义：陆生动物，水生动物，两栖动物
@@ -39,7 +40,7 @@ public enum Ability
     End
 }
 
-public class AbilityDescription
+public static class AbilityDescription
 {
     public static string GetAbilityDescription(Ability ability)
     {
@@ -50,5 +51,20 @@ public class AbilityDescription
             return value;
         DescriptionAttribute descriptionAttribute = (DescriptionAttribute)objs[0];
         return descriptionAttribute.Description;
+    }
+}
+public static class AbilityIconProvider
+{
+    private static Sprite[] icons = new Sprite[(int)Ability.End];
+    static AbilityIconProvider()
+    {
+        for (int i = 0; i < (int)Ability.End; ++i)
+        {
+            icons[i] = Resources.Load<Sprite>("Ability/" + ((Ability)i).ToString());
+        }
+    }
+    public static Sprite GetAbilityIcon(Ability ability)
+    {
+        return icons[(int)ability];
     }
 }

@@ -5,20 +5,16 @@ using UnityEngine;
  *  usage: 
  *  refresh: SpecialistEmployList.refresh();
  *  access: SpecialistEmployList.getSpecialists(Ability.***);
- *  remove: SpecialistEmployList.getSpecialists(Ability.***).Remove(...);
+ *  hire: SpecialistEmployList.hireSpecialist(Specialist specialist)
  */
-public class SpecialistEmployList : MonoBehaviour {
-    private static SpecialistEmployList instance;
-    public List<SpecialistTemplate> indoorSpecialistTemplates;
-    public List<SpecialistTemplate> outdoorSpecialistTemplates;
-    private Dictionary<Ability, List<Specialist>> specialists = new Dictionary<Ability, List<Specialist>>();
+public static class SpecialistEmployList {
+    private static SpecialistTemplate[] indoorSpecialistTemplates = Resources.LoadAll<SpecialistTemplate>("Specialist/Indoor");
+    private static SpecialistTemplate[] outdoorSpecialistTemplates = Resources.LoadAll<SpecialistTemplate>("Specialist/Outdoor");
+    private static Dictionary<Ability, List<Specialist>> specialists = new Dictionary<Ability, List<Specialist>>();
 
-    public void Awake()
+    static SpecialistEmployList()
     {
-        if (instance == null)
-            instance = this;
-        //init specialists
-        for(int i = 0; i < (int)Ability.End; ++i)
+        for (int i = 0; i < (int)Ability.End; ++i)
         {
             specialists.Add((Ability)i, new List<Specialist>());
         }
@@ -26,7 +22,7 @@ public class SpecialistEmployList : MonoBehaviour {
     public static void refresh()
     {
         System.Random random = new System.Random();
-        foreach (KeyValuePair<Ability, List<Specialist>> specialityAndSpecialist in instance.specialists)
+        foreach (KeyValuePair<Ability, List<Specialist>> specialityAndSpecialist in specialists)
         {
             Ability speciality = specialityAndSpecialist.Key;
             specialityAndSpecialist.Value.Clear();
@@ -38,14 +34,14 @@ public class SpecialistEmployList : MonoBehaviour {
                 specialist.birthplace = "randomCity";
                 int abilityLevelTotal = 0;
                 if (random.NextDouble() < 0.5f) { //indoor
-                    specialist.specialistTemplate = instance.indoorSpecialistTemplates[random.Next(0, instance.indoorSpecialistTemplates.Count)];
+                    specialist.specialistTemplate = indoorSpecialistTemplates[random.Next(0, indoorSpecialistTemplates.Length)];
                     abilityLevelTotal += specialist.addSpeciality_range(speciality, 7, 10);
                     for(int j = 0; j < 2; ++j)
                     {
                         abilityLevelTotal += specialist.addSpeciality_range((Ability)random.Next(0, (int)Ability.End), 0, 2);
                     }
                 } else { //outdoor
-                    specialist.specialistTemplate = instance.outdoorSpecialistTemplates[random.Next(0, instance.outdoorSpecialistTemplates.Count)];
+                    specialist.specialistTemplate = outdoorSpecialistTemplates[random.Next(0, outdoorSpecialistTemplates.Length)];
                     abilityLevelTotal += specialist.addSpeciality_range(speciality, 4, 6);
                     for (int j = 0; j < 4; ++j)
                     {
@@ -58,19 +54,19 @@ public class SpecialistEmployList : MonoBehaviour {
         }
         //iteration print sample
         /*
-        foreach(KeyValuePair<Ability, List<Specialist>> keyValuePair in instance.specialists)
+        foreach(KeyValuePair<Ability, List<Specialist>> keyValuePair in specialists)
         {
             Ability ability = keyValuePair.Key;
             foreach(Specialist specialist in keyValuePair.Value)
             {
-                InGameLog.AddLog(AbilityDescription.GetAbilityDescription(ability) + " $" + specialist.hireCost);
+                InGameLog.AddLog(AbilityDescription.GetAbilityDescription(ability) + " " + specialist.specialistTemplate.specialistType.ToString());
             }
         }
         */
     }
     public static List<Specialist> getSpecialists(Ability specality)
     {
-        return instance.specialists[specality];
+        return specialists[specality];
     }
     public static void hireSpecialist(Specialist specialist)
     {
@@ -83,7 +79,7 @@ public class SpecialistEmployList : MonoBehaviour {
         //    Stage.subMoney(specialist.hireCost);
         //}
 
-        foreach (KeyValuePair<Ability, List<Specialist>> keyValuePair in instance.specialists)
+        foreach (KeyValuePair<Ability, List<Specialist>> keyValuePair in specialists)
         {
             Ability ability = keyValuePair.Key;
             int index = 0;
