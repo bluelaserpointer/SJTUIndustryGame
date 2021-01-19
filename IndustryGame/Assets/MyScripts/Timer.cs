@@ -2,19 +2,20 @@
 
 public class Timer
 {
-    public static float oneDay = 1f; //更改游戏速度 (1 sec = 1 game day)
-    public static int dayInMonth = 30;
-    public static int monthInYear = 12;
+    public static float secondsOneDay = 1f; //更改游戏速度 (1 sec = 1 game day)
+    public static float secondsOneMonth = secondsOneDay * 30;
+    public static float secondsOneYear = secondsOneMonth * 12;
+    public static float timeSpeed = 1.0f;
     private static float currentTime = 0f;
     private static int currentYear, currentMonth, currentDay;
 
     // Update is called once per frame
     public static void idle()
     {
-        currentTime += Time.deltaTime;
-        currentDay = (int)((currentTime % (oneDay * 30 * 12)) % (oneDay * 30)) + 1;
-        currentMonth = (int)((currentTime % (oneDay * 30 * 12)) / (oneDay * 30)) + 1;
-        currentYear = (int)(currentTime / (oneDay * 30 * 12)) + 2021;
+        currentTime += Time.deltaTime * timeSpeed;
+        currentDay = (int)((currentTime % secondsOneYear) % secondsOneMonth) + 1;
+        currentMonth = (int)((currentTime % secondsOneYear) / secondsOneMonth) + 1;
+        currentYear = (int)(currentTime / secondsOneYear) + 2021;
     }
 
     public static SeasonType GetSeason()

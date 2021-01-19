@@ -53,7 +53,7 @@
     {
         int day = Timer.GetDay();
         int month = Timer.GetMonth();
-        float dayMonthRatio = (float)day / (float)(Timer.oneDay * Timer.dayInMonth);
+        float dayMonthRatio = day / Timer.secondsOneMonth;
         SeasonType season = Timer.GetSeason();
 
         handleTemperature(month, day, dayMonthRatio);
