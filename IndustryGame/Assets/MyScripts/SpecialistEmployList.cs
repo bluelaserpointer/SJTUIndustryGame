@@ -29,9 +29,9 @@ public static class SpecialistEmployList {
             for(int i = 0; i < 3; ++i)
             {
                 Specialist specialist = new Specialist();
-                specialist.name = "randomName";
+                specialist.name = Resources.Load<NameTemplates>("NameTemplates/SpecialistName").pickRandomOne();
                 specialist.birthday = "randomBirthDay";
-                specialist.birthplace = "randomCity";
+                specialist.birthplace = Resources.Load<NameTemplates>("NameTemplates/CityName").pickRandomOne();
                 int abilityLevelTotal = 0;
                 if (random.NextDouble() < 0.5f) { //indoor
                     specialist.specialistTemplate = indoorSpecialistTemplates[random.Next(0, indoorSpecialistTemplates.Length)];
