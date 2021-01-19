@@ -23,7 +23,7 @@ public class Area : MonoBehaviour
 
     List<Area> neighbors = new List<Area>();
     [SerializeField]
-    private List<Action> enabledActions;
+    public List<Action> enabledActions;
     private struct AmountChange
     {
         public int old;
@@ -73,6 +73,55 @@ public class Area : MonoBehaviour
     {
         return animalAmounts.ContainsKey(animal) ? animalAmounts[animal].change : 0;
     }
+    public List<Animal> getSpeciesTypes(int type)
+    {
+        // 1: normal, 2: danger, 3: very danger
+        List<Animal> speciesTypes = new List<Animal>();
+        foreach (KeyValuePair<Animal,AmountChange> animalAndAmount in animalAmounts)
+        {
+            bool result = false;
+            AmountChange amountChange = animalAndAmount.Value;
+            Animal animal = animalAndAmount.Key;
+            switch (type)
+            {
+                case 1:
+                    result = animalAndAmount.Value.old > 0;
+                break;
+                case 2:
+                    result = amountChange.old > 0 && amountChange.old < animal.dangerLimit;
+                break;
+                case 3:
+                    result = amountChange.old > 0 && amountChange.old < animal.veryDangerLimit;
+                break;
+                default:
+                break;
+            }
+
+            if(result)
+                speciesTypes.Add(animalAndAmount.Key);
+        }
+
+        return speciesTypes;
+    }
+
+    public int getAreaDangerType()
+    {
+        int result = 0;
+        foreach (KeyValuePair<Animal,AmountChange> animalAndAmount in animalAmounts)
+        {
+            AmountChange amountChange = animalAndAmount.Value;
+            Animal animal = animalAndAmount.Key;
+            if(amountChange.old > 0)
+            {
+                if(amountChange.old < animal.dangerLimit)
+                    result = 1;
+                else if(amountChange.old < animal.veryDangerLimit)
+                    result = 2;
+            }
+        }
+        return result;
+    }
+    
     public void changeSpeciesAmount(Animal animal, int change)
     {
         if(animalAmounts.ContainsKey(animal))

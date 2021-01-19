@@ -28,6 +28,11 @@ public class Animal : ScriptableObject
     [Min(0)]
     public int migrateLimit;
 
+    public AudioClip shoutAudio;
+
+    public int dangerLimit;
+    public int veryDangerLimit;
+
     public void idle(Area currentArea, int amount)
     {
         if (amount == 0)

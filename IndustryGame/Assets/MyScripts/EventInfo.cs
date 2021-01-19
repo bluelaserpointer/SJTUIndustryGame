@@ -46,7 +46,7 @@ public class EventInfo : ScriptableObject
     {
         return _isFinished ? descriptionAfterFinish : description;
     }
-    public void idle()
+    public void dayIdle()
     {
         if (!_isAppeared)
         {

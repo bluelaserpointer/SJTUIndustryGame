@@ -30,7 +30,11 @@ public class OrthographicCamera : MonoBehaviour
     private float orthographicRotationX;
     private Vector3 orthographicPosition;
     private HexCell currentHexCell;
+    private Area currentArea;
     private int focusMask;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +50,26 @@ public class OrthographicCamera : MonoBehaviour
     }
     void Update () {
         handleCameraFocus();
+    }
+
+
+    private void handleFocusAreaAudio()
+    {
+        int areaDangerType = currentArea.getAreaDangerType();
+        List<Animal> animals = currentArea.getSpeciesTypes(areaDangerType);
+        Debug.Log("In handle focus area audio: " + areaDangerType);
+        // AreaSFXRandomPlayer.setAnimalList(animals);
+        if(areaDangerType > 0)
+        {
+            AreaBGMRandomPlayer.SetDangerBgmList(areaDangerType);
+        }else{
+            AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
+        }
+    }
+
+    private void handleGlobalAudio()
+    {
+        AreaBGMRandomPlayer.SetGlobalBgmList();
     }
 
     private void FixedUpdate() {
@@ -79,7 +103,6 @@ public class OrthographicCamera : MonoBehaviour
     private void handleCameraFocus() {
         if(mainCamera.orthographicSize <= maskOrthographicSize)
         {
-
             mainCamera.cullingMask &= ~(1 << 8); // 关闭层x
         }
         else
@@ -101,7 +124,7 @@ public class OrthographicCamera : MonoBehaviour
                 currentPosition = originalPosition;
                 currentRotation = originalRotation;
 
-                cameraFocus = false;
+                SetCameraFocus(false);
             }
 
             // Moving with WASD
@@ -138,7 +161,6 @@ public class OrthographicCamera : MonoBehaviour
         }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
             // Focusing with mouse
-
             Area pointingArea = Stage.GetMousePointingArea();
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -157,10 +179,24 @@ public class OrthographicCamera : MonoBehaviour
 
     public void focusOnHexCell(Vector3 focusPosition, float orthographicSize)
     {
-        cameraFocus = true;
+        currentArea = currentHexCell.gameObject.GetComponent<Area>();
+
+        SetCameraFocus(true);
 
         currentSize = orthographicSize;
         currentPosition = new Vector3(focusPosition.x, focusPosition.y + 12.8f, focusPosition.z - 14.5f);
         currentRotation = orthographicRotation;
+    }
+
+    private void SetCameraFocus(bool value)
+    {
+        if(!cameraFocus && !value)
+            return;
+        
+        if(value)
+            handleFocusAreaAudio();
+        else
+            handleGlobalAudio();
+        cameraFocus = value;
     }
 }
