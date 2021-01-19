@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3819386669076169445}
   - component: {fileID: 3819386669076169442}
   m_Layer: 5
-  m_Name: "\u6027\u522B"
+  m_Name: "\u51FA\u751F\u5730"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 3819386669455144349}
   - component: {fileID: 3819386669455144346}
   m_Layer: 5
-  m_Name: Text
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1221,7 +1221,7 @@ GameObject:
   - component: {fileID: 2276796439367952896}
   m_Layer: 5
   m_Name: "\u7B80\u5386"
-  m_TagString: Untagged
+  m_TagString: MyProfile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1297,16 +1297,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e09e3707a53e44b9229134faab5d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Avatar: {fileID: 0}
-  Name: {fileID: 0}
-  Birthplace: {fileID: 0}
-  BirthDate: {fileID: 0}
-  Speciality: {fileID: 0}
-  Gender: {fileID: 0}
+  Avatar: {fileID: 3819386669392282011}
+  Name: {fileID: 3819386670116755433}
+  Birthplace: {fileID: 3819386669076169442}
+  BirthDate: {fileID: 3819386670913638020}
+  Speciality: {fileID: 3819386669332664674}
+  Gender: {fileID: 3819386671050986569}
   HireCost: {fileID: 0}
-  HireMode: 1
-  SingleAbility: {fileID: 0}
-  AbilityList: {fileID: 0}
+  HireMode: 0
+  SingleAbility: {fileID: 8102240029922663510, guid: 43d4840875deee14fa1dc48f4f93c12a,
+    type: 3}
+  AbilityList: {fileID: 3819386670217501997}
 --- !u!1 &3819386670565910174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,7 +1780,7 @@ GameObject:
   - component: {fileID: 3819386670913638023}
   - component: {fileID: 3819386670913638020}
   m_Layer: 5
-  m_Name: "\u6027\u522B"
+  m_Name: "\u51FA\u751F\u5E74\u6708"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - MyProfile
+  - HireProfile1
+  - HireProfile2
+  - HireProfile3
   layers:
   - Default
   - TransparentFX

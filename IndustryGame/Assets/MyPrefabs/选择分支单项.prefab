@@ -146,7 +146,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_MethodName: SetActive
@@ -157,7 +157,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 6962943411945181417}
         m_MethodName: GetHireList
@@ -183,9 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability: 1
-  HireProfile1: {fileID: 0}
-  HireProfile2: {fileID: 0}
-  HireProfile3: {fileID: 0}
   AbilityText: {fileID: 8473865539264360986}
 --- !u!1 &8473865538715777187
 GameObject:

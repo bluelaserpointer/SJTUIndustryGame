@@ -35,6 +35,7 @@ public class SpecialistUI : MonoBehaviour
             GameObject clone;
             clone = Instantiate(SingleSpecialistPrefab, SpecialistList.transform, false);
             clone.GetComponent<SingleSpecialist>().specialist = specialists[i];
+            InGameLog.AddLog("Ins : " + i);
         }
     }
 
