@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7855273059563601298
+--- !u!1 &4080527579983422673
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4168281204669419213}
-  - component: {fileID: 2447996283990407526}
-  - component: {fileID: 2551666130781890961}
-  - component: {fileID: 1033374573636214551}
+  - component: {fileID: 4080527579983422672}
+  - component: {fileID: 4080527579983422687}
+  - component: {fileID: 4080527579983422686}
+  - component: {fileID: 6204239883477884114}
   m_Layer: 0
-  m_Name: BgmPlayer
+  m_Name: AnimalSfxPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4168281204669419213
+--- !u!4 &4080527579983422672
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7855273059563601298}
+  m_GameObject: {fileID: 4080527579983422673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,52 +33,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2447996283990407526
+--- !u!114 &4080527579983422687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7855273059563601298}
+  m_GameObject: {fileID: 4080527579983422673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6270c176fe444942aaf5cc429a39b3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a9942d4b1858764c9fdca971393bac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmAnimator: {fileID: 0}
-  waitTime: 2
-  dangerBgmLists:
-  - {fileID: 11400000, guid: 8e4c4acbd767602408e2a43c5651a343, type: 2}
-  - {fileID: 11400000, guid: 4386d15e281bb9f4e82d34e5261dcf24, type: 2}
-  - {fileID: 11400000, guid: e515db82762a5284fa574bce000df666, type: 2}
-  areaBgmLists:
-  - {fileID: 11400000, guid: c92a0c8054ed530458d7db22697c8a91, type: 2}
-  - {fileID: 11400000, guid: a956a2a6ccb8b2e49af755b1251b1031, type: 2}
-  - {fileID: 11400000, guid: 5451d7179417d5a429496a04f08f8688, type: 2}
-  - {fileID: 11400000, guid: fe7ec62fed18a494fb7a9559b5bb27c5, type: 2}
-  - {fileID: 11400000, guid: b224ff4f9862266438195f2e37208b3f, type: 2}
-  - {fileID: 11400000, guid: 4b9b46011e15ee04a84ec41b9274bfee, type: 2}
-  - {fileID: 11400000, guid: a8c1179dd7845b542a215bfd4aaae5ab, type: 2}
-  - {fileID: 11400000, guid: 890c87080dea07146b0eb081d8e2b498, type: 2}
-  - {fileID: 11400000, guid: 05a301a4249973b4384428bf651a8af4, type: 2}
-  - {fileID: 11400000, guid: 83077db8fecfb0a4daf4b685e7e96bd3, type: 2}
-  - {fileID: 11400000, guid: 73126a39bc47c574890e1bd52621fa34, type: 2}
-  globalBgmList: {fileID: 11400000, guid: 1faa37f0a0bdbe647ab450a02f62ac4f, type: 2}
---- !u!82 &2551666130781890961
+  mockAnimals:
+  - {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
+  - {fileID: 11400000, guid: c6e06ac467d665a4db851735f8a07f49, type: 2}
+  loopLimit: 5
+  loopTime: 5
+  loopParam: 0.5
+--- !u!82 &4080527579983422686
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7855273059563601298}
+  m_GameObject: {fileID: 4080527579983422673}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -160,17 +147,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!95 &1033374573636214551
+--- !u!95 &6204239883477884114
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7855273059563601298}
+  m_GameObject: {fileID: 4080527579983422673}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f893ee5f69db7bc499a47e9873b4f042, type: 2}
+  m_Controller: {fileID: 9100000, guid: e9cfb3b752b3a244e97423f199a75068, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
