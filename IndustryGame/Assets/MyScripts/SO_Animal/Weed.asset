@@ -25,3 +25,7 @@ MonoBehaviour:
   minTempreture: 15
   maxTempreture: 27
   migrateLimit: 0
+  sfxAudio:
+  - {fileID: 8300000, guid: 2833675e60b46a74a83432f818012412, type: 3}
+  dangerLimit: 0
+  veryDangerLimit: 0
