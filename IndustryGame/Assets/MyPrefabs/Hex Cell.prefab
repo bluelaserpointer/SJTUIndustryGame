@@ -82,6 +82,7 @@ MonoBehaviour:
   buildings: []
   stat: []
   enabledActions:
+  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
   - {fileID: 11400000, guid: 041a31c12c42aa54a9edda4a8164d9bb, type: 2}
   totalWater: 1000
   groundSkyRatio: 0.7

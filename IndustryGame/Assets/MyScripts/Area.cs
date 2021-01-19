@@ -23,7 +23,7 @@ public class Area : MonoBehaviour
 
     List<Area> neighbors = new List<Area>();
     [SerializeField]
-    private List<Action> enabledActions;
+    public List<Action> enabledActions;
     private struct AmountChange
     {
         public int old;
