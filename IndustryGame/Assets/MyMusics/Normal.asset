@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2977fa3dea2b6e41ad6ff7a34abc9d1, type: 3}
-  m_Name: New BGM Random Player
+  m_Name: Normal
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  clips: []
-  musicVolume: 0.5
+  clips:
+  - {fileID: 8300000, guid: 39a93601e6eae8140809c7b1b20829de, type: 3}
