@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/BGMList")]
-public class BGMList : ScriptableObject
+[CreateAssetMenu(menuName = "Add ScriptableObjects/AudioClipList")]
+public class AudioClipList : ScriptableObject
 {
     // public AudioSource audioSource;
     public List<AudioClip> clips;
