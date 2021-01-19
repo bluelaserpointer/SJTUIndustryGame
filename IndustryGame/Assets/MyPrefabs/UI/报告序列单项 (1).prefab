@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8528769855409580080}
   - component: {fileID: 8528769855409580083}
   m_Layer: 5
-  m_Name: Text
+  m_Name: InfoName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u85CF\u7F9A\u7F8A"
+  m_Text: 
 --- !u!1 &8528769855529080923
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 8528769855751784126}
   - component: {fileID: 8528769855751784113}
   m_Layer: 5
-  m_Name: "\u4E13\u5BB6\u7C7B\u522B"
+  m_Name: InfoDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 8528769855953375691}
   - component: {fileID: 8528769855953375690}
   m_Layer: 5
-  m_Name: Text
+  m_Name: InfoDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u85CF\u7F9A\u7F8A\uFF08\u5B66\u540D\uFF1APantholopshodgsonii\uFF09\uFF1A\u662F\u5076\u8E44\u76EE\u3001\u725B\u79D1\u3001\u85CF\u7F9A\u5C5E\u7684\u54FA\u4E73\u52A8\u7269\u3002\u4F53\u957F135\u5398\u7C73\uFF0C\u80A9\u9AD880\u5398\u7C73\uFF0C\u4F53\u91CD45-60\u5343\u514B\u3002\u96C4\u6027\u6709\u76F4\u800C\u7EC6\u957F\u7684\u89D2\uFF0C\u957F\u7EA655-62\u5398\u7C73\uFF0C\u8FD1\u57FA\u90E8\u6709\u660E\u663E\u7684\u6A2A\u68F1\u3002\u96CC\u6027\u7565\u5C0F\u3002\u8BE5\u7269\u79CD\u5934\u5F62\u5BBD\u957F\uFF0C\u543B\u90E8\u7C97\u58EE\uFF0C\u9F3B\u90E8\u5BBD\u9614\u7565\u9686\u8D77\uFF0C\u9F3B\u8154\u4E8C\u4FA7\u9F13\u80C0\uFF0C\u5448\u534A\u7403\u72B6\u3002\u80CC\u6BDB\u539A\u5BC6\u3002\u4E0A\u4F53\u6DE1\u68D5\u8910\u8272\uFF0C\u9888\u4E0B\u3001\u80F8\u3001\u8179\u548C\u56DB\u80A2\u5185\u4FA7\u5747\u767D\u8272\u3002\u80CC\u6BDB\u8272\u540C\u4F53\u80CC\uFF0C\u5C3E\u4FA7\u53CA\u5C3E\u5C16\u767D\u8272\uFF0C\u5C3E\u8179\u9762\u88F8\u9732\u3002"
+  m_Text: 
 --- !u!1 &8528769856212804075
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 8528769856212804086}
   - component: {fileID: 8528769856212804073}
   m_Layer: 5
-  m_Name: "\u540D\u5B57"
+  m_Name: InfoName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -999,6 +999,7 @@ GameObject:
   - component: {fileID: 8528769857161261888}
   - component: {fileID: 8528769857161261891}
   - component: {fileID: 8528769857161261890}
+  - component: {fileID: 5230679957794090692}
   m_Layer: 5
   m_Name: "\u62A5\u544A\u5E8F\u5217\u5355\u9879 (1)"
   m_TagString: Untagged
@@ -1109,6 +1110,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5230679957794090692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8528769857161261892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b0f85b2145fa34da3e05173759dd22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventInfo: {fileID: 0}
+  InfoName: {fileID: 8528769855409580083}
+  Description: {fileID: 8528769855953375690}
 --- !u!1 &8528769857225593407
 GameObject:
   m_ObjectHideFlags: 0

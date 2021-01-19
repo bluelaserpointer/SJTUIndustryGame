@@ -8,6 +8,9 @@ TagManager:
   - HireProfile1
   - HireProfile2
   - HireProfile3
+  - ReportWindow
+  - EventReportWindow
+  - ReportInstantiate
   layers:
   - Default
   - TransparentFX
