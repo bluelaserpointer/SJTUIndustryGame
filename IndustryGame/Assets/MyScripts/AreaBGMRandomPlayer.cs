@@ -12,9 +12,9 @@ public class AreaBGMRandomPlayer : MonoBehaviour
     public Animator bgmAnimator;
     public float waitTime;
 
-    public List<BGMList> dangerBgmLists;
-    public List<BGMList> areaBgmLists;
-    public BGMList globalBgmList;
+    public List<AudioClipList> dangerBgmLists;
+    public List<AudioClipList> areaBgmLists;
+    public AudioClipList globalBgmList;
 
     private int dangerType = -1;
     private int environmentType = -1;
@@ -94,7 +94,6 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         if(instance.audioSource.clip != null && instance.audioSource.clip != clip)
         {
             Debug.Log("Before fade out");
-            // instance.StartCorountine.instance.BgmFadeOut(clip);
             instance.StartCoroutine(BgmFadeOut(clip));
         }
     }
