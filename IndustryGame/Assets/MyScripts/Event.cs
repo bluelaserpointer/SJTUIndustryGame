@@ -12,6 +12,13 @@ public class Event : ScriptableObject
 
     [Header("出现的所有Info")]
     public List<EventInfo> includedInfos = new List<EventInfo>();
+    public void init()
+    {
+        foreach(EventInfo info in includedInfos)
+        {
+            info.init();
+        }
+    }
     public void dayIdle()
     {
         foreach(EventInfo info in includedInfos) {

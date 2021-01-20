@@ -46,6 +46,10 @@ public class EventInfo : ScriptableObject
     {
         return _isFinished ? descriptionAfterFinish : description;
     }
+    public void init()
+    {
+        _isAppeared = _isFinished = false;
+    }
     public void dayIdle()
     {
         if (!_isAppeared)
@@ -60,7 +64,10 @@ public class EventInfo : ScriptableObject
                 }
             }
             if (shouldAppear)
+            {
                 _isAppeared = true;
+                PopUpCanvas.GenerateNewPopUpWindow(infoName, description);
+            }
         }
         if (_isFinished) {
             if (buffBeforeFinish != null)

@@ -44,6 +44,10 @@ public class Stage : MonoBehaviour
             instance = this;
         //set stage money objective
         lestMoney = stageMoney;
+        //init events
+        foreach(Event anEvent in events) {
+            anEvent.init();
+        }
     }
     void Start()
     {
