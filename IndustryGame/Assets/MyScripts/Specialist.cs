@@ -47,6 +47,7 @@ public class Specialist
         currentAction = action;
         actionProgress = 0;
         Stage.subMoney(action.moneyCost);
+        currentArea.StartProgressSlider(this);
     }
     public void moveToArea(Area area)
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class Area : MonoBehaviour
@@ -273,5 +274,34 @@ public class Area : MonoBehaviour
             sumProvidableAmount += providableAmount;
         }
         return sumProvidableAmount;
+    }
+
+    // 进度条显示
+    public GameObject ProgressSliderCanvas;
+    public Slider ProgressSlider;
+    private Specialist currentSpecialist;
+
+    public void StartProgressSlider (Specialist specialist)
+    {
+        ProgressSliderCanvas.SetActive(true);
+        ProgressSlider.value = 0.0f;
+        currentSpecialist = specialist;
+    }
+
+    public void UpdateProgressSlider ()
+    {
+        if (ProgressSliderCanvas.activeSelf)
+        {
+            ProgressSlider.value = (float) currentSpecialist.getActionProgressRate();
+            if (ProgressSlider.value >= 1.0f)       //TODO: 将判断语句换成查看该action是否完成
+            {
+                ProgressSliderCanvas.SetActive(false);
+            }
+        }
+    }
+
+    private void Update ()
+    {
+        UpdateProgressSlider();
     }
 }

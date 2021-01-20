@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetActions:
   - action: {fileID: 11400000, guid: 0b06d8a1ab23b9e429cc0123c79ac943, type: 2}
-    count: 3
+    count: 1

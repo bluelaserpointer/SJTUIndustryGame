@@ -22,6 +22,8 @@ public class AreaDetailsHUD : MonoBehaviour
         CurrentArea = OrthographicCamera.GetMousePointingArea();
         UpdateActions();
         UpdateSpecialists();
+
+        InGameLog.AddLog("Action progress rate: " + Stage.GetSpecialists()[Specialists.value].getActionProgressRate().ToString());
     }
 
     public void UpdateActions ()
