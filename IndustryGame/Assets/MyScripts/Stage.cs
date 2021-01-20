@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -172,5 +173,18 @@ public class Stage : MonoBehaviour
         List<EventInfo> eventInfos = new List<EventInfo>();
         instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToEnvironment()));
         return eventInfos;
+    }
+    public static List<Action> GetEnabledActions()
+    {
+        return instance.enabledActions;
+    }
+    public static ICollection<Animal> GetSpecies()
+    {
+        List<Animal> animals = new List<Animal>();
+        foreach(Area area in instance.areas)
+        {
+            animals.Union(area.getSpecies());
+        }
+        return animals;
     }
 }
