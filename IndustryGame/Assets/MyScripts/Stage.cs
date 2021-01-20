@@ -178,7 +178,7 @@ public class Stage : MonoBehaviour
     {
         return instance.enabledActions;
     }
-    public static ICollection<Animal> GetSpecies()
+    public static List<Animal> GetSpecies()
     {
         List<Animal> animals = new List<Animal>();
         foreach(Area area in instance.areas)
