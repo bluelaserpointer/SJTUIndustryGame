@@ -2,7 +2,7 @@
 
 public struct HexHash {
 
-	public float a, b, c, d, e,f;//add f to control rain
+	public float a, b, c, d, e,f;
 
 	public static HexHash Create () {
 		HexHash hash;

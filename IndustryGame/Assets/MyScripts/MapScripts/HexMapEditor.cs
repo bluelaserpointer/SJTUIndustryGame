@@ -26,7 +26,7 @@ public class HexMapEditor : MonoBehaviour {
 		Ignore, Yes, No
 	}
 
-	OptionalToggle riverMode, roadMode, walledMode,expertMode;
+	OptionalToggle riverMode, roadMode, walledMode, expertMode;
 
 	bool isDrag;
 	HexDirection dragDirection;
@@ -64,7 +64,6 @@ public class HexMapEditor : MonoBehaviour {
 		applyFarmLevel = toggle;
 	}
 
-
 	public void SetFarmLevel (float level) {
 		activeFarmLevel = (int)level;
 	}
@@ -80,9 +79,11 @@ public class HexMapEditor : MonoBehaviour {
 	{
 		applyRainLevel = toggle;
 	}
-	public void SetRainLevel(float level) {
+	public void SetRainLevel(float level)
+	{
 		activeRainLevel = (int)level;
 	}
+
 	public void SetApplySpecialIndex (bool toggle) {
 		applySpecialIndex = toggle;
 	}
@@ -103,10 +104,11 @@ public class HexMapEditor : MonoBehaviour {
 		roadMode = (OptionalToggle)mode;
 	}
 
-	public void SetWalledMode(int mode) {
+	public void SetWalledMode (int mode) {
 		walledMode = (OptionalToggle)mode;
 	}
-	public void SetExpertMode (int mode) {
+	public void SetExpertMode(int mode)
+	{
 		expertMode = (OptionalToggle)mode;
 	}
 
@@ -210,9 +212,7 @@ public class HexMapEditor : MonoBehaviour {
 			}
 			if (walledMode != OptionalToggle.Ignore) {
 				cell.Walled = walledMode == OptionalToggle.Yes;
-				
 			}
-
 			if (expertMode != OptionalToggle.Ignore)
 			{
 				cell.Expert = expertMode == OptionalToggle.Yes;
@@ -228,30 +228,6 @@ public class HexMapEditor : MonoBehaviour {
 						otherCell.AddRoad(dragDirection);
 					}
 				}
-			}
-		}
-	}
-
-	public void Save () {
-		string path = Path.Combine(Application.persistentDataPath, "test.map");
-		using (
-			BinaryWriter writer =
-				new BinaryWriter(File.Open(path, FileMode.Create))
-		) {
-			writer.Write(0);
-			hexGrid.Save(writer);
-		}
-	}
-
-	public void Load () {
-		string path = Path.Combine(Application.persistentDataPath, "test.map");
-		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
-			int header = reader.ReadInt32();
-			if (header == 0) {
-				hexGrid.Load(reader);
-			}
-			else {
-				Debug.LogWarning("Unknown map format " + header);
 			}
 		}
 	}

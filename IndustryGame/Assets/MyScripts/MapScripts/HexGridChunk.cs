@@ -72,7 +72,7 @@ public class HexGridChunk : MonoBehaviour {
 		}
 		if (cell.Expert == true)
 		{
-			features.AddExpert(cell,cell.Position);
+			features.AddExpert(cell, cell.Position);
 		}
 	}
 
