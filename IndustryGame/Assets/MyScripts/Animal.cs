@@ -30,17 +30,11 @@ public class Animal : ScriptableObject
 
     public AudioClipList sfxAudio;
 
-    private List<int> dangerLimits;
-    public int mostDangerLimit;
+    public List<int> dangerLimits;
 
-    private void Start() {
-        int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
-        int averageAmount = (int)((float)mostDangerLimit / (float)mostDangerType);
-        for(int i = 0; i <= mostDangerType; i++)
-        {
-            dangerLimits[mostDangerType - i] = i * averageAmount;
-        }
-    }
+    [Header("不同危险级别物种数目间隔")]
+    public int dangerAmountSpan;
+
     public void idle(Area currentArea, int amount)
     {
         if (amount == 0)
@@ -105,9 +99,14 @@ public class Animal : ScriptableObject
 
     public SpeciesDangerType getDangerType(int amount)
     {
+        Debug.Log("In getDangerType");
         int dangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        if(dangerLimits.Count == 0)
+            dangerLimitsInit();
+        Debug.Log(dangerLimits.Count);
         for(int i = 0; i < dangerLimits.Count; i++)
         {
+            Debug.Log("amount: " + amount + ", currentDangerType count: " + dangerLimits[i]);
             if(amount >= dangerLimits[i])
             {
                 dangerType = i;
@@ -115,5 +114,19 @@ public class Animal : ScriptableObject
             }
         }
         return (SpeciesDangerType)dangerType;
+    }
+
+    private void dangerLimitsInit()
+    {
+        int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        dangerLimits = new List<int>();
+        for(int i = 0; i <= mostDangerType; i++)
+        {
+            int amountToAdd = i * dangerAmountSpan;
+            Debug.Log("adding dangerlimits" + amountToAdd);
+
+            dangerLimits[mostDangerType - i] = amountToAdd;
+        }
+
     }
 }

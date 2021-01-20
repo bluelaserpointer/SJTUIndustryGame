@@ -84,16 +84,16 @@ public class OrthographicCamera : MonoBehaviour
             }
         }
 
-        // if(areaMostDangerType > 0)
-        //     AreaBGMRandomPlayer.SetDangerBgmList(areaMostDangerType);
-        // else
-        //     AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
+        if(areaMostDangerType > 0)
+            AreaBGMRandomPlayer.SetDangerBgmList(areaMostDangerType);
+        else
+            AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
     }
 
     private void handleGlobalAudio()
     {
         AreaWeatherSFXRandomPlayer.Silence();
-        // AreaBGMRandomPlayer.SetGlobalBgmList();
+        AreaBGMRandomPlayer.SetGlobalBgmList();
     }
 
     private void FixedUpdate() {

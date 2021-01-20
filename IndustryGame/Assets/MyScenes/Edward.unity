@@ -2389,9 +2389,9 @@ MonoBehaviour:
   events: []
   animalInitialAmounts:
   - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
-    amount: 100
+    amount: 10000
   - animal: {fileID: 11400000, guid: c6e06ac467d665a4db851735f8a07f49, type: 2}
-    amount: 50
+    amount: 100000
 --- !u!114 &1237714305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5011,6 +5011,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7264286896072591456, guid: e3d2d374a9a2edd42bb8746d3bb3b534,
+        type: 3}
+      propertyPath: loopLimit
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7264286897297054752, guid: e3d2d374a9a2edd42bb8746d3bb3b534,
         type: 3}
       propertyPath: m_RootOrder

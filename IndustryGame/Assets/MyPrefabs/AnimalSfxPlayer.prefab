@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9942d4b1858764c9fdca971393bac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loopLimit: 5
+  loopLimit: 3
   loopTime: 5
-  loopParam: 0.5
+  loopParam: 1
 --- !u!82 &4080527579983422686
 AudioSource:
   m_ObjectHideFlags: 0
