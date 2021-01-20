@@ -5,14 +5,13 @@ using UnityEngine.Events;
 
 public abstract class Action : ScriptableObject
 {
-    public static LinkedList<Action> finishedActions = new LinkedList<Action>();
-
-    // Start is called before the first frame update
     public string actionName;
     [TextArea]
     public string description;
     [Min(0)]
     public int timeCost, moneyCost;
+    [Header("可用前需完成的事件阶段")]
+    public List<EventInfo> preFinishInfos;
 
     [Serializable]
     public struct AbilityRequirement
@@ -26,21 +25,16 @@ public abstract class Action : ScriptableObject
     public class ActionFinishEvent : UnityEvent { }
     [SerializeField]
     private ActionFinishEvent finishEvent;
-    private Area area;
-    public void finishAction()
+
+    //专家不管目前做的措施是什么，完成后固定传参自己的目前位置。如果这是全局措施则会被无视。
+    public abstract void finishAction(Area area);
+
+    public int finishCount()
     {
-        finishEvent.Invoke();
-        finishedActions.AddFirst(this);
-        effect();
+        return Stage.GetActionFinishCount(this);
     }
-    public void effect()
+    public bool finishedOnce()
     {
-        effect(null);
-    }
-    public abstract void effect(Area area);
-    public abstract bool requireArea();
-    public Area getArea()
-    {
-        return area;
+        return finishCount() > 0;
     }
 }

@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Action - Reservation")]
-public class ActionReservation : Action
+public class ActionReservation : AreaAction
 {
-    public override void effect(Area area)
+    public override void actionEffect(Area area)
     {
         area.addReservation();
-    }
-    public override bool requireArea()
-    {
-        return true;
     }
 }

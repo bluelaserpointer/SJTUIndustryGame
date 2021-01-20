@@ -1,21 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Check - ActionFinish")]
 public class CheckActionFinish : Condition
 {
-    public List<Action> targetActions;
+    [Serializable]
+    public class ActionAndCount
+    {
+        public Action action;
+        [Min(0)]
+        public int count;
+    }
+    public List<ActionAndCount> targetActions;
     public override bool judge()
     {
-        bool completed = true;
-        foreach (Action action in targetActions)
-        {
-            if (!Action.finishedActions.Contains(action))
-            {
-                completed = false;
-                break;
-            }
-        }
-        return completed;
+        return targetActions.Find(pair => pair.action.finishCount() < pair.count) == null;
     }
 }

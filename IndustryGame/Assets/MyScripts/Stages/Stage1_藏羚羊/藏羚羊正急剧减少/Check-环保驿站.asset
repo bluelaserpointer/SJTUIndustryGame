@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: "Check-\u73AF\u4FDD\u9A7F\u7AD9"
   m_EditorClassIdentifier: 
   targetActions:
-  - {fileID: 11400000, guid: e21d8a2cd21ca95438d577858207a441, type: 2}
+  - action: {fileID: 11400000, guid: e21d8a2cd21ca95438d577858207a441, type: 2}
+    count: 1

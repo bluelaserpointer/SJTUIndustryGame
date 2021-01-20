@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class Area : MonoBehaviour
@@ -22,8 +23,7 @@ public class Area : MonoBehaviour
     public List<Stat> stat;
 
     List<Area> neighbors = new List<Area>();
-    [SerializeField]
-    public List<Action> enabledActions;
+    private List<AreaAction> finishedActions = new List<AreaAction>();
     private struct AmountChange
     {
         public int old;
@@ -50,7 +50,7 @@ public class Area : MonoBehaviour
     private void Start()
     {
         areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
-        HexCell myCell = transform.GetComponent<HexCell>();
+        HexCell myCell = transform.GetComponentInParent<HexCell>();
 
         weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
 
@@ -212,13 +212,17 @@ public class Area : MonoBehaviour
     {
         return weather;
     }
-    public void AddEnabledAction(Action action)
+    public List<AreaAction> GetEnabledActions()
     {
-        enabledActions.Add(action);
+        return Stage.GetEnabledAreaActions(this);
     }
-    public List<Action> GetEnabledActions()
+    public void AddFinishedAction(AreaAction action)
     {
-        return enabledActions;
+        finishedActions.Add(action);
+    }
+    public bool ContainsFinishedAction(AreaAction action)
+    {
+        return finishedActions.Contains(action);
     }
     public List<Area> GetNeighborAreas()
     {
@@ -270,5 +274,34 @@ public class Area : MonoBehaviour
             sumProvidableAmount += providableAmount;
         }
         return sumProvidableAmount;
+    }
+
+    // 进度条显示
+    public GameObject ProgressSliderCanvas;
+    public Slider ProgressSlider;
+    private Specialist currentSpecialist;
+
+    public void StartProgressSlider (Specialist specialist)
+    {
+        ProgressSliderCanvas.SetActive(true);
+        ProgressSlider.value = 0.0f;
+        currentSpecialist = specialist;
+    }
+
+    public void UpdateProgressSlider ()
+    {
+        if (ProgressSliderCanvas.activeSelf)
+        {
+            ProgressSlider.value = (float) currentSpecialist.getActionProgressRate();
+            if (ProgressSlider.value >= 1.0f)       //TODO: 将判断语句换成查看该action是否完成
+            {
+                ProgressSliderCanvas.SetActive(false);
+            }
+        }
+    }
+
+    private void Update ()
+    {
+        UpdateProgressSlider();
     }
 }

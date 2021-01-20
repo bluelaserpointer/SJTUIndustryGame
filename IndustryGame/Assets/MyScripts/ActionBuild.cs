@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Action - Build")]
-public class ActionBuild : Action
+public class ActionBuild : AreaAction
 {
     public enum BuildType { add, remove }
     [Space]
     public BuildType buildType;
     public Building building;
-    public override void effect(Area area)
+    public override void actionEffect(Area area)
     {
         if(buildType == BuildType.add)
         {
@@ -18,9 +18,5 @@ public class ActionBuild : Action
             if (area.buildings.Remove(building))
                 building.removed();
         }
-    }
-    public override bool requireArea()
-    {
-        return true;
     }
 }
