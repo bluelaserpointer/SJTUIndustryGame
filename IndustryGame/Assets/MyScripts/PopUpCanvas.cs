@@ -16,7 +16,7 @@ public class PopUpCanvas : MonoBehaviour
     }
     public void Start ()
     {
-        GenerateNewPopUpWindow("TEST", "TESTING");
+        //GenerateNewPopUpWindow("TEST", "TESTING");
     }
 
     public static void GenerateNewPopUpWindow(string title,string contents)

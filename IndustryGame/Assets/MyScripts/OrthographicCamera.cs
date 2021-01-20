@@ -35,6 +35,9 @@ public class OrthographicCamera : MonoBehaviour
     private Area currentArea;
     private int focusMask;
 
+    // AreaDetails HUD
+    public GameObject AreaDetailsHUD;
+
     private void Awake()
     {
         if (instance == null)
@@ -56,6 +59,7 @@ public class OrthographicCamera : MonoBehaviour
     }
     void Update () {
         handleCameraFocus();
+        AreaDetailsHUD.SetActive(cameraFocus);
     }
 
 
