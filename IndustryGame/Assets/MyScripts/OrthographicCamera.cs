@@ -58,7 +58,8 @@ public class OrthographicCamera : MonoBehaviour
         int areaDangerType = currentArea.getAreaDangerType();
         List<Animal> animals = currentArea.getSpeciesTypes(areaDangerType);
         Debug.Log("In handle focus area audio: " + areaDangerType);
-        // AreaSFXRandomPlayer.setAnimalList(animals);
+        AreaAnimalSFXRandomPlayer.setAnimalList(animals);
+        AreaWeatherSFXRandomPlayer.setArea(currentArea);
         if(areaDangerType > 0)
         {
             AreaBGMRandomPlayer.SetDangerBgmList(areaDangerType);
@@ -69,6 +70,7 @@ public class OrthographicCamera : MonoBehaviour
 
     private void handleGlobalAudio()
     {
+        AreaWeatherSFXRandomPlayer.Silence();
         AreaBGMRandomPlayer.SetGlobalBgmList();
     }
 
@@ -161,7 +163,7 @@ public class OrthographicCamera : MonoBehaviour
         }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
             // Focusing with mouse
-            Area pointingArea = Stage.GetMousePointingArea();
+            Area pointingArea;
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))

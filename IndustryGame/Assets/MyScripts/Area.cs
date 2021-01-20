@@ -49,6 +49,7 @@ public class Area : MonoBehaviour
     public float rainFallRatio = 0.3f;
     private void Start()
     {
+        areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
         HexCell myCell = transform.GetComponent<HexCell>();
 
         weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
@@ -73,6 +74,10 @@ public class Area : MonoBehaviour
     {
         return animalAmounts.ContainsKey(animal) ? animalAmounts[animal].change : 0;
     }
+    public ICollection<Animal> getSpecies()
+    {
+        return animalAmounts.Keys;
+    }
     public List<Animal> getSpeciesTypes(int type)
     {
         // 1: normal, 2: danger, 3: very danger
@@ -82,15 +87,16 @@ public class Area : MonoBehaviour
             bool result = false;
             AmountChange amountChange = animalAndAmount.Value;
             Animal animal = animalAndAmount.Key;
+            InGameLog.AddLog("amount: " + animalAndAmount.Value.old);
             switch (type)
             {
-                case 1:
+                case 0:
                     result = animalAndAmount.Value.old > 0;
                 break;
-                case 2:
+                case 1:
                     result = amountChange.old > 0 && amountChange.old < animal.dangerLimit;
                 break;
-                case 3:
+                case 2:
                     result = amountChange.old > 0 && amountChange.old < animal.veryDangerLimit;
                 break;
                 default:
@@ -113,10 +119,12 @@ public class Area : MonoBehaviour
             Animal animal = animalAndAmount.Key;
             if(amountChange.old > 0)
             {
-                if(amountChange.old < animal.dangerLimit)
-                    result = 1;
-                else if(amountChange.old < animal.veryDangerLimit)
+                if (amountChange.old < animal.veryDangerLimit)
+                {
                     result = 2;
+                    return result;
+                } else if (amountChange.old < animal.dangerLimit)
+                    result = 1;
             }
         }
         return result;
