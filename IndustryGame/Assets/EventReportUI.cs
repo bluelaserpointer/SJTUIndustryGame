@@ -29,11 +29,11 @@ public class EventReportUI : MonoBehaviour
 
     public void InstantiateEventInfoList ()
     {
-        for (int i = 0 ; i < eventDetails.includedInfos.Count ; i++)
+        for (int i = 0 ; i < eventDetails.GetRevealedInfos().Count ; i++)
         {
             GameObject clone = Instantiate(SingleEventInfoPrefab, EventInfoList.transform, false);
-            clone.GetComponent<EventInfoUI>().eventInfo = eventDetails.includedInfos[i];
-            InGameLog.AddLog(eventDetails.includedInfos[i].infoName);
+            clone.GetComponent<EventInfoUI>().eventInfo = eventDetails.GetRevealedInfos()[i];
+            InGameLog.AddLog(eventDetails.GetRevealedInfos()[i].infoName);
 
         }
     }
