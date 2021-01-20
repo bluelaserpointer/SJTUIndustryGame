@@ -28,11 +28,19 @@ public class Animal : ScriptableObject
     [Min(0)]
     public int migrateLimit;
 
-    public List<AudioClip> sfxAudio;
+    public AudioClipList sfxAudio;
 
-    public int dangerLimit;
-    public int veryDangerLimit;
+    private List<int> dangerLimits;
+    public int mostDangerLimit;
 
+    private void Start() {
+        int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        int averageAmount = (int)((float)mostDangerLimit / (float)mostDangerType);
+        for(int i = 0; i <= mostDangerType; i++)
+        {
+            dangerLimits[mostDangerType - i] = i * averageAmount;
+        }
+    }
     public void idle(Area currentArea, int amount)
     {
         if (amount == 0)
@@ -93,5 +101,19 @@ public class Animal : ScriptableObject
         }
         //TODO: tempreture affection
         return dislikeness;
+    }
+
+    public SpeciesDangerType getDangerType(int amount)
+    {
+        int dangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        for(int i = 0; i < dangerLimits.Count; i++)
+        {
+            if(amount >= dangerLimits[i])
+            {
+                dangerType = i;
+                break;
+            }
+        }
+        return (SpeciesDangerType)dangerType;
     }
 }

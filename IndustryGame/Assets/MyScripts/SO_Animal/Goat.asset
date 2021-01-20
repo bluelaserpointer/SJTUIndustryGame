@@ -31,16 +31,5 @@ MonoBehaviour:
   minTempreture: 8
   maxTempreture: 30
   migrateLimit: 5
-  sfxAudio:
-  - {fileID: 8300000, guid: 34e3abf12563fe14799a76a8cd570922, type: 3}
-  - {fileID: 8300000, guid: 3f444a4ded30c214983eebe3411e300b, type: 3}
-  - {fileID: 8300000, guid: e1cbf123bc0039b4aa6f4169c438ff66, type: 3}
-  - {fileID: 8300000, guid: 44205b4bef92f57419b1993506a9d79d, type: 3}
-  - {fileID: 8300000, guid: e52a27580ac9b1d44a4898f4da5f9dc8, type: 3}
-  - {fileID: 8300000, guid: fcb7d5ab4b1e32f41a4609be660da8b4, type: 3}
-  - {fileID: 8300000, guid: 8f4653529325f73498a4b50eec3da7f8, type: 3}
-  - {fileID: 8300000, guid: c2be19b55a6bed343a03de502f2243bf, type: 3}
-  - {fileID: 8300000, guid: b9c7a5e749c3af746a0ee34d677893fe, type: 3}
-  - {fileID: 8300000, guid: 303ae2d3966608940ab700a0b42ce457, type: 3}
-  dangerLimit: 0
-  veryDangerLimit: 0
+  sfxAudio: {fileID: 11400000, guid: 15e6a4ec3ab724d45baebb0c61e93516, type: 2}
+  mostDangerLimit: 5

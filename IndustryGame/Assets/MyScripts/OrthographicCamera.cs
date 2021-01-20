@@ -55,23 +55,35 @@ public class OrthographicCamera : MonoBehaviour
 
     private void handleFocusAreaAudio()
     {
-        int areaDangerType = currentArea.getAreaDangerType();
-        List<Animal> animals = currentArea.getSpeciesTypes(areaDangerType);
-        Debug.Log("In handle focus area audio: " + areaDangerType);
-        AreaAnimalSFXRandomPlayer.setAnimalList(animals);
         AreaWeatherSFXRandomPlayer.setArea(currentArea);
-        if(areaDangerType > 0)
+
+        List<List<Animal>> animals = currentArea.getSpeciesDangerTypes();
+        int areaMostDangerType = 0;
+
+        if(animals.Count > 0)
         {
-            AreaBGMRandomPlayer.SetDangerBgmList(areaDangerType);
-        }else{
-            AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
+            AreaAnimalSFXRandomPlayer.setAnimalList(animals);
+            int dangerTypeNum = EnumHelper.GetMaxEnum<SpeciesDangerType>();
+            for(int i = dangerTypeNum; i > 0; i--)
+            {
+                if(animals[i].Count > 0)
+                {
+                    areaMostDangerType = i;
+                    break;
+                }
+            }
         }
+
+        // if(areaMostDangerType > 0)
+        //     AreaBGMRandomPlayer.SetDangerBgmList(areaMostDangerType);
+        // else
+        //     AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
     }
 
     private void handleGlobalAudio()
     {
         AreaWeatherSFXRandomPlayer.Silence();
-        AreaBGMRandomPlayer.SetGlobalBgmList();
+        // AreaBGMRandomPlayer.SetGlobalBgmList();
     }
 
     private void FixedUpdate() {
