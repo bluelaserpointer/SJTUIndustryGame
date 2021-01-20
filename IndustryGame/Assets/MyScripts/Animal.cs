@@ -31,15 +31,15 @@ public class Animal : ScriptableObject
     public AudioClipList sfxAudio;
 
     private List<int> dangerLimits;
-    public int mostDangerLimit;
 
-    private void Start() {
+    [Header("不同危险级别物种数目间隔")]
+    public int dangerAmountSpan;
+    void Awake() {
         int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
-        int averageAmount = (int)((float)mostDangerLimit / (float)mostDangerType);
+        
         for(int i = 0; i <= mostDangerType; i++)
-        {
-            dangerLimits[mostDangerType - i] = i * averageAmount;
-        }
+            dangerLimits[mostDangerType - i] = i * dangerAmountSpan;
+
     }
     public void idle(Area currentArea, int amount)
     {

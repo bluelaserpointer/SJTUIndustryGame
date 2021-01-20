@@ -75,7 +75,7 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
             AudioClipList currDangerTypeAnimal = currDangerTypeList[Random.Range(0, currDangerTypeList.Count)];
             if(currDangerTypeAnimal.clips.Count > 0)
             {
-                // InGameLog.AddLog("SFXChange: currDangerType " + (int)currDangerType + " mostDangerType " + (int)mostDangerType);
+                InGameLog.AddLog("SFXChange: currDangerType " + (int)currDangerType + " mostDangerType " + (int)mostDangerType);
 
                 // Set audioSource & audioVolumn
                 // InGameLog.AddLog(currDangerTypeAnimal.clips.Count.ToString());
