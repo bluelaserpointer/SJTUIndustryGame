@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: "\u5EFA\u8BBE\u4FDD\u62A4\u7AD9"
   description: 
-  timeCost: 200
+  timeCost: 10
   moneyCost: 100
   preFinishInfos: []
   requiredAbilities: []

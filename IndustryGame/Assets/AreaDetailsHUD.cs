@@ -35,10 +35,10 @@ public class AreaDetailsHUD : MonoBehaviour
                 tempData.text = CurrentArea.GetEnabledActions()[i].actionName;
                 //tempData.image = CurrentArea.GetEnabledActions()[i].actionName;
                 Actions.options.Add(tempData);
-                InGameLog.AddLog(CurrentArea.GetEnabledActions()[i].actionName + " test ");
+                //InGameLog.AddLog(CurrentArea.GetEnabledActions()[i].actionName + " test ");
             }
 
-            Actions.captionText.text = CurrentArea.GetEnabledActions()[0].actionName;
+            Actions.captionText.text = CurrentArea.GetEnabledActions()[Actions.value].actionName;
         }
     }
 
@@ -56,8 +56,14 @@ public class AreaDetailsHUD : MonoBehaviour
                 Specialists.options.Add(tempData);
                 //InGameLog.AddLog(Stage.GetSpecialists()[i].name);
             }
-            Specialists.captionText.text = Stage.GetSpecialists()[0].name + "   " + Stage.GetSpecialists()[0].getCurrentArea().name;
+            Specialists.captionText.text = Stage.GetSpecialists()[Specialists.value].name + "   " + Stage.GetSpecialists()[Specialists.value].getCurrentArea().name;
         }
         
+    }
+
+    public void StartAction ()
+    {
+        Stage.GetSpecialists()[Specialists.value].startAction(CurrentArea.GetEnabledActions()[Actions.value]);
+        Stage.GetSpecialists()[Specialists.value].moveToArea(CurrentArea);
     }
 }
