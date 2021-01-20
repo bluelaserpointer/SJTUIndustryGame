@@ -16,12 +16,15 @@ public class Event : ScriptableObject
     public List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     [Header("出现的所有地区措施")]
     public List<AreaAction> includedAreaActions = new List<AreaAction>();
+
+    private bool _isFinished;
     public void init()
     {
         foreach(EventInfo info in includedInfos)
         {
             info.init();
         }
+        PopUpCanvas.GenerateNewPopUpWindow(eventName, description);
     }
     public void dayIdle()
     {
@@ -31,6 +34,8 @@ public class Event : ScriptableObject
     }
     public bool isFinished()
     {
+        if (_isFinished)
+            return true;
         bool judge = true;
         foreach (EventInfo info in includedInfos)
         {
@@ -39,6 +44,11 @@ public class Event : ScriptableObject
                 judge = false;
                 break;
             }
+        }
+        if(judge)
+        {
+            _isFinished = true;
+            PopUpCanvas.GenerateNewPopUpWindow(eventName, descriptionAfterFinish);
         }
         return judge;
     }
