@@ -16,9 +16,17 @@ public class AreaBGMRandomPlayer : MonoBehaviour
     public List<AudioClipList> areaBgmLists;
     public AudioClipList globalBgmList;
 
+    private BgmAudioType audioType = BgmAudioType.None;
+    private int areaType = -1;
     private int dangerType = -1;
-    private int environmentType = -1;
-    private int currentType = -1;
+    public enum BgmAudioType
+    {
+        None = -1,
+        Global,
+        Area,
+        Danger,
+
+    }
 
     void Awake()
     {
@@ -31,7 +39,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
                 bgmAnimator = GetComponent<Animator>();
             DontDestroyOnLoad(instance);
 
-            SetGlobalBgmList();
+            // SetGlobalBgmList();
         }else{
             Destroy(gameObject);
         }
@@ -41,48 +49,47 @@ public class AreaBGMRandomPlayer : MonoBehaviour
     public static void SetDangerBgmList(int areaDangerType)
     {
         SetDangerAudioClipsIdx(areaDangerType);
-        BgmChange();
     }
 
     public static void SetAreaBgmList(Area area)
     {
         SetAreaAudioClipsIdx((int)area.environmentType);
-        BgmChange();
     }
 
-    // Global: 0, Area: 1, Danger: 2
     public static void SetGlobalBgmList()
     {
-        instance.currentType = 0;
+        instance.audioType = 0;
         instance.clips = instance.globalBgmList.clips;
         BgmChange();
     }
 
-    public static void SetAreaAudioClipsIdx(int environmentType)
+    public static void SetAreaAudioClipsIdx(int areaType)
     {
-        Debug.Log("Setting area audio, self: " + instance.environmentType + " -> " + environmentType);
-        if(instance.currentType != 1 || instance.environmentType != environmentType || instance.environmentType == -1)
+        if(instance.audioType != BgmAudioType.Area || instance.areaType != areaType || instance.areaType == -1)
         {
-            Debug.Log("Setting area audio, self: " + instance.environmentType + " -> " + environmentType);
-            instance.currentType = 1;
-            instance.clips = instance.areaBgmLists[environmentType].clips;
-            instance.environmentType = environmentType;
+            instance.audioType = BgmAudioType.Area;
+            instance.clips = instance.areaBgmLists[(int)instance.audioType].clips;
+            instance.areaType = areaType;
+            BgmChange();
         }
     }
 
     public static void SetDangerAudioClipsIdx(int dangerType)
     {
-        if(instance.currentType != 2 || instance.dangerType != dangerType || instance.dangerType == -1)
+        if(instance.audioType != BgmAudioType.Danger || instance.dangerType != dangerType || instance.dangerType == -1)
         {
-            instance.currentType = 2;
-            Debug.Log("Setting danger audio");
-            instance.clips = instance.dangerBgmLists[dangerType].clips;
+            instance.audioType = BgmAudioType.Danger;
+            instance.clips = instance.dangerBgmLists[(int)instance.audioType].clips;
             instance.dangerType = dangerType;
+            BgmChange();
         }
     }
 
     public static void BgmChange()
     {
+        if(instance.clips == null || instance.clips.Count <= 0)
+            return;
+            
         AudioClip clip = instance.clips[instance.clipIndex = Random.Range(0, instance.clips.Count)];
 
         if(instance.audioSource.clip == null)
@@ -90,18 +97,13 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             instance.audioSource.clip = clip;
             instance.audioSource.Play();
         }
-        Debug.Log("In bgmChange");
         if(instance.audioSource.clip != null && instance.audioSource.clip != clip)
-        {
-            Debug.Log("Before fade out");
             instance.StartCoroutine(BgmFadeOut(clip));
-        }
     }
 
     public static IEnumerator BgmFadeOut(AudioClip clip)
     {
         instance.bgmAnimator.SetTrigger("fadeOut");
-        Debug.Log("Wait for " + instance.waitTime + " seconds");
         yield return new WaitForSeconds(instance.waitTime);
         instance.audioSource.clip = clip;
         instance.audioSource.Play();
