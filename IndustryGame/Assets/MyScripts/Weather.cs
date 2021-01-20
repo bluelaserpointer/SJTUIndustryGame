@@ -81,7 +81,7 @@
                 groundWater -= sunnyChange;
                 break;
         }
-
+        //InGameLog.AddLog("season: " + season + ", skyWater: " + skyWater + ", waterChange:" + waterChange);
         // 根据 季节、云朵储水量设置天气
         if(skyWater <= 2 * waterChange || season == SeasonType.Autumn)
             weatherType = WeatherType.Sunny;

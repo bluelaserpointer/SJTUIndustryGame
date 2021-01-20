@@ -172,9 +172,7 @@ public class OrthographicCamera : MonoBehaviour
             
             if(focusHexCell != null)
             {
-                currentHexCell = focusHexCell;
-                Vector3 focusPosition = focusHexCell.transform.position;
-                focusOnHexCell(focusPosition, keyOrthographicSize);
+                focusOnHexCell(focusHexCell, keyOrthographicSize);
             }
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -185,25 +183,20 @@ public class OrthographicCamera : MonoBehaviour
         }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
             // Focusing with mouse
-            Area pointingArea;
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
             {
-                currentHexCell = hexGrid.GetCell(hit.point);
-                pointingArea = currentHexCell.transform.GetComponent<Area>();
-                Vector3 pointingAreaPosition = pointingArea.transform.position;
-
-                focusOnHexCell(pointingAreaPosition, mouseOrthographicSize);
-            }else{
-                pointingArea = null;
+                focusOnHexCell(hexGrid.GetCell(hit.point), mouseOrthographicSize);
             }
         }
     }
 
-    public void focusOnHexCell(Vector3 focusPosition, float orthographicSize)
+    public void focusOnHexCell(HexCell hexCell, float orthographicSize)
     {
-        currentArea = currentHexCell.gameObject.GetComponent<Area>();
+        currentHexCell = hexCell;
+        currentArea = hexCell.transform.GetComponentInChildren<Area>();
+        Vector3 focusPosition = hexCell.transform.position;
 
         SetCameraFocus(true);
 

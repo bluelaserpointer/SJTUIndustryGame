@@ -49,7 +49,7 @@ public class Area : MonoBehaviour
     private void Start()
     {
         areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
-        HexCell myCell = transform.GetComponent<HexCell>();
+        HexCell myCell = transform.GetComponentInParent<HexCell>();
 
         weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
 
