@@ -181,11 +181,14 @@ public class HexCell : MonoBehaviour {
 
 	public int RainLevel
 	{
-		get {
+		get
+		{
 			return rainLevel;
 		}
-		set {
-			if (rainLevel != value) {
+		set
+		{
+			if (rainLevel != value)
+			{
 				rainLevel = value;
 				RefreshSelfOnly();
 			}
@@ -222,7 +225,9 @@ public class HexCell : MonoBehaviour {
 			}
 		}
 	}
-		public bool Expert {
+
+	public bool Expert
+	{
 		get
 		{
 			return expert;
@@ -237,7 +242,6 @@ public class HexCell : MonoBehaviour {
 		}
 
 	}
-
 	public int TerrainTypeIndex {
 		get {
 			return terrainTypeIndex;
@@ -291,7 +295,6 @@ public class HexCell : MonoBehaviour {
 		);
 	}
 
-
 	public bool HasRiverThroughEdge (HexDirection direction) {
 		return
 			hasIncomingRiver && incomingRiver == direction ||
@@ -326,7 +329,6 @@ public class HexCell : MonoBehaviour {
 		RemoveOutgoingRiver();
 		RemoveIncomingRiver();
 	}
-
 
 	public void SetOutgoingRiver (HexDirection direction) {
 		if (hasOutgoingRiver && outgoingRiver == direction) {
@@ -375,7 +377,6 @@ public class HexCell : MonoBehaviour {
 			}
 		}
 	}
-
 
 	public int GetElevationDifference (HexDirection direction) {
 		int difference = elevation - GetNeighbor(direction).elevation;

@@ -83,19 +83,22 @@ public class HexFeatureManager : MonoBehaviour {
 		otherPrefab = PickPrefab(
 			plantCollections, cell.PlantLevel, hash.c, hash.d
 		);
-		if (prefab) {
-			if (otherPrefab && hash.c < usedHash) {
+		if (prefab)
+		{
+			if (otherPrefab && hash.c < usedHash)
+			{
 				prefab = otherPrefab;
 				usedHash = hash.c;
 			}
 		}
-		else if (otherPrefab) {
+		else if (otherPrefab)
+		{
 			prefab = otherPrefab;
 			usedHash = hash.c;
 		}
 
 		otherPrefab = PickPrefab(
-		   rainCollections,cell.RainLevel,hash.f,hash.d
+		   rainCollections, cell.RainLevel, hash.f, hash.d
 		);
 
 		if (prefab)
@@ -111,7 +114,8 @@ public class HexFeatureManager : MonoBehaviour {
 			prefab = otherPrefab;
 			height_offset = 10;
 		}
-		else {
+		else
+		{
 			return;
 		}
 
@@ -120,7 +124,6 @@ public class HexFeatureManager : MonoBehaviour {
 		instance.localPosition = HexMetrics.Perturb(position);
 		instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 		instance.SetParent(container, false);
-
 	}
 
 	public void AddSpecialFeature (HexCell cell, Vector3 position) {
@@ -309,14 +312,14 @@ public class HexFeatureManager : MonoBehaviour {
 		walls.AddQuadUnperturbed(point, v2, pointTop, v4);
 		walls.AddTriangleUnperturbed(pointTop, v3, v4);
 	}
-
-	public void AddExpert(HexCell cell, Vector3 position) {
+	public void AddExpert(HexCell cell, Vector3 position)
+	{
 		float height_offset = 3.0f;
 		Transform instance = Instantiate(expert);
-		position.y += instance.localScale.y * 0.5f+height_offset;
+		position.y += instance.localScale.y * 0.5f + height_offset;
 		instance.localPosition = HexMetrics.Perturb(position);
 		instance.localRotation = Quaternion.Euler(0f, 360f, 0f);
 		instance.SetParent(container, false);
-		
+
 	}
 }
