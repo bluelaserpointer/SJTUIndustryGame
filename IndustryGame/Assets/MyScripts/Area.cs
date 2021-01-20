@@ -78,60 +78,41 @@ public class Area : MonoBehaviour
     {
         return animalAmounts.Keys;
     }
-    public List<Animal> getSpeciesTypes(int type)
+
+    public List<List<Animal>> getSpeciesDangerTypes()
     {
-        // 1: normal, 2: danger, 3: very danger
-        List<Animal> speciesTypes = new List<Animal>();
+        List<List<Animal>> animalsDangerList = new List<List<Animal>>();
+        int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        for(int i = 0; i <= mostDangerType; i++)
+            animalsDangerList.Add(new List<Animal>());
+        
+        InGameLog.AddLog("In getSpeciesDangerTypes " + EnumHelper.GetMaxEnum<SpeciesDangerType>() + " " + animalAmounts.Count);
+
         foreach (KeyValuePair<Animal,AmountChange> animalAndAmount in animalAmounts)
         {
-            bool result = false;
-            AmountChange amountChange = animalAndAmount.Value;
-            Animal animal = animalAndAmount.Key;
-            InGameLog.AddLog("amount: " + animalAndAmount.Value.old);
-            switch (type)
-            {
-                case 0:
-                    result = animalAndAmount.Value.old > 0;
-                break;
-                case 1:
-                    result = amountChange.old > 0 && amountChange.old < animal.dangerLimit;
-                break;
-                case 2:
-                    result = amountChange.old > 0 && amountChange.old < animal.veryDangerLimit;
-                break;
-                default:
-                break;
-            }
+            InGameLog.AddLog("In getSpeciesDangerTypes - foreach");
 
-            if(result)
-                speciesTypes.Add(animalAndAmount.Key);
+            int amount = animalAndAmount.Value.old;
+            Animal animal = animalAndAmount.Key;
+            if(animalAndAmount.Value.old > 0)
+            {
+                int dangerType = (int)animal.getDangerType(amount);
+
+                InGameLog.AddLog("Adding " + animal.animalName + " to " + dangerType + " " + animalsDangerList.Count);
+                if(animalsDangerList[dangerType] == null)
+                    animalsDangerList[dangerType] = new List<Animal>();
+
+                animalsDangerList[dangerType].Add(animal);
+            }
+                
         }
 
-        return speciesTypes;
-    }
-
-    public int getAreaDangerType()
-    {
-        int result = 0;
-        foreach (KeyValuePair<Animal,AmountChange> animalAndAmount in animalAmounts)
-        {
-            AmountChange amountChange = animalAndAmount.Value;
-            Animal animal = animalAndAmount.Key;
-            if(amountChange.old > 0)
-            {
-                if (amountChange.old < animal.veryDangerLimit)
-                {
-                    result = 2;
-                    return result;
-                } else if (amountChange.old < animal.dangerLimit)
-                    result = 1;
-            }
-        }
-        return result;
+        return animalsDangerList;
     }
     
     public void changeSpeciesAmount(Animal animal, int change)
     {
+        Debug.Log("Adding log: " + animal.animalName + " " + change);
         if(animalAmounts.ContainsKey(animal))
         {
             animalAmounts[animal].addCurrent(change);
