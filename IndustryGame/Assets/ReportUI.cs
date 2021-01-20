@@ -14,22 +14,30 @@ public class ReportUI : MonoBehaviour
     void Start()
     {
         events = Stage.GetEvents();
-        
+        InstantiateEventList();
     }
 
-    // Update is called once per frame
+    private void OnEnable ()
+    {
+        InstantiateEventList();
+        InGameLog.AddLog("In SpecialistUI OnEnable");
+
+    }
+
     void Update()
     {
-        
+        events = Stage.GetEvents();
     }
 
-    //void InstantiateSpecialistList ()
-    //{
-    //    for (int i = 0 ; i < specialists.Count ; i++)
-    //    {
-    //        GameObject clone;
-    //        clone = Instantiate(SingleSpecialistPrefab, SpecialistList.transform, false);
-    //        clone.GetComponent<SingleSpecialist>().specialist = specialists[i];
-    //    }
-    //}
+
+    void InstantiateEventList ()
+    {
+        for (int i = 0 ; i < events.Count ; i++)
+        {
+            GameObject clone;
+            clone = Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+            clone.GetComponent<SingleEventReport>().eventD = events[i];
+
+        }
+    }
 }

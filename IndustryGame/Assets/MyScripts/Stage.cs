@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -9,7 +10,6 @@ public class Stage : MonoBehaviour
 
     private Area[] areas;
     private Area baseArea;
-    private Area pointingArea;
 
     public string stageName;
     [TextArea]
@@ -125,10 +125,6 @@ public class Stage : MonoBehaviour
     {
         return instance.areas;
     }
-    public static Area GetMousePointingArea()
-    {
-        return instance.pointingArea;
-    }
     public static int getSpeciesAmount(Animal species)
     {
         int total = 0;
@@ -177,5 +173,18 @@ public class Stage : MonoBehaviour
         List<EventInfo> eventInfos = new List<EventInfo>();
         instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToEnvironment()));
         return eventInfos;
+    }
+    public static List<Action> GetEnabledActions()
+    {
+        return instance.enabledActions;
+    }
+    public static List<Animal> GetSpecies()
+    {
+        List<Animal> animals = new List<Animal>();
+        foreach(Area area in instance.areas)
+        {
+            animals.Union(area.getSpecies());
+        }
+        return animals;
     }
 }

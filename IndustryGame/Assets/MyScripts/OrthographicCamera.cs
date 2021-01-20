@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[DisallowMultipleComponent]
 public class OrthographicCamera : MonoBehaviour
 {
+    private static OrthographicCamera instance;
+
     [SerializeField]
     public float cameraParam = 1.5f;
     public float transitionSpeed = 0.25f; 
@@ -33,7 +35,11 @@ public class OrthographicCamera : MonoBehaviour
     private Area currentArea;
     private int focusMask;
 
-
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -163,7 +169,7 @@ public class OrthographicCamera : MonoBehaviour
         }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
             // Focusing with mouse
-            Area pointingArea = Stage.GetMousePointingArea();
+            Area pointingArea;
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
@@ -200,5 +206,9 @@ public class OrthographicCamera : MonoBehaviour
         else
             handleGlobalAudio();
         cameraFocus = value;
+    }
+    public static Area GetMousePointingArea()
+    {
+        return instance != null ? instance.currentArea : null;
     }
 }
