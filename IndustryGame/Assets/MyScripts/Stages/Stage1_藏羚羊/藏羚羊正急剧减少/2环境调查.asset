@@ -19,10 +19,6 @@ MonoBehaviour:
   showInEnvironmentReport: 0
   preFinishInfos:
   - {fileID: 11400000, guid: 51d5928a20d79104e8ecf56041cbc7d3, type: 2}
-  successCondition: {fileID: 11400000, guid: a5650e9b80a480444819b63843cb69f2, type: 2}
+  successCondition: {fileID: 11400000, guid: 9508178811ed391479d08eb1d08afc4b, type: 2}
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
-  givenActionsBeforeSolve: []
-  givenActionsAfterSolve:
-  - {fileID: 11400000, guid: e21d8a2cd21ca95438d577858207a441, type: 2}
-  - {fileID: 11400000, guid: 0b06d8a1ab23b9e429cc0123c79ac943, type: 2}
