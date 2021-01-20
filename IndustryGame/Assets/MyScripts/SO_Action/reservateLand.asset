@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdbd04f13438e274fa334d87781a0d7a, type: 3}
   m_Name: reservateLand
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u8C03\u67E5\u5730\u533A"
   description: 
-  timeCost: 0
-  moneyCost: 0
+  timeCost: 10
+  moneyCost: 10
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:

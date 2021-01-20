@@ -9,7 +9,6 @@ public class Stage : MonoBehaviour
 
     private Area[] areas;
     private Area baseArea;
-    private Area pointingArea;
 
     public string stageName;
     [TextArea]
@@ -124,10 +123,6 @@ public class Stage : MonoBehaviour
     public static Area[] getAreas()
     {
         return instance.areas;
-    }
-    public static Area GetMousePointingArea()
-    {
-        return instance.pointingArea;
     }
     public static int getSpeciesAmount(Animal species)
     {

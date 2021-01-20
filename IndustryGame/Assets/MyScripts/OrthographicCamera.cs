@@ -163,7 +163,7 @@ public class OrthographicCamera : MonoBehaviour
         }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
             // Focusing with mouse
-            Area pointingArea = Stage.GetMousePointingArea();
+            Area pointingArea;
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))

@@ -8,8 +8,6 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
     private static AreaAnimalSFXRandomPlayer instance;
     private AudioSource audioSource;
     private List<List<AudioClip>> clips;
-    private int clipIndex;
-    public List<Animal> mockAnimals;
 
     public float loopLimit;
     public float loopTime;
@@ -42,24 +40,14 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
 
     public static void setAnimalList(List<Animal> animals)
     {
-        List<List<AudioClip>> audioClips = new List<List<AudioClip>>();
-
-        foreach (var animal in instance.mockAnimals)
+        foreach (var animal in animals)
         {
-            audioClips.Add(animal.sfxAudio);
+            instance.clips.Add(animal.sfxAudio);
         }
-
-        SetAudioClips(audioClips);
         Debug.Log("Adding animals, count: " + animals.Count);
-        SFXChange();
-    }
-    public static void SetAudioClips(List<List<AudioClip>> audioClips)
-    {
-        instance.clips = audioClips;
     }
     public static void SFXChange()
     {
-
         List<AudioClip> audioClips = instance.clips[Random.Range(0, instance.clips.Count)]; 
         if(audioClips.Count > 0)
         {
