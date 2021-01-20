@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6229496605910841916ad14bc15ba66, type: 3}
   m_Name: Weed
@@ -26,4 +26,4 @@ MonoBehaviour:
   maxTempreture: 27
   migrateLimit: 0
   sfxAudio: {fileID: 11400000, guid: ee752ccd3e871aa41b2c27adc54ff9ad, type: 2}
-  mostDangerLimit: 10
+  dangerAmountSpan: 5

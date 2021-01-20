@@ -79,6 +79,7 @@ public class Stage : MonoBehaviour
                     // if (area.environmentType == environment)
                     // {
                         area.changeSpeciesAmount(animalInitialAmount.animal, (int)(baseAmount * (0.95 + 0.10 * random.NextDouble())));
+
                     // }
                 }
             }
