@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c8e8f3d95dcc94c925fd87ffb32424, type: 3}
   m_Name: "Build-\u4FDD\u62A4\u7AD9"
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u5EFA\u8BBE\u4FDD\u62A4\u7AD9"
   description: 
-  timeCost: 0
-  moneyCost: 0
+  timeCost: 200
+  moneyCost: 100
   preFinishInfos: []
   requiredAbilities: []
   finishEvent:

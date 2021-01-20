@@ -52,9 +52,18 @@ public class Stage : MonoBehaviour
         }
         //union actions
         foreach(Event anEvent in events)
-            includedGlobalActions.Union(anEvent.includedGlobalActions);
-        foreach (Event anEvent in events)
-            includedAreaActions.Union(anEvent.includedAreaActions);
+        {
+            foreach(GlobalAction action in anEvent.includedGlobalActions)
+            {
+                if (!includedGlobalActions.Contains(action))
+                    includedGlobalActions.Add(action);
+            }
+            foreach (AreaAction action in anEvent.includedAreaActions)
+            {
+                if (!includedAreaActions.Contains(action))
+                    includedAreaActions.Add(action);
+            }
+        }
     }
     void Start()
     {
