@@ -12,6 +12,10 @@ public class Event : ScriptableObject
 
     [Header("出现的所有Info")]
     public List<EventInfo> includedInfos = new List<EventInfo>();
+    [Header("出现的所有全局措施")]
+    public List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
+    [Header("出现的所有地区措施")]
+    public List<AreaAction> includedAreaActions = new List<AreaAction>();
     public void init()
     {
         foreach(EventInfo info in includedInfos)

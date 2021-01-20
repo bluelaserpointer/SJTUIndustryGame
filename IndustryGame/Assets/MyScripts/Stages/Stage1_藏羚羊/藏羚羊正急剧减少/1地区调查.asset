@@ -21,5 +21,3 @@ MonoBehaviour:
   successCondition: {fileID: 11400000, guid: a5650e9b80a480444819b63843cb69f2, type: 2}
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
-  givenActionsBeforeSolve: []
-  givenActionsAfterSolve: []

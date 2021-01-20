@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: CheckReservateLand
   m_EditorClassIdentifier: 
   targetActions:
-  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
+  - action: {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
+    count: 1

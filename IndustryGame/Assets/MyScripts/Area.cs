@@ -22,8 +22,7 @@ public class Area : MonoBehaviour
     public List<Stat> stat;
 
     List<Area> neighbors = new List<Area>();
-    [SerializeField]
-    public List<Action> enabledActions;
+    private List<AreaAction> finishedActions = new List<AreaAction>();
     private struct AmountChange
     {
         public int old;
@@ -212,13 +211,17 @@ public class Area : MonoBehaviour
     {
         return weather;
     }
-    public void AddEnabledAction(Action action)
+    public List<AreaAction> GetEnabledActions()
     {
-        enabledActions.Add(action);
+        return Stage.GetEnabledAreaActions(this);
     }
-    public List<Action> GetEnabledActions()
+    public void AddFinishedAction(AreaAction action)
     {
-        return enabledActions;
+        finishedActions.Add(action);
+    }
+    public bool ContainsFinishedAction(AreaAction action)
+    {
+        return finishedActions.Contains(action);
     }
     public List<Area> GetNeighborAreas()
     {

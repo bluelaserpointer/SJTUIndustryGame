@@ -16,7 +16,10 @@ MonoBehaviour:
   description: "\uFF08\u6682\u65F6\u505A\u4E86\u4E2A\u4E00\u6B21\u6027\u8C03\u67E5\u5B8C\u6240\u6709\u52A8\u7269\u6570\u91CF\u7684\u63AA\u65BD\uFF09"
   timeCost: 100
   moneyCost: 50
+  preFinishInfos: []
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:
       m_Calls: []
+  preFinishActions:
+  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}

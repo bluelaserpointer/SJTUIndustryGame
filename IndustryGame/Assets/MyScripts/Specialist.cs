@@ -22,7 +22,7 @@ public class Specialist
             actionProgress += 1;
             if(actionProgress >= currentAction.timeCost)
             {
-                currentAction.finishAction();
+                currentAction.finishAction(currentArea);
                 currentAction = null;
             }
         }

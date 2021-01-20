@@ -21,10 +21,6 @@ public class EventInfo : ScriptableObject
     public Buff buffBeforeFinish;
     [Header("完成后的环境效果")]
     public Buff buffAfterFinish;
-    [Header("完成前提供的可用措施")]
-    public List<Action> givenActionsBeforeSolve;
-    [Header("完成后提供的可用措施")]
-    public List<Action> givenActionsAfterSolve;
 
     private bool _isAppeared;
     private bool _isFinished;
@@ -75,6 +71,11 @@ public class EventInfo : ScriptableObject
         } else {
             if (buffAfterFinish != null)
                 buffAfterFinish.idle();
+            if(successCondition.judge())
+            {
+                _isFinished = true;
+                PopUpCanvas.GenerateNewPopUpWindow(infoName, descriptionAfterFinish);
+            }
         }
     }
 }

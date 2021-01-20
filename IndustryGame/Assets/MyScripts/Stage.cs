@@ -31,9 +31,11 @@ public class Stage : MonoBehaviour
 
     //基地资源
     private int lastDay;
-    int lestMoney;
-    List<Specialist> specialists = new List<Specialist>();
-    List<Action> enabledActions = new List<Action>();
+    private int lestMoney;
+    private List<Specialist> specialists = new List<Specialist>();
+    private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
+    private List<AreaAction> includedAreaActions = new List<AreaAction>();
+    private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
     //TODO Delete after test
     private Specialist test = new Specialist();
@@ -48,6 +50,11 @@ public class Stage : MonoBehaviour
         foreach(Event anEvent in events) {
             anEvent.init();
         }
+        //union actions
+        foreach(Event anEvent in events)
+            includedGlobalActions.Union(anEvent.includedGlobalActions);
+        foreach (Event anEvent in events)
+            includedAreaActions.Union(anEvent.includedAreaActions);
     }
     void Start()
     {
@@ -179,9 +186,24 @@ public class Stage : MonoBehaviour
         instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToEnvironment()));
         return eventInfos;
     }
-    public static List<Action> GetEnabledActions()
+    public static List<GlobalAction> GetEnabledGlobalActions()
     {
-        return instance.enabledActions;
+        return instance.includedGlobalActions.FindAll(action => action.enabled());
+    }
+    public static List<AreaAction> GetEnabledAreaActions(Area area)
+    {
+        return instance.includedAreaActions.FindAll(action => action.enabled(area));
+    }
+    public static void AddActionFinishCount(Action action)
+    {
+        if (instance.actionsFinishCount.ContainsKey(action))
+            instance.actionsFinishCount[action]++;
+        else
+            instance.actionsFinishCount.Add(action, 1);
+    }
+    public static int GetActionFinishCount(Action action)
+    {
+        return instance.actionsFinishCount.ContainsKey(action) ? instance.actionsFinishCount[action] : 0;
     }
     public static List<Animal> GetSpecies()
     {

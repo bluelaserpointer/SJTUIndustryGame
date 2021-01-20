@@ -16,9 +16,12 @@ MonoBehaviour:
   description: 
   timeCost: 0
   moneyCost: 0
+  preFinishInfos: []
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:
       m_Calls: []
+  preFinishActions:
+  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
   buildType: 0
   building: {fileID: 11400000, guid: 8f7656640fec37b429bf64cc74862061, type: 2}

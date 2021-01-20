@@ -21,3 +21,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b20705ac6e781204a8862cde199e25ee, type: 2}
   - {fileID: 11400000, guid: 510aa2b2517ca0d47817f4c42d203e01, type: 2}
   - {fileID: 11400000, guid: 6f823e6674d387d428ba902091f3890a, type: 2}
+  includedGlobalActions: []
+  includedAreaActions:
+  - {fileID: 11400000, guid: 041a31c12c42aa54a9edda4a8164d9bb, type: 2}
+  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
+  - {fileID: 11400000, guid: e21d8a2cd21ca95438d577858207a441, type: 2}
+  - {fileID: 11400000, guid: e21d8a2cd21ca95438d577858207a441, type: 2}
