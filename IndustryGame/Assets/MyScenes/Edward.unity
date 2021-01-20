@@ -2387,7 +2387,11 @@ MonoBehaviour:
   stageMoney: 0
   stageTime: 0
   events: []
-  animalInitialAmounts: []
+  animalInitialAmounts:
+  - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
+    amount: 100
+  - animal: {fileID: 11400000, guid: c6e06ac467d665a4db851735f8a07f49, type: 2}
+    amount: 50
 --- !u!114 &1237714305
 MonoBehaviour:
   m_ObjectHideFlags: 0

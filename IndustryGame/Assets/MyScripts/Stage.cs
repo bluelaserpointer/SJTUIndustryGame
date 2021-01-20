@@ -65,10 +65,10 @@ public class Stage : MonoBehaviour
             int count = 0;
             foreach(Area area in areas)
             {
-                if(area.environmentType == environment)
-                {
+                // if(area.environmentType == environment)
+                // {
                     ++count;
-                }
+                // }
             }
             if (count > 0)
             {
@@ -76,10 +76,11 @@ public class Stage : MonoBehaviour
                 System.Random random = new System.Random();
                 foreach (Area area in areas)
                 {
-                    if (area.environmentType == environment)
-                    {
+                    Debug.Log("Stage: initiating area");
+                    // if (area.environmentType == environment)
+                    // {
                         area.changeSpeciesAmount(animalInitialAmount.animal, (int)(baseAmount * (0.95 + 0.10 * random.NextDouble())));
-                    }
+                    // }
                 }
             }
         }

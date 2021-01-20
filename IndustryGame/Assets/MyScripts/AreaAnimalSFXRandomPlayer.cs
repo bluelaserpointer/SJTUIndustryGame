@@ -7,12 +7,11 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
 {
     private static AreaAnimalSFXRandomPlayer instance;
     private AudioSource audioSource;
-    private List<List<AudioClip>> clips;
+    private List<List<AudioClipList>> clips;
 
     public float loopLimit;
     public float loopTime;
     public float loopParam;
-
     void Awake()
     {
         if (instance == null)
@@ -20,6 +19,7 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
             instance = this;
             if(audioSource == null)
                 audioSource = GetComponent<AudioSource>();
+            
             DontDestroyOnLoad(instance);
 
         }else{
@@ -33,28 +33,61 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
 
         if(instance.audioSource != null && !instance.audioSource.isPlaying && loopTime <= 0f)
         {
-            Debug.Log("In update of sfx player");
             SFXChange();
         }
     }
 
-    public static void setAnimalList(List<Animal> animals)
+    public static void setAnimalList(List<List<Animal>> speciesDangerTypes)
     {
-        foreach (var animal in animals)
+        if(speciesDangerTypes.Count <= 0)
+            return;
+
+        // InGameLog.AddLog("In setAnimalList");
+        List<List<AudioClipList>> dangerTypesList = new List<List<AudioClipList>>();
+        SpeciesDangerType mostDangerType = (SpeciesDangerType)EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        for(int i = 0; i <= (int)mostDangerType; i++)
+            dangerTypesList.Add(new List<AudioClipList>());
+
+        for (SpeciesDangerType i = 0; i <= mostDangerType; i++)
         {
-            instance.clips.Add(animal.sfxAudio);
+            List<AudioClipList> currDangerTypeList = new List<AudioClipList>();
+            List<Animal> currDangerTypeAnimals = speciesDangerTypes[(int)i];
+            foreach (Animal species in currDangerTypeAnimals)
+            {
+                currDangerTypeList.Add(species.sfxAudio);
+            }
+
+            // InGameLog.AddLog("CurrDangerTypeList Count: " + currDangerTypeList.Count);
+            dangerTypesList[(int)i] = currDangerTypeList;
         }
-        Debug.Log("Adding animals, count: " + animals.Count);
+        instance.clips = dangerTypesList;
     }
     public static void SFXChange()
     {
-        List<AudioClip> audioClips = instance.clips[Random.Range(0, instance.clips.Count)]; 
-        if(audioClips.Count > 0)
+        if(instance.clips == null || instance.clips.Count <= 0)
+            return;
+
+        SpeciesDangerType currDangerType = (SpeciesDangerType)Random.Range(0, instance.clips.Count);
+        SpeciesDangerType mostDangerType = (SpeciesDangerType)EnumHelper.GetMaxEnum<SpeciesDangerType>();
+        List<AudioClipList> currDangerTypeList = instance.clips[(int)currDangerType]; 
+        if(currDangerTypeList.Count > 0)
         {
-            instance.audioSource.clip = audioClips[Random.Range(0, audioClips.Count)];
-            instance.audioSource.Play();
-            Debug.Log("Animal making sound");
-            instance.loopTime = Random.Range(0, instance.loopLimit);
+            AudioClipList currDangerTypeAnimal = currDangerTypeList[Random.Range(0, currDangerTypeList.Count)];
+            if(currDangerTypeAnimal.clips.Count > 0)
+            {
+                // InGameLog.AddLog("SFXChange: currDangerType " + (int)currDangerType + " mostDangerType " + (int)mostDangerType);
+
+                // Set audioSource & audioVolumn
+                // InGameLog.AddLog(currDangerTypeAnimal.clips.Count.ToString());
+                instance.audioSource.clip = currDangerTypeAnimal.clips[Random.Range(0, currDangerTypeAnimal.clips.Count)];
+                instance.audioSource.volume = 1 - (float)((float)currDangerType / (float)mostDangerType) + 0.2f;
+                instance.loopTime = Random.Range(0, instance.loopLimit);
+                instance.audioSource.Play();
+            }else{
+                instance.loopTime = 0f;
+            }
+        }else{
+            instance.loopTime = 0f;
         }
     }
 
