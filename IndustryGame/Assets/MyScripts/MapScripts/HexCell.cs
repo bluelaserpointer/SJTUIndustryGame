@@ -255,6 +255,7 @@ public class HexCell : MonoBehaviour {
 	}
 
 	int terrainTypeIndex;
+	//int landformIndex;
 
 	int elevation = int.MinValue;
 	int waterLevel;
