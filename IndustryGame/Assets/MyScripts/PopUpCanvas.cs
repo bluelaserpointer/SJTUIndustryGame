@@ -5,37 +5,50 @@ using UnityEngine.UI;
 
 public class PopUpCanvas : MonoBehaviour
 {
-    private static PopUpCanvas instance;
+    public static PopUpCanvas instance;
+
+    private static bool windowExists = false;
 
     public GameObject SinglePopUpWindowPrefab;
-    private Stack<GameObject> PopUpWindowStack;
+    private Queue<IPopUpWindow> PopUpWindowQueue;
 
     void Awake()
     {
         if (instance == null)
             instance = this;
+        PopUpWindowQueue = new Queue<IPopUpWindow>();
     }
     public void Start ()
     {
         //GenerateNewPopUpWindow("TEST", "TESTING");
     }
 
-    public static void GenerateNewPopUpWindow(string title,string contents)
+    public static void GenerateNewPopUpWindow(IPopUpWindow window)
     {
-        GameObject clone = Instantiate(instance.SinglePopUpWindowPrefab, instance.transform, false);
-        clone.GetComponent<SinglePopUpWindow>().title= title;
-        clone.GetComponent<SinglePopUpWindow>().contents = contents;
-        clone.SetActive(false);
-        instance.PopUpWindowStack.Push(clone);
+        instance.PopUpWindowQueue.Enqueue(window);
+
+        //instance.PopUpWindowQueue.Enqueue(clone);
+        if (!windowExists)
+        {
+            ShowPopUpWindowStack();
+        }
+        //InGameLog.AddLog(GameObject.FindGameObjectWithTag("PopUpWindow").name);
+
     }
 
     public static void ShowPopUpWindowStack ()
     {
-        if (instance.PopUpWindowStack.Count > 0)
+        if (instance.PopUpWindowQueue.Count > 0)
         {
-            GameObject topWindow = instance.PopUpWindowStack.Pop();
-            topWindow.SetActive(true);
+            IPopUpWindow topWindow = instance.PopUpWindowQueue.Dequeue();
+            topWindow.Generate();
+            windowExists = true;
         }
+    }
+
+    public static void SetWindowExists (bool cond)
+    {
+        windowExists = cond;
     }
 
 }
