@@ -293,7 +293,7 @@ public class Area : MonoBehaviour
         if (ProgressSliderCanvas.activeSelf)
         {
             ProgressSlider.value = (float) currentSpecialist.getActionProgressRate();
-            if (ProgressSlider.value >= 1.0f)       //TODO: 将判断语句换成查看该action是否完成
+            if (!currentSpecialist.hasCurrentAction())       //TODO: 将判断语句换成查看该action是否完成
             {
                 ProgressSliderCanvas.SetActive(false);
             }
