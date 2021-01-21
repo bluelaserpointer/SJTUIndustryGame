@@ -9,6 +9,7 @@ public class AreaDetailsHUD : MonoBehaviour
     private Area CurrentArea;
     public Dropdown Actions;
     public Dropdown Specialists;
+    public Text AreaName;
 
     
 
@@ -24,6 +25,7 @@ public class AreaDetailsHUD : MonoBehaviour
         {
             UpdateActions();
             UpdateSpecialists();
+            AreaName.text = CurrentArea.areaName;
         }
 
         //InGameLog.AddLog("Action progress rate: " + Stage.GetSpecialists()[Specialists.value].getActionProgressRate().ToString());
