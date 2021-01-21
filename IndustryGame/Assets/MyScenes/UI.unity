@@ -996,7 +996,11 @@ MonoBehaviour:
   stageTime: 0
   events:
   - {fileID: 11400000, guid: 2120b392985132d44b52d0bfd44d4c72, type: 2}
-  animalInitialAmounts: []
+  animalInitialAmounts:
+  - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
+    amount: 10000
+  - animal: {fileID: 11400000, guid: c6e06ac467d665a4db851735f8a07f49, type: 2}
+    amount: 10000
 --- !u!114 &1405366530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5583,7 +5587,7 @@ PrefabInstance:
     - target: {fileID: 7657628457861282532, guid: 1eaf90e389e46a642824b51a7a698c51,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 42.343647
+      value: 88.44121
       objectReference: {fileID: 0}
     - target: {fileID: 7888146968690205446, guid: 1eaf90e389e46a642824b51a7a698c51,
         type: 3}
