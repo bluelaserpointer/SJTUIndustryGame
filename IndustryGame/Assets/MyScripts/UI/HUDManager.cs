@@ -33,4 +33,31 @@ public class HUDManager : MonoBehaviour
         
         return instance.SpecialistWindow.activeSelf || instance.ReportWindow.activeSelf || GameObject.FindGameObjectWithTag("PopUpWindow") != null;
     }
+
+    public void Pause ()
+    {
+        Timer.Pause();
+    }
+
+    public void Resume ()
+    {
+        Timer.Resume();
+    }
+
+    public void Speed1 ()
+    {
+        Timer.setTimeSpeed(1.0f);
+    }
+
+    public void Speed2 ()
+    {
+        Timer.setTimeSpeed(2.0f);
+    }
+
+    public void Speed3 ()
+    {
+        Timer.setTimeSpeed(3.0f);
+    }
+
+
 }
