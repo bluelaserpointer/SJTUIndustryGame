@@ -82,6 +82,7 @@ public static class Timer
     }
     public static void setTimeSpeed(float speed)
     {
+        Resume();
         timeSpeed = speed;
     }
 
