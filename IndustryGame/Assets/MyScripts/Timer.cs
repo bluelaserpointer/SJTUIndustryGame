@@ -1,21 +1,25 @@
 ﻿using UnityEngine;
 
-public class Timer
+public static class Timer
 {
     public static float secondsOneDay = 1f; //更改游戏速度 (1 sec = 1 game day)
     public static float secondsOneMonth = secondsOneDay * 30;
     public static float secondsOneYear = secondsOneMonth * 12;
-    public static float timeSpeed = 1.0f;
+    private static bool paused;
+    private static float timeSpeed = 1.0f;
     private static float currentTime = 0f;
     private static int currentYear, currentMonth, currentDay;
 
     // Update is called once per frame
     public static void idle()
     {
-        currentTime += Time.deltaTime * timeSpeed;
-        currentDay = (int)((currentTime % secondsOneYear) % secondsOneMonth) + 1;
-        currentMonth = (int)((currentTime % secondsOneYear) / secondsOneMonth) + 1;
-        currentYear = (int)(currentTime / secondsOneYear) + 2021;
+        if (!paused)
+        {
+            currentTime += Time.deltaTime * timeSpeed;
+            currentDay = (int)((currentTime % secondsOneYear) % secondsOneMonth) + 1;
+            currentMonth = (int)((currentTime % secondsOneYear) / secondsOneMonth) + 1;
+            currentYear = (int)(currentTime / secondsOneYear) + 2021;
+        }
     }
 
     public static SeasonType GetSeason()
@@ -62,5 +66,28 @@ public class Timer
     public static int GetYear()
     {
         return currentYear;
+    }
+
+    public static void Pause()
+    {
+        paused = true;
+    }
+    public static void Resume()
+    {
+        paused = false;
+    }
+    public static bool IsPaused()
+    {
+        return paused;
+    }
+    public static void setTimeSpeed(float speed)
+    {
+        Resume();
+        timeSpeed = speed;
+    }
+
+    public static float getTimeSpeed()
+    {
+        return timeSpeed;
     }
 }

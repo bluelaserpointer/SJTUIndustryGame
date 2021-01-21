@@ -49,7 +49,11 @@ public class Area : MonoBehaviour
     public float rainFallRatio = 0.3f;
     private void Start()
     {
-        areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
+        environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
+        if(environmentType.Equals(EnvironmentType.Mountains))
+            areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
+        else
+            areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
         HexCell myCell = transform.GetComponentInParent<HexCell>();
 
         weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
@@ -58,7 +62,7 @@ public class Area : MonoBehaviour
         {
             HexCell neighborCell = myCell.GetNeighbor((HexDirection)direction);
             if(neighborCell != null)
-                neighbors.Add(neighborCell.transform.GetComponent<Area>());
+                neighbors.Add(neighborCell.transform.GetComponentInChildren<Area>());
         }
         foreach (Building building in buildings)
         {
@@ -112,7 +116,6 @@ public class Area : MonoBehaviour
     
     public void changeSpeciesAmount(Animal animal, int change)
     {
-        Debug.Log("Adding log: " + animal.animalName + " " + change);
         if(animalAmounts.ContainsKey(animal))
         {
             animalAmounts[animal].addCurrent(change);
@@ -293,7 +296,7 @@ public class Area : MonoBehaviour
         if (ProgressSliderCanvas.activeSelf)
         {
             ProgressSlider.value = (float) currentSpecialist.getActionProgressRate();
-            if (ProgressSlider.value >= 1.0f)       //TODO: 将判断语句换成查看该action是否完成
+            if (!currentSpecialist.hasCurrentAction())       //TODO: 将判断语句换成查看该action是否完成
             {
                 ProgressSliderCanvas.SetActive(false);
             }

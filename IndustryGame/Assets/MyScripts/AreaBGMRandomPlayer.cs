@@ -39,7 +39,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
                 bgmAnimator = GetComponent<Animator>();
             DontDestroyOnLoad(instance);
 
-            // SetGlobalBgmList();
+            SetGlobalBgmList();
         }else{
             Destroy(gameObject);
         }

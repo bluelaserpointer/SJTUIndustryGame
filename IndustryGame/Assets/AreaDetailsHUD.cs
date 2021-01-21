@@ -9,6 +9,7 @@ public class AreaDetailsHUD : MonoBehaviour
     private Area CurrentArea;
     public Dropdown Actions;
     public Dropdown Specialists;
+    public Text AreaName;
 
     
 
@@ -20,10 +21,14 @@ public class AreaDetailsHUD : MonoBehaviour
     void Update()
     {
         CurrentArea = OrthographicCamera.GetMousePointingArea();
-        UpdateActions();
-        UpdateSpecialists();
+        if (CurrentArea != null)
+        {
+            UpdateActions();
+            UpdateSpecialists();
+            AreaName.text = CurrentArea.areaName;
+        }
 
-        InGameLog.AddLog("Action progress rate: " + Stage.GetSpecialists()[Specialists.value].getActionProgressRate().ToString());
+        //InGameLog.AddLog("Action progress rate: " + Stage.GetSpecialists()[Specialists.value].getActionProgressRate().ToString());
     }
 
     public void UpdateActions ()
@@ -65,7 +70,7 @@ public class AreaDetailsHUD : MonoBehaviour
 
     public void StartAction ()
     {
-        Stage.GetSpecialists()[Specialists.value].startAction(CurrentArea.GetEnabledActions()[Actions.value]);
         Stage.GetSpecialists()[Specialists.value].moveToArea(CurrentArea);
+        Stage.GetSpecialists()[Specialists.value].startAction(CurrentArea.GetEnabledActions()[Actions.value]);
     }
 }
