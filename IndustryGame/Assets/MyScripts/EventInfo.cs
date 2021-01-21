@@ -62,7 +62,7 @@ public class EventInfo : ScriptableObject
             if (shouldAppear)
             {
                 _isAppeared = true;
-                PopUpCanvas.GenerateNewPopUpWindow(infoName, description);
+                PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, description));
             }
         }
         if (_isFinished) {
@@ -74,7 +74,7 @@ public class EventInfo : ScriptableObject
             if(successCondition.judge())
             {
                 _isFinished = true;
-                PopUpCanvas.GenerateNewPopUpWindow(infoName, descriptionAfterFinish);
+                PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, descriptionAfterFinish));
             }
         }
     }

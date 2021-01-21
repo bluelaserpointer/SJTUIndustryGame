@@ -24,7 +24,7 @@ public class Event : ScriptableObject
         {
             info.init();
         }
-        PopUpCanvas.GenerateNewPopUpWindow(eventName, description);
+        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, description));
     }
     public void dayIdle()
     {
@@ -48,7 +48,7 @@ public class Event : ScriptableObject
         if(judge)
         {
             _isFinished = true;
-            PopUpCanvas.GenerateNewPopUpWindow(eventName, descriptionAfterFinish);
+            PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, descriptionAfterFinish));
         }
         return judge;
     }

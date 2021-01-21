@@ -7,7 +7,7 @@ public class SimplePopUpWindow : IPopUpWindow
     public string title;
     public string contents;
 
-    SimplePopUpWindow (string title, string contents)
+    public SimplePopUpWindow (string title, string contents)
     {
         this.title = title;
         this.contents = contents;
