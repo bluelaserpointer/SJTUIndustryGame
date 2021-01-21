@@ -49,7 +49,12 @@ public class Area : MonoBehaviour
     public float rainFallRatio = 0.3f;
     private void Start()
     {
-        areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
+        environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
+        if(environmentType.Equals(EnvironmentType.Mountains))
+            areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
+        else
+            areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
+        InGameLog.AddLog(areaName);
         HexCell myCell = transform.GetComponentInParent<HexCell>();
 
         weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);

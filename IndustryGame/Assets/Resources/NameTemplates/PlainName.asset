@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97b0d67b61575b4f8de460d2b323845, type: 3}
   m_Name: PlainName
   m_EditorClassIdentifier: 
-  names: []
+  names:
+  - "\u9F99\u80CC"
+  - "\u795E\u4E50\u9662"
+  - "\u843D\u65E5\u71D5"
+  - "\u5730\u9B3C\u7259"
+  - "\u94F6\u638C"
+  - "\u9759\u98CE\u53F8"
+  - "\u5DE8\u4EBA\u81C2"
+  - "\u767E\u540D\u5730"
+  - "\u98CE\u4E4B\u6E90"
+  - "\u9057\u5FD8\u4E4B\u5730"
+  - "\u798F\u5A03\u809A"
