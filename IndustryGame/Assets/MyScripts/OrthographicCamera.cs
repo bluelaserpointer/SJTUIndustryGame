@@ -180,7 +180,7 @@ public class OrthographicCamera : MonoBehaviour
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
                 currentSize = keyOrthographicSize;
 
-        }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
+        }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && !HUDManager.CheckOpenWindow())
         {
             // Focusing with mouse
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -220,4 +220,5 @@ public class OrthographicCamera : MonoBehaviour
     {
         return instance != null ? instance.currentArea : null;
     }
+
 }
