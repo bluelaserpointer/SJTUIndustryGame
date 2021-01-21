@@ -54,7 +54,6 @@ public class Area : MonoBehaviour
             areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
         else
             areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
-        InGameLog.AddLog(areaName);
         HexCell myCell = transform.GetComponentInParent<HexCell>();
 
         weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
