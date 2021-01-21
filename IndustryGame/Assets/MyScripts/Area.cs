@@ -112,7 +112,6 @@ public class Area : MonoBehaviour
     
     public void changeSpeciesAmount(Animal animal, int change)
     {
-        Debug.Log("Adding log: " + animal.animalName + " " + change);
         if(animalAmounts.ContainsKey(animal))
         {
             animalAmounts[animal].addCurrent(change);

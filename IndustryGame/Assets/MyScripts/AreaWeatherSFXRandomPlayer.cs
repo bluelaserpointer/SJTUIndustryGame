@@ -45,7 +45,6 @@ public class AreaWeatherSFXRandomPlayer : MonoBehaviour
         Weather.WeatherType weatherType = currentArea.GetWeather().GetWeatherType();
         if(instance.currentWeatherType != weatherType || instance.focus == false)
         {
-            Debug.Log("Weather changes");
             instance.currentWeatherType = weatherType;
             AudioClipList audioClips = instance.weatherSfxList[(int)(instance.currentWeatherType)];
             
