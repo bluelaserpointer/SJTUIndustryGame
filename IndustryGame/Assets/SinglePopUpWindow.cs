@@ -26,5 +26,6 @@ public class SinglePopUpWindow : MonoBehaviour
     public void CloseWindow ()
     {
         Destroy(gameObject);
+        PopUpCanvas.ShowPopUpWindowStack();
     }
 }

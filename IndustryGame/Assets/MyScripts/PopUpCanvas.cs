@@ -31,7 +31,7 @@ public class PopUpCanvas : MonoBehaviour
 
     public static void ShowPopUpWindowStack ()
     {
-        while (instance.PopUpWindowStack.Count > 0)
+        if (instance.PopUpWindowStack.Count > 0)
         {
             GameObject topWindow = instance.PopUpWindowStack.Pop();
             topWindow.SetActive(true);
