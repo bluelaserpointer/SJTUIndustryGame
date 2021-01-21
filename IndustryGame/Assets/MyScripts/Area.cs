@@ -62,7 +62,7 @@ public class Area : MonoBehaviour
         {
             HexCell neighborCell = myCell.GetNeighbor((HexDirection)direction);
             if(neighborCell != null)
-                neighbors.Add(neighborCell.transform.GetComponent<Area>());
+                neighbors.Add(neighborCell.transform.GetComponentInChildren<Area>());
         }
         foreach (Building building in buildings)
         {
