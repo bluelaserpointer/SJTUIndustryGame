@@ -36,9 +36,9 @@ public class HexMapEditor : MonoBehaviour {
 	public void SetTerrainTypeIndex (int index) {
 		activeTerrainTypeIndex = index;
 	}
-	public void SetLandformIndex(int index)
+	public void SetLandformIndex(float index)
 	{
-		activeLandformIndex = index;
+		activeLandformIndex = (int)index;
 	}
 
 	public void SetApplyElevation (bool toggle) {
@@ -184,12 +184,12 @@ public class HexMapEditor : MonoBehaviour {
 
 	void EditCell (HexCell cell) {
 		if (cell) {
-			if (activeLandformIndex >= 0)
+			if (activeLandformIndex > 0)
 			{
 				ApplyLandform(cell);
 				return;
 			}
-
+			
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
 			}
@@ -247,12 +247,21 @@ public class HexMapEditor : MonoBehaviour {
 
 	void ApplyLandform(HexCell cell)
 	{
-		cell.TerrainTypeIndex = activeLandformIndex; //改变地貌颜色
-		switch (activeLandformIndex)
+		cell.Elevation = 0;
+		cell.WaterLevel = -1;
+		cell.PlantLevel = 0;
+		cell.UrbanLevel = 0;
+		cell.FarmLevel = 0;
+		cell.TerrainTypeIndex = activeLandformIndex-1; //改变地貌颜色
+
+
+		switch (activeLandformIndex-1)
 		{
 			case 0://water
+				
 				cell.Elevation = 0;
-				cell.WaterLevel = 0;
+				cell.WaterLevel = 1;
+				
 				break;
 			case 1://grassland
 				cell.Elevation = Random.Range(0,2);
@@ -286,7 +295,7 @@ public class HexMapEditor : MonoBehaviour {
 			case 9://polluted
 				cell.Elevation = 0;
 				break;
-			case 10:
+			case 10://preserve
 				cell.Elevation = 0;
 				break;
 
