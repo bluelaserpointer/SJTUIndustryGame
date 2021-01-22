@@ -13,6 +13,7 @@ public class HexMapEditor : MonoBehaviour {
 		activeRainLevel;
 
 	int activeTerrainTypeIndex;
+	int activeLandformIndex;
 
 	int brushSize;
 
@@ -34,6 +35,10 @@ public class HexMapEditor : MonoBehaviour {
 
 	public void SetTerrainTypeIndex (int index) {
 		activeTerrainTypeIndex = index;
+	}
+	public void SetLandformIndex(float index)
+	{
+		activeLandformIndex = (int)index;
 	}
 
 	public void SetApplyElevation (bool toggle) {
@@ -179,9 +184,16 @@ public class HexMapEditor : MonoBehaviour {
 
 	void EditCell (HexCell cell) {
 		if (cell) {
+			if (activeLandformIndex > 0)
+			{
+				ApplyLandform(cell);
+				return;
+			}
+			
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
 			}
+
 			if (applyElevation) {
 				cell.Elevation = activeElevation;
 			}
@@ -229,6 +241,64 @@ public class HexMapEditor : MonoBehaviour {
 					}
 				}
 			}
+		}
+	}
+
+
+	void ApplyLandform(HexCell cell)
+	{
+		cell.Elevation = 0;
+		cell.WaterLevel = -1;
+		cell.PlantLevel = 0;
+		cell.UrbanLevel = 0;
+		cell.FarmLevel = 0;
+		cell.TerrainTypeIndex = activeLandformIndex-1; //改变地貌颜色
+
+
+		switch (activeLandformIndex-1)
+		{
+			case 0://water
+				
+				cell.Elevation = 0;
+				cell.WaterLevel = 1;
+				
+				break;
+			case 1://grassland
+				cell.Elevation = Random.Range(0,2);
+				cell.PlantLevel = 1;
+				break;
+			case 2://forest
+				cell.Elevation = Random.Range(0, 2);
+				cell.PlantLevel = 2;
+				break;
+			case 3://PrimalForest
+				cell.Elevation = Random.Range(0, 2);
+				cell.PlantLevel = 3;
+				break;
+			case 4://beach
+				cell.Elevation = 0;
+				break;
+			case 5://desert
+				cell.Elevation = 0;
+				break;
+			case 6://mountains
+				cell.Elevation = Random.Range(3, 6);
+				break;
+			case 7://city
+				cell.Elevation = 0;
+				cell.UrbanLevel = Random.Range(2,4);
+				break;
+			case 8://farmland
+				cell.Elevation = 0;
+				cell.FarmLevel = Random.Range(2,4);
+				break;
+			case 9://polluted
+				cell.Elevation = 0;
+				break;
+			case 10://preserve
+				cell.Elevation = 0;
+				break;
+
 		}
 	}
 }
