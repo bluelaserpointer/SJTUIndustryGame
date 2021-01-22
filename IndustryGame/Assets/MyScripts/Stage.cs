@@ -10,6 +10,7 @@ public class Stage : MonoBehaviour
 
     private Area[] areas;
     private Area baseArea;
+    private List<Region> regions = new List<Region>();
 
     public string stageName;
     [TextArea]
@@ -32,6 +33,8 @@ public class Stage : MonoBehaviour
     //基地资源
     private int lastDay;
     private int lestMoney;
+    public static int contribution;
+    public static int reputation;
     private List<Specialist> specialists = new List<Specialist>();
     private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
