@@ -1021,8 +1021,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414a0fc06528949a0baff4f719b04a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellCountX: 6
-  cellCountZ: 6
+  cellCountX: 36
+  cellCountZ: 36
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 3}
   chunkPrefab: {fileID: 114000010052569294, guid: 7622d007cafd044a1b1189c0b93d2912,
@@ -5791,7 +5791,7 @@ PrefabInstance:
     - target: {fileID: 7657628457861282532, guid: 1eaf90e389e46a642824b51a7a698c51,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00023921047
+      value: -0.000041934938
       objectReference: {fileID: 0}
     - target: {fileID: 7888146968690205446, guid: 1eaf90e389e46a642824b51a7a698c51,
         type: 3}
