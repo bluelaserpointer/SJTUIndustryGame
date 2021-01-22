@@ -254,8 +254,24 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	public int LandformIndex
+	{
+		get
+		{
+			return landformIndex;
+		}
+		set
+		{
+			if (landformIndex != value)
+			{
+				landformIndex = value;
+				Refresh();
+			}
+		}
+	}
+
 	int terrainTypeIndex;
-	//int landformIndex;
+	int landformIndex;
 
 	int elevation = int.MinValue;
 	int waterLevel;
@@ -442,9 +458,12 @@ public class HexCell : MonoBehaviour {
 	}
 
 	public void Save (BinaryWriter writer) {
+		if (elevation == -1)
+			elevation = 255;
 		writer.Write((byte)terrainTypeIndex);
 		writer.Write((byte)elevation);
 		writer.Write((byte)waterLevel);
+		writer.Write((byte)landformIndex);
 		writer.Write((byte)urbanLevel);
 		writer.Write((byte)farmLevel);
 		writer.Write((byte)plantLevel);
@@ -476,15 +495,19 @@ public class HexCell : MonoBehaviour {
 
 	public void Load (BinaryReader reader) {
 		terrainTypeIndex = reader.ReadByte();
-		elevation = reader.ReadByte();
+
+		int tmpElevation = reader.ReadByte();
+		if (tmpElevation == 255) tmpElevation = -1;
+		elevation = tmpElevation;
+		//elevation = reader.ReadByte();
 		RefreshPosition();
 		waterLevel = reader.ReadByte();
+		landformIndex = reader.ReadByte();
 		urbanLevel = reader.ReadByte();
 		farmLevel = reader.ReadByte();
 		plantLevel = reader.ReadByte();
 		specialIndex = reader.ReadByte();
 		walled = reader.ReadBoolean();
-
 		byte riverData = reader.ReadByte();
 		if (riverData >= 128) {
 			hasIncomingRiver = true;
@@ -508,4 +531,5 @@ public class HexCell : MonoBehaviour {
 			roads[i] = (roadFlags & (1 << i)) != 0;
 		}
 	}
+
 }

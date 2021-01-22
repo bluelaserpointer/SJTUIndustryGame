@@ -187,7 +187,7 @@ public class HexMapEditor : MonoBehaviour {
 			if (activeLandformIndex > 0)
 			{
 				ApplyLandform(cell);
-				return;
+				//return;
 			}
 			
 			if (activeTerrainTypeIndex >= 0) {
@@ -248,7 +248,7 @@ public class HexMapEditor : MonoBehaviour {
 	void ApplyLandform(HexCell cell)
 	{
 		cell.Elevation = 0;
-		cell.WaterLevel = -1;
+		cell.WaterLevel = 0;
 		cell.PlantLevel = 0;
 		cell.UrbanLevel = 0;
 		cell.FarmLevel = 0;
@@ -259,8 +259,8 @@ public class HexMapEditor : MonoBehaviour {
 		{
 			case 0://water
 				
-				cell.Elevation = 0;
-				cell.WaterLevel = 1;
+				cell.Elevation = -1;
+				cell.WaterLevel =0;
 				
 				break;
 			case 1://grassland
