@@ -6,21 +6,16 @@ using UnityEngine.UI;
 public class HireUI : MonoBehaviour
 {
     public List<Specialist> specialists;
-    public Ability ability;
-    public GameObject HireProfile1;
-    public GameObject HireProfile2;
-    public GameObject HireProfile3;
+    public GameObject HireProfilePrefab;
+    public GameObject HireCanvas;
 
-    public Text AbilityText;
-    //public Image AbilityPhoto;
 
     
     void Start()
     {
-        AbilityText.text = AbilityDescription.GetAbilityDescription(ability);
+        GetHireList();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -28,10 +23,12 @@ public class HireUI : MonoBehaviour
 
     public void GetHireList ()
     {
-        specialists = SpecialistEmployList.getSpecialists(ability);
-        HireProfile1.GetComponent<ProfileManage>().specialist = specialists[0];
-        HireProfile2.GetComponent<ProfileManage>().specialist = specialists[1];
-        HireProfile3.GetComponent<ProfileManage>().specialist = specialists[2];
+        specialists = SpecialistEmployList.getSpecialists();
+        for (int i = 0 ; i < specialists.Count ; i++)
+        {
+            GameObject clone = Instantiate(HireProfilePrefab, HireCanvas.transform, false);
+            HireProfilePrefab.GetComponent<ProfileManage>().specialist = specialists[i];
+        }
     }
 
 

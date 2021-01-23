@@ -19,6 +19,11 @@ public class ProfileManage : MonoBehaviour
     public GameObject SingleAbility;
     public GameObject AbilityList;
 
+    private void OnDisable ()
+    {
+        Destroy(gameObject);
+    }
+
     void Update ()
     {
         clearAbilityList();
@@ -50,12 +55,6 @@ public class ProfileManage : MonoBehaviour
             clone.GetComponent<abilitiesUI>().abilityLevel.text = pair.Value.ToString();
             InGameLog.AddLog(pair.Key.ToString() + ": " + pair.Value.ToString());
         }
-
-        //IDictionaryEnumerator enumerator = specialist.abilities.GetEnumerator();
-        //while (enumerator.MoveNext())
-        //{
-            
-        //}
     }
 
     public void clearAbilityList ()
