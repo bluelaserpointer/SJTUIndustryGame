@@ -21,7 +21,10 @@ public class ProfileManage : MonoBehaviour
 
     private void OnDisable ()
     {
-        Destroy(gameObject);
+        if (HireMode)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Update ()

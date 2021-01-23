@@ -11,7 +11,7 @@ public class HireUI : MonoBehaviour
 
 
     
-    void Start()
+    void OnEnable()
     {
         GetHireList();
     }
@@ -27,7 +27,7 @@ public class HireUI : MonoBehaviour
         for (int i = 0 ; i < specialists.Count ; i++)
         {
             GameObject clone = Instantiate(HireProfilePrefab, HireCanvas.transform, false);
-            HireProfilePrefab.GetComponent<ProfileManage>().specialist = specialists[i];
+            clone.GetComponent<ProfileManage>().specialist = specialists[i];
         }
     }
 
