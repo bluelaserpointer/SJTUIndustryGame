@@ -9,6 +9,25 @@ public class HexCell : MonoBehaviour {
 
 	public HexGridChunk chunk;
 
+
+	public int RegionId
+	{
+		get
+		{
+			return regionId;
+		}
+		set
+		{
+			if (regionId == value)
+			{
+				return;
+			}
+			regionId = value;
+		}
+	
+	}
+
+
 	public Color Color {
 		get {
 			return HexMetrics.colors[terrainTypeIndex];
@@ -270,6 +289,7 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	int regionId;
 	int terrainTypeIndex;
 	int landformIndex;
 
@@ -458,8 +478,9 @@ public class HexCell : MonoBehaviour {
 	}
 
 	public void Save (BinaryWriter writer) {
-		if (elevation == -1)
-			elevation = 255;
+		if (elevation == -1) elevation = 255;
+		if (regionId == -1)  regionId = 255;
+		writer.Write((byte)regionId);
 		writer.Write((byte)terrainTypeIndex);
 		writer.Write((byte)elevation);
 		writer.Write((byte)waterLevel);
@@ -494,11 +515,14 @@ public class HexCell : MonoBehaviour {
 	}
 
 	public void Load (BinaryReader reader) {
-		terrainTypeIndex = reader.ReadByte();
 
+		regionId = reader.ReadByte();
+		if (regionId == 255) regionId = -1;
+		terrainTypeIndex = reader.ReadByte();
 		int tmpElevation = reader.ReadByte();
 		if (tmpElevation == 255) tmpElevation = -1;
 		elevation = tmpElevation;
+		
 		//elevation = reader.ReadByte();
 		RefreshPosition();
 		waterLevel = reader.ReadByte();
