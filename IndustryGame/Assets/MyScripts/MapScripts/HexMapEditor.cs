@@ -12,6 +12,7 @@ public class HexMapEditor : MonoBehaviour {
 	int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex,
 		activeRainLevel;
 
+	int activeregionId;
 	int activeTerrainTypeIndex;
 	int activeLandformIndex;
 
@@ -33,6 +34,10 @@ public class HexMapEditor : MonoBehaviour {
 	HexDirection dragDirection;
 	HexCell previousCell;
 
+	public void setRegionId(float index)
+	{
+		activeregionId = (int)index;
+	}
 	public void SetTerrainTypeIndex (int index) {
 		activeTerrainTypeIndex = index;
 	}
@@ -189,6 +194,10 @@ public class HexMapEditor : MonoBehaviour {
 				ApplyLandform(cell);
 				//return;
 			}
+			//if(activeregionId >= 0)
+			//{
+				cell.RegionId = activeregionId;
+			//}
 			
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
