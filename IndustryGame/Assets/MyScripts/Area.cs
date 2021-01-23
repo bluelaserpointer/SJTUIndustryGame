@@ -113,21 +113,21 @@ public class Area : MonoBehaviour
     public void dayIdle()
     {
         weather.judgeWeather();
-        switch (weather.GetWeatherType())
-        {
-            case Weather.WeatherType.Rainy:
-                setWeatherFX(rainFX, true);
-                setWeatherFX(snowFX, false);
-                break;
-            case Weather.WeatherType.Snowy:
-                setWeatherFX(rainFX, false);
-                setWeatherFX(snowFX, true);
-                break;
-            default:
-                setWeatherFX(rainFX, false);
-                setWeatherFX(snowFX, false);
-                break;
-        }
+        //switch (weather.GetWeatherType())
+        //{
+        //    case Weather.WeatherType.Rainy:
+        //        setWeatherFX(rainFX, true);
+        //        setWeatherFX(snowFX, false);
+        //        break;
+        //    case Weather.WeatherType.Snowy:
+        //        setWeatherFX(rainFX, false);
+        //        setWeatherFX(snowFX, true);
+        //        break;
+        //    default:
+        //        setWeatherFX(rainFX, false);
+        //        setWeatherFX(snowFX, false);
+        //        break;
+        //}
         foreach (Building building in buildings)
         {
             building.idle();
