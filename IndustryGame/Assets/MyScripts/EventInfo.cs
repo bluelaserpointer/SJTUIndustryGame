@@ -9,6 +9,11 @@ public class EventInfo : ScriptableObject
     public string description;
     [TextArea]
     public string descriptionAfterFinish;
+
+    [Header("完成功劳奖励")]
+    [Min(0)]
+    public int contribution;
+
     [Header("出现在以下动物报告")]
     public List<Animal> showInAnimalsReport;
     [Header("出现在环境报告")]
@@ -71,10 +76,11 @@ public class EventInfo : ScriptableObject
         } else {
             if (buffAfterFinish != null)
                 buffAfterFinish.idle();
-            if(successCondition.judge())
+            if(successCondition == null || successCondition.judge())
             {
                 _isFinished = true;
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, descriptionAfterFinish));
+                Stage.contribution += contribution;
             }
         }
     }
