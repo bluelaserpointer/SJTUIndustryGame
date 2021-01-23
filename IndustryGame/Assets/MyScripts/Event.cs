@@ -77,7 +77,7 @@ public class Event : ScriptableObject
         {
             _isFinished = true;
             PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, descriptionAfterFinish));
-            Stage.contribution += contribution;
+            Stage.AddResourceValue(ResourceType.contribution, contribution);
         }
         return judge;
     }

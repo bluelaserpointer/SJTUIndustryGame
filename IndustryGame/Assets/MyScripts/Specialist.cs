@@ -10,6 +10,8 @@ public class Specialist
     public int hireCost;
     public Ability speciality;
     public Dictionary<Ability, int> abilities = new Dictionary<Ability, int>();
+    private int exp;
+    public static int[] expCaps = { 0, 100, 200, 500, 1000, 1600, 2500 };
 
     Area currentArea;
     Action currentAction;
@@ -19,23 +21,33 @@ public class Specialist
     {
         if(currentAction != null)
         {
-            actionProgress += 1;
+            actionProgress += 1 * (1.0 + Stage.GetResourceValue(ResourceType.specialistTrainBoost));
             if(actionProgress >= currentAction.timeCost)
             {
                 currentAction.finishAction(currentArea);
                 currentAction = null;
+                exp += 10; //TODO; need experience info
             }
         }
     }
     /*
      *  Add an ability for level between minValueInclude ~ maxValueInclude.
-     *  Returns actural level.
+     *  Supports removing an ability when its level reach 0.
+     *  Returns result level.
      */
     public int addSpeciality_range(Ability ability, int minValueInclude, int maxValueInclude)
     {
-        if (abilities.ContainsKey(ability))
-            return 0;
         int level = Random.Range(minValueInclude, maxValueInclude + 1);
+        if (abilities.ContainsKey(ability))
+        {
+            int result = Mathf.Clamp(abilities[ability] + level, 0, 10);
+            if (result == 0)
+            {
+                abilities.Remove(ability);
+                return 0;
+            }
+            return abilities[ability] = result;
+        }
         if(level <= 0) {
             return 0;
         }
@@ -65,5 +77,42 @@ public class Specialist
     {
         return currentAction != null;
     }
-
+    public int GetLevel()
+    {
+        int level = 0;
+        foreach (int expCap in expCaps)
+        {
+            if (exp < expCap)
+            {
+                break;
+            }
+            ++level;
+        }
+        return level;
+    }
+    public int GetExpCap()
+    {
+        return expCaps[GetLevel()];
+    }
+    public double GetExpRate()
+    {
+        int level = GetLevel();
+        if(level == GetMaxLevel())
+            return 1.0;
+        int prevExpCap = expCaps[level - 1];
+        return (exp - prevExpCap) / (expCaps[level] - prevExpCap);
+    }
+    public static int GetMaxLevel()
+    {
+        return expCaps.Length - 1;
+    }
+    public void AddExp(int value)
+    {
+        if(exp + value > GetExpCap()) //level up
+        {
+            addSpeciality_range(EnumHelper.GetRandomValue<Ability>(), 2, 2);
+            addSpeciality_range(EnumHelper.GetRandomValue<Ability>(), 1, 1);
+        }
+        exp += value;
+    }
 }

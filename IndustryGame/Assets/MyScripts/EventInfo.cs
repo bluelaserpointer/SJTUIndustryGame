@@ -80,7 +80,7 @@ public class EventInfo : ScriptableObject
             {
                 _isFinished = true;
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, descriptionAfterFinish));
-                Stage.contribution += contribution;
+                Stage.AddResourceValue(ResourceType.contribution, contribution);
             }
         }
     }

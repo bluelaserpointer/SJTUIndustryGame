@@ -1,7 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+
+public struct AmountChange
+{
+    public float old;
+    private float current;
+    public float change;
+    public AmountChange(float initialValue) { old = current = initialValue; change = 0; }
+    public float Add(float value) { return current += value; }
+    public float AddWithClamp(float value, float min, float max) { return current = Mathf.Clamp(current + value, min, max); }
+    public float AddWithoutRecord(float value) { old += value; return current += value; }
+    public void recordChange()
+    {
+        if (current < 0)
+            current = 0;
+        change = current - old;
+        old = current;
+    }
+}
+public enum ResourceType
+{
+    [Description("金钱")]
+    money,
+    [Description("功劳")]
+    contribution,
+    [Description("名声")]
+    reputation,
+    [Description("评价")]
+    opinion,
+    [Description("专家培养加成")]
+    specialistTrainBoost,
+    [Description("措施执行加成")]
+    actionProgressBoost
+}
 
 [DisallowMultipleComponent]
 public class Stage : MonoBehaviour
@@ -32,9 +66,7 @@ public class Stage : MonoBehaviour
 
     //基地资源
     private int lastDay;
-    private int lestMoney;
-    public static int contribution;
-    public static int reputation;
+    public Dictionary<ResourceType, AmountChange> resources = new Dictionary<ResourceType, AmountChange>();
     private List<Specialist> specialists = new List<Specialist>();
     private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
@@ -47,10 +79,13 @@ public class Stage : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        //init resources
+        foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
+            resources.Add(resourceType, new AmountChange());
         //set stage money objective
-        lestMoney = stageMoney;
+        resources[ResourceType.money].AddWithoutRecord(stageMoney);
         //init events
-        foreach(Event anEvent in events) {
+        foreach (Event anEvent in events) {
             anEvent.init();
         }
         //union actions
@@ -120,6 +155,10 @@ public class Stage : MonoBehaviour
     }
     void Update()
     {
+        //record resource changes
+        foreach (AmountChange amountChange in resources.Values)
+            amountChange.recordChange();
+        //check time
         Timer.idle();
         if (lastDay != Timer.GetDay()) //day change happened
         {
@@ -175,11 +214,19 @@ public class Stage : MonoBehaviour
     }
     public static void subMoney(int value)
     {
-        instance.lestMoney -= value;
+        instance.resources[ResourceType.money].Add(-value);
     }
     public static int GetLestMoney()
     {
-        return instance.lestMoney;
+        return (int)instance.resources[ResourceType.money].old;
+    }
+    public static double GetResourceValue(ResourceType resourceType)
+    {
+        return instance.resources[resourceType].old;
+    }
+    public static double AddResourceValue(ResourceType resourceType, float value)
+    {
+        return instance.resources[resourceType].Add(value);
     }
     public static List<Event> GetEvents()
     {
