@@ -99,7 +99,6 @@ public class Stage : MonoBehaviour
                 System.Random random = new System.Random();
                 foreach (Area area in areas)
                 {
-                    Debug.Log("Stage: initiating area");
                     // if (area.environmentType == environment)
                     // {
                         area.changeSpeciesAmount(animalInitialAmount.animal, (int)(baseAmount * (0.95 + 0.10 * random.NextDouble())));
