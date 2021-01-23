@@ -24,20 +24,6 @@ public class Area : MonoBehaviour
 
     List<Area> neighbors = new List<Area>();
     private List<AreaAction> finishedActions = new List<AreaAction>();
-    private struct AmountChange
-    {
-        public int old;
-        private int current;
-        public int change;
-        public AmountChange(int initialValue) { old = current = initialValue; change = 0; }
-        public void addCurrent(int value) { current += value; }
-        public void recordChange() {
-            if (current < 0)
-                current = 0;
-            change = current - old;
-            old = current;
-        }
-    }
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
     private LinkedList<Dictionary<Animal, AmountChange>> animalAmountsRecords = new LinkedList<Dictionary<Animal, AmountChange>>();
 
@@ -72,11 +58,11 @@ public class Area : MonoBehaviour
     }
     public int getSpeciesAmount(Animal animal)
     {
-        return animalAmounts.ContainsKey(animal) ? animalAmounts[animal].old : 0;
+        return animalAmounts.ContainsKey(animal) ? (int)animalAmounts[animal].old : 0;
     }
     public int getSpeciesChange(Animal animal)
     {
-        return animalAmounts.ContainsKey(animal) ? animalAmounts[animal].change : 0;
+        return animalAmounts.ContainsKey(animal) ? (int)animalAmounts[animal].change : 0;
     }
     public ICollection<Animal> getSpecies()
     {
@@ -96,7 +82,7 @@ public class Area : MonoBehaviour
         {
             InGameLog.AddLog("In getSpeciesDangerTypes - foreach");
 
-            int amount = animalAndAmount.Value.old;
+            int amount = (int)animalAndAmount.Value.old;
             Animal animal = animalAndAmount.Key;
             if(animalAndAmount.Value.old > 0)
             {
@@ -118,7 +104,7 @@ public class Area : MonoBehaviour
     {
         if(animalAmounts.ContainsKey(animal))
         {
-            animalAmounts[animal].addCurrent(change);
+            animalAmounts[animal].Add(change);
         } else if(change > 0)
         {
             animalAmounts.Add(animal, new AmountChange(change));
@@ -149,7 +135,7 @@ public class Area : MonoBehaviour
         foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
             animalAndAmount.Value.recordChange();
-            animalAndAmount.Key.idle(this, animalAndAmount.Value.old);
+            animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.old);
         }
         //show specialist mark // will be upgraded to show count in future
         if(getSpecialistsInArea().Count > 0)
@@ -204,12 +190,12 @@ public class Area : MonoBehaviour
     public int getSpeciesAmountInLatestRecord(Animal animal)
     {
         Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
-        return latestRecord.ContainsKey(animal) ? latestRecord[animal].old : 0;
+        return latestRecord.ContainsKey(animal) ? (int)latestRecord[animal].old : 0;
     }
     public int getSpeciesChangeInLatestRecord(Animal animal)
     {
         Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
-        return latestRecord.ContainsKey(animal) ? latestRecord[animal].change : 0;
+        return latestRecord.ContainsKey(animal) ? (int)latestRecord[animal].change : 0;
     }
     public Weather GetWeather()
     {
@@ -249,14 +235,14 @@ public class Area : MonoBehaviour
         {
             if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
                 continue;
-            int providableAmount = animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater;
+            int providableAmount = (int)(animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
             if(sumProvidableAmount + providableAmount >= units)
             {
                 providableAmount = units - sumProvidableAmount;
                 satisfied = true;
             }
             sumProvidableAmount += providableAmount;
-            animalAndAmount.Value.addCurrent(-providableAmount); //decrease eaten animals
+            animalAndAmount.Value.Add(-providableAmount); //decrease eaten animals
             if (satisfied)
                 break;
         }
@@ -273,7 +259,7 @@ public class Area : MonoBehaviour
         {
             if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
                 continue;
-            int providableAmount = animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater;
+            int providableAmount = (int)(animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
             sumProvidableAmount += providableAmount;
         }
         return sumProvidableAmount;

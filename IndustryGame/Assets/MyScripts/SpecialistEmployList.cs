@@ -18,7 +18,8 @@ public static class SpecialistEmployList {
         System.Random random = new System.Random();
         for(int i = 0; i < listSize; ++i)
         {
-            Ability speciality = (Ability)Random.Range(0, (int)Ability.End);
+            Ability speciality = EnumHelper.GetRandomValue<Ability>();
+            InGameLog.AddLog("ability: " + speciality.ToString());
             Specialist specialist = new Specialist();
             specialist.name = Resources.Load<NameTemplates>("NameTemplates/SpecialistName").pickRandomOne();
             specialist.birthday = "randomBirthDay";
@@ -29,14 +30,14 @@ public static class SpecialistEmployList {
                 abilityLevelTotal += specialist.addSpeciality_range(speciality, 7, 10);
                 for(int j = 0; j < 2; ++j)
                 {
-                    abilityLevelTotal += specialist.addSpeciality_range((Ability)random.Next(0, (int)Ability.End), 0, 2);
+                    abilityLevelTotal += specialist.addSpeciality_range(EnumHelper.GetRandomValue<Ability>(), 0, 2);
                 }
             } else { //outdoor
                 specialist.specialistTemplate = outdoorSpecialistTemplates[random.Next(0, outdoorSpecialistTemplates.Length)];
                 abilityLevelTotal += specialist.addSpeciality_range(speciality, 4, 6);
                 for (int j = 0; j < 4; ++j)
                 {
-                    abilityLevelTotal += specialist.addSpeciality_range((Ability)random.Next(0, (int)Ability.End), 1, 3);
+                    abilityLevelTotal += specialist.addSpeciality_range(EnumHelper.GetRandomValue<Ability>(), 1, 3);
                 }
             }
             specialist.hireCost = abilityLevelTotal * 20; //level * 20 = cost

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using UnityEngine;
 
 /*
@@ -34,31 +35,22 @@ public enum Ability
     [Description("节肢动物")]
     Arthropod,
     [Description("软体动物")]
-    Mollusc,
-    //
-    [Description("(终止符)")]
-    End
+    Mollusc
 }
 
 public static class AbilityDescription
 {
     public static string GetAbilityDescription(Ability ability)
     {
-        string value = ability.ToString();
-        System.Reflection.FieldInfo field = ability.GetType().GetField(value);
-        object[] objs = field.GetCustomAttributes(typeof(DescriptionAttribute), false);    //获取描述属性
-        if (objs.Length == 0)    //当描述属性没有时，直接返回名称
-            return value;
-        DescriptionAttribute descriptionAttribute = (DescriptionAttribute)objs[0];
-        return descriptionAttribute.Description;
+        return EnumHelper.GetDescription(ability);
     }
 }
 public static class AbilityIconProvider
 {
-    private static Sprite[] icons = new Sprite[(int)Ability.End];
+    private static Sprite[] icons = new Sprite[Enum.GetValues(typeof(Ability)).Length];
     static AbilityIconProvider()
     {
-        for (int i = 0; i < (int)Ability.End; ++i)
+        for (int i = 0; i < Enum.GetValues(typeof(Ability)).Length; ++i)
         {
             icons[i] = Resources.Load<Sprite>("Ability/" + ((Ability)i).ToString());
         }

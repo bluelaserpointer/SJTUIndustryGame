@@ -1,12 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public static class EnumHelper
 {
+    public static string GetDescription(Enum enumValue)
+    {
+        string enumName = enumValue.ToString();
+        //获取描述属性
+        object[] objs = enumValue.GetType().GetField(enumName).GetCustomAttributes(typeof(DescriptionAttribute), false);
+        //当描述属性没有时，直接返回名称
+        return objs.Length == 0 ? enumName : ((DescriptionAttribute)objs[0]).Description;
+    }
+    public static T GetRandomValue<T>()
+    {
+        T[] enums = (T[])Enum.GetValues(typeof(T));
+        return enums[UnityEngine.Random.Range(0, enums.Length)];
+    }
+    public static int GetRandomIndex<T>()
+    {
+        T[] enums = (T[])Enum.GetValues(typeof(T));
+        return UnityEngine.Random.Range(0, enums.Length);
+    }
     public static int GetMaxEnum<T>()
     {
-
         System.Type t = typeof(T);
         int maxT = 0;
         var arrT = System.Enum.GetValues(t);
