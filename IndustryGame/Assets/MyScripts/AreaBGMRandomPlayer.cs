@@ -122,7 +122,12 @@ public class AreaBGMRandomPlayer : MonoBehaviour
     {
         instance.maxVolume = volume;
     }
-    
+
+    public static float getMaxVolume ()
+    {
+        return instance.maxVolume;
+    }
+
     public static void SetDangerBgmList(int areaDangerType)
     {
         SetDangerAudioClipsIdx(areaDangerType);
