@@ -14,6 +14,7 @@ public class Area : MonoBehaviour
     public EnvironmentType environmentType;
 
     public List<Building> buildings;
+    public List<BuildingModule> buildingModules;
     [Serializable]
     public struct Stat
     {

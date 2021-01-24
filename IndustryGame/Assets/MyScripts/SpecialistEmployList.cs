@@ -27,17 +27,17 @@ public static class SpecialistEmployList {
             int abilityLevelTotal = 0;
             if (random.NextDouble() < 0.5f) { //indoor
                 specialist.specialistTemplate = indoorSpecialistTemplates[random.Next(0, indoorSpecialistTemplates.Length)];
-                abilityLevelTotal += specialist.addSpeciality_range(speciality, 7, 10);
+                abilityLevelTotal += specialist.addSpeciality_randomRange_getIncrease(speciality, 7, 10);
                 for(int j = 0; j < 2; ++j)
                 {
-                    abilityLevelTotal += specialist.addSpeciality_range(EnumHelper.GetRandomValue<Ability>(), 0, 2);
+                    abilityLevelTotal += specialist.addSpeciality_randomRange_getIncrease(EnumHelper.GetRandomValue<Ability>(), 0, 2);
                 }
             } else { //outdoor
                 specialist.specialistTemplate = outdoorSpecialistTemplates[random.Next(0, outdoorSpecialistTemplates.Length)];
-                abilityLevelTotal += specialist.addSpeciality_range(speciality, 4, 6);
+                abilityLevelTotal += specialist.addSpeciality_randomRange_getIncrease(speciality, 4, 6);
                 for (int j = 0; j < 4; ++j)
                 {
-                    abilityLevelTotal += specialist.addSpeciality_range(EnumHelper.GetRandomValue<Ability>(), 1, 3);
+                    abilityLevelTotal += specialist.addSpeciality_randomRange_getIncrease(EnumHelper.GetRandomValue<Ability>(), 1, 3);
                 }
             }
             specialist.hireCost = abilityLevelTotal * 20; //level * 20 = cost
