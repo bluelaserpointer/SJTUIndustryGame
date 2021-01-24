@@ -93,7 +93,8 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
                 instance.audioSource.clip = currDangerTypeAnimal.clips[Random.Range(0, currDangerTypeAnimal.clips.Count)];
                 instance.audioSource.volume = 1 - (float)((float)currDangerType / (float)mostDangerType) + 0.2f;
                 instance.loopTime = Random.Range(0, instance.loopLimit);
-                instance.audioSource.Play();
+                if(AreaBGMRandomPlayer.GetAudioType() == AreaBGMRandomPlayer.BgmAudioType.Area)
+                    instance.audioSource.Play();
             }else{
                 instance.loopTime = 0f;
             }

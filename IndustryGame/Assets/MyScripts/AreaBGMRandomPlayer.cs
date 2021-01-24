@@ -33,9 +33,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
 
     // Param for volume fade in/out
-    // public float fadeLimit;
-    // public float fadeTime;
-    public float fadeParam = 1f;
+    public float fadeParam = 0.2f;
     private bool bgmFadeIn = false;
     private bool bgmFadeOut = false;
     private bool bgmChange = false;
@@ -94,6 +92,11 @@ public class AreaBGMRandomPlayer : MonoBehaviour
                 
             }
         }
+
+        if(!bgmFadeOut && !bgmFadeIn)
+        {
+            audioSource.volume = maxVolume;
+        }
     }
 
     void Awake()
@@ -103,6 +106,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             instance = this;
             if(audioSource == null)
                 audioSource = GetComponent<AudioSource>();
+            audioSource.volume = maxVolume;
             // if(bgmAnimator == null)
             //     bgmAnimator = GetComponent<Animator>();
             DontDestroyOnLoad(instance);
@@ -156,6 +160,11 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             instance.dangerType = dangerType;
             BgmChange();
         }
+    }
+
+    public static BgmAudioType GetAudioType()
+    {
+        return instance.audioType;
     }
 
     public static void BgmChange()

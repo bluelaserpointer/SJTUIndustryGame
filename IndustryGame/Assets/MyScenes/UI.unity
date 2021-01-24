@@ -839,10 +839,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2447996283990407526, guid: d50b39d5d88813b4e8bfe09bbec77df4,
+        type: 3}
+      propertyPath: fadeParam
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2447996283990407526, guid: d50b39d5d88813b4e8bfe09bbec77df4,
+        type: 3}
+      propertyPath: maxVolume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2551666130781890961, guid: d50b39d5d88813b4e8bfe09bbec77df4,
         type: 3}
       propertyPath: m_Volume
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4168281204669419213, guid: d50b39d5d88813b4e8bfe09bbec77df4,
         type: 3}
