@@ -8,14 +8,17 @@ public class SinglePopUpWindow : MonoBehaviour
 {
     public string title;
     public string contents;
+    public Sprite picture;
 
     public Text TitleText;
     public Text ContentsText;
+    public Image Picture;
 
     void Update()
     {
         TitleText.text = title;
         ContentsText.text = contents;
+        Picture.sprite = picture;
     }
 
     private void OnDisable ()
