@@ -111,5 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687243402a8e4e54c9290b97367cd3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SinglePopUpWindowPrefab: {fileID: 3258312783487407254, guid: 0ae8c7ab2d3f2fb41ba96283b29e8cb0,
+  SimplePopUpWindowPrefab: {fileID: 3728843878602487526, guid: f94662abc2e50154caa7fa40c633cfdb,
+    type: 3}
+  PicturePopUpWindowPrefab: {fileID: 6592266443792068122, guid: 2554ae8e4070193448d7c7283eb69b77,
     type: 3}
