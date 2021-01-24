@@ -6,17 +6,9 @@ using UnityEngine.UI;
 
 public class SinglePopUpWindow : MonoBehaviour
 {
-    public string title;
-    public string contents;
-
     public Text TitleText;
     public Text ContentsText;
-
-    void Update()
-    {
-        TitleText.text = title;
-        ContentsText.text = contents;
-    }
+    public Image Picture;
 
     private void OnDisable ()
     {
