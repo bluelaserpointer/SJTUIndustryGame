@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 [DisallowMultipleComponent]
 
 public class AreaBGMRandomPlayer : MonoBehaviour
@@ -28,6 +30,72 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
     }
 
+
+
+    // Param for volume fade in/out
+    // public float fadeLimit;
+    // public float fadeTime;
+    public float fadeParam = 1f;
+    private bool bgmFadeIn = false;
+    private bool bgmFadeOut = false;
+    private bool bgmChange = false;
+    private AudioClip nextClip = null;
+
+    public float maxVolume = 1f;
+    public float minVolume = 0f;
+    private void Start() {
+        // fadeTime = fadeLimit;
+    }
+    private void Update() {
+        // Debug.Log("In update of bgmRandomPlayer");
+        if(bgmFadeIn)
+        {
+            Debug.Log("Fading in");
+            if(bgmChange)
+            {
+                bgmFadeOut = true;
+                bgmFadeIn = false;
+                return;
+            }
+
+            // fadeTime -= fadeParam * Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(audioSource.volume, maxVolume, Time.deltaTime * fadeParam);
+
+            if(audioSource.volume > maxVolume - 0.05f)
+            {
+                bgmFadeIn = false;
+                audioSource.volume = maxVolume;
+
+                // fadeTime = fadeLimit;
+                
+            }
+        }
+
+        if(bgmFadeOut)
+        {
+            bgmChange = false;
+            Debug.Log("Fading out");
+
+            // fadeTime -= fadeParam * Time.deltaTime;
+
+            audioSource.volume = Mathf.Lerp(audioSource.volume, minVolume, Time.deltaTime * fadeParam);
+
+            if(audioSource.volume < minVolume + 0.05f)
+            {
+                bgmFadeOut = false;
+                bgmFadeIn = true;
+
+                // fadeTime = fadeLimit;
+
+                audioSource.volume = minVolume;
+
+                audioSource.clip = nextClip;
+                audioSource.Play();
+                
+            }
+        }
+    }
+
     void Awake()
     {
         if (instance == null)
@@ -35,8 +103,8 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             instance = this;
             if(audioSource == null)
                 audioSource = GetComponent<AudioSource>();
-            if(bgmAnimator == null)
-                bgmAnimator = GetComponent<Animator>();
+            // if(bgmAnimator == null)
+            //     bgmAnimator = GetComponent<Animator>();
             DontDestroyOnLoad(instance);
 
             SetGlobalBgmList();
@@ -46,6 +114,11 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         //set stage money objective
     }
 
+    public static void setMaxVolume(float volume)
+    {
+        instance.maxVolume = volume;
+    }
+    
     public static void SetDangerBgmList(int areaDangerType)
     {
         SetDangerAudioClipsIdx(areaDangerType);
@@ -98,12 +171,18 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             instance.audioSource.Play();
         }
         if(instance.audioSource.clip != null && instance.audioSource.clip != clip)
-            instance.StartCoroutine(BgmFadeOut(clip));
+        {
+            instance.bgmChange = true;
+            instance.bgmFadeOut = true;
+            instance.nextClip = clip;
+        }
+        // instance.StartCoroutine(BgmFadeOut(clip));
     }
 
     public static IEnumerator BgmFadeOut(AudioClip clip)
     {
         instance.bgmAnimator.SetTrigger("fadeOut");
+        Debug.Log(instance.bgmAnimator.GetCurrentAnimatorClipInfo(1).Length);
         yield return new WaitForSeconds(instance.waitTime);
         instance.audioSource.clip = clip;
         instance.audioSource.Play();

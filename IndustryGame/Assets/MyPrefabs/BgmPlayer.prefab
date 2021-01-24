@@ -64,6 +64,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83077db8fecfb0a4daf4b685e7e96bd3, type: 2}
   - {fileID: 11400000, guid: 73126a39bc47c574890e1bd52621fa34, type: 2}
   globalBgmList: {fileID: 11400000, guid: 1faa37f0a0bdbe647ab450a02f62ac4f, type: 2}
+  fadeLimit: 0
+  fadeTime: 0
+  fadeParam: 0
+  bgmFadeIn: 1
+  bgmFadeOut: 0
+  bgmChange: 0
 --- !u!82 &2551666130781890961
 AudioSource:
   m_ObjectHideFlags: 0
@@ -168,7 +174,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7855273059563601298}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f893ee5f69db7bc499a47e9873b4f042, type: 2}
   m_CullingMode: 0

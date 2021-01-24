@@ -12,6 +12,9 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
     public float loopLimit;
     public float loopTime;
     public float loopParam;
+
+    public float currVolume = 1f;
+
     void Awake()
     {
         if (instance == null)
@@ -29,12 +32,20 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
     }
 
     private void Update() {
+        if(audioSource.volume != currVolume)
+            audioSource.volume = currVolume;
+
         loopTime -= Time.deltaTime * loopParam;
 
         if(instance.audioSource != null && !instance.audioSource.isPlaying && loopTime <= 0f)
         {
             SFXChange();
         }
+    }
+
+    public static void setCurrVolume(float volume)
+    {
+        instance.currVolume = volume;
     }
 
     public static void setAnimalList(List<List<Animal>> speciesDangerTypes)
