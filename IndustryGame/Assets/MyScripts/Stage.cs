@@ -72,8 +72,6 @@ public class Stage : MonoBehaviour
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
-    //TODO Delete after test
-    private Specialist test = new Specialist();
 
     void Awake()
     {
@@ -158,16 +156,6 @@ public class Stage : MonoBehaviour
             }
         }
 
-        // TODO: Delete after testing
-        
-        test.name = "naomi";
-        test.speciality = Ability.Amphibian;
-        //test.birthday = "2000-05-11";
-        //test.birthplace = "Shanghai";
-        //test.specialistTemplate.jender = SpecialistTemplate.Jender.Female;
-        //test.abilities.Add(Ability.Outdoor, 1);
-        specialists.Insert(0, test);
-        //specialists.Insert(1, test);
     }
     void Update()
     {
