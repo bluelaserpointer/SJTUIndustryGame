@@ -19,7 +19,6 @@ public static class SpecialistEmployList {
         for(int i = 0; i < listSize; ++i)
         {
             Ability speciality = EnumHelper.GetRandomValue<Ability>();
-            InGameLog.AddLog("ability: " + speciality.ToString());
             Specialist specialist = new Specialist();
             specialist.name = Resources.Load<NameTemplates>("NameTemplates/SpecialistName").pickRandomOne();
             specialist.birthday = "randomBirthDay";

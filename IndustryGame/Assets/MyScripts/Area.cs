@@ -23,6 +23,7 @@ public class Area : MonoBehaviour
     }
     public List<Stat> stat;
 
+    public Region region;
     List<Area> neighbors = new List<Area>();
     private List<AreaAction> finishedActions = new List<AreaAction>();
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
@@ -41,13 +42,13 @@ public class Area : MonoBehaviour
             areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
         else
             areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
-        HexCell myCell = transform.GetComponentInParent<HexCell>();
 
-        weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
+        HexCell cell = GetHexCell();
+        weather = new Weather(cell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
 
         for (int direction = (int)HexDirection.NE; direction <= (int)HexDirection.NW; ++direction)
         {
-            HexCell neighborCell = myCell.GetNeighbor((HexDirection)direction);
+            HexCell neighborCell = cell.GetNeighbor((HexDirection)direction);
             if(neighborCell != null)
                 neighbors.Add(neighborCell.transform.GetComponentInChildren<Area>());
         }
@@ -293,5 +294,9 @@ public class Area : MonoBehaviour
     private void Update ()
     {
         UpdateProgressSlider();
+    }
+    public HexCell GetHexCell()
+    {
+        return transform.GetComponentInParent<HexCell>();
     }
 }

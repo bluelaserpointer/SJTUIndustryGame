@@ -107,6 +107,22 @@ public class Stage : MonoBehaviour
     {
         //collect all Area Components in children gameObject
         areas = GetComponentsInChildren<Area>();
+        //generate regions
+        foreach(Area area in areas)
+        {
+            int regionId = area.GetHexCell().RegionId;
+            Region region = regions.Find(eachRegion => eachRegion.GetRegionId() == regionId);
+            if (region == null)
+            {
+                regions.Add(region = new Region(regionId));
+            }
+            region.AddArea(area);
+            area.region = region;
+        }
+        //debug
+        //foreach(Region region in regions) {
+        //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
+        //}
         //pick random area as basement area
         if (areas.Length > 0)
         {

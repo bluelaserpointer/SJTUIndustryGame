@@ -3,15 +3,17 @@
 public class Region
 {
     private int regionId;
-    private List<Area> areas;
+    private List<Area> areas = new List<Area>();
     private List<Event> includedEvents;
 
-    public Region(int regionId, ICollection<Area> areas)
+    public Region(int regionId)
     {
         this.regionId = regionId;
-        this.areas = new List<Area>(areas);
     }
-
+    public void AddArea(Area area)
+    {
+        areas.Add(area);
+    }
     public int GetRegionId()
     {
         return regionId;

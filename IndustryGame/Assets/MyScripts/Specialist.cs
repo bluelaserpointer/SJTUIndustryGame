@@ -108,6 +108,10 @@ public class Specialist
     {
         return GetLevel() < expCaps.Length ? expCaps[GetLevel()] : expCaps[expCaps.Length - 1];
     }
+    public int GetExp()
+    {
+        return exp;
+    }
     /// <summary>
     /// Percentage of exp
     /// </summary>
