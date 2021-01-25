@@ -203,6 +203,10 @@ public class Stage : MonoBehaviour
     {
         return instance.areas;
     }
+    public static List<Region> GetRegions()
+    {
+        return instance.regions;
+    }
     public static int getSpeciesAmount(Animal species)
     {
         int total = 0;
