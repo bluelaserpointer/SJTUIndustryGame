@@ -9,7 +9,9 @@ public class PopUpCanvas : MonoBehaviour
 
     private static bool windowExists = false;
 
-    public GameObject SinglePopUpWindowPrefab;
+    public GameObject SimplePopUpWindowPrefab;
+    public GameObject PicturePopUpWindowPrefab;
+
     private Queue<IPopUpWindow> PopUpWindowQueue;
 
     void Awake()

@@ -2,11 +2,9 @@
 using System.ComponentModel;
 using UnityEngine;
 
-/*
- * 广义：陆生动物，水生动物，两栖动物
-细分：鱼类，爬行类，鸟类，两栖类，哺乳类等五大类。无脊椎动物中包括：原生动物，软体动物，蠕虫,昆虫，甲壳动物等门类
-+探索（包括了地质学）
- */
+/// <summary>
+/// 专家的专长种类，使其完成高难度的措施，或加快某些措施执行
+/// </summary>
 public enum Ability
 {
     [Description("探索")]

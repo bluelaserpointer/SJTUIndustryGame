@@ -72,8 +72,6 @@ public class Stage : MonoBehaviour
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
-    //TODO Delete after test
-    private Specialist test = new Specialist();
 
     void Awake()
     {
@@ -107,10 +105,27 @@ public class Stage : MonoBehaviour
     {
         //collect all Area Components in children gameObject
         areas = GetComponentsInChildren<Area>();
+        //generate regions
+        foreach(Area area in areas)
+        {
+            int regionId = area.GetHexCell().RegionId;
+            Region region = regions.Find(eachRegion => eachRegion.GetRegionId() == regionId);
+            if (region == null)
+            {
+                regions.Add(region = new Region(regionId));
+            }
+            region.AddArea(area);
+            area.region = region;
+        }
+        //debug
+        //foreach(Region region in regions) {
+        //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
+        //}
         //pick random area as basement area
         if (areas.Length > 0)
         {
             baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
+            regions[0].SetBaseArea(baseArea);
         }
         //generate specialist employment list
         SpecialistEmployList.refresh();
@@ -142,16 +157,6 @@ public class Stage : MonoBehaviour
             }
         }
 
-        // TODO: Delete after testing
-        
-        test.name = "naomi";
-        test.speciality = Ability.Amphibian;
-        //test.birthday = "2000-05-11";
-        //test.birthplace = "Shanghai";
-        //test.specialistTemplate.jender = SpecialistTemplate.Jender.Female;
-        //test.abilities.Add(Ability.Outdoor, 1);
-        specialists.Insert(0, test);
-        //specialists.Insert(1, test);
     }
     void Update()
     {
@@ -163,9 +168,9 @@ public class Stage : MonoBehaviour
         if (lastDay != Timer.GetDay()) //day change happened
         {
             lastDay = Timer.GetDay();
-            foreach (Area area in areas)
+            foreach (Region region in regions)
             {
-                area.dayIdle();
+                region.dayIdle();
             }
             foreach(Specialist specialist in specialists)
             {
@@ -186,6 +191,10 @@ public class Stage : MonoBehaviour
     public static Area[] getAreas()
     {
         return instance.areas;
+    }
+    public static List<Region> GetRegions()
+    {
+        return instance.regions;
     }
     public static int getSpeciesAmount(Animal species)
     {

@@ -15,11 +15,14 @@ public class AreaWeatherSFXRandomPlayer : MonoBehaviour
     public float loopParam;
     public Weather.WeatherType currentWeatherType = Weather.WeatherType.Sunny;
     private bool focus = false;
+    private float currVolume = 1f;
+
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+
             if(audioSource == null)
                 audioSource = GetComponent<AudioSource>();
             DontDestroyOnLoad(instance);
@@ -31,13 +34,13 @@ public class AreaWeatherSFXRandomPlayer : MonoBehaviour
     }
 
     private void Update() {
-        // loopTime -= Time.deltaTime * loopParam;
+        if(audioSource.volume != currVolume)
+            audioSource.volume = currVolume;
 
-        // if(instance.audioSource != null && !instance.audioSource.isPlaying && loopTime <= 0f)
-        // {
-        //     Debug.Log("In update of sfx player");
-        //     SFXChange();
-        // }
+    }
+    public static void setCurrVolume(float volume)
+    {
+        instance.currVolume = volume;
     }
 
     public static void setArea(Area currentArea)

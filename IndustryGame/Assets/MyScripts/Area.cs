@@ -14,6 +14,7 @@ public class Area : MonoBehaviour
     public EnvironmentType environmentType;
 
     public List<Building> buildings;
+    public List<BuildingModule> buildingModules;
     [Serializable]
     public struct Stat
     {
@@ -22,7 +23,8 @@ public class Area : MonoBehaviour
     }
     public List<Stat> stat;
 
-    List<Area> neighbors = new List<Area>();
+    public Region region;
+    Dictionary<HexDirection, Area> neibors = new Dictionary<HexDirection, Area>();
     private List<AreaAction> finishedActions = new List<AreaAction>();
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
     private LinkedList<Dictionary<Animal, AmountChange>> animalAmountsRecords = new LinkedList<Dictionary<Animal, AmountChange>>();
@@ -40,15 +42,17 @@ public class Area : MonoBehaviour
             areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
         else
             areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
-        HexCell myCell = transform.GetComponentInParent<HexCell>();
 
-        weather = new Weather(myCell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
+        HexCell cell = GetHexCell();
+        weather = new Weather(cell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
 
-        for (int direction = (int)HexDirection.NE; direction <= (int)HexDirection.NW; ++direction)
+        foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
         {
-            HexCell neighborCell = myCell.GetNeighbor((HexDirection)direction);
+            HexCell neighborCell = cell.GetNeighbor(direction);
             if(neighborCell != null)
-                neighbors.Add(neighborCell.transform.GetComponentInChildren<Area>());
+            {
+                neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
+            }
         }
         foreach (Building building in buildings)
         {
@@ -213,9 +217,13 @@ public class Area : MonoBehaviour
     {
         return finishedActions.Contains(action);
     }
-    public List<Area> GetNeighborAreas()
+    public ICollection<Area> GetNeighborAreas()
     {
-        return neighbors;
+        return neibors.Values;
+    }
+    public Area GetNeighborArea(HexDirection direction)
+    {
+        return neibors.ContainsKey(direction) ? neibors[direction] : null;
     }
     //foods - animals as food
     //energyNeedsForOneEater - energy one eater requires
@@ -292,5 +300,9 @@ public class Area : MonoBehaviour
     private void Update ()
     {
         UpdateProgressSlider();
+    }
+    public HexCell GetHexCell()
+    {
+        return transform.GetComponentInParent<HexCell>();
     }
 }

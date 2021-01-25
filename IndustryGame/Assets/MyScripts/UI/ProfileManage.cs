@@ -35,7 +35,6 @@ public class ProfileManage : MonoBehaviour
 
     public void UpdateProfile ()
     {
-        //Avatar.sprite = specialist.specialistTemplate.icon;
         if (specialist == null)
         {
             return;
@@ -46,9 +45,10 @@ public class ProfileManage : MonoBehaviour
         BirthDate.text = specialist.birthday;
         Speciality.text = specialist.speciality.ToString();
         Gender.text = specialist.specialistTemplate.jender.ToString();
+        Avatar.sprite = specialist.specialistTemplate.icon;
         if (HireMode)
         {
-            HireCost.text = specialist.hireCost.ToString();
+            HireCost.text = "$" + specialist.hireCost.ToString();
         }
 
         foreach (KeyValuePair<Ability, int> pair in specialist.abilities)
