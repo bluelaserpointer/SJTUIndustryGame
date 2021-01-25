@@ -14,7 +14,7 @@ public class SingleSpecialist : MonoBehaviour
 
     void Update()
     {
-        //Avatar.sprite = specialist.specialistTemplate.icon;
+        Avatar.sprite = specialist.specialistTemplate.icon;
         Name.text = specialist.name;
         Speciality.text = specialist.speciality.ToString();
     }
