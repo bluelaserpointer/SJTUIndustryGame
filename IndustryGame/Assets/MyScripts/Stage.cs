@@ -125,6 +125,7 @@ public class Stage : MonoBehaviour
         if (areas.Length > 0)
         {
             baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
+            regions[0].SetBaseArea(baseArea);
         }
         //generate specialist employment list
         SpecialistEmployList.refresh();
@@ -167,9 +168,9 @@ public class Stage : MonoBehaviour
         if (lastDay != Timer.GetDay()) //day change happened
         {
             lastDay = Timer.GetDay();
-            foreach (Area area in areas)
+            foreach (Region region in regions)
             {
-                area.dayIdle();
+                region.dayIdle();
             }
             foreach(Specialist specialist in specialists)
             {
