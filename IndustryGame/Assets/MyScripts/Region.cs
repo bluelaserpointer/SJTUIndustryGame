@@ -25,7 +25,7 @@ public class Region
         if (baseArea != null)
         {
             reservationProgress += reservationSpeed;
-            InGameLog.AddLog("reservate: " + reservationProgress);
+            //InGameLog.AddLog("reservate: " + reservationProgress);
             if (reservationProgress >= reservationTime)
             {
                 reservationProgress = 0;
@@ -43,7 +43,7 @@ public class Region
                         if (cell != null && cell.RegionId == regionId)
                             break;
                     }
-                    InGameLog.AddLog("step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
+                    //InGameLog.AddLog("step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
                     if (loops == 2048)
                     {
                         InGameLog.AddLog("an area is missing", Color.red);

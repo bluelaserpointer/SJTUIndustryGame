@@ -70,6 +70,7 @@ public class Stage : MonoBehaviour
     private List<Specialist> specialists = new List<Specialist>();
     private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
+    private List<BuildingInfo> includedBuildings = new List<BuildingInfo>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
 
@@ -86,8 +87,17 @@ public class Stage : MonoBehaviour
         foreach (Event anEvent in events) {
             anEvent.init();
         }
+        //load actions
+        foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
+        {
+            includedAreaActions.Add(areaAction);
+        }
+        foreach (GlobalAction globalAction in Resources.LoadAll<GlobalAction>("Action/GlobalAction"))
+        {
+            includedGlobalActions.Add(globalAction);
+        }
         //union actions
-        foreach(Event anEvent in events)
+        foreach (Event anEvent in events)
         {
             foreach(GlobalAction action in anEvent.includedGlobalActions)
             {
@@ -99,6 +109,11 @@ public class Stage : MonoBehaviour
                 if (!includedAreaActions.Contains(action))
                     includedAreaActions.Add(action);
             }
+        }
+        //load buldings
+        foreach(BuildingInfo building in Resources.LoadAll<BuildingInfo>("Building"))
+        {
+            includedBuildings.Add(building);
         }
     }
     void Start()
@@ -239,11 +254,11 @@ public class Stage : MonoBehaviour
     {
         return (int)instance.resources[ResourceType.money].old;
     }
-    public static double GetResourceValue(ResourceType resourceType)
+    public static float GetResourceValue(ResourceType resourceType)
     {
         return instance.resources[resourceType].old;
     }
-    public static double AddResourceValue(ResourceType resourceType, float value)
+    public static float AddResourceValue(ResourceType resourceType, float value)
     {
         return instance.resources[resourceType].Add(value);
     }
@@ -270,6 +285,10 @@ public class Stage : MonoBehaviour
     public static List<AreaAction> GetEnabledAreaActions(Area area)
     {
         return instance.includedAreaActions.FindAll(action => action.enabled(area));
+    }
+    public static List<BuildingInfo> GetEnabledBuildings(Area area)
+    {
+        return instance.includedBuildings.FindAll(building => building.enabled(area));
     }
     public static void AddActionFinishCount(Action action)
     {
