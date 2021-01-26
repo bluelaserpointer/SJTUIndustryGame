@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac14564763373c44c9d30481e0b2768d, type: 3}
-  m_Name: Camera
+  m_Name: "\u81EA\u7136\u4FDD\u62A4\u7AD9"
   m_EditorClassIdentifier: 
-  buildingName: "\u89C2\u5BDF\u6444\u50CF\u673A"
-  description: "\u53EF\u4EE5\u4E0D\u6253\u6270\u91CE\u751F\u52A8\u7269\u7684\u60C5\u51B5\u4E0B\u62CD\u6444\u7167\u7247\uFF0C\u5E76\u7EDF\u8BA1\u76F8\u5173\u6570\u636E"
+  buildingName: "\u81EA\u7136\u4FDD\u62A4\u7AD9"
+  description: "\u8FD9\u91CC\u7684\u5DE5\u4F5C\u4EBA\u5458\u65F6\u5E38\u5DE1\u903B\u8BE5\u533A\u57DF\uFF0C\u6709\u6548\u51CF\u5C11\u5468\u56F4\u7684\u76D7\u730E"
   model: {fileID: 0}
+  moneyCost: 0
+  timeCost: 0
+  preFinishBuildings: []
+  preFinishAreaActions: []
   buffs: []

@@ -30,5 +30,3 @@ MonoBehaviour:
   includedAreaActions:
   - {fileID: 11400000, guid: 041a31c12c42aa54a9edda4a8164d9bb, type: 2}
   - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
-  - {fileID: 11400000, guid: 0b06d8a1ab23b9e429cc0123c79ac943, type: 2}
-  - {fileID: 11400000, guid: e21d8a2cd21ca95438d577858207a441, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Event")]
-public class Event : ScriptableObject
+public class MainEvent : ScriptableObject
 {
     public string eventName;
     [TextArea]

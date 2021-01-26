@@ -72,7 +72,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         if(bgmFadeOut)
         {
             bgmChange = false;
-            Debug.Log("Fading out");
+            //Debug.Log("Fading out");
 
             // fadeTime -= fadeParam * Time.deltaTime;
 

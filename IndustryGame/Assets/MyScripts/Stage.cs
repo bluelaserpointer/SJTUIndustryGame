@@ -44,7 +44,7 @@ public class Stage : MonoBehaviour
 
     private Area[] areas;
     private Area baseArea;
-    private List<Region> regions = new List<Region>();
+    public List<Region> regions = new List<Region>();
 
     public string stageName;
     [TextArea]
@@ -53,7 +53,7 @@ public class Stage : MonoBehaviour
     public int stageMoney;
     [Header("Time allowed for this stage")]
     public int stageTime;
-    public List<Event> events;
+    public List<MainEvent> events;
     [Serializable]
     public struct AnimalInitialAmount
     {
@@ -70,6 +70,7 @@ public class Stage : MonoBehaviour
     private List<Specialist> specialists = new List<Specialist>();
     private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
+    private List<BuildingInfo> includedBuildings = new List<BuildingInfo>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
 
@@ -83,11 +84,20 @@ public class Stage : MonoBehaviour
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecord(stageMoney);
         //init events
-        foreach (Event anEvent in events) {
+        foreach (MainEvent anEvent in events) {
             anEvent.init();
         }
+        //load actions
+        foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
+        {
+            includedAreaActions.Add(areaAction);
+        }
+        foreach (GlobalAction globalAction in Resources.LoadAll<GlobalAction>("Action/GlobalAction"))
+        {
+            includedGlobalActions.Add(globalAction);
+        }
         //union actions
-        foreach(Event anEvent in events)
+        foreach (MainEvent anEvent in events)
         {
             foreach(GlobalAction action in anEvent.includedGlobalActions)
             {
@@ -99,6 +109,11 @@ public class Stage : MonoBehaviour
                 if (!includedAreaActions.Contains(action))
                     includedAreaActions.Add(action);
             }
+        }
+        //load buldings
+        foreach(BuildingInfo building in Resources.LoadAll<BuildingInfo>("Building"))
+        {
+            includedBuildings.Add(building);
         }
     }
     void Start()
@@ -117,6 +132,8 @@ public class Stage : MonoBehaviour
             region.AddArea(area);
             area.region = region;
         }
+
+
         //debug
         //foreach(Region region in regions) {
         //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
@@ -176,13 +193,21 @@ public class Stage : MonoBehaviour
             {
                 specialist.dayIdle();
             }
-            foreach (Event eachEvent in events)
+            foreach (MainEvent eachEvent in events)
             {
                 eachEvent.dayIdle();
             }
         }
 
     }
+
+    public static Region GetRegion(Area area)
+    {
+        int regionId = area.GetHexCell().RegionId;
+        Region region = GetRegions().Find(eachRegion => eachRegion.GetRegionId() == regionId);
+        return region;
+    }
+
     public static HexGrid GetHexGrid()
     {
         return instance.hexGrid;
@@ -229,15 +254,15 @@ public class Stage : MonoBehaviour
     {
         return (int)instance.resources[ResourceType.money].old;
     }
-    public static double GetResourceValue(ResourceType resourceType)
+    public static float GetResourceValue(ResourceType resourceType)
     {
         return instance.resources[resourceType].old;
     }
-    public static double AddResourceValue(ResourceType resourceType, float value)
+    public static float AddResourceValue(ResourceType resourceType, float value)
     {
         return instance.resources[resourceType].Add(value);
     }
-    public static List<Event> GetEvents()
+    public static List<MainEvent> GetEvents()
     {
         return instance.events;
     }
@@ -260,6 +285,10 @@ public class Stage : MonoBehaviour
     public static List<AreaAction> GetEnabledAreaActions(Area area)
     {
         return instance.includedAreaActions.FindAll(action => action.enabled(area));
+    }
+    public static List<BuildingInfo> GetEnabledBuildings(Area area)
+    {
+        return instance.includedBuildings.FindAll(building => building.enabled(area));
     }
     public static void AddActionFinishCount(Action action)
     {

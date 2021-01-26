@@ -9,19 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c8e8f3d95dcc94c925fd87ffb32424, type: 3}
-  m_Name: "Build-\u4FDD\u62A4\u7AD9"
+  m_Script: {fileID: 11500000, guid: cdbd04f13438e274fa334d87781a0d7a, type: 3}
+  m_Name: reservateLand
   m_EditorClassIdentifier: 
-  actionName: "\u5EFA\u8BBE\u4FDD\u62A4\u7AD9"
+  actionName: "\u8C03\u67E5\u5730\u533A"
   description: 
   timeCost: 10
-  moneyCost: 100
+  moneyCost: 10
   preFinishInfos: []
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:
       m_Calls: []
-  preFinishActions:
-  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
-  buildType: 0
-  building: {fileID: 11400000, guid: 8f7656640fec37b429bf64cc74862061, type: 2}
+  needProceedInBase: 0
+  preFinishActions: []
