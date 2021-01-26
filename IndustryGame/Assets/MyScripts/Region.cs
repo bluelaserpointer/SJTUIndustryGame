@@ -5,7 +5,7 @@ public class Region
 {
     private int regionId;
     private List<Area> areas = new List<Area>();
-    private List<Event> includedEvents;
+    private List<MainEvent> includedEvents;
     private HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
     private int reservationTime = 2;
@@ -104,14 +104,14 @@ public class Region
         }
         return count;
     }
-    public void AddEvent(Event anEvent) {
+    public void AddEvent(MainEvent anEvent) {
         includedEvents.Add(anEvent);
     }
-    public List<Event> GetEvents()
+    public List<MainEvent> GetEvents()
     {
         return includedEvents;
     }
-    public List<Event> GetRevealedEvents()
+    public List<MainEvent> GetRevealedEvents()
     {
         return includedEvents.FindAll(anEvent => anEvent.isAppeared());
     }

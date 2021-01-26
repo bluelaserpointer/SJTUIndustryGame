@@ -53,7 +53,7 @@ public class Stage : MonoBehaviour
     public int stageMoney;
     [Header("Time allowed for this stage")]
     public int stageTime;
-    public List<Event> events;
+    public List<MainEvent> events;
     [Serializable]
     public struct AnimalInitialAmount
     {
@@ -84,7 +84,7 @@ public class Stage : MonoBehaviour
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecord(stageMoney);
         //init events
-        foreach (Event anEvent in events) {
+        foreach (MainEvent anEvent in events) {
             anEvent.init();
         }
         //load actions
@@ -97,7 +97,7 @@ public class Stage : MonoBehaviour
             includedGlobalActions.Add(globalAction);
         }
         //union actions
-        foreach (Event anEvent in events)
+        foreach (MainEvent anEvent in events)
         {
             foreach(GlobalAction action in anEvent.includedGlobalActions)
             {
@@ -193,7 +193,7 @@ public class Stage : MonoBehaviour
             {
                 specialist.dayIdle();
             }
-            foreach (Event eachEvent in events)
+            foreach (MainEvent eachEvent in events)
             {
                 eachEvent.dayIdle();
             }
@@ -262,7 +262,7 @@ public class Stage : MonoBehaviour
     {
         return instance.resources[resourceType].Add(value);
     }
-    public static List<Event> GetEvents()
+    public static List<MainEvent> GetEvents()
     {
         return instance.events;
     }
