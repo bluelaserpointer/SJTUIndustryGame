@@ -44,7 +44,7 @@ public class Stage : MonoBehaviour
 
     private Area[] areas;
     private Area baseArea;
-    private List<Region> regions = new List<Region>();
+    public List<Region> regions = new List<Region>();
 
     public string stageName;
     [TextArea]
@@ -132,6 +132,8 @@ public class Stage : MonoBehaviour
             region.AddArea(area);
             area.region = region;
         }
+
+
         //debug
         //foreach(Region region in regions) {
         //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
@@ -198,6 +200,14 @@ public class Stage : MonoBehaviour
         }
 
     }
+
+    public static Region GetRegion(Area area)
+    {
+        int regionId = area.GetHexCell().RegionId;
+        Region region = GetRegions().Find(eachRegion => eachRegion.GetRegionId() == regionId);
+        return region;
+    }
+
     public static HexGrid GetHexGrid()
     {
         return instance.hexGrid;

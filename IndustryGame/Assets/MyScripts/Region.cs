@@ -11,7 +11,7 @@ public class Region
     private int reservationTime = 2;
     private int reservationSpeed = 1, reservationProgress;
     private Area baseArea;
-
+    public Area left, right, bottom, top;
     public Region(int regionId)
     {
         this.regionId = regionId;
@@ -64,6 +64,21 @@ public class Region
     }
     public void AddArea(Area area)
     {
+        Vector3 pos = area.transform.position;
+        if(areas.Count == 0)
+        {
+            top = bottom = right = left = area;
+        }else{
+            if(left.transform.position.x > pos.x)
+                left = area;
+            if(right.transform.position.x < pos.x)
+                right = area;
+            if(bottom.transform.position.z > pos.z)
+                bottom = area;
+            if(top.transform.position.z < pos.z)
+                bottom = area;
+        }
+
         areas.Add(area);
     }
     public void SetBaseArea(Area area)
