@@ -27,6 +27,20 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.colors = colors;
 		Debug.Log("CreateMap: Awake");
 		CreateMap(cellCountX, cellCountZ);
+		
+		string path = Path.Combine("Assets/MyMaps/",  "TestMap" + ".map");
+		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+			int header = reader.ReadInt32();
+			if (header <= 1) {
+				Load(reader, header);
+				// HexMapCamera.ValidatePosition();
+			}
+			else {
+				Debug.LogWarning("Unknown map format " + header);
+			}
+		}
+
+		Debug.Log("In HexGrid Awake()");
 	}
 
 	public bool CreateMap (int x, int z) {

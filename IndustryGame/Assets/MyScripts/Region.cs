@@ -64,19 +64,49 @@ public class Region
     }
     public void AddArea(Area area)
     {
-        Vector3 pos = area.transform.position;
-        if(areas.Count == 0)
+        GameObject parent = area.transform.parent.gameObject;
+        // Debug.Log("Region " + regionId + " " + area.transform.position);
+        // Debug.Log("Region " + regionId + " " + area.transform.TransformPoint(area.transform.position));
+        // Debug.Log("Region " + regionId + " " + parent.transform.parent.TransformPoint(parent.transform.localPosition));
+
+
+        Vector3 pos = area.gameObject.transform.parent.position;
+        if(area == null)
+            return;
+
+        if(top == null)
         {
-            top = bottom = right = left = area;
+            // area.name = "Region " + regionId;
+            // GameObject.Destroy(area.gameObject.transform.parent.gameObject);
+            // Debug.Log("Region " + regionId + ": First init: " + area.transform.position);
+            top = area;
+            bottom = area;
+            left = area;
+            right = area;
         }else{
             if(left.transform.position.x > pos.x)
+            {
                 left = area;
+                Debug.Log("Region " + regionId + ": Updating left");
+            }
             if(right.transform.position.x < pos.x)
+            {
                 right = area;
+                Debug.Log("Region " + regionId + ": Updating right");
+
+            }
             if(bottom.transform.position.z > pos.z)
+            {
                 bottom = area;
+                Debug.Log("Region " + regionId + ": Updating bottom");
+
+            }
             if(top.transform.position.z < pos.z)
-                bottom = area;
+            {
+                top = area;
+                Debug.Log("Region " + regionId + ": Updating top");
+
+            }
         }
 
         areas.Add(area);

@@ -289,7 +289,7 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-	int regionId;
+	int regionId = -2; // -1,0,1,2
 	int terrainTypeIndex;
 	int landformIndex;
 

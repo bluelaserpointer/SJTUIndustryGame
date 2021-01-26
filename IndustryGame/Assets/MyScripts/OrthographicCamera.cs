@@ -72,7 +72,7 @@ public class OrthographicCamera : MonoBehaviour
         currentPosition = worldPosition = worldTransform.position;
         currentRotation = worldRotation = worldTransform.rotation;
 
-        orthographicAreaRotation = currentRotation * Quaternion.Euler(-cameraParam, 0, 0);
+        orthographicAreaRotation = Quaternion.Euler(45, orthographicRegionRotation.y, orthographicRegionRotation.z);
         orthographicRegionRotation = Quaternion.Euler(90, orthographicRegionRotation.y, orthographicRegionRotation.z);
 
         focusMask = LayerMask.GetMask("FocusMask");
@@ -119,7 +119,7 @@ public class OrthographicCamera : MonoBehaviour
     private void FixedUpdate() {
         //Lerp position
 
-        if(regionFocus)
+        if(regionFocus && !areaFocus)
         {
             MeshRenderer renderer = currentRegion.bottom.transform.parent.parent.GetComponentInChildren<MeshRenderer>();
             if(!renderer.isVisible)
@@ -134,9 +134,9 @@ public class OrthographicCamera : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, currentPosition, transitionSpeed);
         
         Vector3 currentAngle = new Vector3 (
-        Mathf.LerpAngle(transform.rotation.eulerAngles.x, currentRotation.eulerAngles.x,  Time.deltaTime * transitionSpeed),
-        Mathf.LerpAngle(transform.rotation.eulerAngles.y, currentRotation.eulerAngles.y,  Time.deltaTime * transitionSpeed),
-        Mathf.LerpAngle(transform.rotation.eulerAngles.z, currentRotation.eulerAngles.z,  Time.deltaTime * transitionSpeed));
+        Mathf.LerpAngle(transform.rotation.eulerAngles.x, currentRotation.eulerAngles.x,  Time.deltaTime * transitionSpeed * 4),
+        Mathf.LerpAngle(transform.rotation.eulerAngles.y, currentRotation.eulerAngles.y,  Time.deltaTime * transitionSpeed * 4),
+        Mathf.LerpAngle(transform.rotation.eulerAngles.z, currentRotation.eulerAngles.z,  Time.deltaTime * transitionSpeed * 4));
         transform.eulerAngles = currentAngle;    
     }
 
@@ -257,10 +257,15 @@ public class OrthographicCamera : MonoBehaviour
 
     public void focusOnArea(HexCell hexCell, float orthographicSize)
     {
-        Debug.Log("In focus on area");
+        Area area = hexCell.transform.GetComponentInChildren<Area>();
+        Debug.Log("Area: RegionId: " + area.region.GetRegionId());
 
+        if(currentRegion.GetRegionId() != area.region.GetRegionId())
+            return;
+
+        Debug.Log("In focus on area");
         currentHexCell = hexCell;
-        currentArea = hexCell.transform.GetComponentInChildren<Area>();
+        currentArea = area;
         Vector3 focusPosition = hexCell.transform.position;
 
         SetAreaFocus(true);
@@ -273,7 +278,10 @@ public class OrthographicCamera : MonoBehaviour
     public void focusOnRegion(HexCell hexCell, float orthographicSize)
     {
         Area area = hexCell.GetComponentInChildren<Area>();
-        Region region = Stage.GetRegion(area);
+        Region region = area.region;
+        Debug.Log("Region: RegionId: " + region.GetRegionId());
+        if(region.GetRegionId() == -1)
+            return;
 
         Debug.Log("In focus on region");
 
