@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AreaDetailsHUD : MonoBehaviour
@@ -9,6 +7,8 @@ public class AreaDetailsHUD : MonoBehaviour
 
     void Update()
     {
-        AreaName.text = OrthographicCamera.GetMousePointingArea().areaName;
+        Area area = OrthographicCamera.GetMousePointingArea();
+        if(area != null)
+            AreaName.text = area.areaName;
     }
 }

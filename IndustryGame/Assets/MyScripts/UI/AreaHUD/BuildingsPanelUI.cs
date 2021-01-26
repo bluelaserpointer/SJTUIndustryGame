@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingsPanelUI:MonoBehaviour
@@ -21,11 +20,15 @@ public class BuildingsPanelUI:MonoBehaviour
     private void GeneratePrefabs ()
     {
         GeneratedPrefabs.Clear();
-        for (int i = 0 ; i < OrthographicCamera.GetMousePointingArea().GetEnabledBuildings().Count ; i++)
+        Area area = OrthographicCamera.GetMousePointingArea();
+        if(area != null)
         {
-            GameObject clone = Instantiate(BuildingSelectPrefab, BuildingsGenerateList.transform, false);
-            clone.GetComponent<BuildingSelectPrefab>().RefreshUI(OrthographicCamera.GetMousePointingArea().GetEnabledBuildings()[i]);
-            GeneratedPrefabs.Add(clone);
+            for (int i = 0; i < area.GetEnabledBuildings().Count; i++)
+            {
+                GameObject clone = Instantiate(BuildingSelectPrefab, BuildingsGenerateList.transform, false);
+                clone.GetComponent<BuildingSelectPrefab>().RefreshUI(OrthographicCamera.GetMousePointingArea().GetEnabledBuildings()[i]);
+                GeneratedPrefabs.Add(clone);
+            }
         }
     }
 
