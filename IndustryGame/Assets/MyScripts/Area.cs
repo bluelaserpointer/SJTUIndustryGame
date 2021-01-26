@@ -13,8 +13,7 @@ public class Area : MonoBehaviour
     public string description;
     public EnvironmentType environmentType;
 
-    private Dictionary<Building, int> buildingsAndConstructions = new Dictionary<Building, int>();
-    public List<BuildingModule> buildingModules;
+    public readonly List<Building> buildings = new List<Building>();
     [Serializable]
     public struct Stat
     {
@@ -54,9 +53,10 @@ public class Area : MonoBehaviour
                 neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
             }
         }
-        foreach (Building building in buildingsAndConstructions.Keys)
+        //initial buildings
+        foreach (Building building in buildings)
         {
-            building.applied();
+            building.FinishConstruction();
         }
         markBasement.SetActive(isBasement());
     }
@@ -132,9 +132,9 @@ public class Area : MonoBehaviour
                 setWeatherFX(snowFX, false);
                 break;
         }
-        foreach (Building building in buildingsAndConstructions.Keys)
+        foreach (Building building in buildings)
         {
-            building.idle();
+            building.DayIdle();
         }
         foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
@@ -209,7 +209,7 @@ public class Area : MonoBehaviour
     {
         return Stage.GetEnabledAreaActions(this);
     }
-    public List<Building> GetEnabledBuildings()
+    public List<BuildingInfo> GetEnabledBuildings()
     {
         return Stage.GetEnabledBuildings(this);
     }
@@ -220,6 +220,14 @@ public class Area : MonoBehaviour
     public bool ContainsFinishedAction(AreaAction action)
     {
         return finishedActions.Contains(action);
+    }
+    public void StartConstruction(BuildingInfo buildingInfo)
+    {
+        buildings.Add(new Building(buildingInfo));
+    }
+    public bool ContainsConstructedBuildingInfo(BuildingInfo buildingInfo)
+    {
+        return buildings.Find(building => building.info.Equals(buildingInfo) && building.IsConstructed()) != null;
     }
     public ICollection<Area> GetNeighborAreas()
     {
@@ -309,8 +317,8 @@ public class Area : MonoBehaviour
     {
         return transform.GetComponentInParent<HexCell>();
     }
-    public ICollection<Building> GetBuildings()
+    public List<Building> GetConstructedBuildings()
     {
-        return buildingsAndConstructions.Keys;
+        return buildings.FindAll(building => building.IsConstructed());
     }
 }

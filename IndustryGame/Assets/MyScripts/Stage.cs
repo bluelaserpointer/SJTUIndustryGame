@@ -70,7 +70,7 @@ public class Stage : MonoBehaviour
     private List<Specialist> specialists = new List<Specialist>();
     private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
-    private List<Building> includedBuildings = new List<Building>();
+    private List<BuildingInfo> includedBuildings = new List<BuildingInfo>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
 
@@ -87,8 +87,17 @@ public class Stage : MonoBehaviour
         foreach (Event anEvent in events) {
             anEvent.init();
         }
+        //load actions
+        foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
+        {
+            includedAreaActions.Add(areaAction);
+        }
+        foreach (GlobalAction globalAction in Resources.LoadAll<GlobalAction>("Action/GlobalAction"))
+        {
+            includedGlobalActions.Add(globalAction);
+        }
         //union actions
-        foreach(Event anEvent in events)
+        foreach (Event anEvent in events)
         {
             foreach(GlobalAction action in anEvent.includedGlobalActions)
             {
@@ -100,6 +109,11 @@ public class Stage : MonoBehaviour
                 if (!includedAreaActions.Contains(action))
                     includedAreaActions.Add(action);
             }
+        }
+        //load buldings
+        foreach(BuildingInfo building in Resources.LoadAll<BuildingInfo>("Building"))
+        {
+            includedBuildings.Add(building);
         }
     }
     void Start()
@@ -262,7 +276,7 @@ public class Stage : MonoBehaviour
     {
         return instance.includedAreaActions.FindAll(action => action.enabled(area));
     }
-    public static List<Building> GetEnabledBuildings(Area area)
+    public static List<BuildingInfo> GetEnabledBuildings(Area area)
     {
         return instance.includedBuildings.FindAll(building => building.enabled(area));
     }
