@@ -224,6 +224,7 @@ public class Area : MonoBehaviour
     public void StartConstruction(BuildingInfo buildingInfo)
     {
         buildings.Add(new Building(buildingInfo));
+        constructionProgressSlider.gameObject.SetActive(true);
     }
     public bool ContainsConstructedBuildingInfo(BuildingInfo buildingInfo)
     {
@@ -286,26 +287,34 @@ public class Area : MonoBehaviour
     }
 
     // 进度条显示
-    public GameObject ProgressSliderCanvas;
-    public Slider ProgressSlider;
+    public Slider actionProgressSlider, constructionProgressSlider;
     private Specialist currentSpecialist;
 
     public void StartProgressSlider (Specialist specialist)
     {
-        ProgressSliderCanvas.SetActive(true);
-        ProgressSlider.value = 0.0f;
+        actionProgressSlider.gameObject.SetActive(true);
+        actionProgressSlider.value = 0.0f;
         currentSpecialist = specialist;
     }
 
     public void UpdateProgressSlider ()
     {
-        if (ProgressSliderCanvas.activeSelf)
+        if (actionProgressSlider.gameObject.activeSelf)
         {
-            ProgressSlider.value = (float) currentSpecialist.getActionProgressRate();
-            if (!currentSpecialist.hasCurrentAction())       //TODO: 将判断语句换成查看该action是否完成
+            if (currentSpecialist.hasCurrentAction())
             {
-                ProgressSliderCanvas.SetActive(false);
+                actionProgressSlider.value = currentSpecialist.getActionProgressRate();
+            } else
+            {
+                actionProgressSlider.gameObject.SetActive(false);
             }
+        }
+        if (constructionProgressSlider.gameObject.activeSelf)
+        {
+            Building building = buildings.Find(eachBuilding => !eachBuilding.IsConstructed());
+            if(building == null)
+                constructionProgressSlider.gameObject.SetActive(false);
+            constructionProgressSlider.value = building.GetConstructionRate();
         }
     }
 

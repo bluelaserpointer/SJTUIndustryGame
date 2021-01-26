@@ -15,13 +15,13 @@ public class Specialist
 
     Area currentArea;
     Action currentAction;
-    double actionProgress;
+    float actionProgress;
 
     public void dayIdle()
     {
         if(currentAction != null)
         {
-            actionProgress += 1 * (1.0 + Stage.GetResourceValue(ResourceType.specialistTrainBoost));
+            actionProgress += 1.0f * (1.0f + Stage.GetResourceValue(ResourceType.specialistTrainBoost));
             if(actionProgress >= currentAction.timeCost)
             {
                 currentAction.finishAction(currentArea);
@@ -80,9 +80,9 @@ public class Specialist
     {
         return currentArea;
     }
-    public double getActionProgressRate()
+    public float getActionProgressRate()
     {
-        return currentAction != null ? actionProgress / currentAction.timeCost : 0.0f;
+        return currentAction != null ? actionProgress / currentAction.timeCost : 1.0f;
     }
     public bool hasCurrentAction()
     {

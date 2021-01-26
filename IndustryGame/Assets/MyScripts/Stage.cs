@@ -244,11 +244,11 @@ public class Stage : MonoBehaviour
     {
         return (int)instance.resources[ResourceType.money].old;
     }
-    public static double GetResourceValue(ResourceType resourceType)
+    public static float GetResourceValue(ResourceType resourceType)
     {
         return instance.resources[resourceType].old;
     }
-    public static double AddResourceValue(ResourceType resourceType, float value)
+    public static float AddResourceValue(ResourceType resourceType, float value)
     {
         return instance.resources[resourceType].Add(value);
     }
