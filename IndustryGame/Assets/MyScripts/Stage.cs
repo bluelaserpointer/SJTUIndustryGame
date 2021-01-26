@@ -40,7 +40,8 @@ public enum ResourceType
 [DisallowMultipleComponent]
 public class Stage : MonoBehaviour
 {
-    private static Stage instance;
+    //private static Stage instance;
+    public static Stage instance;
 
     private Area[] areas;
     private Area baseArea;
@@ -116,17 +117,17 @@ public class Stage : MonoBehaviour
             includedBuildings.Add(building);
         }
     }
-    void Start()
+    public void Init(HexCell[] hexCells)
     {
         //collect all Area Components in children gameObject
         areas = GetComponentsInChildren<Area>();
 
         //generate regions
-        Debug.Log("Stage: Area size: " + areas.Length);
 
         foreach(Area area in areas)
         {
             int regionId = area.GetHexCell().RegionId;
+           
             Region region = regions.Find(eachRegion => eachRegion.GetRegionId() == regionId);
             // Debug.Log("Region: " + area.region.GetRegionId() + " " + area.transform.position);
             if (region == null)

@@ -115,6 +115,7 @@ public class SaveLoadMenu : MonoBehaviour {
 			int header = reader.ReadInt32();
 			if (header <= 1) {
 				hexGrid.Load(reader, header);
+				//Stage.instance.Start();
 				HexMapCamera.ValidatePosition();
 			}
 			else {
