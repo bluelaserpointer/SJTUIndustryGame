@@ -13,27 +13,45 @@ public class OrthographicCamera : MonoBehaviour
     private Camera mainCamera;
 
     // Orthographic Sizes
-    public float mouseOrthographicSize = 7f;
-    public float keyOrthographicSize = 9f;
-    public float maskOrthographicSize = 15f;
+    public float mouseAreaOrthographicSize = 7f;
+    public float keyAreaOrthographicSize = 9f;
+    public float maskAreaOrthographicSize = 15f;
     private float currentSize;
-    private float originalSize;
+    private float regionSize;
+    private float worldSize;
 
 
-    private Transform originalTransform;
+    private Transform worldTransform;
     private Vector3 currentPosition;
     private Quaternion currentRotation;
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
-    private Quaternion orthographicRotation;
+    private Vector3 regionPosition;
+    private Quaternion regionRotation;
+    private Vector3 worldPosition;
+    private Quaternion worldRotation;
+    private Quaternion orthographicAreaRotation;
+    private Quaternion orthographicRegionRotation;
 
-    private bool cameraFocus = false;
+
+    private bool regionFocus = false;
+    private bool areaFocus = false;
     private HexGrid hexGrid;
-    private float orthographicRotationX;
-    private Vector3 orthographicPosition;
+    private float orthographicAreaRotationX;
+    private float orthographicRegionRotationX;
+    private Vector3 orthographicAreaPosition;
+    private Vector3 orthographicRegionPosition;
+
     private HexCell currentHexCell;
     private Area currentArea;
+    private Region currentRegion;
     private int focusMask;
+    private Vector3[] positions;
+
+    public enum FocusStage{
+        World,
+        Region,
+        Area
+    }
+    private FocusStage focusStage = FocusStage.World;
 
     // AreaDetails HUD
     public GameObject AreaDetailsHUD;
@@ -48,18 +66,20 @@ public class OrthographicCamera : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        originalTransform = transform;
-        originalSize = currentSize = mainCamera.orthographicSize;
+        worldTransform = transform;
+        worldSize = currentSize = mainCamera.orthographicSize;
 
-        currentPosition = originalPosition = originalTransform.position;
-        currentRotation = originalRotation = originalTransform.rotation;
-        orthographicRotation = currentRotation * Quaternion.Euler(-cameraParam, 0, 0);
+        currentPosition = worldPosition = worldTransform.position;
+        currentRotation = worldRotation = worldTransform.rotation;
+
+        orthographicAreaRotation = currentRotation * Quaternion.Euler(-cameraParam, 0, 0);
+        orthographicRegionRotation = Quaternion.Euler(90, orthographicRegionRotation.y, orthographicRegionRotation.z);
 
         focusMask = LayerMask.GetMask("FocusMask");
     }
     void Update () {
         handleCameraFocus();
-        AreaDetailsHUD.SetActive(cameraFocus);
+        AreaDetailsHUD.SetActive(areaFocus);
     }
 
 
@@ -98,6 +118,17 @@ public class OrthographicCamera : MonoBehaviour
 
     private void FixedUpdate() {
         //Lerp position
+
+        if(regionFocus)
+        {
+            MeshRenderer renderer = currentRegion.bottom.transform.parent.parent.GetComponentInChildren<MeshRenderer>();
+            if(!renderer.isVisible)
+            {
+                currentSize = GetRequiredOrthographicSize(mainCamera, positions);
+                // currentPosition
+            }
+        }
+
         mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, currentSize, Time.deltaTime * transitionSpeed * 10);
 
         transform.position = Vector3.Lerp(transform.position, currentPosition, transitionSpeed);
@@ -125,7 +156,7 @@ public class OrthographicCamera : MonoBehaviour
     }
 
     private void handleCameraFocus() {
-        if(mainCamera.orthographicSize <= maskOrthographicSize)
+        if(mainCamera.orthographicSize <= maskAreaOrthographicSize)
         {
             mainCamera.cullingMask &= ~(1 << 8); // 关闭层x
         }
@@ -134,21 +165,53 @@ public class OrthographicCamera : MonoBehaviour
             mainCamera.cullingMask |= (1 << 8);
         }
 
-        handleCameraControl();
+        handleRegionFocus();
     }
 
-    private void handleCameraControl()
+    private void handleRegionFocus()
     {
-        if(cameraFocus)
+        if(regionFocus)
+        {
+            // Keyboard control for region selection
+
+            bool areaToRegionFlag = false;
+            handleAreaFocus(ref areaToRegionFlag);
+            if(areaToRegionFlag == true)
+                return;
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                currentSize = worldSize;
+                currentPosition = worldPosition;
+                currentRotation = worldRotation;
+
+                SetRegionFocus(false);
+            }
+
+
+        }else if(!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && !regionFocus){
+            Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(inputRay, out hit))
+            {
+                focusOnRegion(hexGrid.GetCell(hit.point), mouseAreaOrthographicSize);
+            }
+        }
+    }
+
+    private void handleAreaFocus(ref bool areaToRegionFlag)
+    {
+        if(areaFocus)
         {
             // Exiting with esc
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                currentSize = originalSize;
-                currentPosition = originalPosition;
-                currentRotation = originalRotation;
+                currentSize = regionSize;
+                currentPosition = regionPosition;
+                currentRotation = regionRotation;
 
-                SetCameraFocus(false);
+                SetAreaFocus(false);
+                areaToRegionFlag = true;
             }
 
             // Moving with WASD
@@ -172,50 +235,158 @@ public class OrthographicCamera : MonoBehaviour
             
             if(focusHexCell != null)
             {
-                focusOnHexCell(focusHexCell, keyOrthographicSize);
+                focusOnArea(focusHexCell, keyAreaOrthographicSize);
             }
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
-                currentSize = mouseOrthographicSize;
+                currentSize = mouseAreaOrthographicSize;
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-                currentSize = keyOrthographicSize;
+                currentSize = keyAreaOrthographicSize;
 
-        }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && !HUDManager.CheckOpenWindow())
+        }else if (!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && !HUDManager.CheckOpenWindow() && regionFocus)
         {
             // Focusing with mouse
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
             {
-                focusOnHexCell(hexGrid.GetCell(hit.point), mouseOrthographicSize);
+                focusOnArea(hexGrid.GetCell(hit.point), mouseAreaOrthographicSize);
             }
         }
     }
 
-    public void focusOnHexCell(HexCell hexCell, float orthographicSize)
+    public void focusOnArea(HexCell hexCell, float orthographicSize)
     {
+        Debug.Log("In focus on area");
+
         currentHexCell = hexCell;
         currentArea = hexCell.transform.GetComponentInChildren<Area>();
         Vector3 focusPosition = hexCell.transform.position;
 
-        SetCameraFocus(true);
+        SetAreaFocus(true);
 
         currentSize = orthographicSize;
         currentPosition = new Vector3(focusPosition.x, focusPosition.y + 12.8f, focusPosition.z - 14.5f);
-        currentRotation = orthographicRotation;
+        currentRotation = orthographicAreaRotation;
     }
 
-    private void SetCameraFocus(bool value)
+    public void focusOnRegion(HexCell hexCell, float orthographicSize)
     {
-        if(!cameraFocus && !value)
+        Area area = hexCell.GetComponentInChildren<Area>();
+        Region region = Stage.GetRegion(area);
+
+        Debug.Log("In focus on region");
+
+        currentRegion = region;
+        float maxX,minX, maxZ, minZ;
+        positions = new Vector3[4];
+        Vector3 leftPos, rightPos, topPos, bottomPos;
+        positions[0] = leftPos = region.left.transform.position;
+        positions[1] = rightPos = region.right.transform.position;
+        positions[2] = topPos = region.top.transform.position;
+        positions[3] = bottomPos = region.bottom.transform.position;
+
+        float[] xArr = new float[4];
+        float[] zArr = new float[4];
+
+        xArr[0] = leftPos.x;
+        xArr[1] = rightPos.x;
+        xArr[2] = topPos.x;
+        xArr[3] = bottomPos.x;
+        zArr[0] = leftPos.z;
+        zArr[1] = rightPos.z;
+        zArr[2] = topPos.z;
+        zArr[3] = bottomPos.z;
+
+        maxX = Mathf.Max(xArr);
+        minX = Mathf.Min(xArr);
+        maxZ = Mathf.Max(zArr);
+        minZ = Mathf.Min(zArr);
+
+        Vector3 focusPosition = new Vector3((maxX + minX) / 2, 150f, (maxZ + minZ) / 2);
+        currentSize = GetRequiredOrthographicSize(mainCamera, positions);
+        currentPosition = focusPosition;
+        currentRotation = orthographicRegionRotation;
+
+
+        regionSize = currentSize;
+        regionPosition = currentPosition;
+        regionRotation = currentRotation;
+
+        SetRegionFocus(true);
+    }
+
+    public float GetRequiredOrthographicSize(Camera orthographicCamera, params Vector3[] positionBounds)
+    {
+
+ 
+        // Stored width and height are just your Screen.Width and Screen.Height
+        float aspectRatio = (float)16 / (float)9;
+ 
+        // 1: If you have an orthographic size of 5, the viewport will contain exactly 10          
+        // units of world space
+        float yUnits = orthographicCamera.orthographicSize * 2.0f;
+ 
+        // 2: horizontal size is based on units * aspect ratio
+        float xUnits = yUnits * aspectRatio;
+ 
+        // 3: find the min and maximum to required based on world points
+        float maxViewPortPoint = float.MinValue;
+        float minViewPortPoint = float.MaxValue;
+ 
+        for (int index = 0; index < positionBounds.Length; ++index)
+        {
+            float val = orthographicCamera.WorldToViewportPoint(positionBounds[index]).x;
+ 
+            if (val > maxViewPortPoint)
+            {
+                maxViewPortPoint = val;
+            }
+ 
+            if (val < minViewPortPoint)
+            {
+                minViewPortPoint = val;
+            }
+        }
+ 
+        // 4: calculate the viewport size based on these outer values
+        float viewportSize = maxViewPortPoint - minViewPortPoint;
+ 
+        // 5: Convert to actual X width. This can now be considered as Viewport normalised        
+        // to 1 length
+        float newXUnits = viewportSize * xUnits;
+ 
+        // 6: Get the Y Units which match these X Units                                            
+        // -> Reverse xUnits = yUnits * aspectratio
+        float newYUnits = newXUnits / aspectRatio;
+ 
+        // 7: Divide by 2 to get the actual ortho size -> again reverse of getting YUnits          
+        // using ortho size
+        float newOrtho = newYUnits / 2.0f;
+ 
+        // 8: Apply
+        return newOrtho + 100;
+    }
+
+
+    private void SetAreaFocus(bool value)
+    {
+        if(!areaFocus && !value)
             return;
         
         if(value)
             handleFocusAreaAudio();
         else
             handleGlobalAudio();
-        cameraFocus = value;
+
+        areaFocus = value;
     }
+
+    public void SetRegionFocus(bool value)
+    {
+        regionFocus = value;
+    }
+
     public static Area GetMousePointingArea()
     {
         return instance != null ? instance.currentArea : null;
