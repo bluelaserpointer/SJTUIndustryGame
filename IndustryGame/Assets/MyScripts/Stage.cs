@@ -120,8 +120,8 @@ public class Stage : MonoBehaviour
     {
         //collect all Area Components in children gameObject
         areas = GetComponentsInChildren<Area>();
-        //generate regions
 
+        //generate regions
         Debug.Log("Stage: Area size: " + areas.Length);
 
         foreach(Area area in areas)
