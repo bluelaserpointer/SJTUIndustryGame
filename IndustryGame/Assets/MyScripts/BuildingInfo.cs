@@ -9,6 +9,7 @@ public class BuildingInfo : ScriptableObject
     public string description;
     public GameObject model;
     public int moneyCost, timeCost;
+    public bool preventPlayerConstruct;
     public List<BuildingInfo> preFinishBuildings;
     public List<AreaAction> preFinishAreaActions;
     [Header("建筑物效果")]
@@ -37,7 +38,7 @@ public class BuildingInfo : ScriptableObject
     }
     public bool enabled(Area area)
     {
-        return preFinishBuildings.Find(building => !area.ContainsConstructedBuildingInfo(building)) == null
+        return !preventPlayerConstruct && preFinishBuildings.Find(building => !area.ContainsConstructedBuildingInfo(building)) == null
             && preFinishAreaActions.Find(action => !area.ContainsFinishedAction(action)) == null;
     }
 }

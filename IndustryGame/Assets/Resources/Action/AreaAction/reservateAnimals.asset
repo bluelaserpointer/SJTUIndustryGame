@@ -21,5 +21,6 @@ MonoBehaviour:
   finishEvent:
     m_PersistentCalls:
       m_Calls: []
+  needProceedInBase: 0
   preFinishActions:
   - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}

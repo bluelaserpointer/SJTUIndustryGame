@@ -226,6 +226,10 @@ public class Area : MonoBehaviour
         buildings.Add(new Building(buildingInfo));
         constructionProgressSlider.gameObject.SetActive(true);
     }
+    public void StartDeConstruction(Building building)
+    {
+        buildings.Remove(building);
+    }
     public bool ContainsConstructedBuildingInfo(BuildingInfo buildingInfo)
     {
         return buildings.Find(building => building.info.Equals(buildingInfo) && building.IsConstructed()) != null;

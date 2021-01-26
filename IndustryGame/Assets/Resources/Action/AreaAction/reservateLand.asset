@@ -16,7 +16,10 @@ MonoBehaviour:
   description: 
   timeCost: 10
   moneyCost: 10
+  preFinishInfos: []
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:
       m_Calls: []
+  needProceedInBase: 0
+  preFinishActions: []

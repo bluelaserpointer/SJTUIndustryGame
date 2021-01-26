@@ -15,9 +15,10 @@ MonoBehaviour:
   infoName: "\u8FDB\u884C\u4E00\u6B21\u5730\u533A\u8C03\u67E5"
   description: "\u6211\u4EEC\u5C55\u5F00\u6DF1\u5165\u7684\u8C03\u67E5\u4E4B\u524D\u5148\u9700\u8981\u4E86\u89E3\u5F53\u5730\u7684\u8DEF\u51B5\u3002\n\n\u6D3E\u4E00\u540D\u4E13\u5BB6\u5230\u76EE\u6807\u5730\u533A\u8FDB\u884C\u5730\u533A\u8C03\u67E5"
   descriptionAfterFinish: "\u5DF2\u8BB0\u5F55\u5F53\u5730\u6700\u4F73\u79FB\u52A8\u8DEF\u7EBF\u3002\n\u66F4\u9AD8\u7684\u63A2\u7D22\u7B49\u7EA7\u80FD\u52A0\u5FEB\u6B64\u9636\u6BB5\u7684\u8FDB\u5EA6\u3002"
+  contribution: 0
   showInAnimalsReport: []
   showInEnvironmentReport: 0
   preFinishInfos: []
-  successCondition: {fileID: 11400000, guid: a5650e9b80a480444819b63843cb69f2, type: 2}
+  successCondition: {fileID: 0}
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
