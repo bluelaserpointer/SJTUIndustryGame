@@ -9,6 +9,7 @@ public class SingleSpecialist : MonoBehaviour
     public Image Avatar;
     public Text Name;
     public Text Speciality;
+    public Slider LevelSlider;
 
     public ProfileManage profile;
 
@@ -17,6 +18,7 @@ public class SingleSpecialist : MonoBehaviour
         Avatar.sprite = specialist.specialistTemplate.icon;
         Name.text = specialist.name;
         Speciality.text = specialist.speciality.ToString();
+        LevelSlider.value = specialist.GetExpRate();
     }
 
     private void OnDisable ()
