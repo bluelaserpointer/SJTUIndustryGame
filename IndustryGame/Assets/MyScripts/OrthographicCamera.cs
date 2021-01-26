@@ -257,10 +257,15 @@ public class OrthographicCamera : MonoBehaviour
 
     public void focusOnArea(HexCell hexCell, float orthographicSize)
     {
-        Debug.Log("In focus on area");
+        Area area = hexCell.transform.GetComponentInChildren<Area>();
+        Debug.Log("Area: RegionId: " + area.region.GetRegionId());
 
+        if(currentRegion.GetRegionId() != area.region.GetRegionId())
+            return;
+
+        Debug.Log("In focus on area");
         currentHexCell = hexCell;
-        currentArea = hexCell.transform.GetComponentInChildren<Area>();
+        currentArea = area;
         Vector3 focusPosition = hexCell.transform.position;
 
         SetAreaFocus(true);
@@ -273,7 +278,10 @@ public class OrthographicCamera : MonoBehaviour
     public void focusOnRegion(HexCell hexCell, float orthographicSize)
     {
         Area area = hexCell.GetComponentInChildren<Area>();
-        Region region = Stage.GetRegion(area);
+        Region region = area.region;
+        Debug.Log("Region: RegionId: " + region.GetRegionId());
+        if(region.GetRegionId() == -1)
+            return;
 
         Debug.Log("In focus on region");
 

@@ -121,16 +121,40 @@ public class Stage : MonoBehaviour
         //collect all Area Components in children gameObject
         areas = GetComponentsInChildren<Area>();
         //generate regions
+
+        Debug.Log("Stage: Area size: " + areas.Length);
+
         foreach(Area area in areas)
         {
             int regionId = area.GetHexCell().RegionId;
             Region region = regions.Find(eachRegion => eachRegion.GetRegionId() == regionId);
+            // Debug.Log("Region: " + area.region.GetRegionId() + " " + area.transform.position);
             if (region == null)
             {
                 regions.Add(region = new Region(regionId));
             }
             region.AddArea(area);
             area.region = region;
+
+        }
+
+		Debug.Log("In Stage Start()");
+
+
+        foreach (Region region in regions)
+        {
+            Debug.Log("Region: " + region.GetRegionId() + " size: " + region.GetAreas().Count);
+            // if(region.GetRegionId() == 0)
+            //     foreach (Area area in region.GetAreas())
+            //     {
+            //         Debug.Log(area.transform.position);
+            //     }
+            // Debug.Log("LEFT" + region.left.transform.position.x);
+            // Debug.Log("RIGHT" + region.right.transform.position.x);            
+
+            // Debug.Log("TOP" + region.top.transform.position.z);            
+            // Debug.Log("BOTTOM" + region.bottom.transform.position.z);
+
         }
 
 
