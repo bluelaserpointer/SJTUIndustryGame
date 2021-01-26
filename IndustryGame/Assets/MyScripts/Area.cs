@@ -13,7 +13,7 @@ public class Area : MonoBehaviour
     public string description;
     public EnvironmentType environmentType;
 
-    public Dictionary<Building, int> buildingsAndConstructions;
+    private Dictionary<Building, int> buildingsAndConstructions = new Dictionary<Building, int>();
     public List<BuildingModule> buildingModules;
     [Serializable]
     public struct Stat

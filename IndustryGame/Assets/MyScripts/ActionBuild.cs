@@ -11,11 +11,11 @@ public class ActionBuild : AreaAction
     {
         if(buildType == BuildType.add)
         {
-            area.buildings.Add(building);
+            area.GetBuildings().Add(building);
             building.applied();
         } else if (buildType == BuildType.remove)
         {
-            if (area.buildings.Remove(building))
+            if (area.GetBuildings().Remove(building))
                 building.removed();
         }
     }

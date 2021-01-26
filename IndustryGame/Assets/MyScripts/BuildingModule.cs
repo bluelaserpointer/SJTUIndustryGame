@@ -12,6 +12,6 @@ public class BuildingModule : AreaAction
     }
     public override bool enabled(Area area)
     {
-        return base.enabled(area) && area.buildings.Contains(targetBuilding);
+        return base.enabled(area) && area.GetBuildings().Contains(targetBuilding);
     }
 }
