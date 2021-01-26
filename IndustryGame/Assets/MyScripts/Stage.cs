@@ -70,6 +70,7 @@ public class Stage : MonoBehaviour
     private List<Specialist> specialists = new List<Specialist>();
     private List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
+    private List<Building> includedBuildings = new List<Building>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
 
@@ -260,6 +261,10 @@ public class Stage : MonoBehaviour
     public static List<AreaAction> GetEnabledAreaActions(Area area)
     {
         return instance.includedAreaActions.FindAll(action => action.enabled(area));
+    }
+    public static List<Building> GetEnabledBuildings(Area area)
+    {
+        return instance.includedBuildings.FindAll(building => building.enabled(area));
     }
     public static void AddActionFinishCount(Action action)
     {

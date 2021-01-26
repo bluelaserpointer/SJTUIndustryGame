@@ -13,7 +13,7 @@ public class Area : MonoBehaviour
     public string description;
     public EnvironmentType environmentType;
 
-    public List<Building> buildings;
+    public Dictionary<Building, int> buildingsAndConstructions;
     public List<BuildingModule> buildingModules;
     [Serializable]
     public struct Stat
@@ -54,7 +54,7 @@ public class Area : MonoBehaviour
                 neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
             }
         }
-        foreach (Building building in buildings)
+        foreach (Building building in buildingsAndConstructions.Keys)
         {
             building.applied();
         }
@@ -132,7 +132,7 @@ public class Area : MonoBehaviour
                 setWeatherFX(snowFX, false);
                 break;
         }
-        foreach (Building building in buildings)
+        foreach (Building building in buildingsAndConstructions.Keys)
         {
             building.idle();
         }
@@ -208,6 +208,10 @@ public class Area : MonoBehaviour
     public List<AreaAction> GetEnabledActions()
     {
         return Stage.GetEnabledAreaActions(this);
+    }
+    public List<Building> GetEnabledBuildings()
+    {
+        return Stage.GetEnabledBuildings(this);
     }
     public void AddFinishedAction(AreaAction action)
     {
@@ -304,5 +308,9 @@ public class Area : MonoBehaviour
     public HexCell GetHexCell()
     {
         return transform.GetComponentInParent<HexCell>();
+    }
+    public ICollection<Building> GetBuildings()
+    {
+        return buildingsAndConstructions.Keys;
     }
 }

@@ -8,6 +8,8 @@ public class Building : ScriptableObject
     [TextArea]
     public string description;
     public GameObject model;
+    public int moneyCost, timeCost;
+    public List<Building> preFinishBuildings;
     [Header("建筑物效果")]
     public List<Buff> buffs;
     
@@ -31,5 +33,9 @@ public class Building : ScriptableObject
         {
             buff.removed();
         }
+    }
+    public bool enabled(Area area)
+    {
+        return preFinishBuildings.Find(building => !area.GetBuildings().Contains(building)) == null;
     }
 }
