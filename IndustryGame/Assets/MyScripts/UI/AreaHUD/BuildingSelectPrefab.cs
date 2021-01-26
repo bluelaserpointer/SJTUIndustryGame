@@ -15,9 +15,9 @@ public class BuildingSelectPrefab : MonoBehaviour
     {
         this.buildingInfo = buildingInfo;
         buildingName.text = buildingInfo.buildingName;
-        buildingDescription.text = buildingInfo.description;
-        MoneyCost.text = buildingInfo.moneyCost.ToString();
-        buildingName.text = buildingInfo.timeCost.ToString();
+        //buildingDescription.text = buildingInfo.description;
+        //MoneyCost.text = buildingInfo.moneyCost.ToString();
+        //buildingName.text = buildingInfo.timeCost.ToString();
     }
 
     public void StartBuild ()
