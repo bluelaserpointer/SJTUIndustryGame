@@ -4,19 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class AreaDetailsHUD : MonoBehaviour
+public class ActionsPanelUI : MonoBehaviour
 {
     private Area CurrentArea;
     public Dropdown Actions;
     public Dropdown Specialists;
-    public Text AreaName;
-
-    
-
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -25,7 +17,6 @@ public class AreaDetailsHUD : MonoBehaviour
         {
             UpdateActions();
             UpdateSpecialists();
-            AreaName.text = CurrentArea.areaName;
         }
 
         //InGameLog.AddLog("Action progress rate: " + Stage.GetSpecialists()[Specialists.value].getActionProgressRate().ToString());
@@ -73,4 +64,8 @@ public class AreaDetailsHUD : MonoBehaviour
         Stage.GetSpecialists()[Specialists.value].moveToArea(CurrentArea);
         Stage.GetSpecialists()[Specialists.value].startAction(CurrentArea.GetEnabledActions()[Actions.value]);
     }
+
+
+
+
 }

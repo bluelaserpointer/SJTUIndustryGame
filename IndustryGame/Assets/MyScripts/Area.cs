@@ -225,6 +225,7 @@ public class Area : MonoBehaviour
     {
         buildings.Add(new Building(buildingInfo));
         constructionProgressSlider.gameObject.SetActive(true);
+        InGameLog.AddLog("CHECK CON SLIDER ACTIVE: " + constructionProgressSlider.gameObject.activeSelf);
     }
     public void StartDeConstruction(Building building)
     {
@@ -316,9 +317,18 @@ public class Area : MonoBehaviour
         if (constructionProgressSlider.gameObject.activeSelf)
         {
             Building building = buildings.Find(eachBuilding => !eachBuilding.IsConstructed());
-            if(building == null)
+            InGameLog.AddLog("Is building == null ? " + (building == null).ToString());
+            //InGameLog.AddLog("Progress : " + building.GetConstructionRate());
+
+            if (building == null)
+            {
                 constructionProgressSlider.gameObject.SetActive(false);
-            constructionProgressSlider.value = building.GetConstructionRate();
+                InGameLog.AddLog("building is null");
+            }
+            else
+            {
+                constructionProgressSlider.value = building.GetConstructionRate();
+            }
         }
     }
 
