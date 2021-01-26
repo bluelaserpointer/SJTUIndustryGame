@@ -25,6 +25,7 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
 		HexMetrics.colors = colors;
+		Debug.Log("CreateMap: Awake");
 		CreateMap(cellCountX, cellCountZ);
 	}
 
@@ -37,10 +38,19 @@ public class HexGrid : MonoBehaviour {
 			return false;
 		}
 
+		
 		if (chunks != null) {
-			for (int i = 0; i < chunks.Length; i++) {
+			/*Debug.Log("Before Des:"+ GetComponentsInChildren<Area>().Length);
+			Debug.Log("Before Des:" + GetComponentsInChildren<HexCell>().Length);
+			Debug.Log("Before Des:" + GetComponentsInChildren<HexGridChunk>().Length);
+	*/		
+	        for (int i = 0; i < chunks.Length; i++) {
 				Destroy(chunks[i].gameObject);
 			}
+
+			/*Debug.Log("After Des:"+GetComponentsInChildren<Area>().Length);
+			Debug.Log("After Des:" + GetComponentsInChildren<HexCell>().Length);
+			Debug.Log("After Des:" + GetComponentsInChildren<HexGridChunk>().Length);*/
 		}
 
 		cellCountX = x;
@@ -172,6 +182,7 @@ public class HexGrid : MonoBehaviour {
 			z = reader.ReadInt32();
 		}
 		if (x != cellCountX || z != cellCountZ) {
+			Debug.Log("CreateMap: Load");
 			if (!CreateMap(x, z)) {
 				return;
 			}
@@ -183,5 +194,8 @@ public class HexGrid : MonoBehaviour {
 		for (int i = 0; i < chunks.Length; i++) {
 			chunks[i].Refresh();
 		}
+		//GetComponentsInChildren<Area>().Length
+		Stage.instance.Init(cells);
 	}
+	
 }
