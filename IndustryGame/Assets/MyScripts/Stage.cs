@@ -143,6 +143,12 @@ public class Stage : MonoBehaviour
             area.region = region;
 
         }
+
+        foreach (Region region in regions)
+        {
+            region.CalculateCenter();
+        }
+        
         //debug
         //foreach(Region region in regions) {
         //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
