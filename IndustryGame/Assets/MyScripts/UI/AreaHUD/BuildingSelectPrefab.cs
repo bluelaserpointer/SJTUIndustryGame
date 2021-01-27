@@ -26,4 +26,9 @@ public class BuildingSelectPrefab : MonoBehaviour
         InGameLog.AddLog("Start building " + buildingInfo.buildingName);
     }
 
+    private void OnDisable ()
+    {
+        Destroy(gameObject);
+    }
+
 }
