@@ -9,7 +9,7 @@ public class Region
     private List<MainEvent> includedEvents;
     private HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
-    private int reservationTime = 2;
+    private int reservationTime = 1;
     private int reservationSpeed = 1, reservationProgress;
     private Area baseArea;
     private Area left, right, bottom, top;
@@ -23,6 +23,8 @@ public class Region
     }
     public void dayIdle()
     {
+        if (regionId == -1)
+            return;
         foreach (Area area in areas)
         {
             area.dayIdle();
@@ -42,18 +44,21 @@ public class Region
                 {
                     HexCell cell = null;
                     int loops = 0;
-                    while (++loops < 2048)
+                    while (++loops < 512)
                     {
                         cell = Stage.GetHexGrid().GetCell(hexSpiral.next());
                         if (cell != null && cell.RegionId == regionId)
                             break;
                     }
-                    //InGameLog.AddLog("step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
-                    if (loops == 2048)
+                    if (loops == 512)
                     {
-                        InGameLog.AddLog("an area is missing", Color.red);
+                        //InGameLog.AddLog("an area is missing", Color.red);
                         reservationCompleted();
                     }
+                    //debug
+                    //InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
+                    //cell.GetComponentInChildren<Area>().rainFX.SetActive(false);
+                    //cell.GetComponentInChildren<Area>().rainFX.SetActive(true);
                 }
             }
             if (reservatedAreaCount >= areas.Count)

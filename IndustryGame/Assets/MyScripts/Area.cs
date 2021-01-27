@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Area : MonoBehaviour
 {
     [SerializeField]
-    private GameObject rainFX, snowFX, markSpecialist, markBasement;
+    public GameObject rainFX, snowFX, markSpecialist, markBasement;
     public string areaName;
     [TextArea]
     public string description;
@@ -232,7 +232,7 @@ public class Area : MonoBehaviour
     }
     public void StartConstruction(BuildingInfo buildingInfo)
     {
-        buildings.Add(new Building(buildingInfo));
+        buildings.Add(new Building(this, buildingInfo));
         constructionProgressSlider.gameObject.SetActive(true);
     }
     public void StartDeConstruction(Building building)

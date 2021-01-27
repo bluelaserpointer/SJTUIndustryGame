@@ -6,27 +6,23 @@
     int edgeLocation;
     public void setCoordinates(HexCoordinates hexCoordinates)
     {
-        this.hexCoordinates = hexCoordinates;
-        edgeLocation = radius = 0;
-        edge = 6;
+        this.hexCoordinates = move(hexCoordinates, HexDirection.W, 1);
+        edge = 0;
+        edgeLocation = 0;
+        radius = 1;
     }
     public HexCoordinates next()
     {
-        HexDirection moveDirection;
-        if (edgeLocation < radius)
-        {
-            moveDirection = (HexDirection)edge;
-            ++edgeLocation;
-        } else
-         {
+        HexDirection moveDirection = (HexDirection)edge;
+        if (++edgeLocation >= radius)
+        {  
             edgeLocation = 0;
-            if(edge < 6)
+            if(edge < 5)
             {
-                moveDirection = (HexDirection)edge;
                 ++edge;
             } else
             {
-                moveDirection = HexDirection.W;
+                hexCoordinates = move(hexCoordinates, HexDirection.W, 1);
                 edge = 0;
                 ++radius;
             }
