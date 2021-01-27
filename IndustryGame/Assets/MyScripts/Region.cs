@@ -64,51 +64,29 @@ public class Region
     }
     public void AddArea(Area area)
     {
-        GameObject parent = area.transform.parent.gameObject;
-        // Debug.Log("Region " + regionId + " " + area.transform.position);
-        // Debug.Log("Region " + regionId + " " + area.transform.TransformPoint(area.transform.position));
-        // Debug.Log("Region " + regionId + " " + parent.transform.parent.TransformPoint(parent.transform.localPosition));
-
-
-        Vector3 pos = area.gameObject.transform.parent.position;
-        if(area == null)
+        if (area == null)
             return;
-
         if(top == null)
         {
-            // area.name = "Region " + regionId;
-            // GameObject.Destroy(area.gameObject.transform.parent.gameObject);
-            // Debug.Log("Region " + regionId + ": First init: " + area.transform.position);
-            top = area;
-            bottom = area;
-            left = area;
-            right = area;
-        }else{
-            if(left.transform.position.x > pos.x)
+            top = bottom = left = right = area;
+        }else
+        {
+            Vector3 pos = area.gameObject.transform.parent.position;
+            if (left.transform.position.x > pos.x)
             {
                 left = area;
-                Debug.Log("Region " + regionId + ": Updating left");
-            }
-            if(right.transform.position.x < pos.x)
+            } else if(right.transform.position.x < pos.x)
             {
                 right = area;
-                Debug.Log("Region " + regionId + ": Updating right");
-
             }
             if(bottom.transform.position.z > pos.z)
             {
                 bottom = area;
-                Debug.Log("Region " + regionId + ": Updating bottom");
-
-            }
-            if(top.transform.position.z < pos.z)
+            } else if(top.transform.position.z < pos.z)
             {
                 top = area;
-                Debug.Log("Region " + regionId + ": Updating top");
-
             }
         }
-
         areas.Add(area);
     }
     public void SetBaseArea(Area area)

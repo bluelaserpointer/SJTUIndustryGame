@@ -170,10 +170,6 @@ public class OrthographicCamera : MonoBehaviour
 
     private void handleRegionFocus()
     {
-        if(regionFocus)
-        {
-            // Keyboard control for region selection
-
             bool areaToRegionFlag = false;
             handleAreaFocus(ref areaToRegionFlag);
             if(areaToRegionFlag == true)
@@ -188,15 +184,15 @@ public class OrthographicCamera : MonoBehaviour
                 SetRegionFocus(false);
             }
 
-
-        }else if(!IsPointerOverUIObject() && Input.GetMouseButtonDown(0) && !regionFocus){
-            Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(inputRay, out hit))
+            if(!IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
             {
-                focusOnRegion(hexGrid.GetCell(hit.point), mouseAreaOrthographicSize);
+                Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(inputRay, out hit))
+                {
+                    focusOnRegion(hexGrid.GetCell(hit.point), mouseAreaOrthographicSize);
+                }
             }
-        }
     }
 
     private void handleAreaFocus(ref bool areaToRegionFlag)
@@ -258,12 +254,8 @@ public class OrthographicCamera : MonoBehaviour
     public void focusOnArea(HexCell hexCell, float orthographicSize)
     {
         Area area = hexCell.transform.GetComponentInChildren<Area>();
-        Debug.Log("Area: RegionId: " + area.region.GetRegionId());
-
         if(currentRegion.GetRegionId() != area.region.GetRegionId())
             return;
-
-        Debug.Log("In focus on area");
         currentHexCell = hexCell;
         currentArea = area;
         Vector3 focusPosition = hexCell.transform.position;
@@ -279,11 +271,14 @@ public class OrthographicCamera : MonoBehaviour
     {
         Area area = hexCell.GetComponentInChildren<Area>();
         Region region = area.region;
-        Debug.Log("Region: RegionId: " + region.GetRegionId());
+        //Debug.Log("Region: RegionId: " + region.GetRegionId());
         if(region.GetRegionId() == -1)
             return;
+        
+        if(areaFocus)
+            return;
 
-        Debug.Log("In focus on region");
+        //Debug.Log("In focus on region");
 
         currentRegion = region;
         float maxX,minX, maxZ, minZ;
