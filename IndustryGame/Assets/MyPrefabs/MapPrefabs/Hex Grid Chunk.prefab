@@ -91,6 +91,12 @@ MonoBehaviour:
   - {fileID: 4000013750885840, guid: f2967fed6444e43559e32916c2465d27, type: 3}
   - {fileID: 4000011263270592, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}
   - {fileID: 4000012893891830, guid: cc90e6fbc542a40c080d2c64da7d26ed, type: 3}
+  - {fileID: 2045919499748057554, guid: 2a16de053bd14034f9389b9020dff594, type: 3}
+  - {fileID: 5345925368745912235, guid: 9e1b2a16fc971f5429d8440f6d6ef8ed, type: 3}
+  - {fileID: 7219152116716889301, guid: 5c340dd7f8a01f04790511bab3fe5ce9, type: 3}
+  - {fileID: 5638497798023553401, guid: f50e8827f2d8a724b88e3955b029869a, type: 3}
+  - {fileID: 8533791207743642580, guid: 1cdc9f0b8c6c2a6488fdffcd7be5e4ff, type: 3}
+  - {fileID: 241010598653676098, guid: 63eb72eec128fe241ae3807cd5506891, type: 3}
 --- !u!1 &1000010636493760
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,6 +909,7 @@ MonoBehaviour:
   waterShore: {fileID: 114000010976435170}
   estuaries: {fileID: 114000013036081130}
   features: {fileID: 114000013279209982}
+  highLighted: 0
 --- !u!1001 &256289554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -910,6 +917,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4000012252666914}
     m_Modifications:
+    - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -927,6 +939,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -939,16 +956,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff,
         type: 3}
