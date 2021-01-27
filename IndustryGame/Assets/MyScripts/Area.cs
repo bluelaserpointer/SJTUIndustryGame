@@ -327,13 +327,10 @@ public class Area : MonoBehaviour
         if (constructionProgressSlider.gameObject.activeSelf)
         {
             Building building = buildings.Find(eachBuilding => !eachBuilding.IsConstructed());
-            InGameLog.AddLog("Is building == null ? " + (building == null).ToString());
-            //InGameLog.AddLog("Progress : " + building.GetConstructionRate());
 
             if (building == null)
             {
                 constructionProgressSlider.gameObject.SetActive(false);
-                InGameLog.AddLog("building is null");
             }
             else
             {

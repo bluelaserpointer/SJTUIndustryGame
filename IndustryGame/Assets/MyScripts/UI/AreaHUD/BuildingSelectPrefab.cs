@@ -24,9 +24,15 @@ public class BuildingSelectPrefab : MonoBehaviour
     {
         OrthographicCamera.GetMousePointingArea().StartConstruction(buildingInfo);
         InGameLog.AddLog("Start building " + buildingInfo.buildingName);
+        GameObject.FindGameObjectWithTag("BuildingGeneratePanel").GetComponent<BuildingsPanelUI>().GeneratePrefabs();
     }
 
-    private void OnDisable ()
+    //private void OnDisable ()
+    //{
+    //    Destroy(gameObject);
+    //}
+
+    public void ClearObject ()
     {
         Destroy(gameObject);
     }

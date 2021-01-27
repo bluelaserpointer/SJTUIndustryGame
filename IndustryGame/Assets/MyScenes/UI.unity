@@ -4985,6 +4985,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 259870590, guid: 1eaf90e389e46a642824b51a7a698c51, type: 3}
+      propertyPath: m_TagString
+      value: BuildingGeneratePanel
+      objectReference: {fileID: 0}
     - target: {fileID: 602179694, guid: 1eaf90e389e46a642824b51a7a698c51, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5000,6 +5004,10 @@ PrefabInstance:
     - target: {fileID: 670977195, guid: 1eaf90e389e46a642824b51a7a698c51, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 844944450, guid: 1eaf90e389e46a642824b51a7a698c51, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 844944451, guid: 1eaf90e389e46a642824b51a7a698c51, type: 3}
       propertyPath: m_SizeDelta.x
