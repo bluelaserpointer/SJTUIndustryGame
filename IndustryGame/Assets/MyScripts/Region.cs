@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Region
 {
-    private int regionId;
+    public readonly string name;
+    private readonly int regionId;
     private List<Area> areas = new List<Area>();
     private List<MainEvent> includedEvents;
     private HexSpiral hexSpiral = new HexSpiral();
@@ -13,9 +14,12 @@ public class Region
     private Area baseArea;
     private Area left, right, bottom, top;
     private Vector3 center;
+
+    private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
     public Region(int regionId)
     {
         this.regionId = regionId;
+        name = regionId == -1 ? "海洋" : regionNameTemplates.pickRandomOne();
     }
     public void dayIdle()
     {

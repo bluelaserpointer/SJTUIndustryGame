@@ -74,7 +74,7 @@ public class Stage : MonoBehaviour
     private List<BuildingInfo> includedBuildings = new List<BuildingInfo>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
-
+    private Stage() { }
     void Awake()
     {
         if (instance == null)
