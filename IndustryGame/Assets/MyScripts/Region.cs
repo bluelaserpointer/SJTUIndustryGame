@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Region
 {
-    private int regionId;
+    public readonly string name;
+    private readonly int regionId;
     private List<Area> areas = new List<Area>();
     private List<MainEvent> includedEvents;
     private HexSpiral hexSpiral = new HexSpiral();
@@ -11,14 +12,18 @@ public class Region
     private int reservationTime = 2;
     private int reservationSpeed = 1, reservationProgress;
     private Area baseArea;
-    public Area left, right, bottom, top;
+    private Area left, right, bottom, top;
+    private Vector3 center;
+
+    private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
     public Region(int regionId)
     {
         this.regionId = regionId;
+        name = regionId == -1 ? "海洋" : regionNameTemplates.pickRandomOne();
     }
     public void dayIdle()
     {
-        foreach(Area area in areas)
+        foreach (Area area in areas)
         {
             area.dayIdle();
         }
@@ -66,23 +71,23 @@ public class Region
     {
         if (area == null)
             return;
-        if(top == null)
+        if (top == null)
         {
             top = bottom = left = right = area;
-        }else
+        } else
         {
             Vector3 pos = area.gameObject.transform.parent.position;
             if (left.transform.position.x > pos.x)
             {
                 left = area;
-            } else if(right.transform.position.x < pos.x)
+            } else if (right.transform.position.x < pos.x)
             {
                 right = area;
             }
-            if(bottom.transform.position.z > pos.z)
+            if (bottom.transform.position.z > pos.z)
             {
                 bottom = area;
-            } else if(top.transform.position.z < pos.z)
+            } else if (top.transform.position.z < pos.z)
             {
                 top = area;
             }
@@ -105,7 +110,7 @@ public class Region
     public int CountEnvironmentType(EnvironmentType type)
     {
         int count = 0;
-        foreach(Area area in areas)
+        foreach (Area area in areas)
         {
             if (area.environmentType.Equals(type))
                 ++count;
@@ -122,5 +127,32 @@ public class Region
     public List<MainEvent> GetRevealedEvents()
     {
         return includedEvents.FindAll(anEvent => anEvent.isAppeared());
+    }
+    public int CountConstructedBuilding(BuildingInfo buildingInfo)
+    {
+        int count = 0;
+        areas.ForEach(area => count += area.CountConstructedBuilding(buildingInfo));
+        return count;
+    }
+    public int CountBuilding(BuildingInfo buildingInfo)
+    {
+        int count = 0;
+        areas.ForEach(area => count += area.CountBuilding(buildingInfo));
+        return count;
+    }
+    public void CalculateCenter()
+    {
+        this.center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
+    }
+
+    public Vector3 GetCenter()
+    {
+        return center;
+    }
+    public float GetSizeInCamera(Camera camera)
+    {
+        float xSize = Mathf.Abs(camera.WorldToViewportPoint(left.transform.position).x - camera.WorldToViewportPoint(right.transform.position).x);
+        float ySize = Mathf.Abs(camera.WorldToViewportPoint(top.transform.position).y - camera.WorldToViewportPoint(bottom.transform.position).y);
+        return Mathf.Max(xSize, ySize);
     }
 }

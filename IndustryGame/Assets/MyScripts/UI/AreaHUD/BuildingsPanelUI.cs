@@ -17,17 +17,26 @@ public class BuildingsPanelUI:MonoBehaviour
         GeneratePrefabs();
     }
 
-    private void GeneratePrefabs ()
+    public void GeneratePrefabs ()
     {
+        if (GeneratedPrefabs != null)
+        {
+            foreach (GameObject prefab in GeneratedPrefabs)
+            {
+                prefab.GetComponent<BuildingSelectPrefab>().ClearObject();
+            }
+        }
         GeneratedPrefabs.Clear();
+
         Area area = OrthographicCamera.GetMousePointingArea();
         if(area != null)
         {
-            for (int i = 0; i < area.GetEnabledBuildings().Count; i++)
+            foreach (BuildingInfo info in area.GetEnabledBuildings())
             {
                 GameObject clone = Instantiate(BuildingSelectPrefab, BuildingsGenerateList.transform, false);
-                clone.GetComponent<BuildingSelectPrefab>().RefreshUI(OrthographicCamera.GetMousePointingArea().GetEnabledBuildings()[i]);
+                clone.GetComponent<BuildingSelectPrefab>().RefreshUI(info);
                 GeneratedPrefabs.Add(clone);
+                InGameLog.AddLog("Area: " + area.areaName + " Enabled Building: " + info.buildingName);
             }
         }
     }

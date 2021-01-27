@@ -74,7 +74,7 @@ public class Stage : MonoBehaviour
     private List<BuildingInfo> includedBuildings = new List<BuildingInfo>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
 
-
+    private Stage() { }
     void Awake()
     {
         if (instance == null)
@@ -143,6 +143,12 @@ public class Stage : MonoBehaviour
             area.region = region;
 
         }
+
+        foreach (Region region in regions)
+        {
+            region.CalculateCenter();
+        }
+        
         //debug
         //foreach(Region region in regions) {
         //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
