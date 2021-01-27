@@ -37,7 +37,7 @@ public class Area : MonoBehaviour
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
-        if(environmentType.Equals(EnvironmentType.Mountains))
+        if (environmentType.Equals(EnvironmentType.Mountains))
             areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
         else
             areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
@@ -48,7 +48,7 @@ public class Area : MonoBehaviour
         foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
         {
             HexCell neighborCell = cell.GetNeighbor(direction);
-            if(neighborCell != null)
+            if (neighborCell != null)
             {
                 neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
             }
@@ -77,39 +77,40 @@ public class Area : MonoBehaviour
     {
         List<List<Animal>> animalsDangerList = new List<List<Animal>>();
         int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
-        for(int i = 0; i <= mostDangerType; i++)
+        for (int i = 0; i <= mostDangerType; i++)
             animalsDangerList.Add(new List<Animal>());
-        
+
         InGameLog.AddLog("In getSpeciesDangerTypes " + EnumHelper.GetMaxEnum<SpeciesDangerType>() + " " + animalAmounts.Count);
 
-        foreach (KeyValuePair<Animal,AmountChange> animalAndAmount in animalAmounts)
+        foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
             InGameLog.AddLog("In getSpeciesDangerTypes - foreach");
 
             int amount = (int)animalAndAmount.Value.old;
             Animal animal = animalAndAmount.Key;
-            if(animalAndAmount.Value.old > 0)
+            if (animalAndAmount.Value.old > 0)
             {
                 int dangerType = (int)animal.getDangerType(amount);
 
                 InGameLog.AddLog("Adding " + animal.animalName + " to " + dangerType + " " + animalsDangerList.Count);
-                if(animalsDangerList[dangerType] == null)
+                if (animalsDangerList[dangerType] == null)
                     animalsDangerList[dangerType] = new List<Animal>();
 
                 animalsDangerList[dangerType].Add(animal);
             }
-                
+
         }
 
         return animalsDangerList;
     }
-    
+
     public void changeSpeciesAmount(Animal animal, int change)
     {
-        if(animalAmounts.ContainsKey(animal))
+        if (animalAmounts.ContainsKey(animal))
         {
             animalAmounts[animal].Add(change);
-        } else if(change > 0)
+        }
+        else if (change > 0)
         {
             animalAmounts.Add(animal, new AmountChange(change));
         }
@@ -142,10 +143,11 @@ public class Area : MonoBehaviour
             animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.old);
         }
         //show specialist mark // will be upgraded to show count in future
-        if(getSpecialistsInArea().Count > 0)
+        if (getSpecialistsInArea().Count > 0)
         {
             markSpecialist.SetActive(true);
-        } else
+        }
+        else
         {
             markSpecialist.SetActive(false);
         }
@@ -154,12 +156,13 @@ public class Area : MonoBehaviour
     public void setWeatherFX(GameObject weatherFX, bool active)
     {
         // weatherFX
-        if(!weatherFX.activeInHierarchy && active)
+        if (!weatherFX.activeInHierarchy && active)
             weatherFX.SetActive(true);
 
         Animator animator = weatherFX.GetComponent<Animator>();
-        if(animator.gameObject.activeSelf){
-            if(active != animator.GetBool("active"))
+        if (animator.gameObject.activeSelf)
+        {
+            if (active != animator.GetBool("active"))
                 animator.SetBool("active", active);
         }
     }
@@ -167,14 +170,15 @@ public class Area : MonoBehaviour
     public List<Specialist> getSpecialistsInArea()
     {
         List<Specialist> list = new List<Specialist>();
-        foreach(Specialist specialist in Stage.GetSpecialists())
+        foreach (Specialist specialist in Stage.GetSpecialists())
         {
             Area area = specialist.getCurrentArea();
-            if(area == null)
+            if (area == null)
             {
                 InGameLog.AddLog("found a specialist not defiend current area", Color.red);
                 specialist.moveToArea(Stage.getBaseArea());
-            } else if(area.Equals(this))
+            }
+            else if (area.Equals(this))
             {
                 list.Add(specialist);
             }
@@ -221,11 +225,15 @@ public class Area : MonoBehaviour
     {
         return finishedActions.Contains(action);
     }
+
+    public List<AreaAction> GetFinishedActions()
+    {
+        return finishedActions;
+    }
     public void StartConstruction(BuildingInfo buildingInfo)
     {
         buildings.Add(new Building(buildingInfo));
         constructionProgressSlider.gameObject.SetActive(true);
-        InGameLog.AddLog("CHECK CON SLIDER ACTIVE: " + constructionProgressSlider.gameObject.activeSelf);
     }
     public void StartDeConstruction(Building building)
     {
@@ -261,20 +269,22 @@ public class Area : MonoBehaviour
     //returns - satisfied amount
     public int ProvideFood(List<Animal> foods, int energyNeedsForOneEater, int units)
     {
-        if(units <= 0) {
+        if (units <= 0)
+        {
             return 0;
         }
-        if(energyNeedsForOneEater <= 0) { //satisfies all
+        if (energyNeedsForOneEater <= 0)
+        { //satisfies all
             return units;
         }
         int sumProvidableAmount = 0;
         bool satisfied = false;
-        foreach(KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
+        foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
             if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
                 continue;
             int providableAmount = (int)(animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
-            if(sumProvidableAmount + providableAmount >= units)
+            if (sumProvidableAmount + providableAmount >= units)
             {
                 providableAmount = units - sumProvidableAmount;
                 satisfied = true;
@@ -288,7 +298,7 @@ public class Area : MonoBehaviour
     }
     public int GetProvidableFoodEnergy(List<Animal> foods, int energyNeedsForOneEater)
     {
-        if(energyNeedsForOneEater <= 0)
+        if (energyNeedsForOneEater <= 0)
         {
             return 0; // no energy needs means nothing can provide
         }
@@ -307,21 +317,22 @@ public class Area : MonoBehaviour
     public Slider actionProgressSlider, constructionProgressSlider;
     private Specialist currentSpecialist;
 
-    public void StartProgressSlider (Specialist specialist)
+    public void StartProgressSlider(Specialist specialist)
     {
         actionProgressSlider.gameObject.SetActive(true);
         actionProgressSlider.value = 0.0f;
         currentSpecialist = specialist;
     }
 
-    public void UpdateProgressSlider ()
+    public void UpdateProgressSlider()
     {
         if (actionProgressSlider.gameObject.activeSelf)
         {
             if (currentSpecialist.hasCurrentAction())
             {
                 actionProgressSlider.value = currentSpecialist.getActionProgressRate();
-            } else
+            }
+            else
             {
                 actionProgressSlider.gameObject.SetActive(false);
             }
@@ -341,7 +352,7 @@ public class Area : MonoBehaviour
         }
     }
 
-    private void Update ()
+    private void Update()
     {
         UpdateProgressSlider();
     }

@@ -22,6 +22,7 @@ namespace HighlightPlus {
 		void OnEnable () {
 			currentObject = null;
 			currentEffect = null;
+			currentCell = null;
 			if (baseEffect == null) {
 				baseEffect = GetComponent<HighlightEffect> ();
 				if (baseEffect == null) {
@@ -40,6 +41,7 @@ namespace HighlightPlus {
 
 		void OnDisable () {
 			SwitchesCollider (null);
+
 		}
 
 		void Update () {
@@ -55,8 +57,12 @@ namespace HighlightPlus {
 			if (Physics.Raycast(ray, out hitInfo, maxDistance > 0 ? maxDistance : raycastCamera.farClipPlane, layerMask)) {
 				// Check if the object has a Highlight Effect
 				if (hitInfo.collider.transform != currentObject) {
-					SwitchesCollider (hitInfo.collider.transform);
 					currentCell = hexGrid.GetCell(hitInfo.point);
+					if (currentCell.RegionId == -1) {
+						SwitchesCollider(null);
+						return;
+					}
+					SwitchesCollider(hitInfo.collider.transform);
 					currentCell.GetComponentInParent<HexGridChunk>().highLighted = true;
 					for (int z = 0; z < hexGrid.cellCountZ; z++)
 					{
