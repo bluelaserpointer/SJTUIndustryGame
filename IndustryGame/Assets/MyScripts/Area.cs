@@ -235,6 +235,16 @@ public class Area : MonoBehaviour
     {
         return buildings.Find(building => building.info.Equals(buildingInfo) && building.IsConstructed()) != null;
     }
+    public int CountConstructedBuilding(BuildingInfo buildingInfo)
+    {
+        int count = 0;
+        buildings.ForEach(building => { if (building.info.Equals(buildingInfo)) ++count; });
+        return count;
+    }
+    public int CountBuilding(BuildingInfo buildingInfo)
+    {
+        return buildings.Count;
+    }
     public ICollection<Area> GetNeighborAreas()
     {
         return neibors.Values;

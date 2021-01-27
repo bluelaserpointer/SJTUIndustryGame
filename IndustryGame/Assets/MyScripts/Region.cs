@@ -18,7 +18,7 @@ public class Region
     }
     public void dayIdle()
     {
-        foreach(Area area in areas)
+        foreach (Area area in areas)
         {
             area.dayIdle();
         }
@@ -66,23 +66,23 @@ public class Region
     {
         if (area == null)
             return;
-        if(top == null)
+        if (top == null)
         {
             top = bottom = left = right = area;
-        }else
+        } else
         {
             Vector3 pos = area.gameObject.transform.parent.position;
             if (left.transform.position.x > pos.x)
             {
                 left = area;
-            } else if(right.transform.position.x < pos.x)
+            } else if (right.transform.position.x < pos.x)
             {
                 right = area;
             }
-            if(bottom.transform.position.z > pos.z)
+            if (bottom.transform.position.z > pos.z)
             {
                 bottom = area;
-            } else if(top.transform.position.z < pos.z)
+            } else if (top.transform.position.z < pos.z)
             {
                 top = area;
             }
@@ -105,7 +105,7 @@ public class Region
     public int CountEnvironmentType(EnvironmentType type)
     {
         int count = 0;
-        foreach(Area area in areas)
+        foreach (Area area in areas)
         {
             if (area.environmentType.Equals(type))
                 ++count;
@@ -122,5 +122,17 @@ public class Region
     public List<MainEvent> GetRevealedEvents()
     {
         return includedEvents.FindAll(anEvent => anEvent.isAppeared());
+    }
+    public int CountConstructedBuilding(BuildingInfo buildingInfo)
+    {
+        int count = 0;
+        areas.ForEach(area => count += area.CountConstructedBuilding(buildingInfo));
+        return count;
+    }
+    public int CountBuilding(BuildingInfo buildingInfo)
+    {
+        int count = 0;
+        areas.ForEach(area => count += area.CountBuilding(buildingInfo));
+        return count;
     }
 }
