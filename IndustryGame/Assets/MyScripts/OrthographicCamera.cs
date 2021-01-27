@@ -275,9 +275,8 @@ public class OrthographicCamera : MonoBehaviour
         currentRegion = region;
         
         Vector3 focusPosition = region.GetCenter();
-        Vector3[] positions = region.GetBorders();
 
-        SetCurrent(GetRequiredOrthoSize(mainCamera, positions), focusPosition, orthoRegionRotation);
+        SetCurrent(GetRequiredOrthoSize(mainCamera, region), focusPosition, orthoRegionRotation);
 
         regionSize = currentSize;
         regionPosition = currentPosition;
@@ -293,10 +292,8 @@ public class OrthographicCamera : MonoBehaviour
         currentRotation = currRot;
     }
 
-    public float GetRequiredOrthoSize(Camera orthographicCamera, params Vector3[] positionBounds)
+    public float GetRequiredOrthoSize(Camera orthographicCamera, Region region)
     {
-
- 
         // Stored width and height are just your Screen.Width and Screen.Height
         float aspectRatio = (float)16 / (float)9;
  
@@ -306,42 +303,23 @@ public class OrthographicCamera : MonoBehaviour
  
         // 2: horizontal size is based on units * aspect ratio
         float xUnits = yUnits * aspectRatio;
- 
-        // 3: find the min and maximum to required based on world points
-        float maxViewPortPoint = float.MinValue;
-        float minViewPortPoint = float.MaxValue;
- 
-        for (int index = 0; index < positionBounds.Length; ++index)
-        {
-            float val = orthographicCamera.WorldToViewportPoint(positionBounds[index]).x;
- 
-            if (val > maxViewPortPoint)
-            {
-                maxViewPortPoint = val;
-            }
- 
-            if (val < minViewPortPoint)
-            {
-                minViewPortPoint = val;
-            }
-        }
- 
-        // 4: calculate the viewport size based on these outer values
-        float viewportSize = maxViewPortPoint - minViewPortPoint;
- 
-        // 5: Convert to actual X width. This can now be considered as Viewport normalised        
+
+        // 3: calculate the viewport size based on these outer values
+        float viewportSize = region.GetSizeInCamera(orthographicCamera);
+
+        // 4: Convert to actual X width. This can now be considered as Viewport normalised        
         // to 1 length
         float newXUnits = viewportSize * xUnits;
  
-        // 6: Get the Y Units which match these X Units                                            
+        // 5: Get the Y Units which match these X Units                                            
         // -> Reverse xUnits = yUnits * aspectratio
         float newYUnits = newXUnits / aspectRatio;
  
-        // 7: Divide by 2 to get the actual ortho size -> again reverse of getting YUnits          
+        // 6: Divide by 2 to get the actual ortho size -> again reverse of getting YUnits          
         // using ortho size
         float newOrtho = newYUnits / 2.0f;
  
-        // 8: Apply
+        // 7: Apply
         return newOrtho + 100;
     }
     private void SetAreaFocus(bool value)
