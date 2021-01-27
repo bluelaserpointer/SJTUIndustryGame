@@ -15,8 +15,9 @@ MonoBehaviour:
   buildingName: "\u73AF\u4FDD\u9A7F\u7AD9"
   description: "\u8FD9\u91CC\u7684\u5DE5\u4F5C\u4EBA\u5458\u65F6\u5E38\u5DE1\u903B\u8BE5\u533A\u57DF\uFF0C\u6709\u6548\u51CF\u5C11\u5468\u56F4\u7684\u5783\u573E\u4E22\u5F03"
   model: {fileID: 0}
-  moneyCost: 0
-  timeCost: 0
+  moneyCost: 10
+  timeCost: 10
+  preventPlayerConstruct: 0
   preFinishBuildings: []
   preFinishAreaActions: []
   buffs: []

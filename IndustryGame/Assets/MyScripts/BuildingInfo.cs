@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Building")]
 public class BuildingInfo : ScriptableObject
 {
+    // Naomi: 看下building能不能加图标？
     public string buildingName;
     [TextArea]
     public string description;
@@ -60,9 +61,12 @@ public class Building
                 FinishConstruction();
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow("建设完成", info.buildingName));
             }
+            InGameLog.AddLog("Construction in Progress: " + constructionProgress);
         } else
         {
             info.dayIdle();
+            InGameLog.AddLog("Complete Construction in Progress: " + constructionProgress);
+
         }
     }
     public void FinishConstruction()
@@ -76,6 +80,6 @@ public class Building
     }
     public float GetConstructionRate()
     {
-        return info.timeCost > 0 ? constructionProgress / info.timeCost : 1.0f;
+        return info.timeCost > 0 ? ((float) constructionProgress / info.timeCost) : 1.0f;
     }
 }
