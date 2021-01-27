@@ -13,8 +13,7 @@ public class Area : MonoBehaviour
     public string description;
     public EnvironmentType environmentType;
 
-    public List<Building> buildings;
-    public List<BuildingModule> buildingModules;
+    public readonly List<Building> buildings = new List<Building>();
     [Serializable]
     public struct Stat
     {
@@ -54,9 +53,10 @@ public class Area : MonoBehaviour
                 neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
             }
         }
+        //initial buildings
         foreach (Building building in buildings)
         {
-            building.applied();
+            building.FinishConstruction();
         }
         markBasement.SetActive(isBasement());
     }
@@ -116,25 +116,25 @@ public class Area : MonoBehaviour
     }
     public void dayIdle()
     {
-        weather.judgeWeather();
-        switch (weather.GetWeatherType())
-        {
-            case Weather.WeatherType.Rainy:
-                setWeatherFX(rainFX, true);
-                setWeatherFX(snowFX, false);
-                break;
-            case Weather.WeatherType.Snowy:
-                setWeatherFX(rainFX, false);
-                setWeatherFX(snowFX, true);
-                break;
-            default:
-                setWeatherFX(rainFX, false);
-                setWeatherFX(snowFX, false);
-                break;
-        }
+        // weather.judgeWeather();
+        // switch (weather.GetWeatherType())
+        // {
+        //     case Weather.WeatherType.Rainy:
+        //         setWeatherFX(rainFX, true);
+        //         setWeatherFX(snowFX, false);
+        //         break;
+        //     case Weather.WeatherType.Snowy:
+        //         setWeatherFX(rainFX, false);
+        //         setWeatherFX(snowFX, true);
+        //         break;
+        //     default:
+        //         setWeatherFX(rainFX, false);
+        //         setWeatherFX(snowFX, false);
+        //         break;
+        // }
         foreach (Building building in buildings)
         {
-            building.idle();
+            building.DayIdle();
         }
         foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
@@ -209,6 +209,10 @@ public class Area : MonoBehaviour
     {
         return Stage.GetEnabledAreaActions(this);
     }
+    public List<BuildingInfo> GetEnabledBuildings()
+    {
+        return Stage.GetEnabledBuildings(this);
+    }
     public void AddFinishedAction(AreaAction action)
     {
         finishedActions.Add(action);
@@ -216,6 +220,20 @@ public class Area : MonoBehaviour
     public bool ContainsFinishedAction(AreaAction action)
     {
         return finishedActions.Contains(action);
+    }
+    public void StartConstruction(BuildingInfo buildingInfo)
+    {
+        buildings.Add(new Building(buildingInfo));
+        constructionProgressSlider.gameObject.SetActive(true);
+        InGameLog.AddLog("CHECK CON SLIDER ACTIVE: " + constructionProgressSlider.gameObject.activeSelf);
+    }
+    public void StartDeConstruction(Building building)
+    {
+        buildings.Remove(building);
+    }
+    public bool ContainsConstructedBuildingInfo(BuildingInfo buildingInfo)
+    {
+        return buildings.Find(building => building.info.Equals(buildingInfo) && building.IsConstructed()) != null;
     }
     public ICollection<Area> GetNeighborAreas()
     {
@@ -274,25 +292,42 @@ public class Area : MonoBehaviour
     }
 
     // 进度条显示
-    public GameObject ProgressSliderCanvas;
-    public Slider ProgressSlider;
+    public Slider actionProgressSlider, constructionProgressSlider;
     private Specialist currentSpecialist;
 
     public void StartProgressSlider (Specialist specialist)
     {
-        ProgressSliderCanvas.SetActive(true);
-        ProgressSlider.value = 0.0f;
+        actionProgressSlider.gameObject.SetActive(true);
+        actionProgressSlider.value = 0.0f;
         currentSpecialist = specialist;
     }
 
     public void UpdateProgressSlider ()
     {
-        if (ProgressSliderCanvas.activeSelf)
+        if (actionProgressSlider.gameObject.activeSelf)
         {
-            ProgressSlider.value = (float) currentSpecialist.getActionProgressRate();
-            if (!currentSpecialist.hasCurrentAction())       //TODO: 将判断语句换成查看该action是否完成
+            if (currentSpecialist.hasCurrentAction())
             {
-                ProgressSliderCanvas.SetActive(false);
+                actionProgressSlider.value = currentSpecialist.getActionProgressRate();
+            } else
+            {
+                actionProgressSlider.gameObject.SetActive(false);
+            }
+        }
+        if (constructionProgressSlider.gameObject.activeSelf)
+        {
+            Building building = buildings.Find(eachBuilding => !eachBuilding.IsConstructed());
+            InGameLog.AddLog("Is building == null ? " + (building == null).ToString());
+            //InGameLog.AddLog("Progress : " + building.GetConstructionRate());
+
+            if (building == null)
+            {
+                constructionProgressSlider.gameObject.SetActive(false);
+                InGameLog.AddLog("building is null");
+            }
+            else
+            {
+                constructionProgressSlider.value = building.GetConstructionRate();
             }
         }
     }
@@ -304,5 +339,9 @@ public class Area : MonoBehaviour
     public HexCell GetHexCell()
     {
         return transform.GetComponentInParent<HexCell>();
+    }
+    public List<Building> GetConstructedBuildings()
+    {
+        return buildings.FindAll(building => building.IsConstructed());
     }
 }

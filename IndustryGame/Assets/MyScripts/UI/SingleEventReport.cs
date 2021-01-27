@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SingleEventReport : MonoBehaviour
 {
-    public Event eventD;
+    public MainEvent eventD;
     public GameObject EventReportUIPrefab;
     public GameObject InstantiateParent;
     public Image EventImage;

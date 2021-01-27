@@ -5,13 +5,13 @@ public class Region
 {
     private int regionId;
     private List<Area> areas = new List<Area>();
-    private List<Event> includedEvents;
+    private List<MainEvent> includedEvents;
     private HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
     private int reservationTime = 2;
     private int reservationSpeed = 1, reservationProgress;
     private Area baseArea;
-
+    public Area left, right, bottom, top;
     public Region(int regionId)
     {
         this.regionId = regionId;
@@ -25,7 +25,7 @@ public class Region
         if (baseArea != null)
         {
             reservationProgress += reservationSpeed;
-            InGameLog.AddLog("reservate: " + reservationProgress);
+            //InGameLog.AddLog("reservate: " + reservationProgress);
             if (reservationProgress >= reservationTime)
             {
                 reservationProgress = 0;
@@ -43,7 +43,7 @@ public class Region
                         if (cell != null && cell.RegionId == regionId)
                             break;
                     }
-                    InGameLog.AddLog("step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
+                    //InGameLog.AddLog("step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
                     if (loops == 2048)
                     {
                         InGameLog.AddLog("an area is missing", Color.red);
@@ -64,6 +64,29 @@ public class Region
     }
     public void AddArea(Area area)
     {
+        if (area == null)
+            return;
+        if(top == null)
+        {
+            top = bottom = left = right = area;
+        }else
+        {
+            Vector3 pos = area.gameObject.transform.parent.position;
+            if (left.transform.position.x > pos.x)
+            {
+                left = area;
+            } else if(right.transform.position.x < pos.x)
+            {
+                right = area;
+            }
+            if(bottom.transform.position.z > pos.z)
+            {
+                bottom = area;
+            } else if(top.transform.position.z < pos.z)
+            {
+                top = area;
+            }
+        }
         areas.Add(area);
     }
     public void SetBaseArea(Area area)
@@ -89,14 +112,14 @@ public class Region
         }
         return count;
     }
-    public void AddEvent(Event anEvent) {
+    public void AddEvent(MainEvent anEvent) {
         includedEvents.Add(anEvent);
     }
-    public List<Event> GetEvents()
+    public List<MainEvent> GetEvents()
     {
         return includedEvents;
     }
-    public List<Event> GetRevealedEvents()
+    public List<MainEvent> GetRevealedEvents()
     {
         return includedEvents.FindAll(anEvent => anEvent.isAppeared());
     }

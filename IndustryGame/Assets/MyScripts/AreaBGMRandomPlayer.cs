@@ -48,7 +48,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         // Debug.Log("In update of bgmRandomPlayer");
         if(bgmFadeIn)
         {
-            Debug.Log("Fading in");
+            //Debug.Log("Fading in");
             if(bgmChange)
             {
                 bgmFadeOut = true;
@@ -72,7 +72,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         if(bgmFadeOut)
         {
             bgmChange = false;
-            Debug.Log("Fading out");
+            //Debug.Log("Fading out");
 
             // fadeTime -= fadeParam * Time.deltaTime;
 

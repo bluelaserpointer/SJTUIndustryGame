@@ -26,6 +26,18 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.InitializeHashGrid(seed);
 		HexMetrics.colors = colors;
 		CreateMap(cellCountX, cellCountZ);
+		
+		string path = Path.Combine("Assets/MyMaps/",  "TestMap" + ".map");
+		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+			int header = reader.ReadInt32();
+			if (header <= 1) {
+				Load(reader, header);
+				// HexMapCamera.ValidatePosition();
+			}
+			else {
+				Debug.LogWarning("Unknown map format " + header);
+			}
+		}
 	}
 
 	public bool CreateMap (int x, int z) {
@@ -37,10 +49,19 @@ public class HexGrid : MonoBehaviour {
 			return false;
 		}
 
+		
 		if (chunks != null) {
-			for (int i = 0; i < chunks.Length; i++) {
+			/*Debug.Log("Before Des:"+ GetComponentsInChildren<Area>().Length);
+			Debug.Log("Before Des:" + GetComponentsInChildren<HexCell>().Length);
+			Debug.Log("Before Des:" + GetComponentsInChildren<HexGridChunk>().Length);
+	*/		
+	        for (int i = 0; i < chunks.Length; i++) {
 				Destroy(chunks[i].gameObject);
 			}
+
+			/*Debug.Log("After Des:"+GetComponentsInChildren<Area>().Length);
+			Debug.Log("After Des:" + GetComponentsInChildren<HexCell>().Length);
+			Debug.Log("After Des:" + GetComponentsInChildren<HexGridChunk>().Length);*/
 		}
 
 		cellCountX = x;
@@ -183,5 +204,8 @@ public class HexGrid : MonoBehaviour {
 		for (int i = 0; i < chunks.Length; i++) {
 			chunks[i].Refresh();
 		}
+		//GetComponentsInChildren<Area>().Length
+		Stage.instance.Init(cells);
 	}
+	
 }

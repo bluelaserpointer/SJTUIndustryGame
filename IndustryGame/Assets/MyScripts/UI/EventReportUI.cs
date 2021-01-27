@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EventReportUI : MonoBehaviour
 {
-    public Event eventDetails;
+    public MainEvent eventDetails;
     public Text EventDescription;
     public Text EventDescriptionAfterFinish;
 

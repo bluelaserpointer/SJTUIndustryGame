@@ -27,6 +27,7 @@ public class NewMapMenu : MonoBehaviour {
 	}
 
 	void CreateMap (int x, int z) {
+		Debug.Log("CreateMap: New Map");
 		hexGrid.CreateMap(x, z);
 		HexMapCamera.ValidatePosition();
 		Close();
