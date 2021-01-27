@@ -4,13 +4,22 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Building")]
 public class BuildingInfo : ScriptableObject
 {
-    // Naomi: 看下building能不能加图标？
     public string buildingName;
     [TextArea]
     public string description;
     public GameObject model;
+    public Sprite icon;
     public int moneyCost, timeCost;
+    [Header("禁止玩家建造")]
     public bool preventPlayerConstruct;
+    [Space]
+    [Min(1)]
+    public int areaLimit = 1;
+    [Space]
+    public bool hasRegionLimit;
+    [Min(1)]
+    public int regionLimit = 1;
+    [Space]
     public List<BuildingInfo> preFinishBuildings;
     public List<AreaAction> preFinishAreaActions;
     [Header("建筑物效果")]
@@ -39,7 +48,8 @@ public class BuildingInfo : ScriptableObject
     }
     public bool enabled(Area area)
     {
-        return !preventPlayerConstruct && preFinishBuildings.Find(building => !area.ContainsConstructedBuildingInfo(building)) == null
+        return !preventPlayerConstruct && area.CountBuilding(this) < areaLimit && (!hasRegionLimit || area.region.CountBuilding(this) < regionLimit)
+            && preFinishBuildings.Find(building => !area.ContainsConstructedBuildingInfo(building)) == null
             && preFinishAreaActions.Find(action => !area.ContainsFinishedAction(action)) == null;
     }
 }
