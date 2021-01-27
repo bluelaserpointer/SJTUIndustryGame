@@ -12,6 +12,7 @@ TagManager:
   - EventReportWindow
   - ReportInstantiate
   - PopUpWindow
+  - BuildingGeneratePanel
   layers:
   - Default
   - TransparentFX
