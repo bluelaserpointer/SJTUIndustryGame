@@ -138,42 +138,17 @@ public class Region
     }
     public void CalculateCenter()
     {
-        Vector3[] positions = GetBorders();
-
-        float[] xArr = new float[4];
-        float[] zArr = new float[4];
-
-        xArr[0] = positions[0].x;
-        xArr[1] = positions[1].x;
-        xArr[2] = positions[2].x;
-        xArr[3] = positions[3].x;
-        zArr[0] = positions[0].z;
-        zArr[1] = positions[1].z;
-        zArr[2] = positions[2].z;
-        zArr[3] = positions[3].z;
-
-        float maxX = Mathf.Max(xArr);
-        float minX = Mathf.Min(xArr);
-        float maxZ = Mathf.Max(zArr);
-        float minZ = Mathf.Min(zArr);
-
-        Vector3 focusPosition = new Vector3((maxX + minX) / 2, 150f, (maxZ + minZ) / 2);
-
-        this.center = focusPosition;
-    }
-
-    public Vector3[] GetBorders()
-    {
-        Vector3[] positions = new Vector3[4];
-        positions[0] = left.transform.position;
-        positions[1] = right.transform.position;
-        positions[2] = top.transform.position;
-        positions[3] = bottom.transform.position;
-        return positions;
+        this.center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
     }
 
     public Vector3 GetCenter()
     {
         return center;
+    }
+    public float GetSizeInCamera(Camera camera)
+    {
+        float xSize = Mathf.Abs(camera.WorldToViewportPoint(left.transform.position).x - camera.WorldToViewportPoint(right.transform.position).x);
+        float ySize = Mathf.Abs(camera.WorldToViewportPoint(top.transform.position).y - camera.WorldToViewportPoint(bottom.transform.position).y);
+        return Mathf.Max(xSize, ySize);
     }
 }
