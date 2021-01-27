@@ -238,12 +238,14 @@ public class Area : MonoBehaviour
     public int CountConstructedBuilding(BuildingInfo buildingInfo)
     {
         int count = 0;
-        buildings.ForEach(building => { if (building.info.Equals(buildingInfo)) ++count; });
+        buildings.ForEach(building => { if (building.IsConstructed() && building.info.Equals(buildingInfo)) ++count; });
         return count;
     }
     public int CountBuilding(BuildingInfo buildingInfo)
     {
-        return buildings.Count;
+        int count = 0;
+        buildings.ForEach(building => { if (building.info.Equals(buildingInfo)) ++count; });
+        return count;
     }
     public ICollection<Area> GetNeighborAreas()
     {
@@ -327,13 +329,10 @@ public class Area : MonoBehaviour
         if (constructionProgressSlider.gameObject.activeSelf)
         {
             Building building = buildings.Find(eachBuilding => !eachBuilding.IsConstructed());
-            InGameLog.AddLog("Is building == null ? " + (building == null).ToString());
-            //InGameLog.AddLog("Progress : " + building.GetConstructionRate());
 
             if (building == null)
             {
                 constructionProgressSlider.gameObject.SetActive(false);
-                InGameLog.AddLog("building is null");
             }
             else
             {
