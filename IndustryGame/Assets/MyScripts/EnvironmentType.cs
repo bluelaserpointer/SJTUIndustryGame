@@ -25,3 +25,11 @@ public enum EnvironmentType
     [Description("保护区")]
     Preserve
 }
+
+public static class EnvironmentTypeDescription
+{
+    public static string GetEnvironmentTypeDescription(EnvironmentType environmentType)
+    {
+        return EnumHelper.GetDescription(environmentType);
+    }
+}
