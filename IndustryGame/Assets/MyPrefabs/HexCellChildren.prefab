@@ -1279,6 +1279,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rainy
       objectReference: {fileID: 0}
+    - target: {fileID: 8707130904020315936, guid: bb018be83b96f924c8ae73996bc223e8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8707130904020315937, guid: bb018be83b96f924c8ae73996bc223e8,
         type: 3}
       propertyPath: m_RootOrder
@@ -1414,6 +1419,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Snowy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070834667923892163, guid: 6b8027f284cb6b84e9d198d3abd4258d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b8027f284cb6b84e9d198d3abd4258d, type: 3}

@@ -153,12 +153,6 @@ public class Stage : MonoBehaviour
         //foreach(Region region in regions) {
         //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
         //}
-        //pick random area as basement area
-        if (areas.Length > 0)
-        {
-            baseArea = areas[UnityEngine.Random.Range(0, areas.Length)];
-            regions[0].SetBaseArea(baseArea);
-        }
         //generate specialist employment list
         SpecialistEmployList.refresh();
         hexGrid = GetComponent<HexGrid>();

@@ -12,10 +12,14 @@ public class BuildingInfo : ScriptableObject
     public int moneyCost, timeCost;
     [Header("禁止玩家建造")]
     public bool preventPlayerConstruct;
+    [Header("是否是基地")]
+    public bool isBasement;
     [Space]
+    [Header("Area限制")]
     [Min(1)]
     public int areaLimit = 1;
     [Space]
+    [Header("Region限制")]
     public bool hasRegionLimit;
     [Min(1)]
     public int regionLimit = 1;
@@ -55,10 +59,12 @@ public class BuildingInfo : ScriptableObject
 }
 public class Building
 {
+    public readonly Area area;
     public readonly BuildingInfo info;
     private int constructionProgress;
-    public Building(BuildingInfo info)
+    public Building(Area area, BuildingInfo info)
     {
+        this.area = area;
         this.info = info;
     }
     public void DayIdle()
@@ -70,13 +76,14 @@ public class Building
             {
                 FinishConstruction();
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow("建设完成", info.buildingName));
+                if(info.isBasement)
+                {
+                    area.region.SetBaseArea(area);
+                }
             }
-            InGameLog.AddLog("Construction in Progress: " + constructionProgress);
         } else
         {
             info.dayIdle();
-            InGameLog.AddLog("Complete Construction in Progress: " + constructionProgress);
-
         }
     }
     public void FinishConstruction()

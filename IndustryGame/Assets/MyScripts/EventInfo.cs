@@ -53,7 +53,25 @@ public class EventInfo : ScriptableObject
     }
     public void dayIdle()
     {
-        if (!_isAppeared)
+        if (_isAppeared)
+        {
+            if (_isFinished)
+            {
+                if (buffBeforeFinish != null)
+                    buffBeforeFinish.idle();
+            }
+            else
+            {
+                if (buffAfterFinish != null)
+                    buffAfterFinish.idle();
+                if (successCondition == null || successCondition.judge())
+                {
+                    _isFinished = true;
+                    PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, descriptionAfterFinish));
+                    Stage.AddResourceValue(ResourceType.contribution, contribution);
+                }
+            }
+        } else
         {
             bool shouldAppear = true;
             foreach (EventInfo info in preFinishInfos)
@@ -68,19 +86,6 @@ public class EventInfo : ScriptableObject
             {
                 _isAppeared = true;
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, description));
-            }
-        }
-        if (_isFinished) {
-            if (buffBeforeFinish != null)
-                buffBeforeFinish.idle();
-        } else {
-            if (buffAfterFinish != null)
-                buffAfterFinish.idle();
-            if(successCondition == null || successCondition.judge())
-            {
-                _isFinished = true;
-                PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(infoName, descriptionAfterFinish));
-                Stage.AddResourceValue(ResourceType.contribution, contribution);
             }
         }
     }
