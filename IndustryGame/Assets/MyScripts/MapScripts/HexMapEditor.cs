@@ -13,6 +13,7 @@ public class HexMapEditor : MonoBehaviour {
 		activeRainLevel;
 
 	int activeregionId;
+	bool highLighted;
 	int activeTerrainTypeIndex;
 	int activeLandformIndex;
 
@@ -44,6 +45,11 @@ public class HexMapEditor : MonoBehaviour {
 	public void SetLandformIndex(float index)
 	{
 		activeLandformIndex = (int)index;
+	}
+
+	public void SetApplyHighLight(bool toggle)
+	{
+		highLighted = toggle;
 	}
 
 	public void SetApplyElevation (bool toggle) {
@@ -196,9 +202,9 @@ public class HexMapEditor : MonoBehaviour {
 			}
 			//if(activeregionId >= 0)
 			//{
-				cell.RegionId = activeregionId;
+			//cell.RegionId = activeregionId;
 			//}
-			
+			cell.HighLighted = highLighted;
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
 			}

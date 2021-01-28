@@ -27,10 +27,34 @@ public class HexCell : MonoBehaviour {
 	
 	}
 
+	public bool HighLighted
+	{
+		get
+		{
+			return highLighted;
+		}
+		set
+		{
+			if (highLighted != value)
+			{
+				highLighted = value;
+				RefreshSelfOnly();
+			}
+		}
+	}
 
+	private void Start()
+	{
+
+	}
 	public Color Color {
 		get {
-			return HexMetrics.colors[terrainTypeIndex];
+
+			highLightColor.r = HexMetrics.colors[terrainTypeIndex].r * 1.4f < 255 ? HexMetrics.colors[terrainTypeIndex].r * 1.4f : 255;
+			highLightColor.g = HexMetrics.colors[terrainTypeIndex].g * 1.4f < 255 ? HexMetrics.colors[terrainTypeIndex].g * 1.4f : 255;
+			highLightColor.b = HexMetrics.colors[terrainTypeIndex].b * 1.4f < 255 ? HexMetrics.colors[terrainTypeIndex].b * 1.4f : 255;
+			highLightColor.a = 150.0f;
+			return highLighted == false ? HexMetrics.colors[terrainTypeIndex] : highLightColor; 
 		}
 	}
 
@@ -291,6 +315,8 @@ public class HexCell : MonoBehaviour {
 
 	int regionId = -2; // -1,0,1,2
 	int terrainTypeIndex;
+	bool highLighted;
+	Color highLightColor;
 	int landformIndex;
 
 	int elevation = int.MinValue;
