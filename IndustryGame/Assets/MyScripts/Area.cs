@@ -26,7 +26,7 @@ public class Area : MonoBehaviour
     Dictionary<HexDirection, Area> neibors = new Dictionary<HexDirection, Area>();
     private List<AreaAction> finishedActions = new List<AreaAction>();
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
-    private LinkedList<Dictionary<Animal, AmountChange>> animalAmountsRecords = new LinkedList<Dictionary<Animal, AmountChange>>();
+    private Dictionary<Animal, AmountChangeRecords> animalRecords = new Dictionary<Animal, AmountChangeRecords>();
 
     // Weather params
     private Weather weather;
@@ -177,18 +177,29 @@ public class Area : MonoBehaviour
     }
     public void addReservation()
     {
-        Dictionary<Animal, AmountChange> copy = new Dictionary<Animal, AmountChange>(animalAmounts);
-        animalAmountsRecords.AddLast(copy);
+        foreach(var pair in animalAmounts)
+        {
+            Animal animal = pair.Key;
+            if (region.GetConcernedSpecies().Contains(animal)) //only reservate concerned animals
+            {
+                if (animalRecords.ContainsKey(animal))
+                {
+                    animalRecords[animal].AddRecord(pair.Value);
+                }
+                else
+                {
+                    animalRecords.Add(animal, new AmountChangeRecords(pair.Value));
+                }
+            }
+        }
     }
-    public int getSpeciesAmountInLatestRecord(Animal animal)
+    public int? GetSpeciesAmountInLatestRecord(Animal animal)
     {
-        Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
-        return latestRecord.ContainsKey(animal) ? (int)latestRecord[animal].old : 0;
+        return animalRecords.ContainsKey(animal) ? animalRecords[animal].GetAmountInLatestRecord() : null;
     }
-    public int getSpeciesChangeInLatestRecord(Animal animal)
+    public int? GetSpeciesChangeInLatestRecord(Animal animal)
     {
-        Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
-        return latestRecord.ContainsKey(animal) ? (int)latestRecord[animal].change : 0;
+        return animalRecords.ContainsKey(animal) ? animalRecords[animal].GetChangeInLatestRecord() : null;
     }
     public Weather GetWeather()
     {

@@ -7,7 +7,8 @@ public class Region
     public readonly string name;
     private readonly int regionId;
     private List<Area> areas = new List<Area>();
-    private List<MainEvent> includedEvents;
+    private List<MainEvent> includedEvents = new List<MainEvent>();
+    private List<Animal> concernedAnimals = new List<Animal>();
     private HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
     private float reservationTime = 1;
@@ -16,8 +17,10 @@ public class Region
     private Area left, right, bottom, top;
     private Vector3 center;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
+    private Dictionary<Animal, AmountChangeRecords> animalAmountsRecords = new Dictionary<Animal, AmountChangeRecords>();
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
+
     public Region(int regionId)
     {
         this.regionId = regionId;
@@ -42,7 +45,7 @@ public class Region
             reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
             //InGameLog.AddLog("reservate: " + reservationProgress);
             Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
-            while (reservationProgress >= reservationTime)
+            while (reservationProgress >= reservationTime + concernedAnimals.Count * 0.2f)
             {
                 reservationProgress -= reservationTime;
                 if (++reservatedAreaCount >= areas.Count)
@@ -86,11 +89,44 @@ public class Region
         {
             area.dayIdle();
         }
+        foreach (MainEvent anEvent in includedEvents)
+        {
+            anEvent.dayIdle();
+        }
     }
     private void reservationCompleted()
     {
         reservatedAreaCount = 0;
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
+        areas.ForEach(area => area.addReservation());
+    }
+    public void UpdateConcernedSpecies()
+    {
+        concernedAnimals.Clear();
+        foreach (MainEvent mainEvent in includedEvents)
+        {
+            if (mainEvent.isAppeared())
+            {
+                foreach (Animal animal in mainEvent.concernedAnimals)
+                {
+                    if (!concernedAnimals.Contains(animal))
+                        concernedAnimals.Add(animal);
+                }
+            }
+        }
+        Stage.UpdateConcernedSpecies();
+    }
+    public List<Animal> GetConcernedSpecies()
+    {
+        return concernedAnimals;
+    }
+    public int? GetSpeciesAmountInLatestRecord(Animal animal)
+    {
+        return animalAmountsRecords.ContainsKey(animal) ? animalAmountsRecords[animal].GetAmountInLatestRecord() : null;
+    }
+    public int? GetSpeciesChangeInLatestRecord(Animal animal)
+    {
+        return animalAmountsRecords.ContainsKey(animal) ? animalAmountsRecords[animal].GetChangeInLatestRecord() : null;
     }
     public void AddArea(Area area)
     {

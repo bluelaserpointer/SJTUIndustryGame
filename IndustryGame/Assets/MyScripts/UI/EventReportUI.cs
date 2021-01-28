@@ -29,6 +29,8 @@ public class EventReportUI : MonoBehaviour
 
     public void InstantiateEventInfoList ()
     {
+        if (eventDetails == null)
+            return;
         for (int i = 0 ; i < eventDetails.GetRevealedInfos().Count ; i++)
         {
             GameObject clone = Instantiate(SingleEventInfoPrefab, EventInfoList.transform, false);

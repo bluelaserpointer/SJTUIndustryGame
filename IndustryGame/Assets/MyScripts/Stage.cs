@@ -4,23 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
-public struct AmountChange
-{
-    public float old;
-    private float current;
-    public float change;
-    public AmountChange(float initialValue) { old = current = initialValue; change = 0; }
-    public float Add(float value) { return current += value; }
-    public float AddWithClamp(float value, float min, float max) { return current = Mathf.Clamp(current + value, min, max); }
-    public float AddWithoutRecord(float value) { old += value; return current += value; }
-    public void recordChange()
-    {
-        if (current < 0)
-            current = 0;
-        change = current - old;
-        old = current;
-    }
-}
 public enum ResourceType
 {
     [Description("金钱")]
@@ -49,11 +32,11 @@ public class Stage : MonoBehaviour
     public string stageName;
     [TextArea]
     public string description;
+    public List<MainEvent> events;
     [Header("Money allowed for this stage")]
     public int stageMoney;
     [Header("Time allowed for this stage")]
     public int stageTime;
-    public List<MainEvent> events;
     [Serializable]
     public struct AnimalInitialAmount
     {
@@ -72,6 +55,7 @@ public class Stage : MonoBehaviour
     private List<AreaAction> includedAreaActions = new List<AreaAction>();
     private List<BuildingInfo> includedBuildings = new List<BuildingInfo>();
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
+    private List<Animal> concernedAnimals = new List<Animal>();
 
     private Stage() { }
     void Awake()
@@ -83,10 +67,6 @@ public class Stage : MonoBehaviour
             resources.Add(resourceType, new AmountChange());
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecord(stageMoney);
-        //init events
-        foreach (MainEvent anEvent in events) {
-            anEvent.init();
-        }
         //load actions
         foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
         {
@@ -95,20 +75,6 @@ public class Stage : MonoBehaviour
         foreach (GlobalAction globalAction in Resources.LoadAll<GlobalAction>("Action/GlobalAction"))
         {
             includedGlobalActions.Add(globalAction);
-        }
-        //union actions
-        foreach (MainEvent anEvent in events)
-        {
-            foreach(GlobalAction action in anEvent.includedGlobalActions)
-            {
-                if (!includedGlobalActions.Contains(action))
-                    includedGlobalActions.Add(action);
-            }
-            foreach (AreaAction action in anEvent.includedAreaActions)
-            {
-                if (!includedAreaActions.Contains(action))
-                    includedAreaActions.Add(action);
-            }
         }
         //load buldings
         foreach(BuildingInfo building in Resources.LoadAll<BuildingInfo>("Building"))
@@ -181,7 +147,28 @@ public class Stage : MonoBehaviour
                 }
             }
         }
-
+        //init events
+        foreach (MainEvent anEvent in events)
+        {
+            anEvent.init();
+        }
+        //union actions
+        foreach (Region region in regions)
+        {
+            foreach (MainEvent anEvent in region.GetEvents())
+            {
+                foreach (GlobalAction action in anEvent.includedGlobalActions)
+                {
+                    if (!includedGlobalActions.Contains(action))
+                        includedGlobalActions.Add(action);
+                }
+                foreach (AreaAction action in anEvent.includedAreaActions)
+                {
+                    if (!includedAreaActions.Contains(action))
+                        includedAreaActions.Add(action);
+                }
+            }
+        }
     }
     void Update()
     {
@@ -206,12 +193,7 @@ public class Stage : MonoBehaviour
             {
                 specialist.dayIdle();
             }
-            foreach (MainEvent eachEvent in events)
-            {
-                eachEvent.dayIdle();
-            }
         }
-
     }
 
     public static Region GetRegion(Area area)
@@ -233,6 +215,22 @@ public class Stage : MonoBehaviour
     public static List<Region> GetRegions()
     {
         return instance.regions;
+    }
+    public static void UpdateConcernedSpecies()
+    {
+        instance.concernedAnimals.Clear();
+        foreach (Region region in instance.regions)
+        {
+            foreach (Animal animal in region.GetConcernedSpecies())
+            {
+                if (!instance.concernedAnimals.Contains(animal))
+                    instance.concernedAnimals.Add(animal);
+            }
+        }
+    }
+    public static List<Animal> GetConcernedSpecies()
+    {
+        return instance.concernedAnimals;
     }
     public static int getSpeciesAmount(Animal species)
     {
@@ -274,6 +272,14 @@ public class Stage : MonoBehaviour
     public static List<MainEvent> GetEvents()
     {
         return instance.events;
+    }
+    public static List<MainEvent> GetRevealedEvents()
+    {
+        return instance.events.FindAll(eachEvent => eachEvent.isAppeared());
+    }
+    public static List<MainEvent> GetRevealedUnfinishedEvents()
+    {
+        return instance.events.FindAll(eachEvent => eachEvent.isAppeared() && !eachEvent.isFinished());
     }
     public static List<EventInfo> GetEventInfosRelatedToAnimal(Animal animal) //TODO: optimize this code
     {

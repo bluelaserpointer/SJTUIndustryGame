@@ -8,35 +8,30 @@ public class ReportUI : MonoBehaviour
     public GameObject AnimalReportList;
     public GameObject EnvironmentReportList;
     public GameObject SingleEventReportPrefab;      //报告Prefab，三个都应该是一样的
-    private List<MainEvent> events;
     private List<EventInfo> eventinfos;
     
     void Start()
     {
-        events = Stage.GetEvents();
-        InstantiateEventList();
     }
 
     private void OnEnable ()
     {
         InstantiateEventList();
         InGameLog.AddLog("In SpecialistUI OnEnable");
-
     }
 
     void Update()
     {
-        events = Stage.GetEvents();
     }
 
 
     void InstantiateEventList ()
     {
-        for (int i = 0 ; i < events.Count ; i++)
+        foreach (MainEvent mainEvent in Stage.GetRevealedEvents())
         {
             GameObject clone;
             clone = Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-            clone.GetComponent<SingleEventReport>().eventD = events[i];
+            clone.GetComponent<SingleEventReport>().eventD = mainEvent;
 
         }
     }

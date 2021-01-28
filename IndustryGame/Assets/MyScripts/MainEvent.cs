@@ -15,6 +15,8 @@ public class MainEvent : ScriptableObject
     [Range(0, 5)]
     public int hideLevel;
 
+    public Condition spawnCondition;
+
     [Serializable]
     public class AreaRequirement
     {
@@ -24,6 +26,8 @@ public class MainEvent : ScriptableObject
     }
     [Header("出现所需要的地区环境")]
     public List<AreaRequirement> areaRequirements;
+    [Header("关键物种")]
+    public List<Animal> concernedAnimals;
 
     [Header("完成功劳奖励")]
     [Min(0)]
@@ -36,29 +40,56 @@ public class MainEvent : ScriptableObject
     [Header("出现的所有地区措施")]
     public List<AreaAction> includedAreaActions = new List<AreaAction>();
 
+    private Region region;
+    private bool _isSpawned;
     private bool _isAppeared;
     private bool _isFinished;
     public void init()
     {
+        if(spawnCondition == null || spawnCondition.judge())
+        {
+            spawn();
+        }
+        if (hideLevel == 0)
+            reveal();
         foreach(EventInfo info in includedInfos)
         {
             info.init();
         }
-        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, description));
     }
     public void dayIdle()
     {
-        foreach(EventInfo info in includedInfos) {
-            info.dayIdle();
+        if(_isSpawned)
+        {
+            foreach (EventInfo info in includedInfos)
+            {
+                info.dayIdle();
+            }
+        } else if(spawnCondition.judge())
+        {
+            spawn();
         }
     }
     public bool isAppeared()
     {
         return _isAppeared;
     }
+    public void spawn()
+    {
+        List<Region> regions = Stage.GetRegions().FindAll(region => CanGenrateInRegion(region));
+        if(regions.Count > 0)
+        {
+            _isSpawned = true;
+            regions[UnityEngine.Random.Range(0, regions.Count)].AddEvent(this);
+        } else
+        {
+            InGameLog.AddLog("failed spawn: " + eventName , Color.red);
+        }
+    }
     public void reveal()
     {
         _isAppeared = true;
+        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, description));
     }
     public bool isFinished()
     {
@@ -78,6 +109,7 @@ public class MainEvent : ScriptableObject
             _isFinished = true;
             PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, descriptionAfterFinish));
             Stage.AddResourceValue(ResourceType.contribution, contribution);
+            region.UpdateConcernedSpecies();
         }
         return judge;
     }
@@ -97,7 +129,7 @@ public class MainEvent : ScriptableObject
     {
         return includedInfos.FindAll(info => info.isAppeared() && info.showInEnvironmentReport);
     }
-    public bool canGenrateInRegion(Region region)
+    public bool CanGenrateInRegion(Region region)
     {
         return areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
     }
