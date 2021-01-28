@@ -46,15 +46,15 @@ public class ActionsPanelUI : MonoBehaviour
 
         if (Stage.GetSpecialists().Count > 0)
         {
-            for (int i = 0 ; i < Stage.GetSpecialists().Count ; i++)
+            foreach (Specialist specialist in Stage.GetSpecialists())
             {
                 Dropdown.OptionData tempData = new Dropdown.OptionData();
-                tempData.text = Stage.GetSpecialists()[i].name + "   " + Stage.GetSpecialists()[i].getCurrentArea().name;
+                tempData.text = specialist.name + "   " + specialist.GetCurrentAreaName();
                 //tempData.image = CurrentArea.GetEnabledActions()[i].actionName;
                 Specialists.options.Add(tempData);
                 //InGameLog.AddLog(Stage.GetSpecialists()[i].name);
             }
-            Specialists.captionText.text = Stage.GetSpecialists()[Specialists.value].name + "   " + Stage.GetSpecialists()[Specialists.value].getCurrentArea().name;
+            Specialists.captionText.text = Stage.GetSpecialists()[Specialists.value].name + "   " + Stage.GetSpecialists()[Specialists.value].GetCurrentAreaName();
         }
         
     }

@@ -76,6 +76,5 @@ public class AreaDetailsPanelUI : MonoBehaviour
             FinishedBuildingsListPrefabs.Add(clone);
             i++;
         }
-        InGameLog.AddLog("FINISHED BUILDINGS COUNT: " + i);
     }
 }

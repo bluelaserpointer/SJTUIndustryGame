@@ -44,7 +44,6 @@ public class Stage : MonoBehaviour
     public static Stage instance;
 
     private Area[] areas;
-    private Area baseArea;
     public List<Region> regions = new List<Region>();
 
     public string stageName;
@@ -189,6 +188,11 @@ public class Stage : MonoBehaviour
         //record resource changes
         foreach (AmountChange amountChange in resources.Values)
             amountChange.recordChange();
+        //region reservation animation
+        foreach(Region region in regions)
+        {
+            region.FrameIdle();
+        }
         //check time
         Timer.idle();
         if (lastDay != Timer.GetDay()) //day change happened
@@ -246,10 +250,6 @@ public class Stage : MonoBehaviour
             total += area.getSpeciesChange(species);
         }
         return total;
-    }
-    public static Area getBaseArea()
-    {
-        return instance.baseArea;
     }
     public static List<Specialist> GetSpecialists()
     {

@@ -58,7 +58,7 @@ public class Area : MonoBehaviour
         {
             building.FinishConstruction();
         }
-        markBasement.SetActive(isBasement());
+        markBasement.SetActive(false);
     }
     public int getSpeciesAmount(Animal animal)
     {
@@ -143,7 +143,7 @@ public class Area : MonoBehaviour
             animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.old);
         }
         //show specialist mark // will be upgraded to show count in future
-        if (getSpecialistsInArea().Count > 0)
+        if (GetSpecialistsInArea().Count > 0)
         {
             markSpecialist.SetActive(true);
         }
@@ -167,28 +167,13 @@ public class Area : MonoBehaviour
         }
     }
 
-    public List<Specialist> getSpecialistsInArea()
+    public List<Specialist> GetSpecialistsInArea()
     {
-        List<Specialist> list = new List<Specialist>();
-        foreach (Specialist specialist in Stage.GetSpecialists())
-        {
-            Area area = specialist.getCurrentArea();
-            if (area == null)
-            {
-                InGameLog.AddLog("found a specialist not defiend current area", Color.red);
-                specialist.moveToArea(Stage.getBaseArea());
-            }
-            else if (area.Equals(this))
-            {
-                list.Add(specialist);
-            }
-        }
-        return list;
+        return Stage.GetSpecialists().FindAll(specialist => Equals(specialist.getCurrentArea()));
     }
     public bool isBasement()
     {
-        Area area = Stage.getBaseArea();
-        return area == null ? false : area.Equals(this);
+        return Equals(region.GetBaseArea());
     }
     public void addReservation()
     {

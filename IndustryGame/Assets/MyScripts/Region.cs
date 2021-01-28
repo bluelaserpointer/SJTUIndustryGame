@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Region
@@ -9,11 +10,12 @@ public class Region
     private List<MainEvent> includedEvents;
     private HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
-    private int reservationTime = 1;
-    private int reservationSpeed = 1, reservationProgress;
+    private float reservationTime = 1;
+    private float baseReservationPower = 1f, reservationProgress;
     private Area baseArea;
     private Area left, right, bottom, top;
     private Vector3 center;
+    private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
     public Region(int regionId)
@@ -21,21 +23,28 @@ public class Region
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.pickRandomOne();
     }
-    public void dayIdle()
+    public void FrameIdle()
     {
-        if (regionId == -1)
-            return;
-        foreach (Area area in areas)
+        foreach(var pair in lastHighLightedCellAndTime.ToList())
         {
-            area.dayIdle();
+            Stack<HexCell> cells = pair.Key;
+            if ((lastHighLightedCellAndTime[cells] -= Timer.getTimeSpeed() * Time.deltaTime) < 0) //remove outdated highlight effects
+            {
+                while (cells.Count > 0)
+                {
+                    cells.Pop().HighLighted = false;
+                }
+                lastHighLightedCellAndTime.Remove(cells);
+            }
         }
         if (baseArea != null)
         {
-            reservationProgress += reservationSpeed;
+            reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
             //InGameLog.AddLog("reservate: " + reservationProgress);
-            if (reservationProgress >= reservationTime)
+            Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
+            while (reservationProgress >= reservationTime)
             {
-                reservationProgress = 0;
+                reservationProgress -= reservationTime;
                 if (++reservatedAreaCount >= areas.Count)
                 {
                     reservationCompleted();
@@ -50,21 +59,32 @@ public class Region
                         if (cell != null && cell.RegionId == regionId)
                             break;
                     }
-                    if (loops == 512)
+                    if (cell == null)
                     {
                         //InGameLog.AddLog("an area is missing", Color.red);
                         reservationCompleted();
+                    } else
+                    {
+                        cell.HighLighted = true;
+                        lastHighLightedCells.Push(cell);
                     }
                     //debug
                     //InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
-                    //cell.GetComponentInChildren<Area>().rainFX.SetActive(false);
-                    //cell.GetComponentInChildren<Area>().rainFX.SetActive(true);
                 }
             }
-            if (reservatedAreaCount >= areas.Count)
+            if(lastHighLightedCells.Count > 0)
             {
-                reservatedAreaCount = 0;
+                lastHighLightedCellAndTime.Add(lastHighLightedCells, 3.0f);
             }
+        }
+    }
+    public void dayIdle()
+    {
+        if (regionId == -1)
+            return;
+        foreach (Area area in areas)
+        {
+            area.dayIdle();
         }
     }
     private void reservationCompleted()
@@ -102,7 +122,12 @@ public class Region
     public void SetBaseArea(Area area)
     {
         baseArea = area;
+        area.markBasement.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
+    }
+    public Area GetBaseArea()
+    {
+        return baseArea;
     }
     public int GetRegionId()
     {
@@ -159,5 +184,22 @@ public class Region
         float xSize = Mathf.Abs(camera.WorldToViewportPoint(left.transform.position).x - camera.WorldToViewportPoint(right.transform.position).x);
         float ySize = Mathf.Abs(camera.WorldToViewportPoint(top.transform.position).y - camera.WorldToViewportPoint(bottom.transform.position).y);
         return Mathf.Max(xSize, ySize);
+    }
+    public float GetReservationPower()
+    {
+        float power = baseReservationPower; ;
+        foreach(Specialist specialist in GetSpecialistsInRegion())
+        {
+            power += specialist.GetLevel();
+        }
+        return power;
+    }
+    public List<Specialist> GetSpecialistsInRegion()
+    {
+        return Stage.GetSpecialists().FindAll(specialist =>
+        {
+            Area area = specialist.getCurrentArea();
+            return area != null && area.region.Equals(this);
+        });
     }
 }

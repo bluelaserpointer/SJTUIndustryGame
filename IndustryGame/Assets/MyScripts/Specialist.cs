@@ -80,6 +80,10 @@ public class Specialist
     {
         return currentArea;
     }
+    public string GetCurrentAreaName()
+    {
+        return currentArea != null ? currentArea.areaName + "-" + currentArea.region.name : "总部";
+    }
     public float getActionProgressRate()
     {
         return currentAction != null ? actionProgress / currentAction.timeCost : 1.0f;
