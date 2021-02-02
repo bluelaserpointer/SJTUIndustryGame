@@ -74,6 +74,10 @@ public class HexGridChunk : MonoBehaviour {
 		{
 			features.AddExpert(cell, cell.Position);
 		}
+		if (cell.BuildingIndex >= 0 && cell.BuildingLevel>0)
+		{
+			features.AddBuilding(cell, cell.Position, cell.BuildingIndex, cell.BuildingLevel);
+		}
 	}
 
 	void Triangulate (HexDirection direction, HexCell cell) {
