@@ -87,6 +87,31 @@ MonoBehaviour:
   wallTower: {fileID: 4000011665626236, guid: 1589993158ba34786b54f448bdeb6085, type: 3}
   bridge: {fileID: 4000012598710820, guid: 234387bb7219042168570e127fbd5b58, type: 3}
   expert: {fileID: 7924532989697175388, guid: 797d5a2e25b75884cb727a542e49edff, type: 3}
+  buildings:
+  - prefabs:
+    - {fileID: 3364454753584110499, guid: 118aad0f0c270e6429711b7887a6dedd, type: 3}
+    - {fileID: 4606179362878410421, guid: bc036b4b2a3239f4f8593e72cf88fd12, type: 3}
+    - {fileID: 2045919499748057554, guid: 2a16de053bd14034f9389b9020dff594, type: 3}
+  - prefabs:
+    - {fileID: 3106987743043459508, guid: e48d02aae3b95384d99435b1ed974f33, type: 3}
+    - {fileID: 1708342194774232879, guid: 72929f3fddf96d045b5266472dbd631e, type: 3}
+    - {fileID: 5345925368745912235, guid: 9e1b2a16fc971f5429d8440f6d6ef8ed, type: 3}
+  - prefabs:
+    - {fileID: 9176821418020652471, guid: ef8c9cf46f8692c489f2fffe3976eaee, type: 3}
+    - {fileID: 3592182599207497773, guid: c9c7b3290a0c12742947165a2fd490bf, type: 3}
+    - {fileID: 7219152116716889301, guid: 5c340dd7f8a01f04790511bab3fe5ce9, type: 3}
+  - prefabs:
+    - {fileID: 8795085015674064965, guid: 96bd45ee4741f7a44ad2747c7f783f1d, type: 3}
+    - {fileID: 303934093841288729, guid: 20b8fda89991bff4f8e48fa0756b67fc, type: 3}
+    - {fileID: 5638497798023553401, guid: f50e8827f2d8a724b88e3955b029869a, type: 3}
+  - prefabs:
+    - {fileID: 8028338812980676317, guid: 946e008ddf65d38498a712c2ee42dd3b, type: 3}
+    - {fileID: 944851945480470209, guid: cd229f37fb37ba742b8eb4ed2f7781a2, type: 3}
+    - {fileID: 8533791207743642580, guid: 1cdc9f0b8c6c2a6488fdffcd7be5e4ff, type: 3}
+  - prefabs:
+    - {fileID: 1975759302481645106, guid: 91f399445bbe9a34e8da99cab26520b5, type: 3}
+    - {fileID: 611420918224830664, guid: 280d66f6d2d88d94c9c2ca9458363c46, type: 3}
+    - {fileID: 241010598653676098, guid: 63eb72eec128fe241ae3807cd5506891, type: 3}
   special:
   - {fileID: 4000013750885840, guid: f2967fed6444e43559e32916c2465d27, type: 3}
   - {fileID: 4000011263270592, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}

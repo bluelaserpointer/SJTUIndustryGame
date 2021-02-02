@@ -283,7 +283,6 @@ public class HexCell : MonoBehaviour {
 				RefreshSelfOnly();
 			}
 		}
-
 	}
 	public int TerrainTypeIndex {
 		get {
@@ -313,6 +312,39 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	public int BuildingIndex
+	{
+		get
+		{
+			return buildingIndex;
+		}
+		set
+		{
+			if (buildingIndex != value)
+			{
+				buildingIndex = value;
+				RefreshSelfOnly();
+			}
+		}
+	}
+
+	public int BuildingLevel
+	{
+		get
+		{
+			return buildingLevel;
+		}
+		set
+		{
+			if (buildingLevel != value)
+			{
+				buildingLevel = value;
+				RefreshSelfOnly();
+			}
+		}
+	}
+
+
 	int regionId = -2; // -1,0,1,2
 	int terrainTypeIndex;
 	bool highLighted;
@@ -325,6 +357,7 @@ public class HexCell : MonoBehaviour {
 	int urbanLevel, farmLevel, plantLevel,rainLevel;
 
 	int specialIndex;
+	int buildingIndex,buildingLevel;
 
 	bool walled,expert;
 
