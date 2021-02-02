@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EventInfoUI : MonoBehaviour
 {
-    public EventInfo eventInfo;
+    public EventStage eventInfo;
     public Text InfoName;
     public Text Description;
 
@@ -16,7 +16,7 @@ public class EventInfoUI : MonoBehaviour
 
     void Update()
     {
-        InfoName.text = eventInfo.infoName;
+        InfoName.text = eventInfo.name;
         Description.text = eventInfo.description;
     }
 

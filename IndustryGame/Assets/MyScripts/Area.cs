@@ -26,7 +26,7 @@ public class Area : MonoBehaviour
     Dictionary<HexDirection, Area> neibors = new Dictionary<HexDirection, Area>();
     private List<AreaAction> finishedActions = new List<AreaAction>();
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
-    private LinkedList<Dictionary<Animal, AmountChange>> animalAmountsRecords = new LinkedList<Dictionary<Animal, AmountChange>>();
+    private Dictionary<Animal, AmountChangeRecords> animalRecords = new Dictionary<Animal, AmountChangeRecords>();
 
     // Weather params
     private Weather weather;
@@ -58,7 +58,7 @@ public class Area : MonoBehaviour
         {
             building.FinishConstruction();
         }
-        markBasement.SetActive(isBasement());
+        markBasement.SetActive(false);
     }
     public int getSpeciesAmount(Animal animal)
     {
@@ -143,7 +143,7 @@ public class Area : MonoBehaviour
             animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.old);
         }
         //show specialist mark // will be upgraded to show count in future
-        if (getSpecialistsInArea().Count > 0)
+        if (GetSpecialistsInArea().Count > 0)
         {
             markSpecialist.SetActive(true);
         }
@@ -167,43 +167,39 @@ public class Area : MonoBehaviour
         }
     }
 
-    public List<Specialist> getSpecialistsInArea()
+    public List<Specialist> GetSpecialistsInArea()
     {
-        List<Specialist> list = new List<Specialist>();
-        foreach (Specialist specialist in Stage.GetSpecialists())
-        {
-            Area area = specialist.getCurrentArea();
-            if (area == null)
-            {
-                InGameLog.AddLog("found a specialist not defiend current area", Color.red);
-                specialist.moveToArea(Stage.getBaseArea());
-            }
-            else if (area.Equals(this))
-            {
-                list.Add(specialist);
-            }
-        }
-        return list;
+        return Stage.GetSpecialists().FindAll(specialist => Equals(specialist.getCurrentArea()));
     }
     public bool isBasement()
     {
-        Area area = Stage.getBaseArea();
-        return area == null ? false : area.Equals(this);
+        return Equals(region.GetBaseArea());
     }
     public void addReservation()
     {
-        Dictionary<Animal, AmountChange> copy = new Dictionary<Animal, AmountChange>(animalAmounts);
-        animalAmountsRecords.AddLast(copy);
+        foreach(var pair in animalAmounts)
+        {
+            Animal animal = pair.Key;
+            if (region.GetConcernedSpecies().Contains(animal)) //only reservate concerned animals
+            {
+                if (animalRecords.ContainsKey(animal))
+                {
+                    animalRecords[animal].AddRecord(pair.Value);
+                }
+                else
+                {
+                    animalRecords.Add(animal, new AmountChangeRecords(pair.Value));
+                }
+            }
+        }
     }
-    public int getSpeciesAmountInLatestRecord(Animal animal)
+    public int? GetSpeciesAmountInLatestRecord(Animal animal)
     {
-        Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
-        return latestRecord.ContainsKey(animal) ? (int)latestRecord[animal].old : 0;
+        return animalRecords.ContainsKey(animal) ? animalRecords[animal].GetAmountInLatestRecord() : null;
     }
-    public int getSpeciesChangeInLatestRecord(Animal animal)
+    public int? GetSpeciesChangeInLatestRecord(Animal animal)
     {
-        Dictionary<Animal, AmountChange> latestRecord = animalAmountsRecords.Last.Value;
-        return latestRecord.ContainsKey(animal) ? (int)latestRecord[animal].change : 0;
+        return animalRecords.ContainsKey(animal) ? animalRecords[animal].GetChangeInLatestRecord() : null;
     }
     public Weather GetWeather()
     {

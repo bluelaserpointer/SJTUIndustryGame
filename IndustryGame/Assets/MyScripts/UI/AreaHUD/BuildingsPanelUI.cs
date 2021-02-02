@@ -36,7 +36,7 @@ public class BuildingsPanelUI:MonoBehaviour
                 GameObject clone = Instantiate(BuildingSelectPrefab, BuildingsGenerateList.transform, false);
                 clone.GetComponent<BuildingSelectPrefab>().RefreshUI(info);
                 GeneratedPrefabs.Add(clone);
-                InGameLog.AddLog("Area: " + area.areaName + " Enabled Building: " + info.buildingName);
+                //InGameLog.AddLog("Area: " + area.areaName + " Enabled Building: " + info.buildingName);
             }
         }
     }

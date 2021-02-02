@@ -1,0 +1,80 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Event")]
+public class MainEventSO : ScriptableObject
+{
+    public string eventName;
+    [TextArea]
+    public string description;
+    [TextArea]
+    public string descriptionAfterFinish;
+
+    [Header("隐藏级别")]
+    [Range(0, 5)]
+    public int hideLevel;
+
+    [Header("是否只在游戏开头生成")]
+    public bool onlyGenerateAtBeginning;
+    [SerializeField]
+    [Range(0, 1)]
+    private float generateChanceOneDay;
+    [SerializeField]
+    private Condition generateCondition;
+
+    [Serializable]
+    public class AreaRequirement
+    {
+        public EnvironmentType type;
+        [Min(1)]
+        public int count;
+    }
+    [Header("出现所需要的地区环境")]
+    public List<AreaRequirement> areaRequirements;
+    [Header("关键物种")]
+    public List<Animal> concernedAnimals;
+
+    [Header("完成功劳奖励")]
+    [Min(0)]
+    public int contribution;
+
+    [Header("出现的所有事件阶段")]
+    public List<EventStageSO> eventStages = new List<EventStageSO>();
+    [Header("出现的所有全局措施")]
+    public List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
+    [Header("出现的所有地区措施")]
+    public List<AreaAction> includedAreaActions = new List<AreaAction>();
+
+    private MainEventSO() { } //prevent instantiate from code
+    public bool CanGenerate()
+    {
+        return generateCondition == null || generateCondition.judge();
+    }
+    public bool CanGenrateInRegion(Region region)
+    {
+        return areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
+    }
+    public void DayIdle()
+    {
+        if (!onlyGenerateAtBeginning && CanGenerate() && generateChanceOneDay > (float)new System.Random().NextDouble())
+        {
+            TryGenerate();
+        }
+    }
+    public MainEvent TryGenerate()
+    {
+        MainEvent mainEvent = null;
+        List<Region> regions = Stage.GetRegions().FindAll(region => CanGenrateInRegion(region));
+        if (regions.Count > 0)
+        {
+            Region region = regions[UnityEngine.Random.Range(0, regions.Count)];
+            region.AddEvent(mainEvent = new MainEvent(this, region));
+        }
+        else
+        {
+            InGameLog.AddLog("failed spawn: " + eventName, Color.red);
+        }
+        return mainEvent;
+    }
+}

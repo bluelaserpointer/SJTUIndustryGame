@@ -23,6 +23,6 @@ public class AreaAction : Action
     public virtual bool enabled(Area area)
     {
         return (!needProceedInBase || area.isBasement()) && preFinishActions.Find(action => !action.finishedOnceIn(area)) == null
-                && preFinishInfos.Find(info => !info.isFinished()) == null;
+                && preFinishInfos.Find(info => !info.IsFinished()) == null;
     }
 }

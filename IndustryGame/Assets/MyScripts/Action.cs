@@ -11,7 +11,7 @@ public abstract class Action : ScriptableObject
     [Min(0)]
     public int timeCost, moneyCost;
     [Header("可用前需完成的事件阶段")]
-    public List<EventInfo> preFinishInfos;
+    public List<EventStageSO> preFinishInfos;
 
     [Serializable]
     public struct AbilityRequirement

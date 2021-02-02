@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SingleEventReport : MonoBehaviour
@@ -14,7 +12,8 @@ public class SingleEventReport : MonoBehaviour
 
     void Update()
     {
-        EventName.text = eventD.eventName;
+        if(eventD != null)
+            EventName.text = eventD.name;
         //EventImage.sprite = eventD.
     }
 
@@ -25,6 +24,8 @@ public class SingleEventReport : MonoBehaviour
 
     public void DisplayEventReport ()
     {
+        if (eventD == null)
+            return;
         InstantiateParent = GameObject.FindGameObjectWithTag("ReportInstantiate");
         GameObject EventReportUI = Instantiate(EventReportUIPrefab, InstantiateParent.transform, false);
         EventReportUI.GetComponent<EventReportUI>().eventDetails = eventD;

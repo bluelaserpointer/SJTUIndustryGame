@@ -16,6 +16,6 @@ public class GlobalAction : Action
     public bool enabled()
     {
         return preFinishActions.Find(action => !action.finishedOnce()) == null
-                && preFinishInfos.Find(info => !info.isFinished()) == null;
+                && preFinishInfos.Find(info => !info.IsFinished()) == null;
     }
 }
