@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SingleEventReport : MonoBehaviour
@@ -15,7 +13,7 @@ public class SingleEventReport : MonoBehaviour
     void Update()
     {
         if(eventD != null)
-            EventName.text = eventD.eventName;
+            EventName.text = eventD.name;
         //EventImage.sprite = eventD.
     }
 

@@ -1,136 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Event")]
-public class MainEvent : ScriptableObject
+public class MainEvent
 {
-    public string eventName;
-    [TextArea]
-    public string description;
-    [TextArea]
-    public string descriptionAfterFinish;
+    private readonly MainEventSO so;
+    public readonly Region region;
 
-    [Header("隐藏级别")]
-    [Range(0, 5)]
-    public int hideLevel;
+    public string name { get { return so.eventName; } }
+    public string description { get { return so.description; } }
+    public string descriptionAfterFinish { get { return so.descriptionAfterFinish; } }
+    public int hideLevel { get { return so.hideLevel; } }
+    public readonly List<EventStage> eventStages = new List<EventStage>();
+    public List<GlobalAction> includedGlobalActions { get { return so.includedGlobalActions; } }
+    public List<AreaAction> includedAreaActions { get { return so.includedAreaActions; } }
+    public List<Animal> concernedAnimals { get { return so.concernedAnimals; } }
+    public int contribution { get { return so.contribution; } }
 
-    public Condition spawnCondition;
-
-    [Serializable]
-    public class AreaRequirement
-    {
-        public EnvironmentType type;
-        [Min(1)]
-        public int count;
-    }
-    [Header("出现所需要的地区环境")]
-    public List<AreaRequirement> areaRequirements;
-    [Header("关键物种")]
-    public List<Animal> concernedAnimals;
-
-    [Header("完成功劳奖励")]
-    [Min(0)]
-    public int contribution;
-
-    [Header("出现的所有Info")]
-    public List<EventInfo> includedInfos = new List<EventInfo>();
-    [Header("出现的所有全局措施")]
-    public List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
-    [Header("出现的所有地区措施")]
-    public List<AreaAction> includedAreaActions = new List<AreaAction>();
-
-    private Region region;
-    private bool _isSpawned;
     private bool _isAppeared;
     private bool _isFinished;
-    public void init()
+    public MainEvent(MainEventSO so, Region region)
     {
-        if(spawnCondition == null || spawnCondition.judge())
+        this.so = so;
+        this.region = region;
+
+        //generate eventStages
+        foreach(EventStageSO eventStageSO in so.eventStages)
         {
-            spawn();
+            eventStages.Add(new EventStage(eventStageSO, this));
         }
+        //auto reveal
         if (hideLevel == 0)
             reveal();
-        foreach(EventInfo info in includedInfos)
-        {
-            info.init();
-        }
     }
     public void dayIdle()
     {
-        if(_isSpawned)
+        if (!isFinished())
         {
-            foreach (EventInfo info in includedInfos)
+            foreach (EventStage eventStage in eventStages)
             {
-                info.dayIdle();
+                eventStage.dayIdle();
             }
-        } else if(spawnCondition.judge())
-        {
-            spawn();
-        }
-    }
-    public bool isAppeared()
-    {
-        return _isAppeared;
-    }
-    public void spawn()
-    {
-        List<Region> regions = Stage.GetRegions().FindAll(region => CanGenrateInRegion(region));
-        if(regions.Count > 0)
-        {
-            _isSpawned = true;
-            regions[UnityEngine.Random.Range(0, regions.Count)].AddEvent(this);
-        } else
-        {
-            InGameLog.AddLog("failed spawn: " + eventName , Color.red);
         }
     }
     public void reveal()
     {
         _isAppeared = true;
-        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, description));
+        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, description));
     }
     public bool isFinished()
     {
         if (_isFinished)
             return true;
+        if (!_isAppeared)
+            return false;
         bool judge = true;
-        foreach (EventInfo info in includedInfos)
+        foreach (EventStage eventStage in eventStages)
         {
-            if(!info.isFinished())
+            if (!eventStage.IsFinished())
             {
                 judge = false;
                 break;
             }
         }
-        if(judge)
+        if (judge)
         {
             _isFinished = true;
-            PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(eventName, descriptionAfterFinish));
+            PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, descriptionAfterFinish));
             Stage.AddResourceValue(ResourceType.contribution, contribution);
             region.UpdateConcernedSpecies();
         }
         return judge;
     }
-    public List<EventInfo> GetInfos()
+    public bool isAppeared()
     {
-        return includedInfos;
+        return _isAppeared;
     }
-    public List<EventInfo> GetRevealedInfos()
+    public List<EventStage> GetRevealedEventStages()
     {
-        return includedInfos.FindAll(info => info.isAppeared());
+        return eventStages.FindAll(eventStage => eventStage.isAppeared());
     }
-    public List<EventInfo> GetRevealedInfosRelatedToAnimal(Animal animal)
+    public List<EventStage> GetRevealedStagesRelatedToAnimal(Animal animal)
     {
-        return includedInfos.FindAll(info => info.isAppeared() && info.showInAnimalsReport.Contains(animal));
+        return eventStages.FindAll(eventStage => eventStage.isAppeared() && eventStage.showInAnimalsReport.Contains(animal));
     }
-    public List<EventInfo> GetRevealedInfosRelatedToEnvironment()
+    public List<EventStage> GetRevealedStagesRelatedToEnvironment()
     {
-        return includedInfos.FindAll(info => info.isAppeared() && info.showInEnvironmentReport);
-    }
-    public bool CanGenrateInRegion(Region region)
-    {
-        return areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
+        return eventStages.FindAll(eventStage => eventStage.isAppeared() && eventStage.showInEnvironmentReport);
     }
 }

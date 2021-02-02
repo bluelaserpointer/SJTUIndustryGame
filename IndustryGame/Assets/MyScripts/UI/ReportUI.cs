@@ -8,7 +8,7 @@ public class ReportUI : MonoBehaviour
     public GameObject AnimalReportList;
     public GameObject EnvironmentReportList;
     public GameObject SingleEventReportPrefab;      //报告Prefab，三个都应该是一样的
-    private List<EventInfo> eventinfos;
+    private List<EventStageSO> eventinfos;
     
     void Start()
     {

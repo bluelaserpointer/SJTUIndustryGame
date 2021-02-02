@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public struct AmountChange
+public class AmountChange
 {
     public float old;
     private float current;

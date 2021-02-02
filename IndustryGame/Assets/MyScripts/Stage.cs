@@ -32,11 +32,10 @@ public class Stage : MonoBehaviour
     public string stageName;
     [TextArea]
     public string description;
-    public List<MainEvent> events;
+    public List<MainEventSO> definedEvents;
+    public List<MainEvent> events = new List<MainEvent>();
     [Header("Money allowed for this stage")]
     public int stageMoney;
-    [Header("Time allowed for this stage")]
-    public int stageTime;
     [Serializable]
     public struct AnimalInitialAmount
     {
@@ -64,7 +63,7 @@ public class Stage : MonoBehaviour
             instance = this;
         //init resources
         foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
-            resources.Add(resourceType, new AmountChange());
+            resources.Add(resourceType, new AmountChange(0));
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecord(stageMoney);
         //load actions
@@ -108,10 +107,19 @@ public class Stage : MonoBehaviour
             area.region = region;
 
         }
-
         foreach (Region region in regions)
         {
             region.CalculateCenter();
+        }
+        //generate initial events
+        foreach (MainEventSO definedEvent in definedEvents)
+        {
+            if(definedEvent.onlyGenerateAtBeginning && definedEvent.CanGenerate())
+            {
+                MainEvent mainEvent = definedEvent.TryGenerate();
+                if (mainEvent != null)
+                    events.Add(mainEvent);
+            }
         }
         
         //debug
@@ -147,11 +155,6 @@ public class Stage : MonoBehaviour
                 }
             }
         }
-        //init events
-        foreach (MainEvent anEvent in events)
-        {
-            anEvent.init();
-        }
         //union actions
         foreach (Region region in regions)
         {
@@ -172,9 +175,6 @@ public class Stage : MonoBehaviour
     }
     void Update()
     {
-        //record resource changes
-        foreach (AmountChange amountChange in resources.Values)
-            amountChange.recordChange();
         //region reservation animation
         foreach(Region region in regions)
         {
@@ -185,13 +185,23 @@ public class Stage : MonoBehaviour
         if (lastDay != Timer.GetDay()) //day change happened
         {
             lastDay = Timer.GetDay();
+            //record resource changes
+            foreach (AmountChange amountChange in resources.Values)
+                amountChange.recordChange();
+            //region dayidle
             foreach (Region region in regions)
             {
                 region.dayIdle();
             }
-            foreach(Specialist specialist in specialists)
+            //specialist dayidle
+            foreach (Specialist specialist in specialists)
             {
                 specialist.dayIdle();
+            }
+            //defined events dayIdle(generate etc)
+            foreach (MainEventSO so in definedEvents)
+            {
+                so.DayIdle();
             }
         }
     }
@@ -255,7 +265,7 @@ public class Stage : MonoBehaviour
     }
     public static void subMoney(int value)
     {
-        instance.resources[ResourceType.money].Add(-value);
+        instance.resources[ResourceType.money].AddWithoutRecord(-value);
     }
     public static int GetLestMoney()
     {
@@ -281,17 +291,17 @@ public class Stage : MonoBehaviour
     {
         return instance.events.FindAll(eachEvent => eachEvent.isAppeared() && !eachEvent.isFinished());
     }
-    public static List<EventInfo> GetEventInfosRelatedToAnimal(Animal animal) //TODO: optimize this code
+    public static List<EventStage> GetEventInfosRelatedToAnimal(Animal animal) //TODO: optimize this code
     {
-        List<EventInfo> eventInfos = new List<EventInfo>();
-        instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToAnimal(animal)));
-        return eventInfos;
+        List<EventStage> eventStages = new List<EventStage>();
+        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToAnimal(animal)));
+        return eventStages;
     }
-    public static List<EventInfo> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
+    public static List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
     {
-        List<EventInfo> eventInfos = new List<EventInfo>();
-        instance.events.ForEach(anEvent => eventInfos.AddRange(anEvent.GetRevealedInfosRelatedToEnvironment()));
-        return eventInfos;
+        List<EventStage> eventStages = new List<EventStage>();
+        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
+        return eventStages;
     }
     public static List<GlobalAction> GetEnabledGlobalActions()
     {
