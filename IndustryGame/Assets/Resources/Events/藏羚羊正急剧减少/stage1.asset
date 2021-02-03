@@ -19,6 +19,6 @@ MonoBehaviour:
   showInAnimalsReport: []
   showInEnvironmentReport: 0
   preFinishEventStages: []
-  finishCondition: {fileID: 11400000, guid: b78e43209762fc64a824c1dc3fbb90e3, type: 2}
+  successCondition: {fileID: 11400000, guid: b78e43209762fc64a824c1dc3fbb90e3, type: 2}
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}

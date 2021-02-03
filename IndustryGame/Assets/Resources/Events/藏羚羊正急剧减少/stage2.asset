@@ -20,6 +20,6 @@ MonoBehaviour:
   showInEnvironmentReport: 0
   preFinishEventStages:
   - {fileID: 11400000, guid: 79279c21cf4e20e4ba6e185c1e3b59d3, type: 2}
-  finishCondition: {fileID: 0}
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
+  button: {fileID: 0}

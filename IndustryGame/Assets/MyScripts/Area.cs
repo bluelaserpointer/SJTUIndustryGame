@@ -60,15 +60,15 @@ public class Area : MonoBehaviour
         }
         markBasement.SetActive(false);
     }
-    public int getSpeciesAmount(Animal animal)
+    public int GetSpeciesAmount(Animal animal)
     {
         return animalAmounts.ContainsKey(animal) ? (int)animalAmounts[animal].old : 0;
     }
-    public int getSpeciesChange(Animal animal)
+    public int GetSpeciesChange(Animal animal)
     {
         return animalAmounts.ContainsKey(animal) ? (int)animalAmounts[animal].change : 0;
     }
-    public ICollection<Animal> getSpecies()
+    public ICollection<Animal> GetSpecies()
     {
         return animalAmounts.Keys;
     }

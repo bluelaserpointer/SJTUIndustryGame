@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - Reservation")]
-public class CheckReservation : Condition
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - RegionReservation")]
+public class CheckRegionReservationCount : RegionCondition
 {
     public enum CheckType { amount, change }
     public CheckType type;
     public Animal animal;
     public int amount;
-    public override bool judge()
+    public override bool Judge(Region region)
     {
         /*
         switch (type)

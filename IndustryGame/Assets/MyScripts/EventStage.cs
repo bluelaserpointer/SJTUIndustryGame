@@ -11,7 +11,6 @@ public class EventStage
     public List<Animal> showInAnimalsReport { get { return so.showInAnimalsReport; } }
     public bool showInEnvironmentReport { get { return so.showInEnvironmentReport; } }
     public List<EventStageSO> preFinishInfos { get { return so.preFinishEventStages; } }
-    public bool successCondition { get { return so.finishCondition; } }
     public Buff buffBeforeFinish { get { return so.buffBeforeFinish; } }
     public Buff buffAfterFinish { get { return so.buffAfterFinish; } }
 
@@ -54,7 +53,7 @@ public class EventStage
             {
                 if (buffAfterFinish != null)
                     buffAfterFinish.idle();
-                if (so.IsFinished())
+                if (so.IsFinished(mainEvent.region))
                 {
                     _isFinished = true;
                     PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));

@@ -114,7 +114,7 @@ public class Stage : MonoBehaviour
         //generate initial events
         foreach (MainEventSO definedEvent in definedEvents)
         {
-            if(definedEvent.onlyGenerateAtBeginning && definedEvent.CanGenerate())
+            if(definedEvent.onlyGenerateAtBeginning)
             {
                 MainEvent mainEvent = definedEvent.TryGenerate();
                 if (mainEvent != null)
@@ -242,11 +242,11 @@ public class Stage : MonoBehaviour
     {
         return instance.concernedAnimals;
     }
-    public static int getSpeciesAmount(Animal species)
+    public static int GetSpeciesAmount(Animal species)
     {
         int total = 0;
         foreach(Area area in instance.areas) {
-            total += area.getSpeciesAmount(species);
+            total += area.GetSpeciesAmount(species);
         }
         return total;
     }
@@ -255,7 +255,7 @@ public class Stage : MonoBehaviour
         int total = 0;
         foreach (Area area in instance.areas)
         {
-            total += area.getSpeciesChange(species);
+            total += area.GetSpeciesChange(species);
         }
         return total;
     }
@@ -331,7 +331,7 @@ public class Stage : MonoBehaviour
         List<Animal> animals = new List<Animal>();
         foreach(Area area in instance.areas)
         {
-            animals.Union(area.getSpecies());
+            animals.Union(area.GetSpecies());
         }
         return animals;
     }
