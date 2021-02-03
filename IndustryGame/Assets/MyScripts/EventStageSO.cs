@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/EventStage")]
 public class EventStageSO : ScriptableObject
@@ -21,7 +23,7 @@ public class EventStageSO : ScriptableObject
     [Header("出现前需完成的事件阶段")]
     public List<EventStageSO> preFinishEventStages;
     [Header("完成条件")]
-    public Condition finishCondition;
+    public RegionCondition successCondition;
     [Header("完成前的环境效果")]
     public Buff buffBeforeFinish;
     [Header("完成后的环境效果")]
@@ -38,8 +40,8 @@ public class EventStageSO : ScriptableObject
         }
         return true;
     }
-    public bool IsFinished()
+    public bool IsFinished(Region region)
     {
-        return finishCondition == null || finishCondition.judge();
+        return successCondition == null || successCondition.Judge(region);
     }
 }

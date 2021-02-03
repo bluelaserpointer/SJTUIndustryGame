@@ -21,7 +21,7 @@ public class MainEventSO : ScriptableObject
     [Range(0, 1)]
     private float generateChanceOneDay;
     [SerializeField]
-    private Condition generateCondition;
+    private RegionCondition generateCondition;
 
     [Serializable]
     public class AreaRequirement
@@ -47,17 +47,13 @@ public class MainEventSO : ScriptableObject
     public List<AreaAction> includedAreaActions = new List<AreaAction>();
 
     private MainEventSO() { } //prevent instantiate from code
-    public bool CanGenerate()
-    {
-        return generateCondition == null || generateCondition.judge();
-    }
     public bool CanGenrateInRegion(Region region)
     {
-        return areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
+        return (generateCondition == null || generateCondition.Judge(region)) && areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
     }
     public void DayIdle()
     {
-        if (!onlyGenerateAtBeginning && CanGenerate() && generateChanceOneDay > (float)new System.Random().NextDouble())
+        if (!onlyGenerateAtBeginning && generateChanceOneDay > (float)new System.Random().NextDouble())
         {
             TryGenerate();
         }

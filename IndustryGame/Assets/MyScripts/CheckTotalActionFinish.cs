@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - ActionFinish")]
-public class CheckActionFinish : Condition
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - TotalActionFinish")]
+public class CheckTotalActionFinish : WorldCondition
 {
     [Serializable]
     public class ActionAndCount
@@ -13,7 +13,7 @@ public class CheckActionFinish : Condition
         public int count;
     }
     public List<ActionAndCount> targetActions;
-    public override bool judge()
+    public override bool Judge()
     {
         return targetActions.Find(pair => pair.action.finishCount() < pair.count) == null;
     }
