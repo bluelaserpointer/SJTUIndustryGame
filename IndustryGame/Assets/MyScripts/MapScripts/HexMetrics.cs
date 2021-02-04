@@ -55,7 +55,10 @@ public static class HexMetrics {
 
 	public const float hashGridScale = 0.25f;
 
+	public const int TerrainTypeTotal = 11;
+
 	static HexHash[] hashGrid;
+	
 
 	static Vector3[] corners = {
 		new Vector3(0f, 0f, outerRadius),
