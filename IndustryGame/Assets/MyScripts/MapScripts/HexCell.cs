@@ -37,6 +37,7 @@ public class HexCell : MonoBehaviour {
 		{
 			if (highLighted != value)
 			{
+				
 				highLighted = value;
 				RefreshSelfOnly();
 			}
@@ -291,6 +292,7 @@ public class HexCell : MonoBehaviour {
 		set {
 			if (terrainTypeIndex != value) {
 				terrainTypeIndex = value;
+				if (highLighted && terrainTypeIndex<=10) terrainTypeIndex += HexMetrics.TerrainTypeTotal;
 				Refresh();
 			}
 		}
