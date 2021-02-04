@@ -2,12 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 物种
+/// </summary>
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Animal")]
 public class Animal : ScriptableObject
 {
+    /// <summary>
+    /// 物种名称
+    /// </summary>
     public string animalName;
+    /// <summary>
+    /// 物种描述
+    /// </summary>
     [TextArea]
     public string description;
+    /// <summary>
+    /// 物种首要栖息环境
+    /// </summary>
     public EnvironmentType bestEnvironmentType;
     [Serializable]
     public struct EnvironmentPreference
@@ -15,22 +27,59 @@ public class Animal : ScriptableObject
         public EnvironmentType environment;
         public double preference;
     }
+    /// <summary>
+    /// 物种各环境适应度
+    /// </summary>
     public List<EnvironmentPreference> environmentPreferences;
+    /// <summary>
+    /// 物种模型
+    /// </summary>
     public GameObject model;
+    /// <summary>
+    /// 物种基础每日增加
+    /// </summary>
     [Min(0)]
     public int reproductionSpeed;
+    /// <summary>
+    /// 物种猎食对象
+    /// </summary>
     List<Animal> foods;
+    /// <summary>
+    /// 物种生存所需能量
+    /// </summary>
     [Min(0)]
     public int energyNeeds;
+    /// <summary>
+    /// 物种被食提供能量
+    /// </summary>
     [Min(0)]
     public int energyAsFood;
-    public double minTempreture, maxTempreture;
+    /// <summary>
+    /// 最低适应温度
+    /// </summary>
+    public double minTempreture;
+    /// <summary>
+    /// 最高适应温度
+    /// </summary>
+    public double maxTempreture;
+    /// <summary>
+    /// 迁徙规模上限
+    /// </summary>
     [Min(0)]
     public int migrateLimit;
 
+    /// <summary>
+    /// 物种生活音效
+    /// </summary>
     public AudioClipList sfxAudio;
 
+    /// <summary>
+    /// 猜测: 危险级别区间大小
+    /// </summary>
     private List<int> dangerLimits;
+    /// <summary>
+    /// 猜测: 危险级别划分数
+    /// </summary>
     public int mostDangerLimit;
 
     private void Start() {

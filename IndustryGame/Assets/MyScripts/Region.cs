@@ -91,7 +91,7 @@ public class Region
         }
         foreach (MainEvent anEvent in includedEvents)
         {
-            anEvent.dayIdle();
+            anEvent.DayIdle();
         }
     }
     private void reservationCompleted()
@@ -105,7 +105,7 @@ public class Region
         concernedAnimals.Clear();
         foreach (MainEvent mainEvent in includedEvents)
         {
-            if (mainEvent.isAppeared())
+            if (mainEvent.IsAppeared())
             {
                 foreach (Animal animal in mainEvent.concernedAnimals)
                 {
@@ -192,7 +192,7 @@ public class Region
     }
     public List<MainEvent> GetRevealedEvents()
     {
-        return includedEvents.FindAll(anEvent => anEvent.isAppeared());
+        return includedEvents.FindAll(anEvent => anEvent.IsAppeared());
     }
     public int CountConstructedBuilding(BuildingInfo buildingInfo)
     {
