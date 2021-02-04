@@ -52,7 +52,6 @@ public static class SpecialistEmployList {
         if(specialists.Remove(specialist))
         {
             Stage.GetSpecialists().Add(specialist);
-            specialist.moveToArea(Stage.getBaseArea()); //spawn in basement
             Stage.subMoney(specialist.hireCost);
         } else
         {

@@ -8,6 +8,7 @@ public class HexFeatureManager : MonoBehaviour {
 	public HexMesh walls;
 
 	public Transform wallTower, bridge,expert;
+	public HexFeatureCollection[] buildings;
 
 	public Transform[] special;
 
@@ -53,6 +54,7 @@ public class HexFeatureManager : MonoBehaviour {
 		);
 		instance.SetParent(container, false);
 	}
+
 
 	public void AddFeature (HexCell cell, Vector3 position) {
 		float height_offset = 0;
@@ -320,6 +322,15 @@ public class HexFeatureManager : MonoBehaviour {
 		instance.localPosition = HexMetrics.Perturb(position);
 		instance.localRotation = Quaternion.Euler(0f, 360f, 0f);
 		instance.SetParent(container, false);
+	}
 
+
+	public void AddBuilding(HexCell cell, Vector3 position,int index,int level)//index:1~5 level 1~3
+	{
+		Transform instance = Instantiate(buildings[index].prefabs[level-1]);
+		position.y += instance.localScale.y * 0.5f;
+		instance.localPosition = HexMetrics.Perturb(position);
+		instance.localRotation = Quaternion.Euler(0f, 360f, 0f);
+		instance.SetParent(container, false);
 	}
 }

@@ -13,6 +13,9 @@ public class HexMapEditor : MonoBehaviour {
 		activeRainLevel;
 
 	int activeregionId;
+	int buildingIndex;
+	int buildingLevel;
+	bool highLighted;
 	int activeTerrainTypeIndex;
 	int activeLandformIndex;
 
@@ -38,12 +41,25 @@ public class HexMapEditor : MonoBehaviour {
 	{
 		activeregionId = (int)index;
 	}
+	public void SetBuildingIndex(float index)
+	{
+		buildingIndex = (int)index;
+	}
+	public void SetBuildingLevel(float level)
+	{
+		buildingLevel = (int)level;
+	}
 	public void SetTerrainTypeIndex (int index) {
 		activeTerrainTypeIndex = index;
 	}
 	public void SetLandformIndex(float index)
 	{
 		activeLandformIndex = (int)index;
+	}
+
+	public void SetApplyHighLight(bool toggle)
+	{
+		highLighted = toggle;
 	}
 
 	public void SetApplyElevation (bool toggle) {
@@ -196,9 +212,9 @@ public class HexMapEditor : MonoBehaviour {
 			}
 			//if(activeregionId >= 0)
 			//{
-				cell.RegionId = activeregionId;
+			//cell.RegionId = activeregionId;
 			//}
-			
+			cell.HighLighted = highLighted;
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
 			}
@@ -225,6 +241,9 @@ public class HexMapEditor : MonoBehaviour {
 			{
 				cell.RainLevel = activeRainLevel;
 			}
+			cell.BuildingIndex = buildingIndex;
+			cell.BuildingLevel = buildingLevel;
+
 			if (riverMode == OptionalToggle.No) {
 				cell.RemoveRiver();
 			}

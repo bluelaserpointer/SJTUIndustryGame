@@ -1192,10 +1192,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 
   description: 
-  stageMoney: 0
-  stageTime: 0
-  events:
+  definedEvents:
   - {fileID: 11400000, guid: 2120b392985132d44b52d0bfd44d4c72, type: 2}
+  stageMoney: 10000
+  stageTime: 0
   animalInitialAmounts:
   - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
     amount: 10000

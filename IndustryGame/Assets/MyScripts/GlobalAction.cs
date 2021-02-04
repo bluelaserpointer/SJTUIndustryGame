@@ -15,7 +15,6 @@ public class GlobalAction : Action
     public virtual void actionEffect() { }
     public bool enabled()
     {
-        return preFinishActions.Find(action => !action.finishedOnce()) == null
-                && preFinishInfos.Find(info => !info.isFinished()) == null;
+        return preFinishActions.Find(action => !action.finishedOnce()) == null;
     }
 }
