@@ -1195,7 +1195,6 @@ MonoBehaviour:
   definedEvents:
   - {fileID: 11400000, guid: 2120b392985132d44b52d0bfd44d4c72, type: 2}
   stageMoney: 10000
-  stageTime: 0
   animalInitialAmounts:
   - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
     amount: 10000
@@ -1549,6 +1548,7 @@ MonoBehaviour:
   useColors: 0
   useUVCoordinates: 0
   useUV2Coordinates: 0
+  useTerrainTypes: 0
 --- !u!23 &1654817585
 MeshRenderer:
   m_ObjectHideFlags: 0

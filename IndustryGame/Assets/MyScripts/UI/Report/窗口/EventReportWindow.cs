@@ -30,4 +30,15 @@ public class EventReportWindow : MonoBehaviour, BasicReportWindow
     {
         GenerateList();
     }
+
+    void Update()
+    {
+        if (Stage.GetEvents() != null)
+        {
+            foreach (MainEvent mainEvent in Stage.GetEvents())
+            {
+                Debug.Log("Event - " + mainEvent.name);
+            }
+        }
+    }
 }

@@ -48,7 +48,7 @@ public class EventReportUI : MonoBehaviour
         EventDescription.text = eventDetails.description;
         EventDescriptionAfterFinish.text = eventDetails.descriptionAfterFinish;
 
-        foreach (EventInfo eventInfo in eventDetails.GetRevealedInfos())
+        foreach (EventStage eventInfo in eventDetails.GetRevealedEventStages())
         {
             GameObject clone = Instantiate(SingleEventInfoPrefab, EventInfoList.transform, false);
             clone.GetComponent<EventInfoUI>().Generate(eventInfo);

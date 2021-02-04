@@ -19,7 +19,7 @@ public class EnvironmentReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-        foreach (EventInfo eventInfo in Stage.GetEventInfosRelatedToEnvironment())
+        foreach (EventStage eventInfo in Stage.GetEventInfosRelatedToEnvironment())
         {
             GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EnvironmentReportList.transform, false);
             clone.GetComponent<SingleEventReport>().ShowSingleEnvironment(eventInfo);

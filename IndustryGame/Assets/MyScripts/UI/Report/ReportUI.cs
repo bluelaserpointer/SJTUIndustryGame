@@ -94,7 +94,7 @@ public class ReportUI : MonoBehaviour
         OpenWindow = Instantiate(instance.AnimalDetailsWindow, instance.GeneratePosition.transform, false);
     }
 
-    public static void GenerateEnvironmentDetailsWindow(EventInfo environmentEventInfo)
+    public static void GenerateEnvironmentDetailsWindow(EventStage environmentEventInfo)
     {
         if (OpenWindow != null)
         {
