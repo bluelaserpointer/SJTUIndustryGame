@@ -18,10 +18,11 @@ public class CheckRegionBuilding : RegionCondition
 
     public override bool Judge(Region region)
     {
-        //TODO
-        //foreach(var pair in buildingAndCountCompares)
-        //{
-        //}
+        foreach(var pair in buildingAndCountCompares)
+        {
+            int count = region.CountBuilding(pair.target);
+
+        }
         return false;
     }
 }

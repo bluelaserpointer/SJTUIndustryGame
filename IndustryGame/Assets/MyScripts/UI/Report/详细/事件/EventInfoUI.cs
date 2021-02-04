@@ -5,23 +5,18 @@ using UnityEngine.UI;
 
 public class EventInfoUI : MonoBehaviour
 {
+    [HideInInspector]
     public EventStage eventInfo;
+    [Header("显示EventInfo标题的Text")]
     public Text InfoName;
+    [Header("显示EventInfo描述的Text")]
     public Text Description;
 
-    void Start()
+    public void Generate(EventStage eventInfo)
     {
-        
-    }
-
-    void Update()
-    {
+        this.eventInfo = eventInfo;
         InfoName.text = eventInfo.name;
         Description.text = eventInfo.description;
     }
 
-    private void OnDisable ()
-    {
-        Destroy(gameObject);
-    }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 事件阶段种类固定信息
+/// </summary>
 [CreateAssetMenu(menuName = "Add ScriptableObjects/EventStage")]
 public class EventStageSO : ScriptableObject
 {
@@ -29,6 +32,11 @@ public class EventStageSO : ScriptableObject
     [Header("完成后的环境效果")]
     public Buff buffAfterFinish;
 
+    /// <summary>
+    /// 是否已完成所有前置阶段
+    /// </summary>
+    /// <param name="mainEvent"></param>
+    /// <returns></returns>
     public bool CanAppear(MainEvent mainEvent)
     {
         foreach (EventStageSO eventStageSO in preFinishEventStages)
@@ -40,6 +48,11 @@ public class EventStageSO : ScriptableObject
         }
         return true;
     }
+    /// <summary>
+    /// 是否已完成
+    /// </summary>
+    /// <param name="region"></param>
+    /// <returns></returns>
     public bool IsFinished(Region region)
     {
         return successCondition == null || successCondition.Judge(region);

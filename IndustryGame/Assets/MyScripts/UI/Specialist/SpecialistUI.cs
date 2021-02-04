@@ -6,7 +6,7 @@ public class SpecialistUI : MonoBehaviour
     public GameObject SpecialistList;
     public GameObject SingleSpecialistPrefab;
 
-    void Start ()
+    void Start()
     {
         InstantiateSpecialistList();
     }
@@ -15,23 +15,23 @@ public class SpecialistUI : MonoBehaviour
     {
     }
 
-    private void OnEnable ()
+    private void OnEnable()
     {
         InstantiateSpecialistList();
-        InGameLog.AddLog("In SpecialistUI OnEnable");
+        // InGameLog.AddLog("In SpecialistUI OnEnable");
 
     }
 
-    void InstantiateSpecialistList ()
+    void InstantiateSpecialistList()
     {
         foreach (Specialist specialist in Stage.GetSpecialists())
         {
             GameObject clone;
             clone = Instantiate(SingleSpecialistPrefab, SpecialistList.transform, false);
             clone.GetComponent<SingleSpecialist>().specialist = specialist;
-            InGameLog.AddLog("Ins : " + specialist.name);
+            // InGameLog.AddLog("Ins : " + specialist.name);
         }
     }
 
-   
+
 }

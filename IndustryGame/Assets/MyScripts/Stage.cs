@@ -285,22 +285,22 @@ public class Stage : MonoBehaviour
     }
     public static List<MainEvent> GetRevealedEvents()
     {
-        return instance.events.FindAll(eachEvent => eachEvent.isAppeared());
+        return instance.events.FindAll(eachEvent => eachEvent.IsAppeared());
     }
     public static List<MainEvent> GetRevealedUnfinishedEvents()
     {
-        return instance.events.FindAll(eachEvent => eachEvent.isAppeared() && !eachEvent.isFinished());
+        return instance.events.FindAll(eachEvent => eachEvent.IsAppeared() && !eachEvent.IsFinished());
     }
     public static List<EventStage> GetEventInfosRelatedToAnimal(Animal animal) //TODO: optimize this code
     {
         List<EventStage> eventStages = new List<EventStage>();
-        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToAnimal(animal)));
+        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToAnimal(animal)));
         return eventStages;
     }
     public static List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
     {
         List<EventStage> eventStages = new List<EventStage>();
-        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
+        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToEnvironment()));
         return eventStages;
     }
     public static List<GlobalAction> GetEnabledGlobalActions()

@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 88140028343874186}
   - component: {fileID: 6444558444501747390}
   m_Layer: 0
-  m_Name: "\u4E8B\u4EF6\u5355\u9879"
+  m_Name: SingleReportPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -255,9 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410c8c7e2151d4c499335749c5b66300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventD: {fileID: 0}
-  EventReportUIPrefab: {fileID: 262065190049643596, guid: 72c8240cc68aea44aa01fede78dfb9ad,
-    type: 3}
+  mainEvent: {fileID: 0}
+  animal: {fileID: 0}
+  environmentEventInfo: {fileID: 0}
+  windowType: 0
   EventImage: {fileID: 527175974942493032}
   EventName: {fileID: 527175976342035907}
 --- !u!114 &6444558444501747390
@@ -304,7 +305,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 88140028343874186}
-        m_MethodName: DisplayEventReport
+        m_MethodName: DisplayReport
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
