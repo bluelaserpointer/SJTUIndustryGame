@@ -25,7 +25,9 @@ public class ReorderableListDrawer : PropertyDrawer
                 rect.x += 10;rect.width -= 10;
                 EditorGUI.PropertyField(rect, listProperty.GetArrayElementAtIndex(index), true);
                 rect.x += 65;rect.height = 20;
-                EditorGUI.LabelField(rect, "- " + listProperty.GetArrayElementAtIndex(index).managedReferenceFullTypename.Substring(16));
+                string className = listProperty.GetArrayElementAtIndex(index).managedReferenceFullTypename;
+                className = className.Replace("Assembly-CSharp", "");
+                EditorGUI.LabelField(rect, "- " + className);
             };
             _list.elementHeightCallback = delegate (int index)
             {
@@ -34,10 +36,10 @@ public class ReorderableListDrawer : PropertyDrawer
             _list.onAddDropdownCallback = (Rect buttonRect, ReorderableList l) =>
             {
                 var menu = new GenericMenu();
-                menu.AddItem(new GUIContent("Region/CheckBuildingCount"),
-                    false, clickHandler, new CheckRegionBuilding());
-                menu.AddItem(new GUIContent("Region/ReservationCount"),
-                    false, clickHandler, new CheckRegionReservationCount());
+                foreach(ReorderableConditionList.MenuElement menuElement in ReorderableConditionList.menuElements)
+                {
+                    menu.AddItem(new GUIContent(menuElement.text), false, clickHandler, menuElement.supplier.Invoke());
+                }
                 menu.ShowAsContext();
             };
         }

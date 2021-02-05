@@ -250,7 +250,7 @@ public class Stage : MonoBehaviour
         }
         return total;
     }
-    public static int getSpeciesChange(Animal species)
+    public static int GetSpeciesChange(Animal species)
     {
         int total = 0;
         foreach (Area area in instance.areas)

@@ -12,14 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f865e30df96441446b67ccfd0ff71495, type: 3}
   m_Name: stage2
   m_EditorClassIdentifier: 
-  infoName: "\u7B49\u5F85\u7B2C\u4E00\u6B21\u8C03\u67E5\u5B8C\u6BD5"
-  description: "\u53EF\u4EE5\u96C7\u4F63\u4E13\u5BB6\uFF0C\u653E\u7F6E\u5728\u76EE\u6807\u533A\u57DF\u6765\u52A0\u5FEB\u8C03\u67E5\u8FDB\u5EA6\u3002"
-  descriptionAfterFinish: "\u8C03\u67E5\u5DF2\u5B8C\u6BD5\uFF0C\u8BE6\u7EC6\u60C5\u51B5\u5DF2\u5F97\u77E5\u3002"
+  infoName: 
+  description: "\u5B8C\u6210\u8C03\u67E5\uFF0C\u7EDF\u8BA1\u85CF\u7F9A\u7F8A\u7684\u4E2A\u6570"
+  descriptionAfterFinish: "\u85CF\u7F9A\u7F8A\u7B2C\u4E00\u6B21\u6570\u91CF\u8C03\u67E5\u5DF2\u5B8C\u6BD5"
   contribution: 0
-  showInAnimalsReport: []
-  showInEnvironmentReport: 0
   preFinishEventStages:
   - {fileID: 11400000, guid: 79279c21cf4e20e4ba6e185c1e3b59d3, type: 2}
+  successCondition:
+    List:
+    - id: 0
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
-  button: {fileID: 0}
+  showInAnimalsReport: []
+  showInEnvironmentReport: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: CheckRegionAnimalCount, ns: , asm: Assembly-CSharp}
+      data:
+        type: 0
+        animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
+        value: 0
+        compareType: 0

@@ -43,7 +43,6 @@ public class Region
         if (baseArea != null)
         {
             reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
-            //InGameLog.AddLog("reservate: " + reservationProgress);
             Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
             while (reservationProgress >= reservationTime + concernedAnimals.Count * 0.2f)
             {
@@ -68,11 +67,11 @@ public class Region
                         reservationCompleted();
                     } else
                     {
+                        //reservate position debug
+                        InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " reservate pos: " + cell.Position.x + ", " + cell.Position.z);
                         cell.HighLighted = true;
                         lastHighLightedCells.Push(cell);
                     }
-                    //debug
-                    //InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
                 }
             }
             if(lastHighLightedCells.Count > 0)
