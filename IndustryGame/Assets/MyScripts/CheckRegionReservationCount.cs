@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - RegionReservation")]
 public class CheckRegionReservationCount : RegionCondition
 {
     public enum CheckType { amount, change }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - TotalAnimalAmount")]
 public class CheckTotalAnimal : WorldCondition
 {
     public enum CheckType { amount, change }

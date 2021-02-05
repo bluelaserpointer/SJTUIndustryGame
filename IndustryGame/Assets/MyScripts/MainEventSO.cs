@@ -77,7 +77,7 @@ public class MainEventSO : ScriptableObject
         if (regions.Count > 0)
         {
             Region region = regions[UnityEngine.Random.Range(0, regions.Count)];
-            region.AddEvent(mainEvent = new MainEvent(this, region));
+            mainEvent = new MainEvent(this, region);
         }
         else
         {

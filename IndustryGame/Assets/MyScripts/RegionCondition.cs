@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public abstract class RegionCondition : ScriptableObject
+[Serializable]
+public abstract class RegionCondition
 {
     public abstract bool Judge(Region region);
 }

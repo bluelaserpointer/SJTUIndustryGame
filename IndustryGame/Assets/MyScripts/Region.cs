@@ -105,7 +105,7 @@ public class Region
         concernedAnimals.Clear();
         foreach (MainEvent mainEvent in includedEvents)
         {
-            if (mainEvent.IsAppeared())
+            if (mainEvent.IsAppeared() && !mainEvent.IsFinished())
             {
                 foreach (Animal animal in mainEvent.concernedAnimals)
                 {
@@ -237,5 +237,11 @@ public class Region
             Area area = specialist.getCurrentArea();
             return area != null && area.region.Equals(this);
         });
+    }
+    public List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
+    {
+        List<EventStage> eventStages = new List<EventStage>();
+        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToEnvironment()));
+        return eventStages;
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - TotalActionFinish")]
 public class CheckTotalActionFinish : WorldCondition
 {
     [Serializable]

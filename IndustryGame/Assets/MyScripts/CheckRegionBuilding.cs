@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Add ScriptableObjects/Check - RegionBuilding")]
 public class CheckRegionBuilding : RegionCondition
 {
     public enum compareType { large, largeEqual, small, smallEqual, equal };

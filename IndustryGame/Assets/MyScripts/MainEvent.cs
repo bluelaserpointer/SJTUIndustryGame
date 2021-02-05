@@ -52,9 +52,9 @@ public class MainEvent
     {
         this.so = so;
         this.region = region;
-
+        region.AddEvent(this);
         //generate eventStages
-        foreach(EventStageSO eventStageSO in so.eventStages)
+        foreach (EventStageSO eventStageSO in so.eventStages)
         {
             eventStages.Add(new EventStage(eventStageSO, this));
         }
@@ -79,6 +79,7 @@ public class MainEvent
     {
         _isAppeared = true;
         PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, description));
+        region.UpdateConcernedSpecies();
     }
     /// <summary>
     /// 该事件流是否已完成

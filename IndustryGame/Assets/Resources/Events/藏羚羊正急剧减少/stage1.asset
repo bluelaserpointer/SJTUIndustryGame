@@ -19,6 +19,17 @@ MonoBehaviour:
   showInAnimalsReport: []
   showInEnvironmentReport: 0
   preFinishEventStages: []
-  successCondition: {fileID: 11400000, guid: b78e43209762fc64a824c1dc3fbb90e3, type: 2}
+  successCondition:
+    List:
+    - id: 0
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
+  references:
+    version: 1
+    00000000:
+      type: {class: CheckRegionBuilding, ns: , asm: Assembly-CSharp}
+      data:
+        buildingAndCountCompares:
+        - target: {fileID: 11400000, guid: 841db5550a061fd4fb083486a7e154ac, type: 2}
+          count: 1
+          compareType: 1
