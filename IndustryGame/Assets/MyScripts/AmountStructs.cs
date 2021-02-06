@@ -1,21 +1,66 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 能记录增减量的数值保存器，UI上需要显示增减量时有用<para></para>
+/// <see cref="RecordChange"/> - 周期性调用该函数使其记录增减量<para></para>
+/// <see cref="GetRecordValue"/> - 访问本周期开头的数值，显示用<para></para>
+/// <see cref="GetCurrentValue"/> - 访问最新值，处理用<para></para>
+/// <see cref="GetChange"/> - 获取增减量(还未调用过<see cref="RecordChange"/>时返回0)
+/// </summary>
 public class AmountChange
 {
-    public float old;
-    private float current;
+    private float recordValue;
+    private float currentValue;
     public float change;
-    public AmountChange(float initialValue) { old = current = initialValue; change = 0; }
-    public float Add(float value) { return current += value; }
-    public float AddWithClamp(float value, float min, float max) { return current = Mathf.Clamp(current + value, min, max); }
-    public float AddWithoutRecord(float value) { old += value; return current += value; }
-    public void recordChange()
+    public AmountChange(float initialValue) { recordValue = currentValue = initialValue; }
+    /// <summary>
+    /// 增加数值，需调用<see cref="RecordChange"/>才会在<see cref="GetRecordValue"/>看到
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public float Add(float value) { return currentValue += value; }
+    public float Clamp(float min, float max) { return currentValue = Mathf.Clamp(currentValue, min, max); }
+    /// <summary>
+    /// 增加数值，但不影响增减量，<see cref="GetRecordValue"/>也能立刻看到变化
+    /// </summary>
+    /// <param name="value"></param>
+    public void AddWithoutRecording(float value) { recordValue += value; currentValue += value; }
+    /// <summary>
+    /// 周期性调用该函数使其记录增减量
+    /// </summary>
+    public void RecordChange()
     {
-        if (current < 0)
-            current = 0;
-        change = current - old;
-        old = current;
+        if (currentValue < 0)
+            currentValue = 0;
+        change = currentValue - recordValue;
+        recordValue = currentValue;
+    }
+    /// <summary>
+    /// 访问本周期开头的数值，显示用<para></para>
+    /// 还未调用过<see cref="RecordChange"/>时返回初始值
+    /// </summary>
+    /// <returns></returns>
+    public float GetRecordValue()
+    {
+        return recordValue;
+    }
+    /// <summary>
+    /// 访问最新值，处理用
+    /// </summary>
+    /// <returns></returns>
+    public float GetCurrentValue()
+    {
+        return currentValue;
+    }
+    /// <summary>
+    /// 获取增减量<para></para>
+    /// 还未调用过<see cref="RecordChange"/>时返回0)
+    /// </summary>
+    /// <returns></returns>
+    public float GetChange()
+    {
+        return change;
     }
 }
 public class AmountChangeRecords
@@ -41,7 +86,7 @@ public class AmountChangeRecords
     }
     public void AddRecord(AmountChange amountChange)
     {
-        records.AddLast(new Record(amountChange.old, amountChange.change));
+        records.AddLast(new Record(amountChange.GetRecordValue(), amountChange.change));
     }
     public LinkedList<Record> GetRecords()
     {
