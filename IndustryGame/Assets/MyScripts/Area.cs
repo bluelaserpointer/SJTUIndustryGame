@@ -14,10 +14,14 @@ public class Area : MonoBehaviour
     public EnvironmentType environmentType;
 
     public readonly List<Building> buildings = new List<Building>();
+    public enum EnvironmentStat
+    {
+        NOx, SOx, CO2
+    }
     [Serializable]
     public struct Stat
     {
-        public AreaStat statType;
+        public EnvironmentStat statType;
         public double value;
     }
     public List<Stat> stat;

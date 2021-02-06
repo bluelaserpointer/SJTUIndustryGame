@@ -1,6 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+
+public enum SpeciesDangerType
+{
+    [Description("正常")]
+    Normal,
+    [Description("濒危")]
+    Danger,
+    [Description("极度濒危")]
+    VeryDanger,
+}
 
 /// <summary>
 /// 物种
