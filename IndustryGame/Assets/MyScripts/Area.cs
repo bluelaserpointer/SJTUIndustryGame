@@ -62,7 +62,7 @@ public class Area : MonoBehaviour
     }
     public int GetSpeciesAmount(Animal animal)
     {
-        return animalAmounts.ContainsKey(animal) ? (int)animalAmounts[animal].old : 0;
+        return animalAmounts.ContainsKey(animal) ? (int)animalAmounts[animal].GetRecordValue() : 0;
     }
     public int GetSpeciesChange(Animal animal)
     {
@@ -86,9 +86,9 @@ public class Area : MonoBehaviour
         {
             InGameLog.AddLog("In getSpeciesDangerTypes - foreach");
 
-            int amount = (int)animalAndAmount.Value.old;
+            int amount = (int)animalAndAmount.Value.GetRecordValue();
             Animal animal = animalAndAmount.Key;
-            if (animalAndAmount.Value.old > 0)
+            if (animalAndAmount.Value.GetRecordValue() > 0)
             {
                 int dangerType = (int)animal.getDangerType(amount);
 
@@ -139,8 +139,8 @@ public class Area : MonoBehaviour
         }
         foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
-            animalAndAmount.Value.recordChange();
-            animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.old);
+            animalAndAmount.Value.RecordChange();
+            animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.GetRecordValue());
         }
         //show specialist mark // will be upgraded to show count in future
         if (GetSpecialistsInArea().Count > 0)
@@ -169,7 +169,7 @@ public class Area : MonoBehaviour
 
     public List<Specialist> GetSpecialistsInArea()
     {
-        return Stage.GetSpecialists().FindAll(specialist => Equals(specialist.getCurrentArea()));
+        return Stage.GetSpecialists().FindAll(specialist => Equals(specialist.GetCurrentArea()));
     }
     public bool isBasement()
     {
@@ -279,7 +279,7 @@ public class Area : MonoBehaviour
         {
             if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
                 continue;
-            int providableAmount = (int)(animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
+            int providableAmount = (int)(animalAndAmount.Value.GetRecordValue() * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
             if (sumProvidableAmount + providableAmount >= units)
             {
                 providableAmount = units - sumProvidableAmount;
@@ -303,7 +303,7 @@ public class Area : MonoBehaviour
         {
             if (!foods.Contains(animalAndAmount.Key)) //skip non-food animals
                 continue;
-            int providableAmount = (int)(animalAndAmount.Value.old * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
+            int providableAmount = (int)(animalAndAmount.Value.GetRecordValue() * animalAndAmount.Key.energyAsFood / energyNeedsForOneEater);
             sumProvidableAmount += providableAmount;
         }
         return sumProvidableAmount;
@@ -324,9 +324,9 @@ public class Area : MonoBehaviour
     {
         if (actionProgressSlider.gameObject.activeSelf)
         {
-            if (currentSpecialist.hasCurrentAction())
+            if (currentSpecialist.HasCurrentAction())
             {
-                actionProgressSlider.value = currentSpecialist.getActionProgressRate();
+                actionProgressSlider.value = currentSpecialist.GetActionProgressRate();
             }
             else
             {

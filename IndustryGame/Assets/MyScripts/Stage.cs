@@ -65,7 +65,7 @@ public class Stage : MonoBehaviour
         foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
             resources.Add(resourceType, new AmountChange(0));
         //set stage money objective
-        resources[ResourceType.money].AddWithoutRecord(stageMoney);
+        resources[ResourceType.money].AddWithoutRecording(stageMoney);
         //load actions
         foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
         {
@@ -187,7 +187,7 @@ public class Stage : MonoBehaviour
             lastDay = Timer.GetDay();
             //record resource changes
             foreach (AmountChange amountChange in resources.Values)
-                amountChange.recordChange();
+                amountChange.RecordChange();
             //region dayidle
             foreach (Region region in regions)
             {
@@ -265,15 +265,15 @@ public class Stage : MonoBehaviour
     }
     public static void subMoney(int value)
     {
-        instance.resources[ResourceType.money].AddWithoutRecord(-value);
+        instance.resources[ResourceType.money].AddWithoutRecording(-value);
     }
     public static int GetLestMoney()
     {
-        return (int)instance.resources[ResourceType.money].old;
+        return (int)instance.resources[ResourceType.money].GetRecordValue();
     }
     public static float GetResourceValue(ResourceType resourceType)
     {
-        return instance.resources[resourceType].old;
+        return instance.resources[resourceType].GetRecordValue();
     }
     public static float AddResourceValue(ResourceType resourceType, float value)
     {

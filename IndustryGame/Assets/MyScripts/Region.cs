@@ -233,7 +233,7 @@ public class Region
     {
         return Stage.GetSpecialists().FindAll(specialist =>
         {
-            Area area = specialist.getCurrentArea();
+            Area area = specialist.GetCurrentArea();
             return area != null && area.region.Equals(this);
         });
     }
