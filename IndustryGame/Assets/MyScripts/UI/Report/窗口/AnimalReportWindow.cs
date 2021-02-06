@@ -18,11 +18,15 @@ public class AnimalReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-        foreach (Animal animal in Stage.GetSpecies())
+        foreach (MainEvent mainEvent in Stage.GetEvents())
         {
-            GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-            clone.GetComponent<SingleEventReport>().ShowSingleAnimal(animal);
-            AnimalReports.Add(clone);
+            foreach (Animal animal in mainEvent.concernedAnimals)
+            {
+                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+                clone.GetComponent<SingleEventReport>().ShowSingleAnimal(animal);
+                AnimalReports.Add(clone);
+                Debug.Log("Species: " + animal.animalName);
+            }
         }
     }
 
