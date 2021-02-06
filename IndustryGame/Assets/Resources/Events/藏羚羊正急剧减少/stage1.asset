@@ -23,7 +23,7 @@ MonoBehaviour:
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
   showInAnimalsReport: []
-  showInEnvironmentReport: 0
+  showInEnvironmentReport: 1
   references:
     version: 1
     00000000:

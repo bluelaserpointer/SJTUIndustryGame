@@ -24,7 +24,7 @@ MonoBehaviour:
   buffBeforeFinish: {fileID: 11400000, guid: f09cfcf0cd686594a87bd053185efd3a, type: 2}
   buffAfterFinish: {fileID: 0}
   showInAnimalsReport: []
-  showInEnvironmentReport: 0
+  showInEnvironmentReport: 1
   references:
     version: 1
     00000000:
