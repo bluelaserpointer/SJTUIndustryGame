@@ -205,7 +205,7 @@ public class HexGrid : MonoBehaviour {
 			chunks[i].Refresh();
 		}
 		//GetComponentsInChildren<Area>().Length
-		Stage.instance.Init(cells);
+		Stage.Init(cells);
 	}
 	
 }
