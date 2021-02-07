@@ -391,7 +391,7 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public static List<BuildingInfo> GetEnabledBuildings(Area area)
     {
-        return instance.includedBuildings.FindAll(building => building.enabled(area));
+        return instance.includedBuildings.FindAll(building => building.CanConstructIn(area));
     }
     /// <summary>
     /// 增加措施执行完成数

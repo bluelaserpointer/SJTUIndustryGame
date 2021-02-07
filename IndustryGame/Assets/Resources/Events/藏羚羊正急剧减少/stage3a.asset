@@ -21,10 +21,9 @@ MonoBehaviour:
   successCondition:
     List:
     - id: 0
-  buffBeforeFinish: {fileID: 11400000, guid: f09cfcf0cd686594a87bd053185efd3a, type: 2}
-  buffAfterFinish: {fileID: 0}
   showInAnimalsReport: []
-  showInEnvironmentReport: 0
+  relatedEnvironmentStat: {fileID: 11400000, guid: 383df069f0b7f294daa25362c963c894,
+    type: 2}
   references:
     version: 1
     00000000:

@@ -1,23 +1,20 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Buff - AnimalAmount")]
-public class BuffAnimalAmount : Buff
+public class BuffAnimalAmount : AreaBuff
 {
     public Animal animal;
     public int change;
-    public override void applied()
+    public override void Applied(Area area, float power)
     {
     }
 
-    public override void idle()
+    public override void Idle(Area area, float power)
     {
-        foreach(Area area in Stage.getAreas())
-        {
-            area.changeSpeciesAmount(animal, change);
-        }
+        area.changeSpeciesAmount(animal, (int)(change * power));
     }
 
-    public override void removed()
+    public override void Removed(Area area, float power)
     {
     }
 }

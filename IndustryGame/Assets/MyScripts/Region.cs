@@ -298,6 +298,22 @@ public class Region
         return center;
     }
     /// <summary>
+    /// 获取洲左端坐标
+    /// </summary>
+    /// <returns></returns>
+    public float GetLeft()
+    {
+        return left.transform.position.x;
+    }
+    /// <summary>
+    /// 获取洲上端坐标
+    /// </summary>
+    /// <returns></returns>
+    public float GetTop()
+    {
+        return top.transform.position.z;
+    }
+    /// <summary>
     /// 获取洲大小
     /// </summary>
     /// <param name="camera"></param>
