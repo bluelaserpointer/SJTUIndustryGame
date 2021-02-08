@@ -38,6 +38,9 @@ public class EventStage
     /// 在以下环境报告内显示<see cref="description"/>，仅该事件阶段已发现且未解决时
     /// </summary>
     public bool showInEnvironmentReport { get { return so.relatedEnvironmentStat != null; } }
+    /// <summary>
+    /// 相关的环境指标(问题)
+    /// </summary>
     public EnvironmentStatType relatedEnvironmentStat {  get { return so.relatedEnvironmentStat; } }
     /// <summary>
     /// 该事件阶段被发现前需要完成的阶段

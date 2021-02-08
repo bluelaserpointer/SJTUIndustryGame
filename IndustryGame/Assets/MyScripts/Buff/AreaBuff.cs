@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public abstract class AreaBuff : ScriptableObject
+[Serializable]
+public abstract class AreaBuff
 {
     public abstract void Applied(Area area, float power);
     public abstract void Idle(Area area, float power);
@@ -16,5 +18,26 @@ public abstract class AreaBuff : ScriptableObject
     public void Removed(Area area)
     {
         Removed(area, 1.0f);
+    }
+    [Serializable]
+    public class ReorderableList : ReorderableListBase<AreaBuff>
+    {
+    }
+    public class BuffAnimalAmount : AreaBuff
+    {
+        public Animal animal;
+        public int change;
+        public override void Applied(Area area, float power)
+        {
+        }
+
+        public override void Idle(Area area, float power)
+        {
+            area.changeSpeciesAmount(animal, (int)(change * power));
+        }
+
+        public override void Removed(Area area, float power)
+        {
+        }
     }
 }

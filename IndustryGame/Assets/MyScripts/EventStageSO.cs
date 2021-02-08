@@ -22,7 +22,8 @@ public class EventStageSO : ScriptableObject
     [Header("出现前需完成的事件阶段")]
     public List<EventStageSO> preFinishEventStages;
     [Header("完成条件")]
-    public ReorderableConditionList successCondition;
+    [Reorderable(generatablesNestClass: typeof(RegionCondition))]
+    public RegionCondition.ReorderableList successCondition;
     [Header("出现在以下动物报告")]
     public List<Animal> showInAnimalsReport;
     [Header("相关的环境指标(所属事件流发生时生效其效果)")]

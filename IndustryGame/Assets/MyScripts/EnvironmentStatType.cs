@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public class EnvironmentStatType : ScriptableObject
     [Header("环境指标说明")]
     public string description;
     [Header("造成的影响")]
-    public List<AreaBuff> buffs;
+    [Reorderable(generatablesNestClass: typeof(AreaBuff))]
+    public AreaBuff.ReorderableList buffs;
 }
 
 public class EnvironmentStat
@@ -29,7 +31,7 @@ public class EnvironmentStat
     /// <summary>
     /// 造成的影响
     /// </summary>
-    public List<AreaBuff> buffs { get { return type.buffs; } }
+    public List<AreaBuff> buffs { get { return type.buffs.List; } }
     /// <summary>
     /// 指标值
     /// </summary>

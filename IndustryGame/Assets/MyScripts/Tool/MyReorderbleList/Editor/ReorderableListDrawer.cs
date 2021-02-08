@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(ReorderableConditionList), true)]
+[CustomPropertyDrawer(typeof(ReorderableAttribute), true)]
 public class ReorderableListDrawer : PropertyDrawer
 {
     private ReorderableList _list;
@@ -26,7 +26,7 @@ public class ReorderableListDrawer : PropertyDrawer
                 EditorGUI.PropertyField(rect, listProperty.GetArrayElementAtIndex(index), true);
                 rect.x += 65;rect.height = 20;
                 string className = listProperty.GetArrayElementAtIndex(index).managedReferenceFullTypename;
-                className = className.Replace("Assembly-CSharp", "");
+                className = className.Replace("Assembly-CSharp ", "");
                 EditorGUI.LabelField(rect, "- " + className);
             };
             _list.elementHeightCallback = delegate (int index)
@@ -36,9 +36,14 @@ public class ReorderableListDrawer : PropertyDrawer
             _list.onAddDropdownCallback = (Rect buttonRect, ReorderableList l) =>
             {
                 var menu = new GenericMenu();
-                foreach(ReorderableConditionList.MenuElement menuElement in ReorderableConditionList.menuElements)
+                Type nestType = (attribute as ReorderableAttribute).generatablesNestClass;
+                foreach (Type optionClass in nestType.GetNestedTypes())
                 {
-                    menu.AddItem(new GUIContent(menuElement.text), false, clickHandler, menuElement.supplier.Invoke());
+                    if (!optionClass.IsAbstract && optionClass.IsSubclassOf(nestType))
+                    {
+                        menu.AddItem(new GUIContent(optionClass.Name),
+                            false, clickHandler, Activator.CreateInstance(optionClass));
+                    }
                 }
                 menu.ShowAsContext();
             };

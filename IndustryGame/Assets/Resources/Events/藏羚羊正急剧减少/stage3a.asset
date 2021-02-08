@@ -27,7 +27,7 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: CheckRegionBuildingCount, ns: , asm: Assembly-CSharp}
+      type: {class: RegionCondition/CheckRegionBuildingCount, ns: , asm: Assembly-CSharp}
       data:
         building: {fileID: 11400000, guid: f7015e49155e1b648be05e243efa7394, type: 2}
         value: 0

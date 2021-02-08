@@ -22,16 +22,14 @@ MonoBehaviour:
   successCondition:
     List:
     - id: 0
-  buffBeforeFinish: {fileID: 0}
-  buffAfterFinish: {fileID: 0}
   showInAnimalsReport: []
-  showInEnvironmentReport: 0
+  relatedEnvironmentStat: {fileID: 0}
   references:
     version: 1
     00000000:
-      type: {class: CheckRegionAnimalCount, ns: , asm: Assembly-CSharp}
+      type: {class: RegionCondition/CheckRegionAnimalCount, ns: , asm: Assembly-CSharp}
       data:
         type: 1
         animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
-        value: 1
-        compareType: 1
+        value: 0
+        compareType: 0
