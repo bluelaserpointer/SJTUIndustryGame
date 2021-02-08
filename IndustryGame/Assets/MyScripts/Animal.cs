@@ -1,13 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
+public enum SpeciesDangerType
+{
+    [Description("正常")]
+    Normal,
+    [Description("濒危")]
+    Danger,
+    [Description("极度濒危")]
+    VeryDanger,
+}
+
+/// <summary>
+/// 物种
+/// </summary>
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Animal")]
 public class Animal : ScriptableObject
 {
+    /// <summary>
+    /// 物种名称
+    /// </summary>
     public string animalName;
+    /// <summary>
+    /// 物种描述
+    /// </summary>
     [TextArea]
     public string description;
+    /// <summary>
+    /// 物种首要栖息环境
+    /// </summary>
     public EnvironmentType bestEnvironmentType;
     [Serializable]
     public struct EnvironmentPreference
@@ -15,28 +38,66 @@ public class Animal : ScriptableObject
         public EnvironmentType environment;
         public double preference;
     }
+    /// <summary>
+    /// 物种各环境适应度
+    /// </summary>
     public List<EnvironmentPreference> environmentPreferences;
+    /// <summary>
+    /// 物种模型
+    /// </summary>
     public GameObject model;
+    /// <summary>
+    /// 物种基础每日增加
+    /// </summary>
     [Min(0)]
     public int reproductionSpeed;
-    List<Animal> foods;
+    /// <summary>
+    /// 物种猎食对象
+    /// </summary>
+    public List<Animal> foods;
+    /// <summary>
+    /// 物种生存所需能量
+    /// </summary>
     [Min(0)]
     public int energyNeeds;
+    /// <summary>
+    /// 物种被食提供能量
+    /// </summary>
     [Min(0)]
     public int energyAsFood;
-    public double minTempreture, maxTempreture;
+    /// <summary>
+    /// 最低适应温度
+    /// </summary>
+    public double minTempreture;
+    /// <summary>
+    /// 最高适应温度
+    /// </summary>
+    public double maxTempreture;
+    /// <summary>
+    /// 迁徙规模上限
+    /// </summary>
     [Min(0)]
     public int migrateLimit;
 
+    /// <summary>
+    /// 物种生活音效
+    /// </summary>
     public AudioClipList sfxAudio;
 
+    /// <summary>
+    /// 猜测: 危险级别区间大小
+    /// </summary>
     private List<int> dangerLimits;
+    /// <summary>
+    /// 猜测: 危险级别划分数
+    /// </summary>
     public int mostDangerLimit;
 
-    private void Start() {
+    private void Start()
+    {
         int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
         int averageAmount = (int)((float)mostDangerLimit / (float)mostDangerType);
-        for(int i = 0; i <= mostDangerType; i++)
+        for (int i = 0; i <= mostDangerType; i++)
         {
             dangerLimits[mostDangerType - i] = i * averageAmount;
         }
@@ -88,12 +149,12 @@ public class Animal : ScriptableObject
     {
         double dislikeness = 0.0;
         //food affection
-        if(energyNeeds > 0)
+        if (energyNeeds > 0)
             dislikeness += 1.0 - (double)area.GetProvidableFoodEnergy(foods, energyNeeds) / (amount * energyNeeds);
         //environmentType affection
-        foreach(EnvironmentPreference environmentAndPreference in environmentPreferences)
+        foreach (EnvironmentPreference environmentAndPreference in environmentPreferences)
         {
-            if(environmentAndPreference.environment.Equals(area.environmentType))
+            if (environmentAndPreference.environment.Equals(area.environmentType))
             {
                 dislikeness -= environmentAndPreference.preference;
                 break;
@@ -106,9 +167,9 @@ public class Animal : ScriptableObject
     public SpeciesDangerType getDangerType(int amount)
     {
         int dangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
-        for(int i = 0; i < dangerLimits.Count; i++)
+        for (int i = 0; i < dangerLimits.Count; i++)
         {
-            if(amount >= dangerLimits[i])
+            if (amount >= dangerLimits[i])
             {
                 dangerType = i;
                 break;

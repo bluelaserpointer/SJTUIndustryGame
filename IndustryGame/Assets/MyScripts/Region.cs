@@ -2,8 +2,14 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// 洲
+/// </summary>
 public class Region
 {
+    /// <summary>
+    /// 洲名称
+    /// </summary>
     public readonly string name;
     private readonly int regionId;
     private List<Area> areas = new List<Area>();
@@ -26,6 +32,9 @@ public class Region
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.pickRandomOne();
     }
+    /// <summary>
+    /// 每帧流程
+    /// </summary>
     public void FrameIdle()
     {
         foreach(var pair in lastHighLightedCellAndTime.ToList())
@@ -43,7 +52,6 @@ public class Region
         if (baseArea != null)
         {
             reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
-            //InGameLog.AddLog("reservate: " + reservationProgress);
             Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
             while (reservationProgress >= reservationTime + concernedAnimals.Count * 0.2f)
             {
@@ -68,11 +76,11 @@ public class Region
                         reservationCompleted();
                     } else
                     {
+                        //reservate position debug
+                        InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " reservate pos: " + cell.Position.x + ", " + cell.Position.z);
                         cell.HighLighted = true;
                         lastHighLightedCells.Push(cell);
                     }
-                    //debug
-                    //InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " step: x " + cell.coordinates.X + " z " + cell.coordinates.Z);
                 }
             }
             if(lastHighLightedCells.Count > 0)
@@ -81,7 +89,10 @@ public class Region
             }
         }
     }
-    public void dayIdle()
+    /// <summary>
+    /// 每日流程
+    /// </summary>
+    public void DayIdle()
     {
         if (regionId == -1)
             return;
@@ -91,21 +102,27 @@ public class Region
         }
         foreach (MainEvent anEvent in includedEvents)
         {
-            anEvent.dayIdle();
+            anEvent.DayIdle();
         }
     }
+    /// <summary>
+    /// 结束调查
+    /// </summary>
     private void reservationCompleted()
     {
         reservatedAreaCount = 0;
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         areas.ForEach(area => area.addReservation());
     }
+    /// <summary>
+    /// 更新洲濒危动物列表(每当一个事件流开始/结束时被调用)
+    /// </summary>
     public void UpdateConcernedSpecies()
     {
         concernedAnimals.Clear();
         foreach (MainEvent mainEvent in includedEvents)
         {
-            if (mainEvent.isAppeared())
+            if (mainEvent.IsAppeared() && !mainEvent.IsFinished())
             {
                 foreach (Animal animal in mainEvent.concernedAnimals)
                 {
@@ -116,18 +133,34 @@ public class Region
         }
         Stage.UpdateConcernedSpecies();
     }
+    /// <summary>
+    /// 获取洲濒危动物列表
+    /// </summary>
+    /// <returns></returns>
     public List<Animal> GetConcernedSpecies()
     {
         return concernedAnimals;
     }
+    /// <summary>
+    /// 获取最新统计内指定动物数量
+    /// </summary>
+    /// <param name="animal"></param>
+    /// <returns></returns>
     public int? GetSpeciesAmountInLatestRecord(Animal animal)
     {
         return animalAmountsRecords.ContainsKey(animal) ? animalAmountsRecords[animal].GetAmountInLatestRecord() : null;
     }
+    /// <summary>
+    /// 获取最新统计内指定动物增减量
+    /// </summary>
     public int? GetSpeciesChangeInLatestRecord(Animal animal)
     {
         return animalAmountsRecords.ContainsKey(animal) ? animalAmountsRecords[animal].GetChangeInLatestRecord() : null;
     }
+    /// <summary>
+    /// 添加地区
+    /// </summary>
+    /// <param name="area"></param>
     public void AddArea(Area area)
     {
         if (area == null)
@@ -155,24 +188,45 @@ public class Region
         }
         areas.Add(area);
     }
+    /// <summary>
+    /// 设置基地地区
+    /// </summary>
+    /// <param name="area"></param>
     public void SetBaseArea(Area area)
     {
         baseArea = area;
         area.markBasement.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
     }
+    /// <summary>
+    /// 获取基地地区
+    /// </summary>
+    /// <returns></returns>
     public Area GetBaseArea()
     {
         return baseArea;
     }
+    /// <summary>
+    /// 获取洲序号
+    /// </summary>
+    /// <returns></returns>
     public int GetRegionId()
     {
         return regionId;
     }
+    /// <summary>
+    /// 获取所含地区
+    /// </summary>
+    /// <returns></returns>
     public List<Area> GetAreas()
     {
         return areas;
     }
+    /// <summary>
+    /// 统计指定环境种类数
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public int CountEnvironmentType(EnvironmentType type)
     {
         int count = 0;
@@ -183,44 +237,97 @@ public class Region
         }
         return count;
     }
+    /// <summary>
+    /// 添加事件流
+    /// </summary>
+    /// <param name="anEvent"></param>
     public void AddEvent(MainEvent anEvent) {
         includedEvents.Add(anEvent);
     }
+    /// <summary>
+    /// 获取事件流
+    /// </summary>
+    /// <returns></returns>
     public List<MainEvent> GetEvents()
     {
         return includedEvents;
     }
+    /// <summary>
+    /// 获取已揭开事件流
+    /// </summary>
+    /// <returns></returns>
     public List<MainEvent> GetRevealedEvents()
     {
-        return includedEvents.FindAll(anEvent => anEvent.isAppeared());
+        return includedEvents.FindAll(anEvent => anEvent.IsAppeared());
     }
+    /// <summary>
+    /// 统计指定类型已建设建筑物数量
+    /// </summary>
+    /// <param name="buildingInfo"></param>
+    /// <returns></returns>
     public int CountConstructedBuilding(BuildingInfo buildingInfo)
     {
         int count = 0;
         areas.ForEach(area => count += area.CountConstructedBuilding(buildingInfo));
         return count;
     }
+    /// <summary>
+    /// 统计指定类型建筑物数量
+    /// </summary>
+    /// <param name="buildingInfo"></param>
+    /// <returns></returns>
     public int CountBuilding(BuildingInfo buildingInfo)
     {
         int count = 0;
         areas.ForEach(area => count += area.CountBuilding(buildingInfo));
         return count;
     }
+    /// <summary>
+    /// 重新计算洲中心坐标
+    /// </summary>
     public void CalculateCenter()
     {
-        this.center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
+        center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
     }
-
+    /// <summary>
+    /// 获取洲中心坐标
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetCenter()
     {
         return center;
     }
+    /// <summary>
+    /// 获取洲左端坐标
+    /// </summary>
+    /// <returns></returns>
+    public float GetLeft()
+    {
+        return left.transform.position.x;
+    }
+    /// <summary>
+    /// 获取洲上端坐标
+    /// </summary>
+    /// <returns></returns>
+    public float GetTop()
+    {
+        return top.transform.position.z;
+    }
+    /// <summary>
+    /// 获取洲大小
+    /// </summary>
+    /// <param name="camera"></param>
+    /// <returns></returns>
     public float GetSizeInCamera(Camera camera)
     {
         float xSize = Mathf.Abs(camera.WorldToViewportPoint(left.transform.position).x - camera.WorldToViewportPoint(right.transform.position).x);
         float ySize = Mathf.Abs(camera.WorldToViewportPoint(top.transform.position).y - camera.WorldToViewportPoint(bottom.transform.position).y);
         return Mathf.Max(xSize, ySize);
     }
+    /// <summary>
+    /// 获取洲调查每日进度
+    /// </summary>
+    /// <returns></returns>
     public float GetReservationPower()
     {
         float power = baseReservationPower; ;
@@ -230,12 +337,26 @@ public class Region
         }
         return power;
     }
+    /// <summary>
+    /// 获取州内所有专家
+    /// </summary>
+    /// <returns></returns>
     public List<Specialist> GetSpecialistsInRegion()
     {
         return Stage.GetSpecialists().FindAll(specialist =>
         {
-            Area area = specialist.getCurrentArea();
+            Area area = specialist.GetCurrentArea();
             return area != null && area.region.Equals(this);
         });
+    }
+    /// <summary>
+    /// 获取洲内环境相关报告
+    /// </summary>
+    /// <returns></returns>
+    public List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
+    {
+        List<EventStage> eventStages = new List<EventStage>();
+        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToEnvironment()));
+        return eventStages;
     }
 }

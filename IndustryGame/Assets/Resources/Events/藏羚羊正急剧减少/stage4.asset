@@ -12,15 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f865e30df96441446b67ccfd0ff71495, type: 3}
   m_Name: stage4
   m_EditorClassIdentifier: 
-  infoName: "\u7B49\u5F85\u5F97\u51FA\u7ED3\u679C"
-  description: 
-  descriptionAfterFinish: 
+  infoName: 
+  description: "\u786E\u8BA4\u6570\u91CF\u6062\u590D"
+  descriptionAfterFinish: "\u85CF\u7F9A\u7F8A\u589E\u52A0\u6570\u5DF2\u786E\u8BA4\u5230\u6062\u590D"
   contribution: 0
-  showInAnimalsReport: []
-  showInEnvironmentReport: 0
   preFinishEventStages:
   - {fileID: 11400000, guid: fd93f650e48081e498b2bae1d37d2206, type: 2}
   - {fileID: 11400000, guid: e953e1676d255994ba08e1c3cd31493b, type: 2}
-  finishCondition: {fileID: 0}
+  successCondition:
+    List:
+    - id: 0
   buffBeforeFinish: {fileID: 0}
   buffAfterFinish: {fileID: 0}
+  showInAnimalsReport: []
+  showInEnvironmentReport: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: CheckRegionAnimalCount, ns: , asm: Assembly-CSharp}
+      data:
+        type: 1
+        animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
+        value: 1
+        compareType: 1

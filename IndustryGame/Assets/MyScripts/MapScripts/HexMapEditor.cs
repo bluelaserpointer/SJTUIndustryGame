@@ -205,6 +205,7 @@ public class HexMapEditor : MonoBehaviour {
 
 	void EditCell (HexCell cell) {
 		if (cell) {
+			cell.HighLighted = highLighted;
 			if (activeLandformIndex > 0)
 			{
 				ApplyLandform(cell);
@@ -214,7 +215,7 @@ public class HexMapEditor : MonoBehaviour {
 			//{
 			//cell.RegionId = activeregionId;
 			//}
-			cell.HighLighted = highLighted;
+			
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
 			}
@@ -280,8 +281,7 @@ public class HexMapEditor : MonoBehaviour {
 		cell.PlantLevel = 0;
 		cell.UrbanLevel = 0;
 		cell.FarmLevel = 0;
-		cell.TerrainTypeIndex = activeLandformIndex-1; //改变地貌颜色
-
+		cell.TerrainTypeIndex = (activeLandformIndex-1); //改变地貌颜色
 
 		switch (activeLandformIndex-1)
 		{
@@ -328,5 +328,6 @@ public class HexMapEditor : MonoBehaviour {
 				break;
 
 		}
+
 	}
 }

@@ -12,14 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f865e30df96441446b67ccfd0ff71495, type: 3}
   m_Name: stage3a
   m_EditorClassIdentifier: 
-  infoName: "\u5783\u573E"
-  description: 
-  descriptionAfterFinish: 
+  infoName: 
+  description: "\u9700\u8981\u5EFA\u8BBE\u4E00\u4E2A\u73AF\u4FDD\u9A7F\u7AD9"
+  descriptionAfterFinish: "\u73AF\u4FDD\u9A7F\u7AD9\u5EFA\u8BBE\u5B8C\u6BD5"
   contribution: 0
-  showInAnimalsReport: []
-  showInEnvironmentReport: 0
   preFinishEventStages:
   - {fileID: 11400000, guid: 4cd21fed922f5ed48bec8e43611f2b1a, type: 2}
-  finishCondition: {fileID: 0}
-  buffBeforeFinish: {fileID: 0}
-  buffAfterFinish: {fileID: 0}
+  successCondition:
+    List:
+    - id: 0
+  showInAnimalsReport: []
+  relatedEnvironmentStat: {fileID: 11400000, guid: 383df069f0b7f294daa25362c963c894,
+    type: 2}
+  references:
+    version: 1
+    00000000:
+      type: {class: CheckRegionBuildingCount, ns: , asm: Assembly-CSharp}
+      data:
+        building: {fileID: 11400000, guid: f7015e49155e1b648be05e243efa7394, type: 2}
+        value: 0
+        compareType: 0

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 事件流种类固定信息
+/// </summary>
 [CreateAssetMenu(menuName = "Add ScriptableObjects/Event")]
 public class MainEventSO : ScriptableObject
 {
@@ -21,7 +24,7 @@ public class MainEventSO : ScriptableObject
     [Range(0, 1)]
     private float generateChanceOneDay;
     [SerializeField]
-    private Condition generateCondition;
+    private RegionCondition generateCondition;
 
     [Serializable]
     public class AreaRequirement
@@ -47,21 +50,26 @@ public class MainEventSO : ScriptableObject
     public List<AreaAction> includedAreaActions = new List<AreaAction>();
 
     private MainEventSO() { } //prevent instantiate from code
-    public bool CanGenerate()
-    {
-        return generateCondition == null || generateCondition.judge();
-    }
+    /// <summary>
+    /// 判断指定<see cref="Region"/>是否满足该事件流生成条件
+    /// </summary>
     public bool CanGenrateInRegion(Region region)
     {
-        return areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
+        return (generateCondition == null || generateCondition.Judge(region)) && areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
     }
+    /// <summary>
+    /// 每日流程，概率满足时寻找条件满足的<see cref="Region"/>并生成该事件流
+    /// </summary>
     public void DayIdle()
     {
-        if (!onlyGenerateAtBeginning && CanGenerate() && generateChanceOneDay > (float)new System.Random().NextDouble())
+        if (!onlyGenerateAtBeginning && generateChanceOneDay > (float)new System.Random().NextDouble())
         {
             TryGenerate();
         }
     }
+    /// <summary>
+    /// 尝试寻找一个条件满足的<see cref="Region"/>并生成该事件流
+    /// </summary>
     public MainEvent TryGenerate()
     {
         MainEvent mainEvent = null;
@@ -69,7 +77,7 @@ public class MainEventSO : ScriptableObject
         if (regions.Count > 0)
         {
             Region region = regions[UnityEngine.Random.Range(0, regions.Count)];
-            region.AddEvent(mainEvent = new MainEvent(this, region));
+            mainEvent = new MainEvent(this, region);
         }
         else
         {
