@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f865e30df96441446b67ccfd0ff71495, type: 3}
   m_Name: stage1
   m_EditorClassIdentifier: 
-  infoName: 
+  infoName: "\u57FA\u5730\u5EFA\u9020"
   description: "\u5148\u5EFA\u9020\u4E00\u4E2A\u57FA\u5730"
   descriptionAfterFinish: "\u57FA\u5730\u5EFA\u8BBE\u5B8C\u6BD5\uFF0C\u8C03\u67E5\u8FDB\u884C\u4E2D"
   contribution: 0

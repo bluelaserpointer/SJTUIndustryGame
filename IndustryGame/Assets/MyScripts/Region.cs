@@ -30,7 +30,6 @@ public class Region
     private Area left, right, bottom, top;
     private Vector3 center;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
-    private Dictionary<Animal, AmountChangeRecords> animalAmountsRecords = new Dictionary<Animal, AmountChangeRecords>();
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
 
@@ -79,12 +78,12 @@ public class Region
                     }
                     if (cell == null)
                     {
-                        //InGameLog.AddLog("an area is missing", Color.red);
+                        InGameLog.AddLog("an area is missing", Color.red);
                         reservationCompleted();
                     } else
                     {
-                        //reservate position debug
-                        InGameLog.AddLog("base x z: " + baseArea.GetHexCell().coordinates.X + ", " + baseArea.GetHexCell().coordinates.Z + " reservate pos: " + cell.Position.x + ", " + cell.Position.z);
+                        //reservate progress debug
+                        InGameLog.AddLog("reservate: " + reservatedAreaCount + "/" + areas.Count);
                         cell.HighLighted = true;
                         lastHighLightedCells.Push(cell);
                     }
@@ -117,7 +116,7 @@ public class Region
     /// </summary>
     private void reservationCompleted()
     {
-        reservatedAreaCount = 0;
+        reservatedAreaCount = 1; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         areas.ForEach(area => area.addReservation());
     }
@@ -155,14 +154,36 @@ public class Region
     /// <returns></returns>
     public int? GetSpeciesAmountInLatestRecord(Animal animal)
     {
-        return animalAmountsRecords.ContainsKey(animal) ? animalAmountsRecords[animal].GetAmountInLatestRecord() : null;
+        int sum = 0;
+        bool hasRecord = false;
+        foreach(Area area in areas)
+        {
+            int? value = area.GetSpeciesAmountInLatestRecord(animal);
+            if(value.HasValue)
+            {
+                hasRecord = true;
+                sum += value.Value;
+            }
+        }
+        return hasRecord ? (int?)sum : null;
     }
     /// <summary>
     /// 获取最新统计内指定动物增减量
     /// </summary>
     public int? GetSpeciesChangeInLatestRecord(Animal animal)
     {
-        return animalAmountsRecords.ContainsKey(animal) ? animalAmountsRecords[animal].GetChangeInLatestRecord() : null;
+        int sum = 0;
+        bool hasRecord = false;
+        foreach (Area area in areas)
+        {
+            int? value = area.GetSpeciesChangeInLatestRecord(animal);
+            if (value.HasValue)
+            {
+                hasRecord = true;
+                sum += value.Value;
+            }
+        }
+        return hasRecord ? (int?)sum : null;
     }
     /// <summary>
     /// 添加地区
@@ -204,6 +225,7 @@ public class Region
         baseArea = area;
         area.markBasement.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
+        reservatedAreaCount = 1; //base area is always reservated
     }
     /// <summary>
     /// 获取基地地区
