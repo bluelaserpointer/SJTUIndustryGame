@@ -2821,7 +2821,7 @@ PrefabInstance:
     - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: orthographic size
-      value: 270
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
@@ -2833,6 +2833,11 @@ PrefabInstance:
       propertyPath: AreaDetailsHUD
       value: 
       objectReference: {fileID: 7724855537089835243}
+    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: worldOrthoSize
+      value: 130
+      objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: regionObserveSizeSpeed

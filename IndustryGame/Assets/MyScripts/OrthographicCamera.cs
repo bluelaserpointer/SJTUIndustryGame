@@ -355,7 +355,7 @@ public class OrthographicCamera : MonoBehaviour
         float newOrtho = newYUnits / 2.0f;
  
         // 7: Apply
-        return newOrtho + 100;
+        return newOrtho;
     }
 
     /// <summary>
