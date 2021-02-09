@@ -314,38 +314,21 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-	public int BuildingIndex
+	public GameObject BuildingPrefab
 	{
 		get
 		{
-			return buildingIndex;
+			return buildingPrefab;
 		}
 		set
 		{
-			if (buildingIndex != value)
+			if (buildingPrefab != value)
 			{
-				buildingIndex = value;
+				buildingPrefab = value;
 				RefreshSelfOnly();
 			}
 		}
 	}
-
-	public int BuildingLevel
-	{
-		get
-		{
-			return buildingLevel;
-		}
-		set
-		{
-			if (buildingLevel != value)
-			{
-				buildingLevel = value;
-				RefreshSelfOnly();
-			}
-		}
-	}
-
 
 	int regionId = -2; // -1,0,1,2
 	int terrainTypeIndex;
@@ -359,7 +342,7 @@ public class HexCell : MonoBehaviour {
 	int urbanLevel, farmLevel, plantLevel,rainLevel;
 
 	int specialIndex;
-	int buildingIndex,buildingLevel;
+	GameObject buildingPrefab;
 
 	bool walled,expert;
 

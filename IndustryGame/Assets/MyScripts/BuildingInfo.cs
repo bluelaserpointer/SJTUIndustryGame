@@ -7,7 +7,7 @@ public class BuildingInfo : ScriptableObject
     public string buildingName;
     [TextArea]
     public string description;
-    public int modelID;
+    public List<GameObject> constructionModels;
     public Sprite icon;
     public int moneyCost, timeCost;
     [Header("禁止玩家建造")]
@@ -48,7 +48,7 @@ public class Building
     private int constructionProgress;
 
     public List<AreaBuff> buffs { get { return info.buffs.List; }}
-
+    public List<GameObject> constructionModels { get { return info.constructionModels; } }
     public Building(BuildingInfo info, Area area)
     {
         this.info = info;
@@ -72,8 +72,8 @@ public class Building
                 }
             } else
             {
-                area.GetHexCell().BuildingIndex = info.modelID;
-                area.GetHexCell().BuildingLevel = (int)(3 * ((float)constructionProgress / info.timeCost));
+                if(constructionModels.Count > 0)
+                    area.GetHexCell().BuildingPrefab = constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))];
             }
         }
     }
@@ -81,8 +81,8 @@ public class Building
     {
         constructionProgress = info.timeCost;
         buffs.ForEach(buff => buff.Applied(area));
-        area.GetHexCell().BuildingIndex = info.modelID;
-        area.GetHexCell().BuildingLevel = 3;
+        if (constructionModels.Count > 0)
+            area.GetHexCell().BuildingPrefab = constructionModels[constructionModels.Count - 1];
     }
     public bool IsConstructed()
     {

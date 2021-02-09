@@ -242,8 +242,8 @@ public class HexMapEditor : MonoBehaviour {
 			{
 				cell.RainLevel = activeRainLevel;
 			}
-			cell.BuildingIndex = buildingIndex;
-			cell.BuildingLevel = buildingLevel;
+			//cell.BuildingIndex = buildingIndex;
+			//cell.BuildingLevel = buildingLevel;
 
 			if (riverMode == OptionalToggle.No) {
 				cell.RemoveRiver();
