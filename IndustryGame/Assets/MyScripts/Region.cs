@@ -305,6 +305,16 @@ public class Region
     {
         return left.transform.position.x;
     }
+
+    /// <summary>
+    /// 获取洲右端坐标
+    /// </summary>
+    /// <returns></returns>
+    public float GetRight()
+    {
+        return right.transform.position.x;
+    }
+
     /// <summary>
     /// 获取洲上端坐标
     /// </summary>
@@ -313,6 +323,17 @@ public class Region
     {
         return top.transform.position.z;
     }
+
+    /// <summary>
+    /// 获取洲下端坐标
+    /// </summary>
+    /// <returns></returns>
+    public float GetBottom()
+    {
+        return bottom.transform.position.z;
+    }
+
+
     /// <summary>
     /// 获取洲大小
     /// </summary>

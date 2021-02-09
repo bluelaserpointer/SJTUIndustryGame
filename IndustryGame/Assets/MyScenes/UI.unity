@@ -1428,7 +1428,7 @@ MonoBehaviour:
   description: 
   definedEvents:
   - {fileID: 11400000, guid: 2120b392985132d44b52d0bfd44d4c72, type: 2}
-  stageMoney: 10000
+  initialMoney: 0
   animalInitialAmounts:
   - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
     amount: 10000
@@ -2818,11 +2818,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: orthographic size
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: positionSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: AreaDetailsHUD
       value: 
       objectReference: {fileID: 7724855537089835243}
+    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: regionObserveSizeSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: regionObserveTranSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: areaToRegionSpeedChangeStep
+      value: 0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: areaToRegionSpeedChangeOffset
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094655, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: m_RootOrder
