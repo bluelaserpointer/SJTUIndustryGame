@@ -45,6 +45,10 @@ public abstract class RegionCondition
                     record = null;
                     break;
             }
+            if (record != null)
+                Debug.Log(animal.animalName + ": " + record.Value);
+            else
+                Debug.Log("waiting for first record...");
             return record == null ? false : NumCompare.Judge(compareType, record.Value, value);
         }
     }
