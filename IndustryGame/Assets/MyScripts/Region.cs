@@ -11,11 +11,18 @@ public class Region
     /// 洲名称
     /// </summary>
     public readonly string name;
-    private readonly int regionId;
-    private List<Area> areas = new List<Area>();
-    private List<MainEvent> includedEvents = new List<MainEvent>();
-    private List<Animal> concernedAnimals = new List<Animal>();
-    private HexSpiral hexSpiral = new HexSpiral();
+    /// <summary>
+    /// 洲序号
+    /// </summary>
+    public readonly int regionId;
+    /// <summary>
+    /// 是否为海洋
+    /// </summary>
+    public bool IsOcean { get { return regionId == -1; } }
+    private readonly List<Area> areas = new List<Area>();
+    private readonly List<MainEvent> includedEvents = new List<MainEvent>();
+    private readonly List<Animal> concernedAnimals = new List<Animal>();
+    private readonly HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
     private float reservationTime = 1;
     private float baseReservationPower = 1f, reservationProgress;
