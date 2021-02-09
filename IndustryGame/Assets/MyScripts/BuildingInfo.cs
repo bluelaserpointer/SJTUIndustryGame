@@ -7,7 +7,7 @@ public class BuildingInfo : ScriptableObject
     public string buildingName;
     [TextArea]
     public string description;
-    public GameObject model;
+    public int modelID;
     public Sprite icon;
     public int moneyCost, timeCost;
     [Header("禁止玩家建造")]
@@ -27,8 +27,13 @@ public class BuildingInfo : ScriptableObject
     public List<BuildingInfo> preFinishBuildings;
     public List<AreaAction> preFinishAreaActions;
     [Header("建筑物效果")]
-    public List<AreaBuff> buffs;
+    [Reorderable(generatablesNestClass: typeof(AreaBuff))]
+    public AreaBuff.ReorderableList buffs;
     
+    public static BuildingInfo[] GetAllTypes()
+    {
+        return ResourcesLoader.GetAllBuildingTypes();
+    }
     public bool CanConstructIn(Area area)
     {
         return !preventPlayerConstruct && area.CountBuilding(this) < areaLimit && (!hasRegionLimit || area.region.CountBuilding(this) < regionLimit)
@@ -42,7 +47,7 @@ public class Building
     public readonly Area area;
     private int constructionProgress;
 
-    public List<AreaBuff> buffs { get {return info.buffs;}}
+    public List<AreaBuff> buffs { get { return info.buffs.List; }}
 
     public Building(BuildingInfo info, Area area)
     {
@@ -65,6 +70,10 @@ public class Building
                 {
                     area.region.SetBaseArea(area);
                 }
+            } else
+            {
+                area.GetHexCell().BuildingIndex = info.modelID;
+                area.GetHexCell().BuildingLevel = (int)(3 * ((float)constructionProgress / info.timeCost));
             }
         }
     }
@@ -72,6 +81,8 @@ public class Building
     {
         constructionProgress = info.timeCost;
         buffs.ForEach(buff => buff.Applied(area));
+        area.GetHexCell().BuildingIndex = info.modelID;
+        area.GetHexCell().BuildingLevel = 3;
     }
     public bool IsConstructed()
     {

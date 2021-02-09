@@ -13,6 +13,11 @@ public class EnvironmentStatType : ScriptableObject
     [Header("造成的影响")]
     [Reorderable(generatablesNestClass: typeof(AreaBuff))]
     public AreaBuff.ReorderableList buffs;
+
+    public static EnvironmentStatType[] GetAllTypes()
+    {
+        return ResourcesLoader.GetAllEnvironmentStatTypes();
+    }
 }
 
 public class EnvironmentStat
