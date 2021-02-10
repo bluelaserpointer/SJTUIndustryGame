@@ -417,7 +417,7 @@ public class Area : MonoBehaviour
     {
         if (actionProgressSlider.gameObject.activeSelf)
         {
-            if (currentSpecialist.HasCurrentAction())
+            if (currentSpecialist != null && currentSpecialist.HasCurrentAction())
             {
                 actionProgressSlider.value = currentSpecialist.GetActionProgressRate();
             }
