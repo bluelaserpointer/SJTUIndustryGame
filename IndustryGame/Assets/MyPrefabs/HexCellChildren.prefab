@@ -320,7 +320,7 @@ PrefabInstance:
     - target: {fileID: 2606266701649486849, guid: 84790c9d6f6b65e40a290a4dbeaee710,
         type: 3}
       propertyPath: m_Name
-      value: ConstructionProgressSlider
+      value: ConstructionProgressBar
       objectReference: {fileID: 0}
     - target: {fileID: 5838762788116816985, guid: 84790c9d6f6b65e40a290a4dbeaee710,
         type: 3}
@@ -563,7 +563,7 @@ PrefabInstance:
     - target: {fileID: 2606266701649486849, guid: 84790c9d6f6b65e40a290a4dbeaee710,
         type: 3}
       propertyPath: m_Name
-      value: ActionProgressSlider
+      value: ActionProgressBar
       objectReference: {fileID: 0}
     - target: {fileID: 5838762788116816985, guid: 84790c9d6f6b65e40a290a4dbeaee710,
         type: 3}
