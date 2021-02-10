@@ -403,7 +403,7 @@ public class Area : MonoBehaviour
     }
 
     // 进度条显示
-    public Slider actionProgressSlider, constructionProgressSlider;
+    [SerializeField] private Slider actionProgressSlider, constructionProgressSlider;
     private Specialist currentSpecialist;
 
     public void StartProgressSlider(Specialist specialist)
