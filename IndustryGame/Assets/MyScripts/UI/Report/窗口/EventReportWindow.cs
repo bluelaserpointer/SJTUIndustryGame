@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EventReportWindow : MonoBehaviour, BasicReportWindow
 {
@@ -8,6 +9,8 @@ public class EventReportWindow : MonoBehaviour, BasicReportWindow
     public GameObject EventReportList;
     [Header("小报告Prefab")]
     public GameObject SingleEventReportPrefab;      //报告Prefab，三个都应该是一样的
+    [Header("Region的选择Dropdown")]
+    public Dropdown RegionSelection;
     private List<GameObject> EventReports = new List<GameObject>();
 
     public void ClearList()
@@ -18,7 +21,7 @@ public class EventReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-        foreach (MainEvent mainEvent in Stage.GetEvents())
+        foreach (MainEvent mainEvent in Stage.GetRegions()[RegionSelection.value].GetRevealedEvents())
         {
             GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
             clone.GetComponent<SingleEventReport>().ShowSingleEvent(mainEvent);
@@ -28,17 +31,13 @@ public class EventReportWindow : MonoBehaviour, BasicReportWindow
 
     void Start()
     {
+        Helper.RefreshRegionDropdown(RegionSelection);
         GenerateList();
     }
 
     void Update()
     {
-        if (Stage.GetEvents() != null)
-        {
-            foreach (MainEvent mainEvent in Stage.GetEvents())
-            {
-                Debug.Log("Event - " + mainEvent.name);
-            }
-        }
+        Helper.RefreshRegionDropdown(RegionSelection);
     }
+
 }

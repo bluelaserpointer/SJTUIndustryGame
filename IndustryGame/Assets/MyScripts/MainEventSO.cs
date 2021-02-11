@@ -55,7 +55,7 @@ public class MainEventSO : ScriptableObject
     /// </summary>
     public bool CanGenrateInRegion(Region region)
     {
-        return (generateCondition == null || generateCondition.Judge(region)) && areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
+        return !region.IsOcean && (generateCondition == null || generateCondition.Judge(region)) && areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
     }
     /// <summary>
     /// 每日流程，概率满足时寻找条件满足的<see cref="Region"/>并生成该事件流
@@ -77,7 +77,7 @@ public class MainEventSO : ScriptableObject
         if (regions.Count > 0)
         {
             Region region = regions[UnityEngine.Random.Range(0, regions.Count)];
-            region.AddEvent(mainEvent = new MainEvent(this, region));
+            mainEvent = new MainEvent(this, region);
         }
         else
         {

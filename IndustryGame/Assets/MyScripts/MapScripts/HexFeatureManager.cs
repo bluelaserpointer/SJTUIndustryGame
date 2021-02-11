@@ -325,9 +325,9 @@ public class HexFeatureManager : MonoBehaviour {
 	}
 
 
-	public void AddBuilding(HexCell cell, Vector3 position,int index,int level)//index:1~5 level 1~3
+	public void AddBuilding(HexCell cell, Vector3 position, GameObject buildingPrefab)//index:1~5 level 1~3
 	{
-		Transform instance = Instantiate(buildings[index].prefabs[level-1]);
+		Transform instance = Instantiate(buildingPrefab).transform;
 		position.y += instance.localScale.y * 0.5f;
 		instance.localPosition = HexMetrics.Perturb(position);
 		instance.localRotation = Quaternion.Euler(0f, 360f, 0f);

@@ -18,7 +18,6 @@ MonoBehaviour:
   hideLevel: 0
   onlyGenerateAtBeginning: 1
   generateChanceOneDay: 1
-  startCondition: {fileID: 0}
   areaRequirements: []
   concernedAnimals:
   - {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}

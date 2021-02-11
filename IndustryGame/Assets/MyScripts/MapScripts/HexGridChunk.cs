@@ -76,9 +76,9 @@ public class HexGridChunk : MonoBehaviour {
 		{
 			features.AddExpert(cell, cell.Position);
 		}
-		if (cell.BuildingIndex >= 0 && cell.BuildingLevel>0)
+		if (cell.BuildingPrefab != null)
 		{
-			features.AddBuilding(cell, cell.Position, cell.BuildingIndex, cell.BuildingLevel);
+			features.AddBuilding(cell, cell.Position, cell.BuildingPrefab);
 		}
 	}
 

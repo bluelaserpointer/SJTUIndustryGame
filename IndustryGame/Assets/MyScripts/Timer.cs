@@ -1,5 +1,12 @@
 ﻿using UnityEngine;
 
+public enum SeasonType
+{
+    Spring,
+    Summer,
+    Autumn,
+    Winter
+}
 public static class Timer
 {
     public static float secondsOneDay = 1f; //更改游戏速度 (1 sec = 1 game day)

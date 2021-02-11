@@ -1,6 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+
+public enum SpeciesDangerType
+{
+    [Description("正常")]
+    Normal,
+    [Description("濒危")]
+    Danger,
+    [Description("极度濒危")]
+    VeryDanger,
+}
 
 /// <summary>
 /// 物种
@@ -43,7 +54,7 @@ public class Animal : ScriptableObject
     /// <summary>
     /// 物种猎食对象
     /// </summary>
-    List<Animal> foods;
+    public List<Animal> foods;
     /// <summary>
     /// 物种生存所需能量
     /// </summary>
@@ -82,10 +93,11 @@ public class Animal : ScriptableObject
     /// </summary>
     public int mostDangerLimit;
 
-    private void Start() {
+    private void Start()
+    {
         int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
         int averageAmount = (int)((float)mostDangerLimit / (float)mostDangerType);
-        for(int i = 0; i <= mostDangerType; i++)
+        for (int i = 0; i <= mostDangerType; i++)
         {
             dangerLimits[mostDangerType - i] = i * averageAmount;
         }
@@ -137,12 +149,12 @@ public class Animal : ScriptableObject
     {
         double dislikeness = 0.0;
         //food affection
-        if(energyNeeds > 0)
+        if (energyNeeds > 0)
             dislikeness += 1.0 - (double)area.GetProvidableFoodEnergy(foods, energyNeeds) / (amount * energyNeeds);
         //environmentType affection
-        foreach(EnvironmentPreference environmentAndPreference in environmentPreferences)
+        foreach (EnvironmentPreference environmentAndPreference in environmentPreferences)
         {
-            if(environmentAndPreference.environment.Equals(area.environmentType))
+            if (environmentAndPreference.environment.Equals(area.environmentType))
             {
                 dislikeness -= environmentAndPreference.preference;
                 break;
@@ -155,9 +167,9 @@ public class Animal : ScriptableObject
     public SpeciesDangerType getDangerType(int amount)
     {
         int dangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();
-        for(int i = 0; i < dangerLimits.Count; i++)
+        for (int i = 0; i < dangerLimits.Count; i++)
         {
-            if(amount >= dangerLimits[i])
+            if (amount >= dangerLimits[i])
             {
                 dangerType = i;
                 break;

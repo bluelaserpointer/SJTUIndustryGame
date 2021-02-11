@@ -7,7 +7,7 @@ public class BuildingInfo : ScriptableObject
     public string buildingName;
     [TextArea]
     public string description;
-    public GameObject model;
+    public List<GameObject> constructionModels;
     public Sprite icon;
     public int moneyCost, timeCost;
     [Header("禁止玩家建造")]
@@ -27,30 +27,14 @@ public class BuildingInfo : ScriptableObject
     public List<BuildingInfo> preFinishBuildings;
     public List<AreaAction> preFinishAreaActions;
     [Header("建筑物效果")]
-    public List<Buff> buffs;
+    [Reorderable(generatablesNestClass: typeof(AreaBuff))]
+    public AreaBuff.ReorderableList buffs;
     
-    public void FinishConstruction()
+    public static BuildingInfo[] GetAllTypes()
     {
-        foreach (Buff buff in buffs)
-        {
-            buff.applied();
-        }
+        return ResourcesLoader.GetAllBuildingTypes();
     }
-    public void dayIdle()
-    {
-        foreach (Buff buff in buffs)
-        {
-            buff.idle();
-        }
-    }
-    public void removed()
-    {
-        foreach (Buff buff in buffs)
-        {
-            buff.removed();
-        }
-    }
-    public bool enabled(Area area)
+    public bool CanConstructIn(Area area)
     {
         return !preventPlayerConstruct && area.CountBuilding(this) < areaLimit && (!hasRegionLimit || area.region.CountBuilding(this) < regionLimit)
             && preFinishBuildings.Find(building => !area.ContainsConstructedBuildingInfo(building)) == null
@@ -59,37 +43,46 @@ public class BuildingInfo : ScriptableObject
 }
 public class Building
 {
-    public readonly Area area;
     public readonly BuildingInfo info;
+    public readonly Area area;
     private int constructionProgress;
-    public Building(Area area, BuildingInfo info)
+
+    public List<AreaBuff> buffs { get { return info.buffs.List; }}
+    public List<GameObject> constructionModels { get { return info.constructionModels; } }
+    public Building(BuildingInfo info, Area area)
     {
-        this.area = area;
         this.info = info;
+        this.area = area;
     }
     public void DayIdle()
     {
-        if(!IsConstructed())
+        if(IsConstructed())
+        {
+            buffs.ForEach(buff => buff.Idle(area));
+        } else
         {
             constructionProgress += 1;
-            if(IsConstructed())
+            if (IsConstructed())
             {
                 FinishConstruction();
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow("建设完成", info.buildingName));
-                if(info.isBasement)
+                if (info.isBasement)
                 {
                     area.region.SetBaseArea(area);
                 }
+            } else
+            {
+                if(constructionModels.Count > 0)
+                    area.GetHexCell().BuildingPrefab = constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))];
             }
-        } else
-        {
-            info.dayIdle();
         }
     }
     public void FinishConstruction()
     {
         constructionProgress = info.timeCost;
-        info.FinishConstruction();
+        buffs.ForEach(buff => buff.Applied(area));
+        if (constructionModels.Count > 0)
+            area.GetHexCell().BuildingPrefab = constructionModels[constructionModels.Count - 1];
     }
     public bool IsConstructed()
     {
@@ -98,5 +91,9 @@ public class Building
     public float GetConstructionRate()
     {
         return info.timeCost > 0 ? ((float) constructionProgress / info.timeCost) : 1.0f;
+    }
+    public void Removed()
+    {
+        buffs.ForEach(buff => buff.Removed(area));
     }
 }

@@ -19,19 +19,16 @@ public class EventStageSO : ScriptableObject
     [Min(0)]
     public int contribution;
 
-    [Header("出现在以下动物报告")]
-    public List<Animal> showInAnimalsReport;
-    [Header("出现在环境报告")]
-    public bool showInEnvironmentReport;
     [Header("出现前需完成的事件阶段")]
     public List<EventStageSO> preFinishEventStages;
     [Header("完成条件")]
-    public RegionCondition successCondition;
-    [Header("完成前的环境效果")]
-    public Buff buffBeforeFinish;
-    [Header("完成后的环境效果")]
-    public Buff buffAfterFinish;
-
+    [Reorderable(generatablesNestClass: typeof(RegionCondition))]
+    public RegionCondition.ReorderableList successCondition;
+    [Header("出现在以下动物报告")]
+    public List<Animal> showInAnimalsReport;
+    [Header("相关的环境指标(所属事件流发生时生效其效果)")]
+    public EnvironmentStatType relatedEnvironmentStat;
+    
     /// <summary>
     /// 是否已完成所有前置阶段
     /// </summary>

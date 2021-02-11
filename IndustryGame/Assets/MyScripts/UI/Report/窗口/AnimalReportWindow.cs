@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimalReportWindow : MonoBehaviour, BasicReportWindow
 {
@@ -8,6 +9,8 @@ public class AnimalReportWindow : MonoBehaviour, BasicReportWindow
     public GameObject EventReportList;
     [Header("小报告Prefab")]
     public GameObject SingleEventReportPrefab;      //报告Prefab，三个都应该是一样的
+    [Header("Region的选择Dropdown")]
+    public Dropdown RegionSelection;
     private List<GameObject> AnimalReports = new List<GameObject>();
 
     public void ClearList()
@@ -18,17 +21,28 @@ public class AnimalReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-        foreach (Animal animal in Stage.GetSpecies())
+        foreach (MainEvent mainEvent in Stage.GetRegions()[RegionSelection.value].GetRevealedEvents())
         {
-            GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-            clone.GetComponent<SingleEventReport>().ShowSingleAnimal(animal);
-            AnimalReports.Add(clone);
+            foreach (Animal animal in mainEvent.concernedAnimals)
+            {
+                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+                clone.GetComponent<SingleEventReport>().ShowSingleAnimal(animal);
+                AnimalReports.Add(clone);
+                Debug.Log("Species: " + animal.animalName);
+            }
         }
     }
 
     // 有点击事件发生所以要手动调用GenerateList来更新列表，而不能用Update实时更新
     void Start()
     {
+        Helper.RefreshRegionDropdown(RegionSelection);
         GenerateList();
     }
+
+    void Update()
+    {
+        Helper.RefreshRegionDropdown(RegionSelection);
+    }
+
 }

@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: "\u73AF\u4FDD\u9A7F\u7AD9"
   description: "\u8FD9\u91CC\u7684\u5DE5\u4F5C\u4EBA\u5458\u65F6\u5E38\u5DE1\u903B\u8BE5\u533A\u57DF\uFF0C\u6709\u6548\u51CF\u5C11\u5468\u56F4\u7684\u5783\u573E\u4E22\u5F03"
-  model: {fileID: 0}
+  constructionModels:
+  - {fileID: 3106987743043459496, guid: e48d02aae3b95384d99435b1ed974f33, type: 3}
+  - {fileID: 1708342194774232883, guid: 72929f3fddf96d045b5266472dbd631e, type: 3}
+  - {fileID: 5345925368745912247, guid: 9e1b2a16fc971f5429d8440f6d6ef8ed, type: 3}
+  - {fileID: 2839748915516054507, guid: 339a915c94b7a3448a4894dce5672447, type: 3}
   icon: {fileID: 0}
   moneyCost: 10
   timeCost: 10
   preventPlayerConstruct: 0
+  isBasement: 0
   areaLimit: 1
   hasRegionLimit: 0
   regionLimit: 99
   preFinishBuildings: []
   preFinishAreaActions: []
-  buffs: []
+  buffs:
+    List: []
+  references:
+    version: 1

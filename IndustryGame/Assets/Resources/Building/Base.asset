@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: "\u57FA\u5730"
   description: "\u6240\u6709\u6D3B\u52A8\u7684\u6838\u5FC3\u573A\u6240\uFF0C\u6BCF\u4E2A\u9886\u57DF\u53EA\u80FD\u5EFA\u8BBE\u4E00\u5904"
-  model: {fileID: 0}
+  constructionModels:
+  - {fileID: 8028338812980676289, guid: 946e008ddf65d38498a712c2ee42dd3b, type: 3}
+  - {fileID: 944851945480470237, guid: cd229f37fb37ba742b8eb4ed2f7781a2, type: 3}
+  - {fileID: 8533791207743642568, guid: 1cdc9f0b8c6c2a6488fdffcd7be5e4ff, type: 3}
+  - {fileID: 4092316164812338405, guid: 44fb31112bb347443a47cd98278ed064, type: 3}
   icon: {fileID: 0}
   moneyCost: 10
   timeCost: 10
@@ -25,4 +29,7 @@ MonoBehaviour:
   regionLimit: 1
   preFinishBuildings: []
   preFinishAreaActions: []
-  buffs: []
+  buffs:
+    List: []
+  references:
+    version: 1

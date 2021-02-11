@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 事件阶段
@@ -36,19 +37,15 @@ public class EventStage
     /// <summary>
     /// 在以下环境报告内显示<see cref="description"/>，仅该事件阶段已发现且未解决时
     /// </summary>
-    public bool showInEnvironmentReport { get { return so.showInEnvironmentReport; } }
+    public bool showInEnvironmentReport { get { return so.relatedEnvironmentStat != null; } }
+    /// <summary>
+    /// 相关的环境指标(问题)
+    /// </summary>
+    public EnvironmentStatType relatedEnvironmentStat {  get { return so.relatedEnvironmentStat; } }
     /// <summary>
     /// 该事件阶段被发现前需要完成的阶段
     /// </summary>
     public List<EventStageSO> preFinishInfos { get { return so.preFinishEventStages; } }
-    /// <summary>
-    /// 该事件阶段被完成前给世界带来的影响
-    /// </summary>
-    public Buff buffBeforeFinish { get { return so.buffBeforeFinish; } }
-    /// <summary>
-    /// 该事件阶段被完成后给世界带来的影响
-    /// </summary>
-    public Buff buffAfterFinish { get { return so.buffAfterFinish; } }
 
     private bool _isAppeared;
     private bool _isFinished;
@@ -57,6 +54,16 @@ public class EventStage
     {
         this.so = so;
         this.mainEvent = mainEvent;
+        //generate environment stat (problems);
+        if (relatedEnvironmentStat != null)
+        {
+            int generateLimit = Random.Range(10, 15);
+            List<Area> areas = mainEvent.region.GetAreas();
+            for (int i = 0; i < generateLimit; ++i)
+            {
+                areas[Random.Range(0, areas.Count)].AddEnviromentStat(relatedEnvironmentStat, Random.Range(0.5f, 1.5f));
+            }
+        }
     }
     /// <summary>
     /// 完成该事件阶段
@@ -64,8 +71,6 @@ public class EventStage
     public void finish()
     {
         _isAppeared = _isFinished = true;
-        buffAfterFinish.removed();
-        buffBeforeFinish.applied();
     }
     /// <summary>
     /// 该事件阶段是否已完成
@@ -100,13 +105,9 @@ public class EventStage
         {
             if (_isFinished)
             {
-                if (buffBeforeFinish != null)
-                    buffBeforeFinish.idle();
             }
             else
             {
-                if (buffAfterFinish != null)
-                    buffAfterFinish.idle();
                 if (so.IsFinished(mainEvent.region))
                 {
                     _isFinished = true;

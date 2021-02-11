@@ -48,11 +48,12 @@ public class EventReportUI : MonoBehaviour
         EventDescription.text = eventDetails.description;
         EventDescriptionAfterFinish.text = eventDetails.descriptionAfterFinish;
 
+
         foreach (EventStage eventInfo in eventDetails.GetRevealedEventStages())
         {
             GameObject clone = Instantiate(SingleEventInfoPrefab, EventInfoList.transform, false);
             clone.GetComponent<EventInfoUI>().Generate(eventInfo);
-            // InGameLog.AddLog(eventDetails.GetRevealedInfos()[i].infoName);
+            // InGameLog.AddLog(areaAction.actionName);
             EventInfoPrefabs.Add(clone);
         }
 
@@ -60,7 +61,7 @@ public class EventReportUI : MonoBehaviour
         {
             GameObject clone = Instantiate(EnabledActionPrefab, EnabledActionsList.transform, false);
             clone.GetComponent<EnabledActionPrefab>().Generate(areaAction);
-            // InGameLog.AddLog(eventDetails.GetRevealedInfos()[i].infoName);
+            InGameLog.AddLog(areaAction.actionName);
             GeneratedActionPrefabs.Add(clone);
         }
     }

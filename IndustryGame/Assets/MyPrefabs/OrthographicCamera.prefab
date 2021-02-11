@@ -99,13 +99,16 @@ MonoBehaviour:
   mouseAreaOrthoSize: 7
   keyAreaOrthoSize: 9
   maskAreaOrthoSize: 15
-  areaPositionOffset: {x: 0, y: 12.8, z: -11.7}
   worldOrthoSize: 250
   sizeSpeed: 7.5
   positionSpeed: 0.5
   rotationSpeed: 0.1
+  regionObserveTranSpeed: 1.5
+  regionObserveSizeSpeed: 5
   worldPosition: {x: 0, y: 0, z: 0}
   worldRotation: {x: 0, y: 0, z: 0, w: 0}
+  regionMinSize: 40
   orthoAreaRotationX: 45
-  orthoRegionRotationX: 90
+  areaPositionOffset: {x: 0, y: 12.8, z: -11.7}
+  orthoRegionRotationX: 85
   AreaDetailsHUD: {fileID: 0}
