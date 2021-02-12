@@ -95,13 +95,14 @@ public class ReportUI : MonoBehaviour
         OpenWindow.GetComponent<AnimalReportUI>().animal = animal;
     }
 
-    public static void GenerateEnvironmentDetailsWindow(EventStage environmentEventInfo)
+    public static void GenerateEnvironmentDetailsWindow(Region region)
     {
         if (OpenWindow != null)
         {
             ClearWindow();
         }
         OpenWindow = Instantiate(instance.EnvironmentDetailsWindow, instance.GeneratePosition.transform, false);
+        OpenWindow.GetComponent<EnvironmentReportUI>().region = region;
     }
 
     public static void ClearWindow()

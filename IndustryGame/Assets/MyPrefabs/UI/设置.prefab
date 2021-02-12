@@ -718,7 +718,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -341.50058, y: 250.00005}
+  m_AnchoredPosition: {x: -341.50058, y: 250.00002}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8678797723659596440
@@ -1193,9 +1193,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8678797723660369738}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
+          type: 3}
+        m_MethodName: ClearWindow
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1671,7 +1672,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8678797724138567630}
   m_HandleRect: {fileID: 8678797724138567629}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

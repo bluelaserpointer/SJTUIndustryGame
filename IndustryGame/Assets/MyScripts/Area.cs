@@ -203,7 +203,7 @@ public class Area : MonoBehaviour
     /// </summary>
     public void addReservation()
     {
-        foreach(var pair in animalAmounts)
+        foreach (var pair in animalAmounts)
         {
             Animal animal = pair.Key;
             if (region.GetConcernedSpecies().Contains(animal)) //only reservate concerned animals
@@ -403,7 +403,7 @@ public class Area : MonoBehaviour
     }
 
     // 进度条显示
-    public Slider actionProgressSlider, constructionProgressSlider;
+    [SerializeField] private Slider actionProgressSlider, constructionProgressSlider;
     private Specialist currentSpecialist;
 
     public void StartProgressSlider(Specialist specialist)
@@ -469,6 +469,32 @@ public class Area : MonoBehaviour
         return stat == null ? 0 : stat.value;
     }
     /// <summary>
+    /// 获取指定环境指标
+    /// </summary>
+    /// <param name="environmentStatType"></param>
+    /// <param name="value"></param>
+    public float GetEnviromentStatWithString(string environmentStatType)
+    {
+        EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.name.Equals(environmentStatType));
+        return stat == null ? 0 : stat.value;
+    }
+    /// <summary>
+    /// 获取所有负面环境指标
+    /// </summary>
+    /// <returns></returns>
+    public List<EnvironmentStat> GetNegativeEnvironmentStats()
+    {
+        return environmentStats.FindAll(eachStat => eachStat.isNegative);
+    }
+    /// <summary>
+    /// 是否含任何负面环境指标
+    /// </summary>
+    /// <returns></returns>
+    public bool HasNegativeEnvironmentStats()
+    {
+        return GetNegativeEnvironmentStats().Count == 0;
+    }
+    /// <summary>
     /// 增加指定环境指标
     /// </summary>
     /// <param name="environmentStatType"></param>
@@ -476,13 +502,14 @@ public class Area : MonoBehaviour
     public void AddEnviromentStat(EnvironmentStatType environmentStatType, float value)
     {
         EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.IsType(environmentStatType));
-        if(stat != null)
+        if (stat != null)
         {
-            stat.value += value;
-        } else
+            stat.value = Mathf.Clamp(stat.value + value, 0.0f, 1.0f);
+        }
+        else
         {
             stat = new EnvironmentStat(environmentStatType, this);
-            stat.value += value;
+            stat.value = Mathf.Clamp(stat.value + value, 0.0f, 1.0f);
             environmentStats.Add(stat);
         }
     }

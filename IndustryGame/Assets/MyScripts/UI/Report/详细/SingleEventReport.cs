@@ -30,7 +30,7 @@ public class SingleEventReport : MonoBehaviour
 
     //For Environment Reports
     [HideInInspector]
-    public EventStage environmentEventStage;
+    public Region region;
 
     [HideInInspector]
     public ReportSelectionWindowType windowType;
@@ -58,10 +58,10 @@ public class SingleEventReport : MonoBehaviour
         EventName.text = animal.animalName;
         windowType = ReportSelectionWindowType.AnimalType;
     }
-    public void ShowSingleEnvironment(EventStage EventStage)
+    public void ShowSingleEnvironment(Region region)
     {
-        this.environmentEventStage = EventStage;
-        EventName.text = EventStage.name;
+        this.region = region;
+        EventName.text = region.name;
         windowType = ReportSelectionWindowType.EnvironmentType;
     }
 
@@ -80,7 +80,7 @@ public class SingleEventReport : MonoBehaviour
                 ReportUI.GenerateAnimalDetailsWindow(animal);
                 break;
             case ReportSelectionWindowType.EnvironmentType:
-                ReportUI.GenerateEnvironmentDetailsWindow(environmentEventStage);
+                ReportUI.GenerateEnvironmentDetailsWindow(region);
                 break;
 
         }

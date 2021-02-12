@@ -9,10 +9,8 @@ public class HUDManager : MonoBehaviour
     public Text Date;
     public Text Money;
 
-    public GameObject SpecialistWindow;
-    public GameObject ReportWindow;
 
-    private void Awake ()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
@@ -24,37 +22,29 @@ public class HUDManager : MonoBehaviour
         Money.text = Stage.GetLestMoney().ToString();
     }
 
-    public static bool CheckOpenWindow ()
-    {
-        if (instance == null)
-        {
-            return false;
-        }
-        
-        return instance.SpecialistWindow.activeSelf || instance.ReportWindow.activeSelf || GameObject.FindGameObjectWithTag("PopUpWindow") != null;
-    }
 
-    public void Pause ()
+
+    public void Pause()
     {
         Timer.Pause();
     }
 
-    public void Resume ()
+    public void Resume()
     {
         Timer.Resume();
     }
 
-    public void Speed1 ()
+    public void Speed1()
     {
         Timer.setTimeSpeed(1.0f);
     }
 
-    public void Speed2 ()
+    public void Speed2()
     {
         Timer.setTimeSpeed(2.0f);
     }
 
-    public void Speed3 ()
+    public void Speed3()
     {
         Timer.setTimeSpeed(3.0f);
     }

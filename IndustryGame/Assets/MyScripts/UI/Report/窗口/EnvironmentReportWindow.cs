@@ -9,8 +9,8 @@ public class EnvironmentReportWindow : MonoBehaviour, BasicReportWindow
     public GameObject EnvironmentReportList;
     [Header("小报告Prefab")]
     public GameObject SingleEventReportPrefab;      //报告Prefab，三个都应该是一样的
-    [Header("Region的选择Dropdown")]
-    public Dropdown RegionSelection;
+    // [Header("Region的选择Dropdown")]
+    // public Dropdown RegionSelection;
 
     private List<GameObject> EnvironmentReports = new List<GameObject>();
 
@@ -23,24 +23,34 @@ public class EnvironmentReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-        foreach (EventStage eventInfo in Stage.GetRegions()[RegionSelection.value].GetEventInfosRelatedToEnvironment())
+        foreach (Region region in Stage.GetRegions())
         {
-            GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EnvironmentReportList.transform, false);
-            clone.GetComponent<SingleEventReport>().ShowSingleEnvironment(eventInfo);
-            EnvironmentReports.Add(clone);
+            if (region.GetEvents().Count > 0)
+            {
+                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EnvironmentReportList.transform, false);
+                clone.GetComponent<SingleEventReport>().ShowSingleEnvironment(region);
+                EnvironmentReports.Add(clone);
+            }
+
+            // foreach (EventStage eventStage in mainEvent.GetRevealedUnfinishedStagesRelatedToEnvironment())
+            // {
+            //     GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EnvironmentReportList.transform, false);
+            //     clone.GetComponent<SingleEventReport>().ShowSingleEnvironment(eventStage.relatedEnvironmentStat);
+            //     EnvironmentReports.Add(clone);
+            // }
         }
     }
 
     // 有点击事件发生所以要手动调用GenerateList来更新列表，而不能用Update实时更新
     void Start()
     {
-        Helper.RefreshRegionDropdown(RegionSelection);
+        // Helper.RefreshRegionDropdown(RegionSelection);
         GenerateList();
     }
 
     void Update()
     {
-        Helper.RefreshRegionDropdown(RegionSelection);
+        // Helper.RefreshRegionDropdown(RegionSelection);
     }
 
 }
