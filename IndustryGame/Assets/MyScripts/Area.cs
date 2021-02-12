@@ -504,12 +504,12 @@ public class Area : MonoBehaviour
         EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.IsType(environmentStatType));
         if (stat != null)
         {
-            stat.value += value;
+            stat.value = Mathf.Clamp(stat.value + value, 0.0f, 1.0f);
         }
         else
         {
             stat = new EnvironmentStat(environmentStatType, this);
-            stat.value += value;
+            stat.value = Mathf.Clamp(stat.value + value, 0.0f, 1.0f);
             environmentStats.Add(stat);
         }
     }
