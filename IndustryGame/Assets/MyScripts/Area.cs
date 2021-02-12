@@ -479,6 +479,22 @@ public class Area : MonoBehaviour
         return stat == null ? 0 : stat.value;
     }
     /// <summary>
+    /// 获取所有负面环境指标
+    /// </summary>
+    /// <returns></returns>
+    public List<EnvironmentStat> GetNegativeEnvironmentStats()
+    {
+        return environmentStats.FindAll(eachStat => eachStat.isNegative);
+    }
+    /// <summary>
+    /// 是否含任何负面环境指标
+    /// </summary>
+    /// <returns></returns>
+    public bool HasNegativeEnvironmentStats()
+    {
+        return GetNegativeEnvironmentStats().Count == 0;
+    }
+    /// <summary>
     /// 增加指定环境指标
     /// </summary>
     /// <param name="environmentStatType"></param>
