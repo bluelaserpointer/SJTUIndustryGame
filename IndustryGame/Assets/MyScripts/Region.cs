@@ -406,7 +406,7 @@ public class Region
     public List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
     {
         List<EventStage> eventStages = new List<EventStage>();
-        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToEnvironment()));
+        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
         return eventStages;
     }
 }

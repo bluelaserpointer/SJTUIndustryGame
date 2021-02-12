@@ -58,14 +58,14 @@ public class Helper : MonoBehaviour
             foreach (MainEvent mainEvent in region.GetEvents())
             {
                 // Debug.Log("事件: " + mainEvent.name);
-                if (mainEvent.GetRevealedUnfinishedStagesRelatedToEnvironment().Count < 1)
+                if (mainEvent.GetRevealedStagesRelatedToEnvironment().Count < 1)
                 {
                     // 现在还没有跟环境相关的EventStage
                     Debug.Log("Region: " + region.name + "中的MainEvent: '" + mainEvent.name + "'事件还没有跟环境相关的EventStage");
                 }
                 else
                 {
-                    foreach (EventStage eventStage in mainEvent.GetRevealedUnfinishedStagesRelatedToEnvironment())
+                    foreach (EventStage eventStage in mainEvent.GetRevealedStagesRelatedToEnvironment())
                     {
                         // Debug.Log("Event Stage: " + eventStage.name + "    Related EnvironmentStat Name: " + eventStage.relatedEnvironmentStat.statName);
                         if (!dropDownValue.Contains(eventStage.relatedEnvironmentStat.statName))

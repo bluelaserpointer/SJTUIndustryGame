@@ -354,7 +354,7 @@ public class Stage : MonoBehaviour
     public static List<EventStage> GetEventInfosRelatedToAnimal(Animal animal) //TODO: optimize this code
     {
         List<EventStage> eventStages = new List<EventStage>();
-        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToAnimal(animal)));
+        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToAnimal(animal)));
         return eventStages;
     }
     /// <summary>
@@ -364,7 +364,7 @@ public class Stage : MonoBehaviour
     public static List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
     {
         List<EventStage> eventStages = new List<EventStage>();
-        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToEnvironment()));
+        instance.events.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
         return eventStages;
     }
     /// <summary>
