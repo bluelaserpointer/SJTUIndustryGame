@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class HexCell : MonoBehaviour {
@@ -330,6 +331,19 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	public int Distance
+	{
+		get
+		{
+			return distance;
+		}
+		set
+		{
+			distance = value;
+			UpdateDistanceLabel();
+		}
+	}
+
 	int regionId = -2; // -1,0,1,2
 	int terrainTypeIndex;
 	bool highLighted;
@@ -349,6 +363,7 @@ public class HexCell : MonoBehaviour {
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;
 
+	int distance;
 	[SerializeField]
 	HexCell[] neighbors;
 
@@ -600,4 +615,9 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	void UpdateDistanceLabel()
+	{
+		Text label = uiRect.GetComponent<Text>();
+		label.text = distance == int.MaxValue ? "" : distance.ToString();
+	}
 }
