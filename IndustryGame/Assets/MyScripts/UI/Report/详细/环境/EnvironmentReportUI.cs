@@ -77,12 +77,13 @@ public class EnvironmentReportUI : MonoBehaviour
     void Start()
     {
         Helper.RefreshEnvironmentStatDropDown(environmentStatSelection, region, dropDownValue);
-        RefreshUI();
     }
 
     void Update()
     {
         Helper.RefreshEnvironmentStatDropDown(environmentStatSelection, region, dropDownValue);
+        RefreshUI();
+
     }
 
 }
