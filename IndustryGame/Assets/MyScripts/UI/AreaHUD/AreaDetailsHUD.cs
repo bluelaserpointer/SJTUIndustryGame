@@ -10,6 +10,11 @@ public class AreaDetailsHUD : MonoBehaviour
 
     void Update()
     {
+        // SetMousePointingArea();
+    }
+
+    public void SetMousePointingArea()
+    {
         if (OrthographicCamera.GetMousePointingArea() != null)
         {
             AreaName.text = OrthographicCamera.GetMousePointingArea().areaName;
