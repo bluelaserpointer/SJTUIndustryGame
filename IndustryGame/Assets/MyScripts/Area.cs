@@ -203,7 +203,7 @@ public class Area : MonoBehaviour
     /// </summary>
     public void addReservation()
     {
-        foreach(var pair in animalAmounts)
+        foreach (var pair in animalAmounts)
         {
             Animal animal = pair.Key;
             if (region.GetConcernedSpecies().Contains(animal)) //only reservate concerned animals
@@ -469,6 +469,16 @@ public class Area : MonoBehaviour
         return stat == null ? 0 : stat.value;
     }
     /// <summary>
+    /// 获取指定环境指标
+    /// </summary>
+    /// <param name="environmentStatType"></param>
+    /// <param name="value"></param>
+    public float GetEnviromentStatWithString(string environmentStatType)
+    {
+        EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.name.Equals(environmentStatType));
+        return stat == null ? 0 : stat.value;
+    }
+    /// <summary>
     /// 增加指定环境指标
     /// </summary>
     /// <param name="environmentStatType"></param>
@@ -476,10 +486,11 @@ public class Area : MonoBehaviour
     public void AddEnviromentStat(EnvironmentStatType environmentStatType, float value)
     {
         EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.IsType(environmentStatType));
-        if(stat != null)
+        if (stat != null)
         {
             stat.value += value;
-        } else
+        }
+        else
         {
             stat = new EnvironmentStat(environmentStatType, this);
             stat.value += value;

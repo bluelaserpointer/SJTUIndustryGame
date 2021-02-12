@@ -9,18 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbd04f13438e274fa334d87781a0d7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a8a25bfd28c5724a85a07c09ac4d37d, type: 3}
   m_Name: reservateAnimals
   m_EditorClassIdentifier: 
-  actionName: "\u8C03\u67E5\u52A8\u7269\u6570\u91CF\uFF08\u5168\u4F53\uFF09"
-  description: "\uFF08\u6682\u65F6\u505A\u4E86\u4E2A\u4E00\u6B21\u6027\u8C03\u67E5\u5B8C\u6240\u6709\u52A8\u7269\u6570\u91CF\u7684\u63AA\u65BD\uFF09"
-  timeCost: 10
-  moneyCost: 50
-  preFinishInfos: []
+  actionName: 
+  description: 
+  timeCost: 0
+  moneyCost: 0
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:
       m_Calls: []
   needProceedInBase: 0
-  preFinishActions:
-  - {fileID: 11400000, guid: 05a96a20048a1f444b1a6b918d7b904a, type: 2}
+  preFinishActions: []
