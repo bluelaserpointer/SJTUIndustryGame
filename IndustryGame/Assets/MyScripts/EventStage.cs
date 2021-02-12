@@ -57,12 +57,18 @@ public class EventStage
         //generate environment stat (problems);
         if (relatedEnvironmentStat != null)
         {
+            //MIDDLE VERSITON: find a area doesn't have problem
             int generateLimit = Random.Range(10, 15);
-            List<Area> areas = mainEvent.region.GetAreas();
-            for (int i = 0; i < generateLimit; ++i)
+            List<Area> greenAreas = mainEvent.region.GetAreas().FindAll(eachArea => !eachArea.HasNegativeEnvironmentStats());
+            if(greenAreas.Count == 0)
             {
-                areas[Random.Range(0, areas.Count)].AddEnviromentStat(relatedEnvironmentStat, Random.Range(0.5f, 1.5f));
+                Debug.Log("! EventStage cannot generate center problem area at a green area.");
+                greenAreas = mainEvent.region.GetAreas();
             }
+            //generate 0.1f as initial
+            //=> reach higher number will speread problem to neighbor areas
+            Area randomArea = greenAreas[Random.Range(0, greenAreas.Count)];
+            randomArea.AddEnviromentStat(relatedEnvironmentStat, 0.1f);
         }
     }
     /// <summary>
