@@ -37,4 +37,51 @@ public class Helper : MonoBehaviour
             dropdown.captionText.text = Stage.GetRegions()[dropdown.value].name;
         }
     }
+
+    public static void RefreshEnvironmentStatDropDown(Dropdown dropdown, Region region, List<string> dropDownValue)
+    {
+        dropdown.options.Clear();
+        if (region.GetEvents().Count < 1)
+        {
+            Debug.Log("Error: Region Has no event to show environment report!");
+        }
+        else
+        {
+            // 有Event能够显示EnvironmentStat指标，要获取有哪些指标
+            foreach (MainEvent mainEvent in region.GetEvents())
+            {
+                // Debug.Log("事件: " + mainEvent.name);
+                if (mainEvent.GetRevealedUnfinishedStagesRelatedToEnvironment().Count < 1)
+                {
+                    // 现在还没有跟环境相关的EventStage
+                    Debug.Log("Region: " + region.name + "中的MainEvent: '" + mainEvent.name + "'事件还没有跟环境相关的EventStage");
+                }
+                else
+                {
+                    foreach (EventStage eventStage in mainEvent.GetRevealedUnfinishedStagesRelatedToEnvironment())
+                    {
+                        if (!dropDownValue.Contains(eventStage.relatedEnvironmentStat.statName))
+                        {
+                            Debug.Log("Revealed EventStage: " + eventStage.name + "   statName: " + eventStage.relatedEnvironmentStat.statName);
+                            Dropdown.OptionData tempData = new Dropdown.OptionData();
+                            tempData.text = eventStage.relatedEnvironmentStat.statName;
+                            dropdown.options.Add(tempData);
+                            dropDownValue.Add(eventStage.relatedEnvironmentStat.statName);
+                            //tempData.image = CurrentArea.GetEnabledActions()[i].actionName;
+                            //InGameLog.AddLog(Stage.GetSpecialists()[i].name);
+                        }
+                    }
+                }
+            }
+            // foreach (string t in dropDownValue)
+            // {
+            //     Debug.Log("环境指标: " + t);
+            // }
+            // Debug.Log("Count: " + dropDownValue.Count);
+            if (dropDownValue.Count > 0)
+            {
+                dropdown.captionText.text = dropDownValue[dropdown.value];
+            }
+        }
+    }
 }

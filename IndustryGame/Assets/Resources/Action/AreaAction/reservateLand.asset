@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbd04f13438e274fa334d87781a0d7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a8a25bfd28c5724a85a07c09ac4d37d, type: 3}
   m_Name: reservateLand
   m_EditorClassIdentifier: 
-  actionName: "\u8C03\u67E5\u5730\u533A"
+  actionName: 
   description: 
-  timeCost: 10
-  moneyCost: 10
-  preFinishInfos: []
+  timeCost: 0
+  moneyCost: 0
   requiredAbilities: []
   finishEvent:
     m_PersistentCalls:

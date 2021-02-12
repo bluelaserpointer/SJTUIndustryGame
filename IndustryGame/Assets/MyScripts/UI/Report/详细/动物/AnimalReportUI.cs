@@ -41,6 +41,7 @@ public class AnimalReportUI : MonoBehaviour
     public GameObject EnvironmentPreferencePosition;
     [Header("单个显示的Environment Preference的 UI Prefab")]
     public GameObject SingleEnvironmentPreferencePrefab;
+
     // [Header("生成DangerLimits列表的位置")]
     // public GameObject DangerLimitsListPosition;
     // [Header("单个显示的DangerLimits的 UI Prefab")]

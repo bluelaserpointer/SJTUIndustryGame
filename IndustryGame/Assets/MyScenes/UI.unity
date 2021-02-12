@@ -2007,6 +2007,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 912642947547735050, guid: 6d45a1b34e2fac94c9611ded1b7e251e,
         type: 3}
+    - target: {fileID: 161136545659556910, guid: 71a9be117c1cca440a37370931de85e6,
+        type: 3}
+      propertyPath: EnvironmentDetailsWindow
+      value: 
+      objectReference: {fileID: 2650179133604867232, guid: 775e96dbd484f6b44b3d9014eaa7b635,
+        type: 3}
     - target: {fileID: 3042763911250128056, guid: 71a9be117c1cca440a37370931de85e6,
         type: 3}
       propertyPath: m_Pivot.x
