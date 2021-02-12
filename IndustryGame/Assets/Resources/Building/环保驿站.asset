@@ -30,6 +30,14 @@ MonoBehaviour:
   preFinishBuildings: []
   preFinishAreaActions: []
   buffs:
-    List: []
+    List:
+    - id: 0
   references:
     version: 1
+    00000000:
+      type: {class: AreaBuff/BuffStatChange, ns: , asm: Assembly-CSharp}
+      data:
+        statType: {fileID: 11400000, guid: 383df069f0b7f294daa25362c963c894, type: 2}
+        change: -0.2
+        distanceAttenuation: 0.75
+        maxDistance: 5

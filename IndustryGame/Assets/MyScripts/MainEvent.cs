@@ -73,6 +73,14 @@ public class MainEvent
         }
     }
     /// <summary>
+    /// 根据事件流是否完成返回不同描述
+    /// </summary>
+    /// <returns><see cref="IsFinished"/> ? <see cref="descriptionAfterFinish"/> : <see cref="description"/></returns>
+    public string GetDescription()
+    {
+        return _isFinished ? descriptionAfterFinish : description;
+    }
+    /// <summary>
     /// 变为可见
     /// </summary>
     public void Reveal()
@@ -138,16 +146,16 @@ public class MainEvent
     /// </summary>
     /// <param name="animal"></param>
     /// <returns></returns>
-    public List<EventStage> GetRevealedUnfinishedStagesRelatedToAnimal(Animal animal)
+    public List<EventStage> GetRevealedStagesRelatedToAnimal(Animal animal)
     {
-        return eventStages.FindAll(eventStage => eventStage.IsAppeared() && !eventStage.IsFinished() && eventStage.showInAnimalsReport.Contains(animal));
+        return eventStages.FindAll(eventStage => eventStage.IsAppeared() && eventStage.showInAnimalsReport.Contains(animal));
     }
     /// <summary>
     /// 获取可见未完的事件阶段里与环境相关的(使用自<see cref="Stage.GetEventInfosRelatedToEnvironment"/>)
     /// </summary>
     /// <returns></returns>
-    public List<EventStage> GetRevealedUnfinishedStagesRelatedToEnvironment()
+    public List<EventStage> GetRevealedStagesRelatedToEnvironment()
     {
-        return eventStages.FindAll(eventStage => eventStage.IsAppeared() && !eventStage.IsFinished() && eventStage.showInEnvironmentReport);
+        return eventStages.FindAll(eventStage => eventStage.IsAppeared() && eventStage.showInEnvironmentReport);
     }
 }

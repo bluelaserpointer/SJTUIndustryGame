@@ -25,7 +25,7 @@ public class Region
     private readonly HexSpiral hexSpiral = new HexSpiral();
     private int reservatedAreaCount;
     private float reservationTime = 1;
-    private float baseReservationPower = 1f, reservationProgress;
+    private float baseReservationPower = 2f, reservationProgress;
     private Area baseArea;
     private Area left, right, bottom, top;
     private Vector3 center;
@@ -406,7 +406,7 @@ public class Region
     public List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
     {
         List<EventStage> eventStages = new List<EventStage>();
-        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedUnfinishedStagesRelatedToEnvironment()));
+        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
         return eventStages;
     }
 }

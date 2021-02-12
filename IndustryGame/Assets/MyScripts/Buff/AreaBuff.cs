@@ -26,7 +26,7 @@ public abstract class AreaBuff
     public class BuffAnimalAmount : AreaBuff
     {
         public Animal animal;
-        public int change;
+        public float change;
         public override void Applied(Area area, float power)
         {
         }
@@ -34,6 +34,31 @@ public abstract class AreaBuff
         public override void Idle(Area area, float power)
         {
             area.changeSpeciesAmount(animal, (int)(change * power));
+        }
+
+        public override void Removed(Area area, float power)
+        {
+        }
+    }
+    public class BuffStatChange : AreaBuff
+    {
+        public EnvironmentStatType statType;
+        public float change;
+        [Header("距离衰减比率(rate ^ dist)")]
+        public float distanceAttenuation;
+        [Min(1)]
+        public int maxDistance;
+
+        public override void Applied(Area area, float power)
+        {
+        }
+
+        public override void Idle(Area area, float power)
+        {
+            area.AddEnviromentStat(statType, change);
+            foreach(Area neighborArea in area.GetNeighborAreas()) {
+                neighborArea.AddEnviromentStat(statType, change * distanceAttenuation);
+            }
         }
 
         public override void Removed(Area area, float power)

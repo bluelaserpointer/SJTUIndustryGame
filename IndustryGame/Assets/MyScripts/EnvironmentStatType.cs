@@ -10,6 +10,11 @@ public class EnvironmentStatType : ScriptableObject
     public string statName;
     [Header("环境指标说明")]
     public string description;
+    [Header("是否是造成坏影响的指标")]
+    public bool isNegative;
+    [Min(0.0f)]
+    [Header("每日最大增长比")]
+    public float maxGrowRate;
     [Header("造成的影响")]
     [Reorderable(generatablesNestClass: typeof(AreaBuff))]
     public AreaBuff.ReorderableList buffs;
@@ -33,6 +38,14 @@ public class EnvironmentStat
     /// 环境指标说明
     /// </summary>
     public string description { get { return type.description; } }
+    /// <summary>
+    /// 是否是造成坏影响的指标
+    /// </summary>
+    public bool isNegative { get { return type.isNegative; } }
+    /// <summary>
+    /// 每日最大增长值
+    /// </summary>
+    public float maxGrowRate { get { return type.maxGrowRate; } }
     /// <summary>
     /// 造成的影响
     /// </summary>
@@ -61,7 +74,22 @@ public class EnvironmentStat
     /// </summary>
     public void DayIdle()
     {
+        //affect current area
         buffs.ForEach(buff => buff.Idle(area, value));
+        //grow and spread
+        if(isNegative)
+        {
+            //TODO: reference degree of people environment attention
+            value *= 1.0f + UnityEngine.Random.Range(0.0f, maxGrowRate);
+            if(value > 1.0f)
+            {
+                float overflow = value - 1.0f;
+                value = 1.0f;
+                //spreads to nearby area
+                List<Area> neighborAreas = new List<Area>(area.GetNeighborAreas());
+                neighborAreas[UnityEngine.Random.Range(0, neighborAreas.Count)].AddEnviromentStat(type, overflow);
+            }
+        }
     }
     /// <summary>
     /// 清除环境指标
