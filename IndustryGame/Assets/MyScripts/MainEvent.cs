@@ -73,6 +73,14 @@ public class MainEvent
         }
     }
     /// <summary>
+    /// 根据事件流是否完成返回不同描述
+    /// </summary>
+    /// <returns><see cref="IsFinished"/> ? <see cref="descriptionAfterFinish"/> : <see cref="description"/></returns>
+    public string GetDescription()
+    {
+        return _isFinished ? descriptionAfterFinish : description;
+    }
+    /// <summary>
     /// 变为可见
     /// </summary>
     public void Reveal()
