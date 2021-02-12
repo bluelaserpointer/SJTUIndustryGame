@@ -281,4 +281,17 @@ public class HexGrid : MonoBehaviour {
 			}
 		}
 	}
+	List<HexCell> FindHexCellByDistance(HexCell cell,int distance)
+	{
+		List<HexCell> ret = new List<HexCell>();
+		for (int i = 0; i < cells.Length; i++)
+		{
+			if(cells[i].Distance == distance)
+			{
+				ret.Add(cells[i]);
+				//cells[i].HighLighted = true;//调试用
+			}
+		}
+		return ret;
+	}
 }
