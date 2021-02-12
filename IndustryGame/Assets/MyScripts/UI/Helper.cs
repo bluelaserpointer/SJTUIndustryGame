@@ -40,13 +40,20 @@ public class Helper : MonoBehaviour
 
     public static void RefreshEnvironmentStatDropDown(Dropdown dropdown, Region region, List<string> dropDownValue)
     {
-        dropdown.options.Clear();
+        if (dropdown == null || dropDownValue == null || region == null)
+        {
+            Debug.Log("传参错误");
+            return;
+        }
         if (region.GetEvents().Count < 1)
         {
             Debug.Log("Error: Region Has no event to show environment report!");
+            return;
         }
         else
         {
+            dropdown.options.Clear();
+            dropDownValue.Clear();
             // 有Event能够显示EnvironmentStat指标，要获取有哪些指标
             foreach (MainEvent mainEvent in region.GetEvents())
             {
@@ -60,9 +67,10 @@ public class Helper : MonoBehaviour
                 {
                     foreach (EventStage eventStage in mainEvent.GetRevealedUnfinishedStagesRelatedToEnvironment())
                     {
+                        // Debug.Log("Event Stage: " + eventStage.name + "    Related EnvironmentStat Name: " + eventStage.relatedEnvironmentStat.statName);
                         if (!dropDownValue.Contains(eventStage.relatedEnvironmentStat.statName))
                         {
-                            Debug.Log("Revealed EventStage: " + eventStage.name + "   statName: " + eventStage.relatedEnvironmentStat.statName);
+                            // Debug.Log("Revealed EventStage: " + eventStage.name + "   statName: " + eventStage.relatedEnvironmentStat.statName);
                             Dropdown.OptionData tempData = new Dropdown.OptionData();
                             tempData.text = eventStage.relatedEnvironmentStat.statName;
                             dropdown.options.Add(tempData);
@@ -73,9 +81,9 @@ public class Helper : MonoBehaviour
                     }
                 }
             }
-            // foreach (string t in dropDownValue)
+            // foreach (Dropdown.OptionData t in dropdown.options)
             // {
-            //     Debug.Log("环境指标: " + t);
+            //     Debug.Log("环境指标: " + t.text);
             // }
             // Debug.Log("Count: " + dropDownValue.Count);
             if (dropDownValue.Count > 0)

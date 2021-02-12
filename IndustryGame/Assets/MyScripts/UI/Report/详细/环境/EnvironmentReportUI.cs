@@ -55,8 +55,8 @@ public class EnvironmentReportUI : MonoBehaviour
             if (dropDownValue.Count != 0)
             {
                 ImageGeneratePosition.transform.localScale = new Vector3(1, 1, 1);
-                Debug.Log("area EnvironmentStat value: " + area.GetEnviromentStatWithString(dropDownValue[environmentStatSelection.value]));
-                Debug.Log("area x value: " + area.regionPositionX + "area y value: " + area.regionPositionY);
+                // Debug.Log("area EnvironmentStat value: " + area.GetEnviromentStatWithString(dropDownValue[environmentStatSelection.value]));
+                // Debug.Log("area x value: " + area.regionPositionX + "area y value: " + area.regionPositionY);
                 GameObject clone = Instantiate(HexagonImagePrefab, ImageGeneratePosition.transform, false);
                 clone.transform.localPosition = new Vector3(area.regionPositionX - (ImageGeneratePosition.GetComponent<RectTransform>().rect.width / 3), area.regionPositionY + (ImageGeneratePosition.GetComponent<RectTransform>().rect.height / 3), 0);
 
