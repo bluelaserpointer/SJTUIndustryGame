@@ -280,18 +280,78 @@ public class HexGrid : MonoBehaviour {
 				frontier.Sort((x, y) => x.Distance.CompareTo(y.Distance));
 			}
 		}
+
 	}
-	List<HexCell> FindHexCellByDistance(HexCell cell,int distance)
+	public List<HexCell> FindHexCellByDistance(HexCell cell,int mydistance)
 	{
 		List<HexCell> ret = new List<HexCell>();
+
+
 		for (int i = 0; i < cells.Length; i++)
 		{
-			if(cells[i].Distance == distance)
+			cells[i].Distance = int.MaxValue;
+		}
+		List<HexCell> frontier = new List<HexCell>();
+		cell.Distance = 0;
+		frontier.Add(cell);
+		while (frontier.Count > 0)
+		{
+			HexCell current = frontier[0];
+			frontier.RemoveAt(0);
+			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 			{
-				ret.Add(cells[i]);
-				//cells[i].HighLighted = true;//调试用
+				HexCell neighbor = current.GetNeighbor(d);
+				if (neighbor == null)
+				{
+					continue;
+				}
+				if (neighbor.IsUnderwater)
+				{
+					continue;
+				}
+				HexEdgeType edgeType = current.GetEdgeType(neighbor);
+				if (edgeType == HexEdgeType.Cliff)
+				{
+					continue;
+				}
+				int distance = current.Distance;
+				if (current.HasRoadThroughEdge(d))
+				{
+					distance += 1;
+				}
+				else if (current.Walled != neighbor.Walled)
+				{
+					continue;
+				}
+				else
+				{
+					//distance += edgeType == HexEdgeType.Flat ? 5 : 10;  //没有加slope的差别，distance统一加1
+					//distance += neighbor.UrbanLevel + neighbor.FarmLevel +neighbor.PlantLevel;//同样的，忽视地形差距
+					distance += 1;
+				}
+				if (neighbor.Distance == int.MaxValue)
+				{
+					neighbor.Distance = distance;
+					frontier.Add(neighbor);
+				}
+				else if (distance < neighbor.Distance)
+				{
+					neighbor.Distance = distance;
+				}
+				frontier.Sort((x, y) => x.Distance.CompareTo(y.Distance));
 			}
 		}
+
+		//int cnt = 0;
+		for (int i = 0; i < cells.Length; i++)
+		{
+			if (cells[i].Distance == mydistance)
+			{
+				//cnt++;
+				ret.Add(cells[i]);
+			}	
+		}
+		//Debug.Log(cnt);
 		return ret;
 	}
 }

@@ -186,11 +186,14 @@ public class HexMapEditor : MonoBehaviour {
 			if (editMode)
 			{
 				EditCells(currentCell);
+				
 			}
 			else
 			{
-				hexGrid.FindDistancesTo(currentCell);
+				//hexGrid.FindDistancesTo(currentCell);
+				hexGrid.FindHexCellByDistance(currentCell, 3);
 			}
+			
 			previousCell = currentCell;
 		}
 		else {
