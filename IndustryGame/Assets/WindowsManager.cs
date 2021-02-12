@@ -54,7 +54,7 @@ public class WindowsManager : MonoBehaviour
         OpenWindow = Instantiate(instance.SettingsWindowPrefab, instance.gameObject.transform, true);
     }
 
-    public static void ClearWindow()
+    public void ClearWindow()
     {
         Destroy(OpenWindow);
     }

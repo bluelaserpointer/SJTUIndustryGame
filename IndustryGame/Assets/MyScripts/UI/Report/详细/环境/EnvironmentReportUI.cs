@@ -66,7 +66,7 @@ public class EnvironmentReportUI : MonoBehaviour
                 }
                 else
                 {
-                    clone.GetComponent<Image>().color = new Color(clone.GetComponent<Image>().color.r, clone.GetComponent<Image>().color.g, clone.GetComponent<Image>().color.b, area.GetEnviromentStatWithString(dropDownValue[environmentStatSelection.value]));
+                    clone.GetComponent<Image>().color = new Color(clone.GetComponent<Image>().color.r, clone.GetComponent<Image>().color.g, clone.GetComponent<Image>().color.b, area.GetEnviromentStatWithString(dropDownValue[environmentStatSelection.value]) < 0.1f ? 0.1f : area.GetEnviromentStatWithString(dropDownValue[environmentStatSelection.value]));
                 }
                 GeneratedHexagons.Add(clone);
                 ImageGeneratePosition.transform.localScale = new Vector3(2, 2, 1);
@@ -77,12 +77,13 @@ public class EnvironmentReportUI : MonoBehaviour
     void Start()
     {
         Helper.RefreshEnvironmentStatDropDown(environmentStatSelection, region, dropDownValue);
-        RefreshUI();
     }
 
     void Update()
     {
         Helper.RefreshEnvironmentStatDropDown(environmentStatSelection, region, dropDownValue);
+        RefreshUI();
+
     }
 
 }
