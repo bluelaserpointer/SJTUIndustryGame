@@ -282,33 +282,33 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void HandleAreaFocus()
     {
-        if(areaFocus)
+        if (areaFocus)
         {
             // Moving with WASD
             HexCell focusHexCell = null;
-            if(Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.NW);
-                if(focusHexCell == null)
+                if (focusHexCell == null)
                     focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.NE);
             }
-            if(Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S))
             {
                 focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.SE);
-                if(focusHexCell == null)
+                if (focusHexCell == null)
                     focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.SW);
             }
-            if(Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A))
                 focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.W);
-            if(Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D))
                 focusHexCell = currentHexCell.GetNeighbor((HexDirection)(int)HexDirection.E);
-            
-            if(focusHexCell != null)
+
+            if (focusHexCell != null)
             {
                 FocusOnArea(focusHexCell, keyAreaOrthoSize);
             }
 
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 actualScrollSize = worldOrthoSize;
 
@@ -318,8 +318,9 @@ public class OrthographicCamera : MonoBehaviour
                 SetAreaFocus(false);
             }
 
-        
-        }else if (!IsPointerOverUIObject() && !HUDManager.CheckOpenWindow())
+
+        } else if (!IsPointerOverUIObject() && !HUDManager.CheckOpenWindow())
+        //} else if (!IsPointerOverUIObject())
         {
             // Focusing with mouse
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
