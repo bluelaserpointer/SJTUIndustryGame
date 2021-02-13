@@ -133,6 +133,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 461110704321435274}
+        m_MethodName: SelectImage
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1007726304144754519}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4957429204949428639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98823535, g: 0.36078432, b: 0.39607847, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -248,6 +259,7 @@ GameObject:
   - component: {fileID: 3042763911250128062}
   - component: {fileID: 3042763911250128061}
   - component: {fileID: 161136545659556910}
+  - component: {fileID: 461110704321435274}
   m_Layer: 5
   m_Name: "\u62A5\u544A"
   m_TagString: ReportInstantiate
@@ -362,6 +374,21 @@ MonoBehaviour:
   EnvironmentDetailsWindow: {fileID: 2650179133604867232, guid: 775e96dbd484f6b44b3d9014eaa7b635,
     type: 3}
   GeneratePosition: {fileID: 3693796979017283492}
+--- !u!114 &461110704321435274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042763911250128060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3eeef3f9938434d8fb8d96c95cfde5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectedColor: {r: 0.98823535, g: 0.36078432, b: 0.39607847, a: 1}
+  NormalColor: {r: 1, g: 1, b: 1, a: 1}
+  StartSelectedButton: {fileID: 678717824283939321}
 --- !u!1 &3404690648259659071
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +595,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 461110704321435274}
+        m_MethodName: SelectImage
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1085679256883574233}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -835,7 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98823535, g: 0.36078432, b: 0.39607847, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1055,7 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98823535, g: 0.36078432, b: 0.39607847, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1277,6 +1315,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 461110704321435274}
+        m_MethodName: SelectImage
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 678717824283939321}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
