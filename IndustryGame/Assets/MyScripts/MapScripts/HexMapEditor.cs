@@ -36,7 +36,7 @@ public class HexMapEditor : MonoBehaviour {
 
 	bool isDrag;
 	HexDirection dragDirection;
-	HexCell previousCell;
+	HexCell previousCell, searchFromCell;
 
 	public void ShowGrid(bool visible)
 	{
@@ -188,10 +188,21 @@ public class HexMapEditor : MonoBehaviour {
 				EditCells(currentCell);
 				
 			}
-			else
+			else if (Input.GetKey(KeyCode.LeftShift))
 			{
-				//hexGrid.FindDistancesTo(currentCell);
-				hexGrid.FindHexCellByDistance(currentCell, 3);
+				
+				if (searchFromCell)
+				{
+					searchFromCell.DisableHighlight();
+				}
+				//Debug.Log("2333");
+				searchFromCell = currentCell;
+				searchFromCell.EnableHighlight(Color.blue);
+			}
+			else if(searchFromCell && searchFromCell != currentCell)
+			{
+				hexGrid.FindPath(searchFromCell,currentCell);
+				//hexGrid.FindHexCellByDistance(currentCell, 3);
 			}
 			
 			previousCell = currentCell;
