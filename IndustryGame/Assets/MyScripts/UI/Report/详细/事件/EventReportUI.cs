@@ -10,8 +10,6 @@ public class EventReportUI : MonoBehaviour
     public MainEvent eventDetails;
     [Header("显示报告描述的Text")]
     public Text EventDescription;
-    [Header("显示报告结束后描述的Text")]
-    public Text EventDescriptionAfterFinish;
 
     [Header("单个报告的Prefab")]
     public GameObject SingleEventInfoPrefab;
@@ -45,8 +43,7 @@ public class EventReportUI : MonoBehaviour
         Helper.ClearList(EventInfoPrefabs);
         Helper.ClearList(GeneratedActionPrefabs);
 
-        EventDescription.text = eventDetails.description;
-        EventDescriptionAfterFinish.text = eventDetails.descriptionAfterFinish;
+        EventDescription.text = eventDetails.GetDescription();
 
 
         foreach (EventStage eventInfo in eventDetails.GetRevealedEventStages())
