@@ -29,7 +29,7 @@ public class HUDManager : MonoBehaviour
     void Update()
     {
         Date.text = Timer.GetYear().ToString() + " " + Timer.GetMonth().ToString() + " " + Timer.GetDay().ToString() + " " + Timer.GetSeason().ToString();
-        Money.text = Stage.GetLestMoney().ToString();
+        Money.text = Stage.GetResourceValue(ResourceType.money).ToString();
         Opinion.text = Stage.GetResourceValue(ResourceType.opinion).ToString();
         Contributions.text = Stage.GetResourceValue(ResourceType.contribution).ToString();
         Reputation.text = Stage.GetResourceValue(ResourceType.reputation).ToString();
