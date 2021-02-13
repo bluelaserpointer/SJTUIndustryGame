@@ -8,10 +8,10 @@ public class HUDManager : MonoBehaviour
     private static HUDManager instance;
     public Text Date;
     public Text Money;
-    // public Image PauseButton;
-    // public Image SpeedOneButton;
-    // public Image SpeedTwoButton;
-    // public Image SpeedThreeButton;
+    public Text Contributions;
+    public Text Opinion;
+    public Text Reputation;
+
     public Color SelectedColor;
     public Color NormalColor;
 
@@ -30,6 +30,9 @@ public class HUDManager : MonoBehaviour
     {
         Date.text = Timer.GetYear().ToString() + " " + Timer.GetMonth().ToString() + " " + Timer.GetDay().ToString() + " " + Timer.GetSeason().ToString();
         Money.text = Stage.GetLestMoney().ToString();
+        Opinion.text = Stage.GetResourceValue(ResourceType.opinion).ToString();
+        Contributions.text = Stage.GetResourceValue(ResourceType.contribution).ToString();
+        Reputation.text = Stage.GetResourceValue(ResourceType.reputation).ToString();
     }
 
 
