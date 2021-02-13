@@ -190,10 +190,12 @@ public class HexMapEditor : MonoBehaviour {
 			}
 			else if (Input.GetKey(KeyCode.LeftShift))
 			{
+				
 				if (searchFromCell)
 				{
 					searchFromCell.DisableHighlight();
 				}
+				//Debug.Log("2333");
 				searchFromCell = currentCell;
 				searchFromCell.EnableHighlight(Color.blue);
 			}
