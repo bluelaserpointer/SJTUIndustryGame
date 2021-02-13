@@ -34,7 +34,7 @@ public class Stage : MonoBehaviour
     public List<MainEventSO> definedEvents;
     public List<MainEvent> events = new List<MainEvent>();
     [Header("Money allowed for this stage")]
-    public int initialMoney;
+    public const int INITIAL_MONEY = 10000;
     [Serializable]
     public struct AnimalInitialAmount
     {
@@ -65,7 +65,7 @@ public class Stage : MonoBehaviour
         foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
             resources.Add(resourceType, new AmountChange(0));
         //set stage money objective
-        resources[ResourceType.money].AddWithoutRecording(initialMoney);
+        resources[ResourceType.money].AddWithoutRecording(INITIAL_MONEY);
         //load actions
         foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
         {
@@ -187,7 +187,9 @@ public class Stage : MonoBehaviour
             lastDay = Timer.GetDay();
             //record resource changes
             foreach (AmountChange amountChange in resources.Values)
+            {
                 amountChange.RecordChange();
+            }
             //region dayidle
             foreach (Region region in regions)
             {
@@ -288,39 +290,38 @@ public class Stage : MonoBehaviour
         return instance.specialists;
     }
     /// <summary>
-    /// 消费金钱
-    /// </summary>
-    /// <param name="value"></param>
-    public static void subMoney(int value)
-    {
-        instance.resources[ResourceType.money].AddWithoutRecording(-value);
-    }
-    /// <summary>
-    /// 获取所剩金钱
-    /// </summary>
-    /// <returns></returns>
-    public static int GetLestMoney()
-    {
-        return (int)instance.resources[ResourceType.money].GetRecordValue();
-    }
-    /// <summary>
     /// 获取指定类型总部资源
     /// </summary>
     /// <param name="resourceType"></param>
     /// <returns></returns>
     public static float GetResourceValue(ResourceType resourceType)
     {
-        return instance.resources[resourceType].GetRecordValue();
+        return instance.resources[resourceType].GetCurrentValue();
     }
     /// <summary>
-    /// 增加指定类型总部资源
+    /// 强制增加指定类型总部资源
     /// </summary>
     /// <param name="resourceType"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static float AddResourceValue(ResourceType resourceType, float value)
+    public static void AddResourceValue(ResourceType resourceType, float value)
     {
-        return instance.resources[resourceType].Add(value);
+        instance.resources[resourceType].AddWithoutRecording(value);
+    }
+    /// <summary>
+    /// 增加指定类型总部资源<para></para>
+    /// 如果结果值小于零则放弃更改并返回false
+    /// </summary>
+    /// <param name="resourceType"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static bool TryAddResourceValue(ResourceType resourceType, float value)
+    {
+        float result = instance.resources[resourceType].GetCurrentValue() + value;
+        if (result < 0)
+            return false;
+        instance.resources[resourceType].AddWithoutRecording(value);
+        return true;
     }
     /// <summary>
     /// 获取所有事件流

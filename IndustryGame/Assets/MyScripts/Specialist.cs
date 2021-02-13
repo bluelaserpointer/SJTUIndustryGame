@@ -99,7 +99,7 @@ public class Specialist
     {
         currentAction = action;
         actionProgress = 0;
-        Stage.subMoney(action.moneyCost);
+        Stage.AddResourceValue(ResourceType.money, action.moneyCost);
         currentArea.StartProgressSlider(this);
     }
     /// <summary>

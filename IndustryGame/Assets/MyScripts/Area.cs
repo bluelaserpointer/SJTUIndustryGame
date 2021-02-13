@@ -293,6 +293,7 @@ public class Area : MonoBehaviour
     public void StartConstruction(BuildingInfo buildingInfo)
     {
         buildings.Add(new Building(buildingInfo, this));
+        Stage.AddResourceValue(ResourceType.money, -buildingInfo.moneyCost);
         constructionProgressSlider.gameObject.SetActive(true);
     }
     /// <summary>
