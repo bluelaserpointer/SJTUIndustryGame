@@ -58,7 +58,6 @@ public class OrthographicCamera : MonoBehaviour
     private HexGrid hexGrid;
     private HexCell currentHexCell;
     private Area currentArea;
-    private Region currentRegion; 
     private int focusMask;
 
     [Header("Click Steps")]
@@ -110,11 +109,8 @@ public class OrthographicCamera : MonoBehaviour
 
     void Update () {
         HandleCameraFocus();
-
-        if(AreaDetailsHUDGameObject.activeInHierarchy == false)
-            AreaDetailsHUDGameObject.SetActive(currentArea != null);
-        else
-            AreaDetailsHUD.SetMousePointingArea();
+        AreaDetailsHUDGameObject.SetActive(currentArea != null);
+        AreaDetailsHUD.SetMousePointingArea();
     }
 
     private void FixedUpdate() {
@@ -264,9 +260,6 @@ public class OrthographicCamera : MonoBehaviour
     {
         Area area = hexCell.transform.GetComponentInChildren<Area>();
 
-        if(currentRegion.GetRegionId() != area.region.GetRegionId())
-            return;
-
         currentHexCell = hexCell;
         currentArea = area;
 
@@ -311,16 +304,12 @@ public class OrthographicCamera : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 actualScrollSize = worldOrthoSize;
-
                 SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
-
+                currentArea = null;
                 regionFocus = false;
                 SetAreaFocus(false);
             }
-
-
-        } else if (!IsPointerOverUIObject() && !HUDManager.CheckOpenWindow())
-        //} else if (!IsPointerOverUIObject())
+        } else if (!IsPointerOverUIObject())
         {
             // Focusing with mouse
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -358,7 +347,6 @@ public class OrthographicCamera : MonoBehaviour
 
         currentHexCell = hexCell;
         currentArea = area;
-        currentRegion = area.region;
         Debug.Log("Set current area by raycast");
     }
 
@@ -399,21 +387,9 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 执行洲聚焦
     /// </summary>
-    private void FocusOnRegion(HexCell hexCell)
-    {
-        Area area = hexCell.GetComponentInChildren<Area>();
-        Region region = area.region;
-
-        if(region.GetRegionId() == -1)
-            return;
-
-        currentRegion = region;
-        currentArea = area;
-        
-        Vector3 focusPosition = region.GetCenter();
-        
+    private void FocusOnRegion()
+    {   
         SetCurrentCameraParam(actualScrollSize , currentPosition, orthoRegionRotation, false);
-
     }
 
     /// <summary>
@@ -480,7 +456,7 @@ public class OrthographicCamera : MonoBehaviour
 
             }else if(actualScrollSize >= minObserveRegionSize && actualScrollSize < maxObserveRegionSize)
             {
-                FocusOnRegion(currentArea.GetComponentInParent<HexCell>());
+                FocusOnRegion();
 
                 regionFocus = true;
                 SetAreaFocus(false);
@@ -502,12 +478,6 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void HandleRegionFocusControl()
     {
-        float x = currentPosition.x;
-        float z = currentPosition.z;
-        float xMinLimit = currentRegion.GetLeft();
-        float xMaxLimit = currentRegion.GetRight();
-        float zMinLimit = currentRegion.GetBottom() + areaPositionOffset.z;
-        float zMaxLimit = currentRegion.GetTop() + areaPositionOffset.z;
 
         if(Input.GetKey(KeyCode.S))
             currentPosition.z -= regionObserveTranSpeed;
@@ -522,8 +492,9 @@ public class OrthographicCamera : MonoBehaviour
         // Exiting with esc
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            actualScrollSize = worldOrthoSize;
             SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
-
+            currentArea = null;
             SetAreaFocus(false);
             regionFocus = false;
         }
