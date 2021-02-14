@@ -12,11 +12,7 @@ public class HUDManager : MonoBehaviour
     public Text Opinion;
     public Text Reputation;
 
-    public Color SelectedColor;
-    public Color NormalColor;
 
-
-    private Image SelectedButton;
 
 
 
@@ -37,10 +33,9 @@ public class HUDManager : MonoBehaviour
 
 
 
-    public void Pause(Image PauseButton)
+    public void Pause()
     {
         Timer.Pause();
-        UpdateButtons(PauseButton);
     }
 
     public void Resume()
@@ -48,33 +43,19 @@ public class HUDManager : MonoBehaviour
         Timer.Resume();
     }
 
-    public void Speed1(Image SpeedOneButton)
+    public void Speed1()
     {
         Timer.setTimeSpeed(1.0f);
-        UpdateButtons(SpeedOneButton);
     }
 
-    public void Speed2(Image SpeedTwoButton)
+    public void Speed2()
     {
         Timer.setTimeSpeed(2.0f);
-        UpdateButtons(SpeedTwoButton);
     }
 
-    public void Speed3(Image SpeedThreeButton)
+    public void Speed3()
     {
         Timer.setTimeSpeed(3.0f);
-        UpdateButtons(SpeedThreeButton);
     }
-
-    private void UpdateButtons(Image SelectButton)
-    {
-        if (SelectedButton != null)
-        {
-            SelectedButton.color = NormalColor;
-        }
-        SelectedButton = SelectButton;
-        SelectedButton.color = SelectedColor;
-    }
-
 
 }
