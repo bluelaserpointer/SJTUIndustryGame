@@ -55,6 +55,7 @@ public class HexCell : MonoBehaviour {
 	}
 	public HexCell NextWithSamePriority { get; set; }
 	public int SearchPhase { get; set; }
+	public HexUnit Unit { get; set; }
 	private void Start()
 	{
 
@@ -551,11 +552,19 @@ public class HexCell : MonoBehaviour {
 					neighbor.chunk.Refresh();
 				}
 			}
+			if (Unit)
+			{
+				Unit.ValidateLocation();
+			}
 		}
 	}
 
 	void RefreshSelfOnly () {
 		chunk.Refresh();
+		if (Unit)
+		{
+			Unit.ValidateLocation();
+		}
 	}
 
 	public void Save (BinaryWriter writer) {
