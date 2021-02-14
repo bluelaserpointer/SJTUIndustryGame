@@ -14,7 +14,8 @@ public class FocusHelper : MonoBehaviour
 
     void Start()
     {
-        SelectImage(StartSelectedButton);
+        if(StartSelectedButton != null)
+            SelectImage(StartSelectedButton);
     }
 
     public void SelectImage(Image SelectButton)
