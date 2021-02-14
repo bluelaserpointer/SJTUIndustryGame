@@ -61,6 +61,13 @@ public class MainEvent
         //auto reveal
         if (hideLevel == 0)
             Reveal();
+        //generate initial animals
+        foreach (Area area in region.GetAreas())
+        {
+            foreach (Animal animal in concernedAnimals) {
+                area.changeSpeciesAmount(animal, UnityEngine.Random.Range(100, 200));
+            }
+        }
     }
     public void DayIdle()
     {

@@ -28,6 +28,8 @@ public class Area : MonoBehaviour
     public float groundSkyRatio = 0.7f;
     public float rainSnowRatio = 0.4f;
     public float rainFallRatio = 0.3f;
+
+    public GameObject animalNumberOval;
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
@@ -53,6 +55,7 @@ public class Area : MonoBehaviour
             building.FinishConstruction();
         }
         markBasement.SetActive(false);
+        animalNumberOval.SetActive(false);
     }
     /// <summary>
     /// 获取指定动物数量
@@ -208,9 +211,24 @@ public class Area : MonoBehaviour
             Animal animal = pair.Key;
             if (region.GetConcernedSpecies().Contains(animal)) //only reservate concerned animals
             {
+                float change = pair.Value.GetChange();
+                animalNumberOval.gameObject.GetComponentInChildren<Text>().text = pair.Value.GetRecordValue().ToString() + "\n" + (change > 0 ? "+" : "") + change;
+                Color backgroundColor;
+                if (change < 0)
+                {
+                    backgroundColor = Color.red;
+                } else if (change > 0)
+                {
+                    backgroundColor = Color.green;
+                } else
+                {
+                    backgroundColor = Color.white;
+                }
+                animalNumberOval.gameObject.GetComponent<Image>().color = backgroundColor;
                 if (animalRecords.ContainsKey(animal))
                 {
                     animalRecords[animal].AddRecord(pair.Value);
+                    animalNumberOval.SetActive(true);
                 }
                 else
                 {
