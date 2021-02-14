@@ -161,10 +161,10 @@ public class OrthographicCamera : MonoBehaviour
             }
         }
 
-        if(areaMostDangerType > 0)
-            AreaBGMRandomPlayer.SetDangerBgmList(areaMostDangerType);
-        else
-            AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
+        // if(areaMostDangerType > 0)
+        //     AreaBGMRandomPlayer.SetDangerBgmList(areaMostDangerType);
+        // else
+        //     AreaBGMRandomPlayer.SetAreaBgmList(currentArea);
     }
 
     /// <summary>
@@ -245,9 +245,9 @@ public class OrthographicCamera : MonoBehaviour
         if(!areaFocus && !value)
             return;
         
-        if(value)
-            HandleFocusAreaAudio();
-        else
+        // if(value)
+            // HandleFocusAreaAudio();
+        // else
             HandleGlobalAudio();
 
         areaFocus = value;
@@ -347,7 +347,7 @@ public class OrthographicCamera : MonoBehaviour
 
         currentHexCell = hexCell;
         currentArea = area;
-        Debug.Log("Set current area by raycast");
+        // Debug.Log("Set current area by raycast");
     }
 
     /// <summary>
