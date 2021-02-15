@@ -12,7 +12,7 @@ public class OrthographicCamera : MonoBehaviour
     public float worldOrthoSize;
     public float mouseAreaOrthoSize = 7f;
     public float keyAreaOrthoSize = 9f;
-    public float maskAreaOrthoSize = 15f;
+    public float maskAreaOrthoSize = 20f;
     public float minObserveRegionSize = 30f;
     private float observeRegionSizeOffset = 5f;
     public float actualScrollSize;
@@ -22,11 +22,11 @@ public class OrthographicCamera : MonoBehaviour
 
     [Header("Speed for different lerps")]
     public float sizeSpeed = 7.5f;
-    public float positionSpeed = 0.3f;
+    public float positionSpeed = 0.2f;
     public float regionObserveTranSpeed = 4.0f;
     public float regionObserveSizeSpeed = 10f;
-    public float areaToRegionSpeedChangeOffset = 10f;
-    public float areaToRegionSpeedChangeStep = 0.008f;
+    public float areaToRegionSpeedChangeOffset = 30f;
+    public float areaToRegionSpeedChangeStep = 0.025f;
     private bool modeChangeFlag = false;
     private float currentPositionSpeed;
 
@@ -439,7 +439,7 @@ public class OrthographicCamera : MonoBehaviour
         if(region == null || region.GetRegionId() == -1)
             return;
 
-        // Debug.Log("From " + currentRegion.GetRegionId() + " to " + region.GetRegionId());
+        Debug.Log("From " + currentRegion.GetRegionId() + " to " + region.GetRegionId());
 
         regionFocus = true;
         SetAreaFocus(false);
@@ -486,7 +486,8 @@ public class OrthographicCamera : MonoBehaviour
                         if (area != null)
                         {
                             SetCurrentAreaByRaycast(hit);
-                            FocusOnRegion(area.region, true);
+                            if(regionFocus == false)
+                                FocusOnRegion(area.region, true);
                         }
                     }
                 }
@@ -669,6 +670,36 @@ public class OrthographicCamera : MonoBehaviour
         }
 
         lastRegionBorderChangeTime = currTime;
+
+
+        if (!IsPointerOverUIObject())
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                if (currentSize > maskAreaOrthoSize)
+                {
+                    float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
+                    float ratio = regionObserveSizeSpeed / (currentSize - mouseAreaOrthoSize);
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                    currentPosition.y -= (currentPosition.y - currentRegion.GetHighestPosition().y) * ratio;
+                    
+                    currentSize -= regionObserveSizeSpeed;
+                }
+
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+                if (currentSize < worldOrthoSize)
+                {
+                    float angle = Quaternion.Angle(currentRotation, worldRotation);
+                    float ratio = regionObserveSizeSpeed / (worldOrthoSize - currentSize);
+                    // currentRotation = Quaternion.Slerp(currentRotation, worldRotation, ratio);
+                    // currentPosition.y = Mathf.Lerp(currentPosition.y, worldPosition.y, ratio);
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.right);
+                    currentPosition.y += (worldPosition.y - currentPosition.y) * ratio;
+                    
+
+                    currentSize += regionObserveSizeSpeed;
+                }
+        }
+
 
         // Exiting with esc
         if (Input.GetKeyDown(KeyCode.Escape))

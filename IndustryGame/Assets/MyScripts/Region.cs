@@ -31,6 +31,7 @@ public class Region
     private Area left, right, bottom, top;
     private Region northR, southR, westR, eastR;
     private Vector3 center;
+    private Vector3 highestPosition;
     public float observeOrthoSize;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
 
@@ -325,6 +326,25 @@ public class Region
     {
         center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
     }
+
+    /// <summary>
+    /// 重新计算洲最高点
+    /// </summary>
+    public void CalculateHighestPosition()
+    {
+        List<Area> orderedAreas = areas.OrderByDescending(a => a.GetComponentInParent<HexCell>().transform.position.y).ToList();
+        highestPosition = orderedAreas[0].GetComponentInParent<HexCell>().transform.position;
+    }
+
+    /// <summary>
+    /// 获取洲最高点坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetHighestPosition()
+    {
+        return highestPosition;
+    }
+
     /// <summary>
     /// 获取洲中心坐标
     /// </summary>

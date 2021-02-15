@@ -111,6 +111,7 @@ public class Stage : MonoBehaviour
         foreach (Region region in instance.regions)
         {
             region.CalculateCenter();
+            region.CalculateHighestPosition();
         }
 
         
