@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4668202282042024639}
   - component: {fileID: 4668202282042024638}
+  - component: {fileID: 2062460157}
+  - component: {fileID: 2062460156}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -34,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4668202282042024638
 MonoBehaviour:
@@ -60,6 +62,34 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 1
+--- !u!114 &2062460157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668202282042024608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828182524ff1eec47b6205498bf122f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteSelected: {fileID: 21300000, guid: df542a65addfcbf49a0b4b709e777134, type: 3}
+  SpriteNormal: {fileID: 0}
+--- !u!114 &2062460156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668202282042024608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 1
+  m_VerticalFit: 1
 --- !u!1 &4668202282176226598
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +360,7 @@ GameObject:
   - component: {fileID: 4668202282871457569}
   - component: {fileID: 4668202282871457599}
   - component: {fileID: 4668202282871457598}
+  - component: {fileID: 1633176197}
   m_Layer: 5
   m_Name: "Region\u9009\u62E9"
   m_TagString: Untagged
@@ -432,6 +463,22 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.5372549}
   m_EffectDistance: {x: -8, y: 5}
   m_UseGraphicAlpha: 1
+--- !u!114 &1633176197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4668202282871457571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2559fb2e91c102741b69a9ed21703944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImageSelectedColor: {r: 1, g: 1, b: 1, a: 1}
+  ImageNormalColor: {r: 0.38065147, g: 0.5628623, b: 0.8867924, a: 1}
+  TextNormalColor: {r: 1, g: 1, b: 1, a: 1}
+  TextSelectedColor: {r: 0.38065147, g: 0.5628623, b: 0.8867924, a: 1}
 --- !u!1 &4668202282882155955
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +722,10 @@ MonoBehaviour:
   EventSelectionGeneratePosition: {fileID: 4668202282042024608}
   EventSelectionPrefab: {fileID: 1146486744222085632, guid: 7a30ee4ae21424a48b5202af8ea29211,
     type: 3}
+  focusHelperForRegion: {fileID: 1633176197}
+  focusHelperForEvent: {fileID: 2062460157}
+  AnimalSelectionPanel: {fileID: 5653244897089427355, guid: 5f2bc187f6ad5224a8408b8c2feeb757,
+    type: 3}
 --- !u!1 &4668202283985739992
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,8 +844,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4668202282176226596}
   m_HandleRect: {fileID: 4668202282176226597}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.6
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
