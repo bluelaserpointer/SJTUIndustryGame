@@ -978,7 +978,6 @@ MonoBehaviour:
   description: 
   definedEvents:
   - {fileID: 11400000, guid: 2120b392985132d44b52d0bfd44d4c72, type: 2}
-  initialMoney: 0
   animalInitialAmounts:
   - animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
     amount: 10000
@@ -1016,6 +1015,7 @@ MonoBehaviour:
   - {r: 0.54901963, g: 0.25490198, b: 0.054901965, a: 1}
   - {r: 0.4666667, g: 0.20392159, b: 0.6627451, a: 1}
   - {r: 1, g: 0.79215693, b: 0.007843138, a: 1}
+  unitPrefab: {fileID: 0}
 --- !u!114 &1410842066 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
@@ -2038,7 +2038,7 @@ PrefabInstance:
     - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: orthographic size
-      value: 130
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
