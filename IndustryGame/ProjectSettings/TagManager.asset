@@ -13,6 +13,8 @@ TagManager:
   - ReportInstantiate
   - PopUpWindow
   - BuildingGeneratePanel
+  - AreaHUD
+  - RegionHUD
   layers:
   - Default
   - TransparentFX

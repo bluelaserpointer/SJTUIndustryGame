@@ -92,7 +92,6 @@ public class Stage : MonoBehaviour
         }
 
         //generate regions
-
         foreach(Area area in instance.areas)
         {
             int regionId = area.GetHexCell().RegionId;
@@ -107,10 +106,79 @@ public class Stage : MonoBehaviour
             area.region = region;
 
         }
+
+
         foreach (Region region in instance.regions)
         {
             region.CalculateCenter();
+            region.CalculateHighestPosition();
         }
+
+        
+        List<Region> xPos = instance.regions.GetRange(0, instance.regions.Count);
+        List<Region> zPos = instance.regions.GetRange(0, instance.regions.Count);
+        xPos.RemoveAll(r => r.GetRegionId() == -1);
+        zPos.RemoveAll(r => r.GetRegionId() == -1);
+
+        xPos = xPos.OrderBy(r => r.GetCenter().x).ToList();
+        zPos = zPos.OrderBy(r => r.GetCenter().z).ToList();
+
+        String xIds = "";
+        String zIds = "";
+        foreach(Region region in xPos)
+            xIds += region.GetRegionId() + ": " + region.GetCenter().x + ", ";
+        foreach(Region region in zPos)
+            zIds += region.GetRegionId() + ": " + region.GetCenter().z + ", ";
+
+        
+
+        // Debug.Log(xIds);
+        // Debug.Log(zIds);
+
+        if(instance.regions.Count > 1)
+        {
+            for(int i = 0; i < xPos.Count - 1; i++)
+            {
+                xPos[i].SetEastRegion(xPos[i + 1]);
+                xPos[i + 1].SetWestRegion(xPos[i]);
+            }
+
+            for(int i = 0; i < zPos.Count - 1; i++)
+            {
+                zPos[i].SetNorthRegion(zPos[i + 1]);
+                zPos[i + 1].SetSouthRegion(zPos[i]);
+            }
+        }
+
+        // foreach(Region region in instance.regions)
+        // {
+        //     if(region.GetRegionId() != -1)
+        //     {
+        //         Debug.Log("Region " + region.GetRegionId().ToString() + " z: " + region.GetCenter().z + " x: " + region.GetCenter().x);
+        //         if((region.GetNorthRegion() != null))
+        //         {
+        //             Debug.Log("North");
+        //             Debug.Log(region.GetNorthRegion().GetCenter().z);
+        //         }
+        //         if((region.GetSouthRegion() != null))
+        //         {
+        //             Debug.Log("South");
+        //             Debug.Log(region.GetSouthRegion().GetCenter().z);
+        //         }
+        //         if((region.GetWestRegion() != null))
+        //         {
+        //             Debug.Log("West");
+        //             Debug.Log(region.GetWestRegion().GetCenter().x);
+        //         }
+        //         if((region.GetEastRegion() != null))
+        //         {
+        //             Debug.Log("East");
+        //             Debug.Log(region.GetEastRegion().GetCenter().x);
+        //         }
+        //     }
+        // }
+
+        
         //generate initial events
         foreach (MainEventSO definedEvent in instance.definedEvents)
         {
@@ -426,5 +494,17 @@ public class Stage : MonoBehaviour
             animals.Union(area.GetSpecies());
         }
         return animals;
+    }
+    /// <summary>
+    /// 所有地块上显示特定动物的数量标记<para></para>
+    /// 参数为null时隐藏标记
+    /// </summary>
+    /// <param name="animal"></param>
+    public static void ShowAnimalNumberPop(Animal animal)
+    {
+        foreach(Area area in instance.areas)
+        {
+            area.ShowAnimalNumberPop(animal);
+        }
     }
 }

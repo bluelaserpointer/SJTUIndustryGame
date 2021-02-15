@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 洲
@@ -28,7 +29,10 @@ public class Region
     private float baseReservationPower = 2f, reservationProgress;
     private Area baseArea;
     private Area left, right, bottom, top;
+    private Region northR, southR, westR, eastR;
     private Vector3 center;
+    private Vector3 highestPosition;
+    public float observeOrthoSize;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
@@ -59,9 +63,10 @@ public class Region
         {
             reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
             Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
-            while (reservationProgress >= reservationTime + concernedAnimals.Count * 0.2f)
+            float reservationCostOfOneArea = reservationTime + concernedAnimals.Count * 0.2f;
+            while (reservationProgress >= reservationCostOfOneArea)
             {
-                reservationProgress -= reservationTime;
+                reservationProgress -= reservationCostOfOneArea;
                 if (++reservatedAreaCount >= areas.Count)
                 {
                     reservationCompleted();
@@ -93,6 +98,8 @@ public class Region
             {
                 lastHighLightedCellAndTime.Add(lastHighLightedCells, 3.0f);
             }
+            //show progress circle on top of basement area
+            baseArea.reservationProgressCircle.GetComponent<Image>().fillAmount = (float)reservatedAreaCount / areas.Count;
         }
     }
     /// <summary>
@@ -118,7 +125,7 @@ public class Region
     {
         reservatedAreaCount = 1; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
-        areas.ForEach(area => area.addReservation());
+        areas.ForEach(area => area.AddReservation());
     }
     /// <summary>
     /// 更新洲濒危动物列表(每当一个事件流开始/结束时被调用)
@@ -223,7 +230,8 @@ public class Region
     public void SetBaseArea(Area area)
     {
         baseArea = area;
-        area.markBasement.SetActive(true);
+        area.basementLabel.SetActive(true);
+        area.basementLabel.GetComponentInChildren<Text>().text = name + "基地";
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
@@ -318,6 +326,25 @@ public class Region
     {
         center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
     }
+
+    /// <summary>
+    /// 重新计算洲最高点
+    /// </summary>
+    public void CalculateHighestPosition()
+    {
+        List<Area> orderedAreas = areas.OrderByDescending(a => a.GetComponentInParent<HexCell>().transform.position.y).ToList();
+        highestPosition = orderedAreas[0].GetComponentInParent<HexCell>().transform.position;
+    }
+
+    /// <summary>
+    /// 获取洲最高点坐标
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetHighestPosition()
+    {
+        return highestPosition;
+    }
+
     /// <summary>
     /// 获取洲中心坐标
     /// </summary>
@@ -362,6 +389,41 @@ public class Region
         return bottom.transform.position.z;
     }
 
+    public Region GetSouthRegion()
+    {
+        return southR;
+    }
+
+    public Region GetNorthRegion()
+    {
+        return northR;
+    }
+    public Region GetEastRegion()
+    {
+        return eastR;
+    }
+    public Region GetWestRegion()
+    {
+        return westR;
+    }
+
+    public void SetSouthRegion(Region region)
+    {
+        southR = region;
+    }
+
+    public void SetNorthRegion(Region region)
+    {
+        northR = region;
+    }
+    public void SetEastRegion(Region region)
+    {
+        eastR = region;
+    }
+    public void SetWestRegion(Region region)
+    {
+        westR = region;
+    }
 
     /// <summary>
     /// 获取洲大小

@@ -22,6 +22,6 @@ public class AreaAction : Action
     public virtual void actionEffect(Area area) { }
     public virtual bool enabled(Area area)
     {
-        return (!needProceedInBase || area.isBasement()) && preFinishActions.Find(action => !action.finishedOnceIn(area)) == null;
+        return (!needProceedInBase || area.IsBasement()) && preFinishActions.Find(action => !action.finishedOnceIn(area)) == null;
     }
 }

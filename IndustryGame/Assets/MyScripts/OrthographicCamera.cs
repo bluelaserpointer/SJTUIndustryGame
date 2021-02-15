@@ -12,22 +12,22 @@ public class OrthographicCamera : MonoBehaviour
     public float worldOrthoSize;
     public float mouseAreaOrthoSize = 7f;
     public float keyAreaOrthoSize = 9f;
-    public float maskAreaOrthoSize = 15f;    
+    public float maskAreaOrthoSize = 20f;
     public float minObserveRegionSize = 30f;
     private float observeRegionSizeOffset = 5f;
-    private float actualScrollSize;
+    public float actualScrollSize;
     private float maxObserveRegionSize;
     private float currentSize;
 
 
     [Header("Speed for different lerps")]
     public float sizeSpeed = 7.5f;
-    public float positionSpeed = 0.3f;
+    public float positionSpeed = 0.2f;
     public float regionObserveTranSpeed = 4.0f;
     public float regionObserveSizeSpeed = 10f;
-    public float areaToRegionSpeedChangeOffset = 10f;
-    public float areaToRegionSpeedChangeStep = 0.008f;
-    private bool areaToRegionFlag = false;
+    public float areaToRegionSpeedChangeOffset = 30f;
+    public float areaToRegionSpeedChangeStep = 0.025f;
+    private bool modeChangeFlag = false;
     private float currentPositionSpeed;
 
 
@@ -58,14 +58,21 @@ public class OrthographicCamera : MonoBehaviour
     private HexGrid hexGrid;
     private HexCell currentHexCell;
     private Area currentArea;
+    private Region currentRegion;
     private int focusMask;
 
     [Header("Click Steps")]
     public float doubleClickStep = 0.5f;
     private float lastClickTime;
+    public float regionBorderChangeStep = 1f;
+    public KeyCode lastDirection;
+    public float lastRegionBorderChangeTime;
+    public float totalRegionBorderChangeTime;
 
     [Header("AreaDetails HUD")]
     public GameObject AreaDetailsHUDGameObject;
+    [Header("RegionDetails HUD")]
+    public GameObject RegionDetailsHUDGameObject;
     private AreaDetailsHUD AreaDetailsHUD;
 
     private void Awake()
@@ -78,6 +85,7 @@ public class OrthographicCamera : MonoBehaviour
     {
         mainCamera = Camera.main;
         Region region = Stage.GetRegions().Find(eachRegion => eachRegion.GetRegionId() == -1);
+
         mainCamera.transform.position = region.GetCenter();
         mainCamera.orthographicSize = worldOrthoSize;
 
@@ -95,35 +103,43 @@ public class OrthographicCamera : MonoBehaviour
 
         AreaDetailsHUD = AreaDetailsHUDGameObject.GetComponent<AreaDetailsHUD>();
 
-        List<Region> regions = Stage.GetRegions(); 
+        List<Region> regions = Stage.GetRegions();
         float maxSize = 0f;
-        for(int i = 0; i < regions.Count; i++)
+        for (int i = 0; i < regions.Count; i++)
         {
             float currSize = GetRequiredOrthoSize(mainCamera, regions[i]);
-            if(maxSize < currSize)
+            regions[i].observeOrthoSize = currSize;
+
+            if (maxSize < currSize)
                 maxSize = currSize;
         }
 
         maxObserveRegionSize = maxSize;
     }
 
-    void Update () {
+    void Update()
+    {
         HandleCameraFocus();
-        AreaDetailsHUDGameObject.SetActive(currentArea != null);
+        AreaDetailsHUDGameObject.SetActive(areaFocus);
         AreaDetailsHUD.SetMousePointingArea();
+        RegionDetailsHUDGameObject.SetActive(regionFocus);
+        RegionDetailsHUD.SetMousePointingRegion();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, currentSize, Time.deltaTime * sizeSpeed);
 
 
-        if(areaToRegionFlag)
+        if (modeChangeFlag)
         {
-            if(Quaternion.Angle(transform.rotation, currentRotation) < areaToRegionSpeedChangeOffset)
+            if (Quaternion.Angle(transform.rotation, currentRotation) < areaToRegionSpeedChangeOffset)
             {
-                currentPositionSpeed = Mathf.Lerp(currentPositionSpeed , positionSpeed, areaToRegionSpeedChangeStep);
+                currentPositionSpeed = Mathf.Lerp(currentPositionSpeed, positionSpeed, areaToRegionSpeedChangeStep);
                 transform.position = Vector3.Lerp(transform.position, currentPosition, currentPositionSpeed);
-            }else{
+            }
+            else
+            {
                 currentPositionSpeed = Time.deltaTime * positionSpeed;
                 transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * positionSpeed);
             }
@@ -147,13 +163,13 @@ public class OrthographicCamera : MonoBehaviour
         List<List<Animal>> animals = currentArea.getSpeciesDangerTypes();
         int areaMostDangerType = 0;
 
-        if(animals.Count > 0)
+        if (animals.Count > 0)
         {
             AreaAnimalSFXRandomPlayer.setAnimalList(animals);
             int dangerTypeNum = EnumHelper.GetMaxEnum<SpeciesDangerType>();
-            for(int i = dangerTypeNum; i > 0; i--)
+            for (int i = dangerTypeNum; i > 0; i--)
             {
-                if(animals[i].Count > 0)
+                if (animals[i].Count > 0)
                 {
                     areaMostDangerType = i;
                     break;
@@ -199,19 +215,23 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 设置Camera属性
     /// </summary>
-    private void SetCurrentCameraParam(float currSize, Vector3 currPos, Quaternion currRot, bool areaToRegion)
+    private void SetCurrentCameraParam(float currSize, Vector3 currPos, Quaternion currRot, bool modeChange)
     {
+        if (modeChange)
+            actualScrollSize = currSize;
+
         currentSize = currSize;
         currentPosition = currPos;
         currentRotation = currRot;
-        areaToRegionFlag = areaToRegion;
+        modeChangeFlag = modeChange;
     }
 
     /// <summary>
     /// 设置Camera聚焦时屏蔽Object
     /// </summary>
-    private void HandleCameraFocus() {
-        if(mainCamera.orthographicSize <= maskAreaOrthoSize)
+    private void HandleCameraFocus()
+    {
+        if (mainCamera.orthographicSize <= maskAreaOrthoSize)
         {
             mainCamera.cullingMask &= ~(1 << 8); // 关闭层x
         }
@@ -219,11 +239,11 @@ public class OrthographicCamera : MonoBehaviour
         {
             mainCamera.cullingMask |= (1 << 8);
         }
-        
-        if(!areaFocus && !regionFocus)
+
+        if (!areaFocus && !regionFocus)
         {
             currentSize = actualScrollSize;
-            
+
         }
 
         HandleRegionFocus();
@@ -242,13 +262,13 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void SetAreaFocus(bool value)
     {
-        if(!areaFocus && !value)
+        if (!areaFocus && !value)
             return;
-        
+
         // if(value)
-            // HandleFocusAreaAudio();
+        // HandleFocusAreaAudio();
         // else
-            HandleGlobalAudio();
+        HandleGlobalAudio();
 
         areaFocus = value;
     }
@@ -256,9 +276,34 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 执行地区聚焦
     /// </summary>
-    public void FocusOnArea(HexCell hexCell, float OrthoSize)
+    public void FocusOnAreaByHexCell(HexCell hexCell, float OrthoSize, bool modeChange)
     {
+        if (hexCell == null)
+            return;
+
         Area area = hexCell.transform.GetComponentInChildren<Area>();
+
+        currentHexCell = hexCell;
+        currentArea = area;
+
+        Vector3 focusPosition = hexCell.transform.position;
+
+        SetCurrentCameraParam(OrthoSize, GetAreaFocusPosition(focusPosition), orthoAreaRotation, modeChange);
+
+        SetAreaFocus(true);
+    }
+
+    /// <summary>
+    /// 执行地区聚焦
+    /// </summary>
+    public void FocusOnAreaByRaycast(RaycastHit hit, float OrthoSize)
+    {
+        HexCell hexCell = hexGrid.GetCell(hit.point);
+
+        Area area = hexCell.transform.GetComponentInChildren<Area>();
+
+        if (area.region.GetRegionId() == -1)
+            return;
 
         currentHexCell = hexCell;
         currentArea = area;
@@ -273,7 +318,7 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 管理地区聚焦
     /// </summary>
-    private void HandleAreaFocus()
+    private void HandleAreaFocus(ref bool areaToRegionFlag)
     {
         if (areaFocus)
         {
@@ -298,39 +343,39 @@ public class OrthographicCamera : MonoBehaviour
 
             if (focusHexCell != null)
             {
-                FocusOnArea(focusHexCell, keyAreaOrthoSize);
+                FocusOnAreaByHexCell(focusHexCell, keyAreaOrthoSize, false);
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                actualScrollSize = worldOrthoSize;
-                SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
-                currentArea = null;
-                regionFocus = false;
-                SetAreaFocus(false);
+                // Debug.Log("Escaped from area control " + maxObserveRegionSize);
+                areaToRegionFlag = true;
+                // SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
+                FocusOnRegion(currentRegion, true);
             }
-        } else if (!IsPointerOverUIObject())
+        }
+        else if (!IsPointerOverUIObject())
         {
             // Focusing with mouse
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(inputRay, out hit))
             {
-                if(Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     float timeSinceLastClick = Time.time - lastClickTime;
                     lastClickTime = Time.time;
 
-                    if(timeSinceLastClick < doubleClickStep)
+                    if (timeSinceLastClick < doubleClickStep)
                     {
-                        actualScrollSize = mouseAreaOrthoSize;
-                        FocusOnArea(currentArea.GetComponentInParent<HexCell>(), mouseAreaOrthoSize);
+                        FocusOnAreaByRaycast(hit, mouseAreaOrthoSize);
 
                         regionFocus = false;
                         SetAreaFocus(true);
-                    }else{
-                        SetCurrentAreaByRaycast(hit);
                     }
+                    // else{
+                    //     SetCurrentAreaByRaycast(hit);
+                    // }
                 }
             }
         }
@@ -342,11 +387,13 @@ public class OrthographicCamera : MonoBehaviour
 
         Area area = hexCell.transform.GetComponentInChildren<Area>();
 
-        if(area.region.GetRegionId() == -1)
+        if (area.region.GetRegionId() == -1)
             return;
-
+        // Debug.Log("Setting current area by raycast");
         currentHexCell = hexCell;
         currentArea = area;
+        currentRegion = area.region;
+
         // Debug.Log("Set current area by raycast");
     }
 
@@ -357,11 +404,11 @@ public class OrthographicCamera : MonoBehaviour
     {
         // Stored width and height are just your Screen.Width and Screen.Height
         float aspectRatio = (float)16 / (float)9;
- 
+
         // 1: If you have an orthographic size of 5, the viewport will contain exactly 10          
         // units of world space
         float yUnits = orthographicCamera.orthographicSize * 2.0f;
- 
+
         // 2: horizontal size is based on units * aspect ratio
         float xUnits = yUnits * aspectRatio;
 
@@ -371,15 +418,15 @@ public class OrthographicCamera : MonoBehaviour
         // 4: Convert to actual X width. This can now be considered as Viewport normalised        
         // to 1 length
         float newXUnits = viewportSize * xUnits;
- 
+
         // 5: Get the Y Units which match these X Units                                            
         // -> Reverse xUnits = yUnits * aspectratio
         float newYUnits = newXUnits / aspectRatio;
- 
+
         // 6: Divide by 2 to get the actual ortho size -> again reverse of getting YUnits          
         // using ortho size
         float newOrtho = newYUnits / 2.0f;
- 
+
         // 7: Apply
         return newOrtho;
     }
@@ -387,9 +434,18 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 执行洲聚焦
     /// </summary>
-    private void FocusOnRegion()
+    private void FocusOnRegion(Region region, bool modeChange)
     {   
-        SetCurrentCameraParam(actualScrollSize , currentPosition, orthoRegionRotation, false);
+        if(region == null || region.GetRegionId() == -1)
+            return;
+
+        Debug.Log("From " + currentRegion.GetRegionId() + " to " + region.GetRegionId());
+
+        regionFocus = true;
+        SetAreaFocus(false);
+        currentArea = null;
+        currentRegion = region;
+        SetCurrentCameraParam(region.observeOrthoSize , region.GetCenter(), orthoRegionRotation, modeChange);
     }
 
     /// <summary>
@@ -398,11 +454,11 @@ public class OrthographicCamera : MonoBehaviour
     private void HandleRegionFocus()
     {
         // Handling mouse scroll
-        HandleGlobalFocusScrollControl();        
+        // HandleGlobalFocusScrollControl();        
+        bool areaToRegionFlag = false;
+        HandleAreaFocus(ref areaToRegionFlag);
 
-        HandleAreaFocus();
-
-        if(areaFocus)
+        if (areaFocus || areaToRegionFlag)
             return;
 
 
@@ -411,21 +467,32 @@ public class OrthographicCamera : MonoBehaviour
         bool raycasted = Physics.Raycast(inputRay, out hit);
 
         // Handling RegionFocus Control
-        if(regionFocus == true)
+        if (regionFocus == true)
             HandleRegionFocusControl();
-        
 
-        
-        // // Handling Mouse Click Region
-        // if(!IsPointerOverUIObject())
-        // {
-        //     if(raycasted)
-        //     {
-        //         // if(Input.GetMouseButtonDown(0))
-        //         //     SetCurrentRegionByRaycast(hit);
-        //         // FocusOnRegion(hexGrid.GetCell(hit.point));
-        //     }
-        // }
+
+
+        // Handling Mouse Click Region
+        if (!IsPointerOverUIObject())
+        {
+            if (raycasted)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    HexCell hexCell = hexGrid.GetCell(hit.point);
+                    if (hexCell != null)
+                    {
+                        Area area = hexCell.transform.GetComponentInChildren<Area>();
+                        if (area != null)
+                        {
+                            SetCurrentAreaByRaycast(hit);
+                            if(regionFocus == false)
+                                FocusOnRegion(area.region, true);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -433,38 +500,38 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void HandleGlobalFocusScrollControl()
     {
-        if(!IsPointerOverUIObject())
+        if (!IsPointerOverUIObject())
         {
-            
+
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
-                if(actualScrollSize > mouseAreaOrthoSize)
+                if (actualScrollSize > mouseAreaOrthoSize)
                     actualScrollSize -= regionObserveSizeSpeed;
-            
+
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
-                if(actualScrollSize < worldOrthoSize)
+                if (actualScrollSize < worldOrthoSize)
                     actualScrollSize += regionObserveSizeSpeed;
 
-            if(actualScrollSize < minObserveRegionSize)
+            if (actualScrollSize < minObserveRegionSize)
             {
-                if(currentArea != null)
+                if (currentArea != null)
                 {
-                    FocusOnArea(currentArea.GetComponentInParent<HexCell>(), mouseAreaOrthoSize);
+                    FocusOnAreaByHexCell(currentArea.GetComponentInParent<HexCell>(), mouseAreaOrthoSize, true);
 
                     regionFocus = false;
                     SetAreaFocus(true);
                 }
 
-            }else if(actualScrollSize >= minObserveRegionSize && actualScrollSize < maxObserveRegionSize)
+            }
+            else if (actualScrollSize >= minObserveRegionSize && actualScrollSize < maxObserveRegionSize)
             {
-                FocusOnRegion();
+                FocusOnRegion(currentRegion, true);
 
-                regionFocus = true;
-                SetAreaFocus(false);
 
-            }else if(actualScrollSize >= maxObserveRegionSize)
+            }
+            else if (actualScrollSize >= maxObserveRegionSize)
             {
                 // Switch to world
-                SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
+                SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, true);
 
                 regionFocus = false;
                 SetAreaFocus(false);
@@ -478,23 +545,169 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void HandleRegionFocusControl()
     {
+        float x = currentPosition.x;
+        float z = currentPosition.z;
+        float xMinLimit = currentRegion.GetLeft();
+        float xMaxLimit = currentRegion.GetRight();
+        float zMinLimit = currentRegion.GetBottom() + areaPositionOffset.z;
+        float zMaxLimit = currentRegion.GetTop() + areaPositionOffset.z;
+
+
+        float currTime = Time.time;
+
+        Vector3 prevPosition = currentPosition;
 
         if(Input.GetKey(KeyCode.S))
-            currentPosition.z -= regionObserveTranSpeed;
+        {
+            if(currentPosition.z > zMinLimit)
+            {
+                currentPosition.z -= regionObserveTranSpeed;
+            }else{
+                Region southRegion = currentRegion.GetSouthRegion();
+                if(southRegion != null)
+                {
+                    if(lastDirection == KeyCode.S)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(southRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.S;
+                    }
+                }
+            }
+        }
+
         if(Input.GetKey(KeyCode.W))
-            currentPosition.z += regionObserveTranSpeed;
+        {
+            if(currentPosition.z < zMaxLimit)
+            {
+                currentPosition.z += regionObserveTranSpeed;
+            }else{
+                Region northRegion = currentRegion.GetNorthRegion();
+                if(northRegion != null)
+                {
+                    if(lastDirection == KeyCode.W)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(northRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.W;
+                    }
+                }
+
+            // currentPosition.z += regionObserveTranSpeed;
+            }
+        }
 
         if(Input.GetKey(KeyCode.A))
-            currentPosition.x -= regionObserveTranSpeed;
+        {
+            if(currentPosition.x > xMinLimit)
+                currentPosition.x -= regionObserveTranSpeed;
+            else{
+                Region westRegion = currentRegion.GetWestRegion();
+                if(westRegion != null)
+                {
+                    if(lastDirection == KeyCode.A)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(westRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.A;
+                    }
+                }
+            }
+        }
+
         if(Input.GetKey(KeyCode.D))
-            currentPosition.x += regionObserveTranSpeed;
+        {
+            if(currentPosition.x < xMaxLimit)
+                currentPosition.x += regionObserveTranSpeed;
+            else{
+                Region eastRegion = currentRegion.GetEastRegion();
+                if(eastRegion != null)
+                {
+                    if(lastDirection == KeyCode.D)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(eastRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.D;
+                    }
+                }
+            }
+        }
+
+        lastRegionBorderChangeTime = currTime;
+
+
+        if (!IsPointerOverUIObject())
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                if (currentSize > maskAreaOrthoSize)
+                {
+                    float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
+                    float ratio = regionObserveSizeSpeed / (currentSize - mouseAreaOrthoSize);
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                    currentPosition.y -= (currentPosition.y - currentRegion.GetHighestPosition().y) * ratio;
+                    
+                    currentSize -= regionObserveSizeSpeed;
+                }
+
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+                if (currentSize < worldOrthoSize)
+                {
+                    float angle = Quaternion.Angle(currentRotation, worldRotation);
+                    float ratio = regionObserveSizeSpeed / (worldOrthoSize - currentSize);
+                    // currentRotation = Quaternion.Slerp(currentRotation, worldRotation, ratio);
+                    // currentPosition.y = Mathf.Lerp(currentPosition.y, worldPosition.y, ratio);
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.right);
+                    currentPosition.y += (worldPosition.y - currentPosition.y) * ratio;
+                    
+
+                    currentSize += regionObserveSizeSpeed;
+                }
+        }
+
 
         // Exiting with esc
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            actualScrollSize = worldOrthoSize;
-            SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
-            currentArea = null;
+            // Debug.Log("Escaped from region control");
+
+            // FocusOnRegion();
+            SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, true);
             SetAreaFocus(false);
             regionFocus = false;
         }
@@ -506,5 +719,10 @@ public class OrthographicCamera : MonoBehaviour
     public static Area GetMousePointingArea()
     {
         return instance != null ? instance.currentArea : null;
+    }
+
+    public static Region GetMousePointingRegion()
+    {
+        return instance != null ? instance.currentRegion : null;
     }
 }
