@@ -28,6 +28,7 @@ public class Region
     private float baseReservationPower = 2f, reservationProgress;
     private Area baseArea;
     private Area left, right, bottom, top;
+    private Region northR, southR, westR, eastR;
     private Vector3 center;
     public float observeOrthoSize;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
@@ -363,6 +364,41 @@ public class Region
         return bottom.transform.position.z;
     }
 
+    public Region GetSouthRegion()
+    {
+        return southR;
+    }
+
+    public Region GetNorthRegion()
+    {
+        return northR;
+    }
+    public Region GetEastRegion()
+    {
+        return eastR;
+    }
+    public Region GetWestRegion()
+    {
+        return westR;
+    }
+
+    public void SetSouthRegion(Region region)
+    {
+        southR = region;
+    }
+
+    public void SetNorthRegion(Region region)
+    {
+        northR = region;
+    }
+    public void SetEastRegion(Region region)
+    {
+        eastR = region;
+    }
+    public void SetWestRegion(Region region)
+    {
+        westR = region;
+    }
 
     /// <summary>
     /// 获取洲大小
