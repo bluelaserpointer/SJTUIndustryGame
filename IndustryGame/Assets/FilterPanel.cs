@@ -15,8 +15,12 @@ public class FilterPanel : MonoBehaviour
     [Header("Event选项的Prefab")]
     public GameObject EventSelectionPrefab;
     private List<GameObject> GeneratedEventSelections = new List<GameObject>();
-    private FilterPanelFocusHelper focusHelper;
-    private FilterPanelRegionSelect StartSelectedRegion;
+    public FilterPanelFocusHelper focusHelperForRegion;
+    public FilterPanelEventFocusHelper focusHelperForEvent;
+
+    public GameObject AnimalSelectionPanel;
+
+    private GameObject GeneratedAnimalSelectionPanel;
 
     void Awake()
     {
@@ -29,10 +33,9 @@ public class FilterPanel : MonoBehaviour
     void Start()
     {
         RefreshRegions();
-        StartSelectedRegion = instance.GeneratedRegionSelections[0].GetComponent<FilterPanelRegionSelect>();
+        FilterPanelRegionSelect StartSelectedRegion = instance.GeneratedRegionSelections[0].GetComponent<FilterPanelRegionSelect>();
         RefreshEventsDueToRegionSelection(StartSelectedRegion.region);
-        focusHelper = gameObject.GetComponent<FilterPanelFocusHelper>();
-        focusHelper.SelectImage(StartSelectedRegion.BackgroundImage, StartSelectedRegion.RegionName);
+        focusHelperForRegion.SelectImage(StartSelectedRegion.BackgroundImage, StartSelectedRegion.RegionName);
     }
 
     void Update()
@@ -64,5 +67,16 @@ public class FilterPanel : MonoBehaviour
             clone.GetComponent<FilterPanelEventSelect>().mainEvent = mainEvent;
             instance.GeneratedEventSelections.Add(clone);
         }
+    }
+
+    public static void GenerateAnimalSelectionPanel(MainEvent mainEvent)
+    {
+        if (instance.GeneratedAnimalSelectionPanel != null)
+        {
+            Destroy(instance.GeneratedAnimalSelectionPanel);
+        }
+        instance.GeneratedAnimalSelectionPanel = Instantiate(instance.AnimalSelectionPanel, instance.transform, false);
+        instance.GeneratedAnimalSelectionPanel.GetComponent<FilterPanelAnimalPanel>().mainEvent = mainEvent;
+        instance.GeneratedAnimalSelectionPanel.GetComponent<FilterPanelAnimalPanel>().RefreshUI();
     }
 }

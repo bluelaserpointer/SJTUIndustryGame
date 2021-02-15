@@ -13,18 +13,6 @@ public class FilterPanelFocusHelper : MonoBehaviour
     private Image SelectedButton;
     private Text SelectedText;
 
-    [HideInInspector]
-    public Image StartSelectedButton;
-    [HideInInspector]
-    public Text StartSelectedText;
-
-    void Start()
-    {
-        if (StartSelectedButton != null)
-        {
-            SelectImage(StartSelectedButton, StartSelectedText);
-        }
-    }
 
     public void SelectImage(Image SelectButton, Text SelectText)
     {

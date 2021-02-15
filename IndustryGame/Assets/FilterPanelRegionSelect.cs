@@ -15,7 +15,7 @@ public class FilterPanelRegionSelect : MonoBehaviour
     {
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(() => FilterPanel.RefreshEventsDueToRegionSelection(region));
-        button.onClick.AddListener(() => FilterPanel.instance.GetComponent<FilterPanelFocusHelper>().SelectImage(BackgroundImage, RegionName));
+        button.onClick.AddListener(() => FilterPanel.instance.focusHelperForRegion.SelectImage(BackgroundImage, RegionName));
     }
 
     void Update()

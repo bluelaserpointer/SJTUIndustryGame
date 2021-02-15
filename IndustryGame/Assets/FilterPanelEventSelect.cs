@@ -9,11 +9,14 @@ public class FilterPanelEventSelect : MonoBehaviour
 
     public Text EventName;
 
+    public Image BackgroundImage;
+
     private Button button;
     void Start()
     {
         button = gameObject.GetComponent<Button>();
-        // button.onClick.AddListener(() => FilterPanel.RefreshEventsDueToRegionSelection(region));
+        button.onClick.AddListener(() => FilterPanel.instance.focusHelperForEvent.SelectImage(BackgroundImage));
+        button.onClick.AddListener(() => FilterPanel.GenerateAnimalSelectionPanel(mainEvent));
     }
 
     void Update()
