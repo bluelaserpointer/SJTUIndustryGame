@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 洲
@@ -61,9 +62,10 @@ public class Region
         {
             reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
             Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
-            while (reservationProgress >= reservationTime + concernedAnimals.Count * 0.2f)
+            float reservationCostOfOneArea = reservationTime + concernedAnimals.Count * 0.2f;
+            while (reservationProgress >= reservationCostOfOneArea)
             {
-                reservationProgress -= reservationTime;
+                reservationProgress -= reservationCostOfOneArea;
                 if (++reservatedAreaCount >= areas.Count)
                 {
                     reservationCompleted();
@@ -95,6 +97,8 @@ public class Region
             {
                 lastHighLightedCellAndTime.Add(lastHighLightedCells, 3.0f);
             }
+            //show progress circle on top of basement area
+            baseArea.reservationProgressCircle.GetComponent<Image>().fillAmount = (float)reservatedAreaCount / areas.Count;
         }
     }
     /// <summary>
@@ -120,7 +124,7 @@ public class Region
     {
         reservatedAreaCount = 1; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
-        areas.ForEach(area => area.addReservation());
+        areas.ForEach(area => area.AddReservation());
     }
     /// <summary>
     /// 更新洲濒危动物列表(每当一个事件流开始/结束时被调用)
@@ -225,7 +229,8 @@ public class Region
     public void SetBaseArea(Area area)
     {
         baseArea = area;
-        area.markBasement.SetActive(true);
+        area.basementLabel.SetActive(true);
+        area.basementLabel.GetComponentInChildren<Text>().text = name + "基地";
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
