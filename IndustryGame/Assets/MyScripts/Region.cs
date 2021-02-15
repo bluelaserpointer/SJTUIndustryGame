@@ -61,9 +61,10 @@ public class Region
         {
             reservationProgress += GetReservationPower() * Timer.getTimeSpeed() * Time.deltaTime;
             Stack<HexCell> lastHighLightedCells = new Stack<HexCell>();
-            while (reservationProgress >= reservationTime + concernedAnimals.Count * 0.2f)
+            float reservationCostOfOneArea = reservationTime + concernedAnimals.Count * 0.2f;
+            while (reservationProgress >= reservationCostOfOneArea)
             {
-                reservationProgress -= reservationTime;
+                reservationProgress -= reservationCostOfOneArea;
                 if (++reservatedAreaCount >= areas.Count)
                 {
                     reservationCompleted();
@@ -95,6 +96,8 @@ public class Region
             {
                 lastHighLightedCellAndTime.Add(lastHighLightedCells, 3.0f);
             }
+            //show progress circle on top of basement area
+            baseArea.reservationProgressCircle.GetComponent<Image>().fillAmount = (float)reservatedAreaCount / areas.Count;
         }
     }
     /// <summary>

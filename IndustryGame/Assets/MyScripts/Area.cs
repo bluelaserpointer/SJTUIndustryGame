@@ -32,6 +32,7 @@ public class Area : MonoBehaviour
     public GameObject animalNumberPop;
     public GameObject animalNumberTooltip;
     public GameObject basementLabel;
+    public GameObject reservationProgressCircle;
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
