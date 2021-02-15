@@ -29,7 +29,8 @@ public class Area : MonoBehaviour
     public float rainSnowRatio = 0.4f;
     public float rainFallRatio = 0.3f;
 
-    public GameObject animalNumberOval;
+    public GameObject animalNumberPop;
+    public GameObject animalNumberTooltip;
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
@@ -55,7 +56,7 @@ public class Area : MonoBehaviour
             building.FinishConstruction();
         }
         markBasement.SetActive(false);
-        animalNumberOval.SetActive(false);
+        animalNumberPop.SetActive(false);
     }
     /// <summary>
     /// 获取指定动物数量
@@ -212,7 +213,9 @@ public class Area : MonoBehaviour
             if (region.GetConcernedSpecies().Contains(animal)) //only reservate concerned animals
             {
                 float change = pair.Value.GetChange();
-                animalNumberOval.gameObject.GetComponentInChildren<Text>().text = pair.Value.GetRecordValue().ToString() + "\n" + (change > 0 ? "+" : "") + change;
+                string animalNumberStr = pair.Value.GetRecordValue().ToString();
+                string animalChangeStr = (change > 0 ? "+" : "") + change;
+                animalNumberPop.gameObject.GetComponentInChildren<Text>().text = animalNumberStr + "\n" + animalChangeStr;
                 Color backgroundColor;
                 if (change < 0)
                 {
@@ -224,16 +227,17 @@ public class Area : MonoBehaviour
                 {
                     backgroundColor = Color.white;
                 }
-                animalNumberOval.gameObject.GetComponent<Image>().color = backgroundColor;
+                animalNumberPop.gameObject.GetComponent<Image>().color = backgroundColor;
                 if (animalRecords.ContainsKey(animal))
                 {
                     animalRecords[animal].AddRecord(pair.Value);
-                    animalNumberOval.SetActive(true);
+                    animalNumberPop.SetActive(true);
                 }
                 else
                 {
                     animalRecords.Add(animal, new AmountChangeRecords(pair.Value));
                 }
+                animalNumberTooltip.gameObject.GetComponentInChildren<Text>().text = "现有个体数: " + animalNumberStr + ", 距上次统计变化" + animalChangeStr;
             }
         }
     }
