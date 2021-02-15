@@ -120,7 +120,7 @@ public class Region
     {
         reservatedAreaCount = 1; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
-        areas.ForEach(area => area.addReservation());
+        areas.ForEach(area => area.AddReservation());
     }
     /// <summary>
     /// 更新洲濒危动物列表(每当一个事件流开始/结束时被调用)
