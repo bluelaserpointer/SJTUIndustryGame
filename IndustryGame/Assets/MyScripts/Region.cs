@@ -29,6 +29,7 @@ public class Region
     private Area baseArea;
     private Area left, right, bottom, top;
     private Vector3 center;
+    public float observeOrthoSize;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
