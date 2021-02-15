@@ -64,6 +64,10 @@ public class OrthographicCamera : MonoBehaviour
     [Header("Click Steps")]
     public float doubleClickStep = 0.5f;
     private float lastClickTime;
+    public float regionBorderChangeStep = 1f;
+    public KeyCode lastDirection;
+    public float lastRegionBorderChangeTime;
+    public float totalRegionBorderChangeTime;
 
     [Header("AreaDetails HUD")]
     public GameObject AreaDetailsHUDGameObject;
@@ -344,7 +348,7 @@ public class OrthographicCamera : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.Log("Escaped from area control " + maxObserveRegionSize);
+                // Debug.Log("Escaped from area control " + maxObserveRegionSize);
                 areaToRegionFlag = true;
                 // SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
                 FocusOnRegion(currentRegion, true);
@@ -385,7 +389,7 @@ public class OrthographicCamera : MonoBehaviour
 
         if (area.region.GetRegionId() == -1)
             return;
-        Debug.Log("Setting current area by raycast");
+        // Debug.Log("Setting current area by raycast");
         currentHexCell = hexCell;
         currentArea = area;
         currentRegion = area.region;
@@ -431,14 +435,17 @@ public class OrthographicCamera : MonoBehaviour
     /// 执行洲聚焦
     /// </summary>
     private void FocusOnRegion(Region region, bool modeChange)
-    {
-        if (region == null)
+    {   
+        if(region == null || region.GetRegionId() == -1)
             return;
+
+        // Debug.Log("From " + currentRegion.GetRegionId() + " to " + region.GetRegionId());
 
         regionFocus = true;
         SetAreaFocus(false);
         currentArea = null;
-        SetCurrentCameraParam(region.observeOrthoSize, region.GetCenter(), orthoRegionRotation, modeChange);
+        currentRegion = region;
+        SetCurrentCameraParam(region.observeOrthoSize , region.GetCenter(), orthoRegionRotation, modeChange);
     }
 
     /// <summary>
@@ -537,29 +544,136 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void HandleRegionFocusControl()
     {
-        // float x = currentPosition.x;
-        // float z = currentPosition.z;
-        // float xMinLimit = currentRegion.GetLeft();
-        // float xMaxLimit = currentRegion.GetRight();
-        // float zMinLimit = currentRegion.GetBottom() + areaPositionOffset.z;
-        // float zMaxLimit = currentRegion.GetTop() + areaPositionOffset.z;
+        float x = currentPosition.x;
+        float z = currentPosition.z;
+        float xMinLimit = currentRegion.GetLeft();
+        float xMaxLimit = currentRegion.GetRight();
+        float zMinLimit = currentRegion.GetBottom() + areaPositionOffset.z;
+        float zMaxLimit = currentRegion.GetTop() + areaPositionOffset.z;
 
 
+        float currTime = Time.time;
 
-        if (Input.GetKey(KeyCode.S))
-            currentPosition.z -= regionObserveTranSpeed;
-        if (Input.GetKey(KeyCode.W))
-            currentPosition.z += regionObserveTranSpeed;
+        Vector3 prevPosition = currentPosition;
 
-        if (Input.GetKey(KeyCode.A))
-            currentPosition.x -= regionObserveTranSpeed;
-        if (Input.GetKey(KeyCode.D))
-            currentPosition.x += regionObserveTranSpeed;
+        if(Input.GetKey(KeyCode.S))
+        {
+            if(currentPosition.z > zMinLimit)
+            {
+                currentPosition.z -= regionObserveTranSpeed;
+            }else{
+                Region southRegion = currentRegion.GetSouthRegion();
+                if(southRegion != null)
+                {
+                    if(lastDirection == KeyCode.S)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(southRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.S;
+                    }
+                }
+            }
+        }
+
+        if(Input.GetKey(KeyCode.W))
+        {
+            if(currentPosition.z < zMaxLimit)
+            {
+                currentPosition.z += regionObserveTranSpeed;
+            }else{
+                Region northRegion = currentRegion.GetNorthRegion();
+                if(northRegion != null)
+                {
+                    if(lastDirection == KeyCode.W)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(northRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.W;
+                    }
+                }
+
+            // currentPosition.z += regionObserveTranSpeed;
+            }
+        }
+
+        if(Input.GetKey(KeyCode.A))
+        {
+            if(currentPosition.x > xMinLimit)
+                currentPosition.x -= regionObserveTranSpeed;
+            else{
+                Region westRegion = currentRegion.GetWestRegion();
+                if(westRegion != null)
+                {
+                    if(lastDirection == KeyCode.A)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(westRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.A;
+                    }
+                }
+            }
+        }
+
+        if(Input.GetKey(KeyCode.D))
+        {
+            if(currentPosition.x < xMaxLimit)
+                currentPosition.x += regionObserveTranSpeed;
+            else{
+                Region eastRegion = currentRegion.GetEastRegion();
+                if(eastRegion != null)
+                {
+                    if(lastDirection == KeyCode.D)
+                    {
+                        totalRegionBorderChangeTime += currTime - lastRegionBorderChangeTime;
+
+                        if(totalRegionBorderChangeTime > regionBorderChangeStep)
+                        {
+                            FocusOnRegion(eastRegion, false);
+                            totalRegionBorderChangeTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        totalRegionBorderChangeTime = 0f;
+                        lastDirection = KeyCode.D;
+                    }
+                }
+            }
+        }
+
+        lastRegionBorderChangeTime = currTime;
 
         // Exiting with esc
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Escaped from region control");
+            // Debug.Log("Escaped from region control");
 
             // FocusOnRegion();
             SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, true);
