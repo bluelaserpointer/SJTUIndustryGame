@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class Area : MonoBehaviour
 {
     [SerializeField]
-    public GameObject rainFX, snowFX, markSpecialist, markBasement;
-    public string areaName;
+    public GameObject rainFX, snowFX, markSpecialist;
+    [HideInInspector] public string areaName;
     [TextArea]
     public string description;
     public EnvironmentType environmentType;
@@ -31,6 +31,7 @@ public class Area : MonoBehaviour
 
     public GameObject animalNumberPop;
     public GameObject animalNumberTooltip;
+    public GameObject basementLabel;
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
@@ -55,7 +56,7 @@ public class Area : MonoBehaviour
         {
             building.FinishConstruction();
         }
-        markBasement.SetActive(false);
+        basementLabel.SetActive(false);
         animalNumberPop.SetActive(false);
     }
     /// <summary>

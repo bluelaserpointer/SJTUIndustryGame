@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 洲
@@ -224,7 +225,8 @@ public class Region
     public void SetBaseArea(Area area)
     {
         baseArea = area;
-        area.markBasement.SetActive(true);
+        area.basementLabel.SetActive(true);
+        area.basementLabel.GetComponentInChildren<Text>().text = name + "基地";
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
