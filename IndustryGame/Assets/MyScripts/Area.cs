@@ -35,6 +35,7 @@ public class Area : MonoBehaviour
     public GameObject basementNameText;
     public GameObject basementLevelText;
     public GameObject reservationProgressCircle;
+    public GameObject basementTooltip;
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
