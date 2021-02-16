@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(UnityEngine.EventSystems.EventTrigger))]
 public class AnimalSelection : MonoBehaviour
 {
     [HideInInspector]
@@ -16,7 +18,14 @@ public class AnimalSelection : MonoBehaviour
     {
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(() => Stage.ShowAnimalNumberPop(animal));
-        // button.onClick.AddListener(() => FilterPanel.instance.)
+
+        EventTrigger trigger = gameObject.GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.Deselect;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(DeselectAnimal);
+
+        trigger.triggers.Add(entry);
     }
 
     void Update()
@@ -27,5 +36,10 @@ public class AnimalSelection : MonoBehaviour
     private void RefreshUI()
     {
         AnimalName.text = animal.animalName;
+    }
+
+    private void DeselectAnimal(BaseEventData pointData)
+    {
+        Stage.ShowAnimalNumberPop(null);
     }
 }
