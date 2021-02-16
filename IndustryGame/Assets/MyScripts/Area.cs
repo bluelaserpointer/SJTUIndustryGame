@@ -32,7 +32,10 @@ public class Area : MonoBehaviour
     public GameObject animalNumberPop;
     public GameObject animalNumberTooltip;
     public GameObject basementLabel;
+    public GameObject basementNameText;
+    public GameObject basementLevelText;
     public GameObject reservationProgressCircle;
+    public GameObject basementTooltip;
     private void Start()
     {
         environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
@@ -59,6 +62,7 @@ public class Area : MonoBehaviour
         }
         basementLabel.SetActive(false);
         animalNumberPop.SetActive(false);
+        markSpecialist.SetActive(false);
     }
     /// <summary>
     /// 获取指定动物数量
@@ -242,7 +246,11 @@ public class Area : MonoBehaviour
         string animalNumberStr = amount.HasValue ? amount.ToString() : "-";
         string animalChangeStr = change.HasValue ? (change.Value > 0 ? "+" + change.ToString() : change.ToString()) : "+0";
         Color backgroundColor;
-        if (change < 0)
+        if (amount == 0)
+        {
+            backgroundColor = Color.gray;
+        }
+        else if (change < 0)
         {
             backgroundColor = Color.red;
         }

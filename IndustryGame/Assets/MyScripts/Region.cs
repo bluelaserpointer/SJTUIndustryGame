@@ -24,6 +24,8 @@ public class Region
     private readonly List<MainEvent> includedEvents = new List<MainEvent>();
     private readonly List<Animal> concernedAnimals = new List<Animal>();
     private readonly HexSpiral hexSpiral = new HexSpiral();
+    private int basementLevel;
+    public int BasementLevel { get { return basementLevel; } }
     private int reservatedAreaCount;
     private float reservationTime = 1;
     private float baseReservationPower = 2f, reservationProgress;
@@ -88,7 +90,6 @@ public class Region
                     } else
                     {
                         //reservate progress debug
-                        InGameLog.AddLog("reservate: " + reservatedAreaCount + "/" + areas.Count);
                         cell.HighLighted = true;
                         lastHighLightedCells.Push(cell);
                     }
@@ -100,6 +101,11 @@ public class Region
             }
             //show progress circle on top of basement area
             baseArea.reservationProgressCircle.GetComponent<Image>().fillAmount = (float)reservatedAreaCount / areas.Count;
+            //basement tooltip
+            if (baseArea.basementTooltip.activeSelf)
+            {
+                baseArea.basementTooltip.GetComponentInChildren<Text>().text = "基地等级: " + RomanNumerals.convert(basementLevel) + "\n调查进度: " + reservatedAreaCount + " / " + areas.Count;
+            }
         }
     }
     /// <summary>
@@ -230,8 +236,10 @@ public class Region
     public void SetBaseArea(Area area)
     {
         baseArea = area;
+        basementLevel = 1;
         area.basementLabel.SetActive(true);
-        area.basementLabel.GetComponentInChildren<Text>().text = name + "基地";
+        area.basementNameText.GetComponent<Text>().text = name + "基地";
+        area.basementLevelText.GetComponent<Text>().text = RomanNumerals.convert(basementLevel);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
