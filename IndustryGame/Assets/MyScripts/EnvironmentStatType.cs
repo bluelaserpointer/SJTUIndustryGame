@@ -12,12 +12,24 @@ public class EnvironmentStatType : ScriptableObject
     public string description;
     [Header("是否是造成坏影响的指标")]
     public bool isNegative;
-    [Min(0.0f)]
-    [Header("每日最大增长比")]
-    public float maxGrowRate;
     [Header("造成的影响")]
     [Reorderable(generatablesNestClass: typeof(AreaBuff))]
     public AreaBuff.ReorderableList buffs;
+    [Header("影响每日最大增长比")]
+    [Min(0.0f)]
+    public float maxGrowRate;
+    [Header("初始数值区间(min, max)")]
+    public Vector2 initialValueRange;
+    /// <summary>
+    /// 累计动物数改变
+    /// </summary>
+    [HideInInspector]
+    public float animalChanged;
+
+    private void Awake()
+    {
+        animalChanged = 0;
+    }
 
     public static EnvironmentStatType[] GetAllTypes()
     {
@@ -76,8 +88,13 @@ public class EnvironmentStat
     {
         //affect current area
         buffs.ForEach(buff => buff.Idle(area, value));
+        AreaBuff buffAnimalAmount = buffs.Find(buff => buff is AreaBuff.BuffAnimalAmount);
+        if(buffAnimalAmount != null)
+        {
+            type.animalChanged += ((AreaBuff.BuffAnimalAmount)buffAnimalAmount).change;
+        }
         //grow and spread
-        if(isNegative)
+        if(value > 0.0f && maxGrowRate > 0)
         {
             //TODO: reference degree of people environment attention
             value *= 1.0f + UnityEngine.Random.Range(0.0f, maxGrowRate);
@@ -87,7 +104,7 @@ public class EnvironmentStat
                 value = 1.0f;
                 //spreads to nearby area
                 List<Area> neighborAreas = new List<Area>(area.GetNeighborAreas());
-                neighborAreas[UnityEngine.Random.Range(0, neighborAreas.Count)].AddEnviromentStat(type, overflow);
+                neighborAreas[UnityEngine.Random.Range(0, neighborAreas.Count)].AddEnvironmentStat(type, overflow);
             }
         }
     }

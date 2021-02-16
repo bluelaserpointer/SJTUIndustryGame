@@ -15,15 +15,16 @@ MonoBehaviour:
   statName: "\u76D7\u730E"
   description: "\u975E\u6CD5\u7684\u76D7\u730E\u884C\u4E3A\uFF0C\u5371\u5BB3\u6FD2\u5371\u52A8\u7269\u7684\u751F\u5B58"
   isNegative: 1
-  maxGrowRate: 0.05
-  valueLimit: 1
   buffs:
     List:
     - id: 0
+  maxGrowRate: 0
+  initialValueRange: {x: 0.3, y: 0.7}
+  animalChanged: -48906
   references:
     version: 1
     00000000:
       type: {class: AreaBuff/BuffAnimalAmount, ns: , asm: Assembly-CSharp}
       data:
         animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
-        change: -3
+        change: -1
