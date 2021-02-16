@@ -231,7 +231,8 @@ public class Region
     {
         baseArea = area;
         area.basementLabel.SetActive(true);
-        area.basementLabel.GetComponentInChildren<Text>().text = name + "基地";
+        area.basementNameText.GetComponent<Text>().text = name + "基地";
+        area.basementLevelText.GetComponent<Text>().text = "I";
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
