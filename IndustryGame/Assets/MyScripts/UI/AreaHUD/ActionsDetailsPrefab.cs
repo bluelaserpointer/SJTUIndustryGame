@@ -9,6 +9,7 @@ public class ActionsDetailsPrefab : MonoBehaviour
 
     public void RefreshUI(AreaAction areaAction)
     {
-        ActionNameText.text = areaAction.actionName;
+        ActionNameText.text = areaAction.name;
+        Debug.Log("action Name: " + ActionNameText.text);
     }
 }

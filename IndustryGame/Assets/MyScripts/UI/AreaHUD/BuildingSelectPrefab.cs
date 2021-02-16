@@ -11,16 +11,16 @@ public class BuildingSelectPrefab : MonoBehaviour
     public Text MoneyCost;
     public Text TimeCost;
 
-    public void RefreshUI (BuildingInfo buildingInfo)
+    public void RefreshUI(BuildingInfo buildingInfo)
     {
         this.buildingInfo = buildingInfo;
         buildingName.text = buildingInfo.buildingName;
         //buildingDescription.text = buildingInfo.description;
-        //MoneyCost.text = buildingInfo.moneyCost.ToString();
+        MoneyCost.text = buildingInfo.moneyCost.ToString() + "$";
         //buildingName.text = buildingInfo.timeCost.ToString();
     }
 
-    public void StartBuild ()
+    public void StartBuild()
     {
         OrthographicCamera.GetMousePointingArea().StartConstruction(buildingInfo);
         InGameLog.AddLog("Start building " + buildingInfo.buildingName);
@@ -32,7 +32,7 @@ public class BuildingSelectPrefab : MonoBehaviour
     //    Destroy(gameObject);
     //}
 
-    public void ClearObject ()
+    public void ClearObject()
     {
         Destroy(gameObject);
     }
