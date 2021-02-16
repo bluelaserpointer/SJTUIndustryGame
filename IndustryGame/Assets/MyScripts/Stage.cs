@@ -211,10 +211,13 @@ public class Stage : MonoBehaviour
     }
     void Update()
     {
-        //region reservation animation
-        foreach(Region region in regions)
+        //region reservation
+        if (!Timer.IsPaused())
         {
-            region.FrameIdle();
+            foreach (Region region in regions)
+            {
+                region.FrameIdle();
+            }
         }
         //check time
         Timer.idle();
