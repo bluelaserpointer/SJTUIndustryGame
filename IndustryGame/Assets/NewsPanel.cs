@@ -22,11 +22,6 @@ public class NewsPanel : MonoBehaviour
             instance = this;
         }
 
-        News a = new News("Testing1", null);
-        News b = new News("Testing2", null);
-        NewsList.Add(a);
-        NewsList.Add(b);
-
         RefreshNews();
     }
 
