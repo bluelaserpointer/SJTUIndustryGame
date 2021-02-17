@@ -6,6 +6,7 @@ public class HexGameUI : MonoBehaviour
 
 	public HexGrid grid;
 	HexCell currentCell;
+	bool activeMigrate;
 	HexUnit selectedUnit;
 	public void SetEditMode(bool toggle)
 	{
@@ -13,6 +14,12 @@ public class HexGameUI : MonoBehaviour
 		grid.ShowUI(!toggle);
 		grid.ClearPath();
 	}
+
+	public void SetMigrateMode(bool toggle)
+	{
+		activeMigrate = toggle;
+	}
+
 	bool UpdateCurrentCell()
 	{
 		HexCell cell =
@@ -34,6 +41,21 @@ public class HexGameUI : MonoBehaviour
 		}
 	}
 
+	void HandleInput()
+	{
+		if (currentCell)
+		{
+			if (activeMigrate)
+			{
+				currentCell.EnableMigrate(Color.blue, HexDirection.E);
+			}
+			else
+			{
+				currentCell.DisableMigrate();
+			}
+		}
+	}
+
 	void Update()
 	{
 		if (!EventSystem.current.IsPointerOverGameObject())
@@ -41,6 +63,7 @@ public class HexGameUI : MonoBehaviour
 			if (Input.GetMouseButtonDown(0))
 			{
 				DoSelection();
+				HandleInput();
 			}
 			else if (selectedUnit)
 			{

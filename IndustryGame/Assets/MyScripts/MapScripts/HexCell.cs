@@ -373,6 +373,8 @@ public class HexCell : MonoBehaviour {
 
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;
+	//HexDirection migrateDirection;
+
 
 	int distance;
 	[SerializeField]
@@ -391,6 +393,22 @@ public class HexCell : MonoBehaviour {
 		Image highlight = uiRect.GetChild(0).GetComponent<Image>();
 		highlight.color = color;
 		highlight.enabled = true;
+	}
+	public void EnableMigrate(Color color,HexDirection hexDirection)
+	{
+		Debug.Log("EnableMigrate");
+		this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+		RawImage arrow = this.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<RawImage>();
+		RectTransform arrowCanvasTransform = this.gameObject.transform.GetChild(0).transform.GetComponent<RectTransform>();
+		arrowCanvasTransform.rotation = Quaternion.Euler(new Vector3(90, 0, 150-60* (int)hexDirection));
+		arrow.color = color;
+		
+	}
+
+	public void DisableMigrate()
+	{
+		Debug.Log("DisableMigrate");
+		this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 	}
 
 	public HexCell GetNeighbor (HexDirection direction) {
