@@ -43,6 +43,9 @@ public class BuildingSelectPrefab : MonoBehaviour
     public void SelectBuilding()
     {
         GameObject.FindGameObjectWithTag("BuildingGeneratePanel").GetComponent<BuildingsPanelUI>().SelectedBuildingInfo = buildingInfo;
+
+        OrthographicCamera.GetMousePointingArea().StartConstruction(buildingInfo);
+        GameObject.FindGameObjectWithTag("BuildingGeneratePanel").GetComponent<BuildingsPanelUI>().GeneratePrefabs();
     }
 
     public void DeselectBuildingInfo(BaseEventData pointData)

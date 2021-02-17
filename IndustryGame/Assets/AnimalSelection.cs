@@ -13,19 +13,24 @@ public class AnimalSelection : MonoBehaviour
     public Button button;
 
     public Text AnimalName; //TODO: replace with picture;
+    public Color NormalColor;
+    public Color SelectedColor;
+    private Image BackgroundImage;
 
     void Start()
     {
+        BackgroundImage = gameObject.GetComponent<Image>();
+
         button = gameObject.GetComponent<Button>();
-        button.onClick.AddListener(() => Stage.ShowAnimalNumberPop(animal));
+        button.onClick.AddListener(OpenFilter);
 
-        EventTrigger trigger = gameObject.GetComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.Deselect;
-        entry.callback = new EventTrigger.TriggerEvent();
-        entry.callback.AddListener(DeselectAnimal);
+        // EventTrigger trigger = gameObject.GetComponent<EventTrigger>();
+        // EventTrigger.Entry entry = new EventTrigger.Entry();
+        // entry.eventID = EventTriggerType.Deselect;
+        // entry.callback = new EventTrigger.TriggerEvent();
+        // entry.callback.AddListener(DeselectAnimal);
 
-        trigger.triggers.Add(entry);
+        // trigger.triggers.Add(entry);
     }
 
     void Update()
@@ -33,13 +38,24 @@ public class AnimalSelection : MonoBehaviour
         RefreshUI();
     }
 
+    public void OpenFilter()
+    {
+        if (Stage.ShowingNumberPopsAnimal == null)
+        {
+            Stage.ShowAnimalNumberPop(animal);
+            BackgroundImage.color = SelectedColor;
+        }
+        else
+        {
+            Stage.ShowAnimalNumberPop(null);
+            BackgroundImage.color = NormalColor;
+        }
+    }
+
     private void RefreshUI()
     {
         AnimalName.text = animal.animalName;
     }
 
-    private void DeselectAnimal(BaseEventData pointData)
-    {
-        Stage.ShowAnimalNumberPop(null);
-    }
+
 }
