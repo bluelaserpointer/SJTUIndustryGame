@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(UnityEngine.EventSystems.EventTrigger))]
 public class BuildingSelectPrefab : MonoBehaviour
 {
     private BuildingInfo buildingInfo;
@@ -10,6 +12,24 @@ public class BuildingSelectPrefab : MonoBehaviour
     public Text buildingDescription;
     public Text MoneyCost;
     public Text TimeCost;
+    private Button button;
+    public Image SelectImage;
+
+    void Start()
+    {
+        button = gameObject.GetComponent<Button>();
+        button.onClick.AddListener(SelectBuilding);
+        // button.onClick.AddListener(() => gameObject.GetComponentInParent<FilterPanelFocusHelper>().SelectImage(SelectImage, SelectText));
+        // button.onClick.AddListener(() => gameObject.GetComponentInParent<FilterPanelFocusHelper>().SelectImage(SelectImage, MoneyText));
+
+        EventTrigger trigger = gameObject.GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.Deselect;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(DeselectBuildingInfo);
+
+        trigger.triggers.Add(entry);
+    }
 
     public void RefreshUI(BuildingInfo buildingInfo)
     {
@@ -20,17 +40,15 @@ public class BuildingSelectPrefab : MonoBehaviour
         //buildingName.text = buildingInfo.timeCost.ToString();
     }
 
-    public void StartBuild()
+    public void SelectBuilding()
     {
-        OrthographicCamera.GetMousePointingArea().StartConstruction(buildingInfo);
-        InGameLog.AddLog("Start building " + buildingInfo.buildingName);
-        GameObject.FindGameObjectWithTag("BuildingGeneratePanel").GetComponent<BuildingsPanelUI>().GeneratePrefabs();
+        GameObject.FindGameObjectWithTag("BuildingGeneratePanel").GetComponent<BuildingsPanelUI>().SelectedBuildingInfo = buildingInfo;
     }
 
-    //private void OnDisable ()
-    //{
-    //    Destroy(gameObject);
-    //}
+    public void DeselectBuildingInfo(BaseEventData pointData)
+    {
+        GameObject.FindGameObjectWithTag("BuildingGeneratePanel").GetComponent<BuildingsPanelUI>().SelectedBuildingInfo = null;
+    }
 
     public void ClearObject()
     {
