@@ -132,6 +132,11 @@ public class Region
         reservatedAreaCount = 1; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         areas.ForEach(area => area.AddReservation());
+        //update number pops
+        if(Stage.ShowingNumberPopsAnimal != null)
+        {
+            Stage.ShowAnimalNumberPop(Stage.ShowingNumberPopsAnimal);
+        }
     }
     /// <summary>
     /// 更新洲濒危动物列表(每当一个事件流开始/结束时被调用)

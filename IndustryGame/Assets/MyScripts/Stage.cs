@@ -466,6 +466,11 @@ public class Stage : MonoBehaviour
         }
         return animals;
     }
+    private static Animal showingNumberPopsAnimal;
+    /// <summary>
+    /// 地图上正在标出数量与增减量的动物
+    /// </summary>
+    public static Animal ShowingNumberPopsAnimal { get { return showingNumberPopsAnimal; } }
     /// <summary>
     /// 所有地块上显示特定动物的数量标记<para></para>
     /// 参数为null时隐藏标记
@@ -473,7 +478,8 @@ public class Stage : MonoBehaviour
     /// <param name="animal"></param>
     public static void ShowAnimalNumberPop(Animal animal)
     {
-        foreach(Area area in instance.areas)
+        showingNumberPopsAnimal = animal;
+        foreach (Area area in instance.areas)
         {
             area.ShowAnimalNumberPop(animal);
         }
