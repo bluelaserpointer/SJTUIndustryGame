@@ -65,11 +65,6 @@ public class Building
             if (IsConstructed())
             {
                 FinishConstruction();
-                PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow("建设完成", info.buildingName));
-                if (info.isBasement)
-                {
-                    area.region.SetBaseArea(area);
-                }
             } else
             {
                 if(constructionModels.Count > 0)
@@ -83,6 +78,11 @@ public class Building
         buffs.ForEach(buff => buff.Applied(area));
         if (constructionModels.Count > 0)
             area.GetHexCell().BuildingPrefab = constructionModels[constructionModels.Count - 1];
+        if (info.isBasement)
+        {
+            area.region.SetBaseArea(area);
+        }
+        NewsPanel.instance.AddNews(area.region.name + area.areaName + "地区 " + info.name + " 建设完成", Resources.Load<Sprite>("UI/Icon/Construction"));
     }
     public bool IsConstructed()
     {

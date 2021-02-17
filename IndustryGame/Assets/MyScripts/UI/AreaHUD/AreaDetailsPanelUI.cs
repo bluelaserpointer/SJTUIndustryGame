@@ -30,22 +30,10 @@ public class AreaDetailsPanelUI : MonoBehaviour
 
     public void SetArea()
     {
-        foreach (GameObject prefab in FinishedActionsListPrefabs)
-        {
-            Destroy(prefab);
-        }
-        foreach (GameObject prefab in UnfinshedEnabledActionsListPrefabs)
-        {
-            Destroy(prefab);
-        }
-        foreach (GameObject prefab in FinishedBuildingsListPrefabs)
-        {
-            Destroy(prefab);
-        }
 
-        FinishedActionsListPrefabs.Clear();
-        UnfinshedEnabledActionsListPrefabs.Clear();
-        FinishedBuildingsListPrefabs.Clear();
+        Helper.ClearList(FinishedActionsListPrefabs);
+        Helper.ClearList(UnfinshedEnabledActionsListPrefabs);
+        Helper.ClearList(FinishedBuildingsListPrefabs);
 
 
         if (OrthographicCamera.GetMousePointingArea() != null)
@@ -53,7 +41,7 @@ public class AreaDetailsPanelUI : MonoBehaviour
 
             AreaNameText.text = OrthographicCamera.GetMousePointingArea().areaName;
             EnvironmentTypeText.text = EnvironmentTypeDescription.GetEnvironmentTypeDescription(OrthographicCamera.GetMousePointingArea().environmentType);
-            RegionText.text = OrthographicCamera.GetMousePointingArea().region.GetRegionId().ToString();
+            RegionText.text = OrthographicCamera.GetMousePointingArea().region.name;
             DescriptionText.text = OrthographicCamera.GetMousePointingArea().description;
 
             foreach (AreaAction finishedAction in OrthographicCamera.GetMousePointingArea().GetFinishedActions())

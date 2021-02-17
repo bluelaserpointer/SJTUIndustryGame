@@ -55,9 +55,9 @@ public abstract class AreaBuff
 
         public override void Idle(Area area, float power)
         {
-            area.AddEnviromentStat(statType, change);
+            area.AddEnvironmentStat(statType, change);
             foreach(Area neighborArea in area.GetNeighborAreas()) {
-                neighborArea.AddEnviromentStat(statType, change * distanceAttenuation);
+                neighborArea.AddEnvironmentStat(statType, change * distanceAttenuation);
             }
         }
 

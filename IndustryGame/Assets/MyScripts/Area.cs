@@ -544,11 +544,20 @@ public class Area : MonoBehaviour
         return GetNegativeEnvironmentStats().Count == 0;
     }
     /// <summary>
+    /// 生成指定环境指标（取值参照该种类初始值设定）
+    /// </summary>
+    /// <param name="environmentStatType"></param>
+    public void AddEnvironmentStat(EnvironmentStatType environmentStatType)
+    {
+        float initialvalue = UnityEngine.Random.Range(environmentStatType.initialValueRange.x, environmentStatType.initialValueRange.y);
+        AddEnvironmentStat(environmentStatType, initialvalue);
+    }
+    /// <summary>
     /// 增加指定环境指标
     /// </summary>
     /// <param name="environmentStatType"></param>
     /// <param name="value"></param>
-    public void AddEnviromentStat(EnvironmentStatType environmentStatType, float value)
+    public void AddEnvironmentStat(EnvironmentStatType environmentStatType, float value)
     {
         EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.IsType(environmentStatType));
         if (stat != null)

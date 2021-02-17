@@ -35,15 +35,7 @@ public class Stage : MonoBehaviour
     public List<MainEvent> events = new List<MainEvent>();
     [Header("Money allowed for this stage")]
     public const int INITIAL_MONEY = 10000;
-    [Serializable]
-    public struct AnimalInitialAmount
-    {
-        public Animal animal;
-        public int amount;
-    }
-    [Header("初始物种数")]
-    [SerializeField]
-    private List<AnimalInitialAmount> animalInitialAmounts;
+
     private HexGrid hexGrid;
 
     //基地资源
@@ -199,30 +191,6 @@ public class Stage : MonoBehaviour
         instance.hexGrid = instance.GetComponent<HexGrid>();
         Camera.main.GetComponent<OrthographicCamera>().SetHexGrid(instance.hexGrid);
         instance.lastDay = Timer.GetDay();
-        foreach (AnimalInitialAmount animalInitialAmount in instance.animalInitialAmounts)
-        {
-            EnvironmentType environment = animalInitialAmount.animal.bestEnvironmentType;
-            int count = 0;
-            foreach(Area area in instance.areas)
-            {
-                // if(area.environmentType == environment)
-                // {
-                    ++count;
-                // }
-            }
-            if (count > 0)
-            {
-                int baseAmount = animalInitialAmount.amount / count;
-                System.Random random = new System.Random();
-                foreach (Area area in instance.areas)
-                {
-                    // if (area.environmentType == environment)
-                    // {
-                        area.changeSpeciesAmount(animalInitialAmount.animal, (int)(baseAmount * (0.95 + 0.10 * random.NextDouble())));
-                    // }
-                }
-            }
-        }
         //union actions
         foreach (Region region in instance.regions)
         {
@@ -243,10 +211,13 @@ public class Stage : MonoBehaviour
     }
     void Update()
     {
-        //region reservation animation
-        foreach(Region region in regions)
+        //region reservation
+        if (!Timer.IsPaused())
         {
-            region.FrameIdle();
+            foreach (Region region in regions)
+            {
+                region.FrameIdle();
+            }
         }
         //check time
         Timer.idle();
@@ -495,6 +466,11 @@ public class Stage : MonoBehaviour
         }
         return animals;
     }
+    private static Animal showingNumberPopsAnimal;
+    /// <summary>
+    /// 地图上正在标出数量与增减量的动物
+    /// </summary>
+    public static Animal ShowingNumberPopsAnimal { get { return showingNumberPopsAnimal; } }
     /// <summary>
     /// 所有地块上显示特定动物的数量标记<para></para>
     /// 参数为null时隐藏标记
@@ -502,7 +478,8 @@ public class Stage : MonoBehaviour
     /// <param name="animal"></param>
     public static void ShowAnimalNumberPop(Animal animal)
     {
-        foreach(Area area in instance.areas)
+        showingNumberPopsAnimal = animal;
+        foreach (Area area in instance.areas)
         {
             area.ShowAnimalNumberPop(animal);
         }

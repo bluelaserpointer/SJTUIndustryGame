@@ -1,23 +1,36 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingsPanelUI:MonoBehaviour
+public class BuildingsPanelUI : MonoBehaviour
 {
+    public static BuildingsPanelUI instance;
+    [HideInInspector]
     public List<GameObject> GeneratedPrefabs;
     public GameObject BuildingsGenerateList;
     public GameObject BuildingSelectPrefab;
 
-    private void Start ()
+    [HideInInspector]
+    public BuildingInfo SelectedBuildingInfo;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    private void Start()
     {
         GeneratePrefabs();
     }
 
-    private void OnEnable ()
+    private void OnEnable()
     {
         GeneratePrefabs();
     }
 
-    public void GeneratePrefabs ()
+    public void GeneratePrefabs()
     {
         if (GeneratedPrefabs != null)
         {
@@ -29,7 +42,7 @@ public class BuildingsPanelUI:MonoBehaviour
         GeneratedPrefabs.Clear();
 
         Area area = OrthographicCamera.GetMousePointingArea();
-        if(area != null)
+        if (area != null)
         {
             foreach (BuildingInfo info in area.GetEnabledBuildings())
             {
@@ -41,6 +54,13 @@ public class BuildingsPanelUI:MonoBehaviour
         }
     }
 
-
+    public void StartConstruction()
+    {
+        if (SelectedBuildingInfo != null)
+        {
+            OrthographicCamera.GetMousePointingArea().StartConstruction(SelectedBuildingInfo);
+            GeneratePrefabs();
+        }
+    }
 
 }
