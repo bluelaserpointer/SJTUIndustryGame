@@ -293,6 +293,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MigrateArrow
       objectReference: {fileID: 0}
+    - target: {fileID: 9170807833037284615, guid: f197d5ae2595d5e4d844f2bdc58f4c57,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f197d5ae2595d5e4d844f2bdc58f4c57, type: 3}
 --- !u!224 &2393194284597535605 stripped
