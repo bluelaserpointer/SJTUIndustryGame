@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(UnityEngine.EventSystems.EventTrigger))]
+// [RequireComponent(typeof(UnityEngine.EventSystems.EventTrigger))]
 public class AnimalSelection : MonoBehaviour
 {
     [HideInInspector]
