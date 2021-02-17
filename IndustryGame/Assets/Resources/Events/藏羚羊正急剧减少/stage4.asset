@@ -32,4 +32,4 @@ MonoBehaviour:
         type: 1
         animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
         value: 0
-        compareType: 0
+        compareType: 1

@@ -48,6 +48,13 @@ public class MainEvent
 
     private bool _isAppeared;
     private bool _isFinished;
+    //calculate after event finish
+    private int wildReservated;
+    public int WildReservated { get { return wildReservated; } }
+    private int mamMadeEnvReservated;
+    public int MamMadeEnvReservated { get { return mamMadeEnvReservated; } }
+    private int totalReward;
+    public int TotalReward { get { return totalReward; } }
     public MainEvent(MainEventSO so, Region region)
     {
         this.so = so;
@@ -118,8 +125,15 @@ public class MainEvent
         if (judge)
         {
             _isFinished = true;
+            //calculate rewards
+            wildReservated = Stage.GetSpeciesAmount(concernedAnimals[0]);
+            mamMadeEnvReservated = 0;
+            totalReward = contribution + wildReservated + mamMadeEnvReservated;
+            //show popUpWindow
             PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, descriptionAfterFinish));
-            Stage.AddResourceValue(ResourceType.contribution, contribution);
+            PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
+            //add rewards
+            Stage.AddResourceValue(ResourceType.contribution, totalReward);
             region.UpdateConcernedSpecies();
         }
         return judge;
