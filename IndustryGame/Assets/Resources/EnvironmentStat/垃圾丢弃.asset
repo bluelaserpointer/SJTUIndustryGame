@@ -20,11 +20,11 @@ MonoBehaviour:
     - id: 0
   maxGrowRate: 0
   initialValueRange: {x: 0.3, y: 0.7}
-  animalChanged: -48906
+  animalChanged: -54679
   references:
     version: 1
     00000000:
       type: {class: AreaBuff/BuffAnimalAmount, ns: , asm: Assembly-CSharp}
       data:
         animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
-        change: -1
+        change: -3
