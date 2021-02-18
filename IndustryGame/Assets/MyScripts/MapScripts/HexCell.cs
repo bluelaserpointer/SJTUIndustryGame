@@ -396,7 +396,7 @@ public class HexCell : MonoBehaviour {
 	}
 	public void EnableMigrate(Color color,HexDirection hexDirection)
 	{
-		Debug.Log("EnableMigrate");
+		//Debug.Log("EnableMigrate");
 		this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
 		RawImage arrow = this.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<RawImage>();
 		RectTransform arrowCanvasTransform = this.gameObject.transform.GetChild(0).transform.GetComponent<RectTransform>();
@@ -407,7 +407,7 @@ public class HexCell : MonoBehaviour {
 
 	public void DisableMigrate()
 	{
-		Debug.Log("DisableMigrate");
+		//Debug.Log("DisableMigrate");
 		this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 	}
 

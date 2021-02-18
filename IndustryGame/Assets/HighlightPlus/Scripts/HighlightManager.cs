@@ -16,8 +16,11 @@ namespace HighlightPlus {
 		HighlightEffect baseEffect, currentEffect;
 		Transform currentObject;
 		public HexGrid hexGrid;
+		public GameObject highlightParent;
 		HexCell currentCell;
+		int highlightRegionId;
 		List<HexCell> relatedCells = new List<HexCell>();
+		RaycastHit myHitInfo;
 
 		void OnEnable () {
 			currentObject = null;
@@ -54,39 +57,56 @@ namespace HighlightPlus {
 				ray = new Ray (raycastCamera.transform.position, raycastCamera.transform.forward);
 			}
 			RaycastHit hitInfo;
-			if (Physics.Raycast(ray, out hitInfo, maxDistance > 0 ? maxDistance : raycastCamera.farClipPlane, layerMask)) {
-				// Check if the object has a Highlight Effect
-				if (hitInfo.collider.transform != currentObject) {
-					currentCell = hexGrid.GetCell(hitInfo.point);
-					if (currentCell.RegionId == -1) {
-						SwitchesCollider(null);
-						return;
-					}
-					SwitchesCollider(hitInfo.collider.transform);
-					currentCell.GetComponentInParent<HexGridChunk>().highLighted = true;
-					for (int z = 0; z < hexGrid.cellCountZ; z++)
-					{
-						for (int x = 0; x < hexGrid.cellCountX; x++)
-						{
-							HexCoordinates hexCoordinate = HexCoordinates.FromOffsetCoordinates(x, z);
-							HexCell relatedCell = hexGrid.GetCell(hexCoordinate);
-							if (currentCell != null && relatedCell.RegionId == currentCell.RegionId)
-							{
-								relatedCell.GetComponentInParent<HexGridChunk>().highLighted = true;//相同region的chunk，highlighted标1---->highlighted标1的chunk高亮
-							}
-							else
-							{
-								relatedCell.GetComponentInParent<HexGridChunk>().highLighted = false;
-							}
-							//Debug.Log(x.ToString()+" "+z.ToString()+" "+relatedCell.GetComponentInParent<HexGridChunk>().highLighted);
-						}
-					}
-				}
-                return;
-            }
+			if (Physics.Raycast(ray, out hitInfo, maxDistance > 0 ? maxDistance : raycastCamera.farClipPlane, layerMask))
+			{
+				SwitchesCollider(hitInfo.collider.transform);
+			}
 
-            // no hit
-            SwitchesCollider (null);
+				/*if (Physics.Raycast(ray, out hitInfo, maxDistance > 0 ? maxDistance : raycastCamera.farClipPlane, layerMask)) {
+					// Check if the object has a Highlight Effect
+					if (hitInfo.collider.transform != currentObject) {
+						currentCell = hexGrid.GetCell(hitInfo.point);
+
+						if (currentCell.RegionId == -1) {
+							SwitchesCollider(null);
+							return;
+						}
+						//SwitchesCollider(hitInfo.collider.transform);
+
+						//currentCell.GetComponentInParent<HexGridChunk>().highLighted = true;
+						//if (currentCell)
+							//HighLightRegion(currentCell.RegionId);
+
+					}
+					return;
+				}
+
+				// no hit
+				SwitchesCollider (null);*/
+			}
+		public void SetHighlightRegionId(float index)
+		{
+			highlightRegionId = (int)index;
+			HighLightRegion();
+		}
+		public void HighLightRegion() {
+			for (int z = 0; z < hexGrid.cellCountZ; z++)
+			{
+				for (int x = 0; x < hexGrid.cellCountX; x++)
+				{
+					HexCoordinates hexCoordinate = HexCoordinates.FromOffsetCoordinates(x, z);
+					HexCell relatedCell = hexGrid.GetCell(hexCoordinate);
+					if (relatedCell.RegionId == highlightRegionId)
+					{
+						relatedCell.GetComponentInParent<HexGridChunk>().highLighted = true;//相同region的chunk，highlighted标1---->highlighted标1的chunk高亮
+					}
+					else
+					{
+						relatedCell.GetComponentInParent<HexGridChunk>().highLighted = false;
+					}
+					//Debug.Log(x.ToString()+" "+z.ToString()+" "+relatedCell.GetComponentInParent<HexGridChunk>().highLighted);
+				}
+			}
 		}
 
 		void SwitchesCollider (Transform newObject) {
