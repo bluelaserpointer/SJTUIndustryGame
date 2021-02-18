@@ -314,6 +314,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4668202282882155954, guid: 0f1605e2a2f64144cb6246f0032f5bb0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668202282882155954, guid: 0f1605e2a2f64144cb6246f0032f5bb0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668202282882155954, guid: 0f1605e2a2f64144cb6246f0032f5bb0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4668202283871397189, guid: 0f1605e2a2f64144cb6246f0032f5bb0,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1471,7 +1486,7 @@ PrefabInstance:
     - target: {fileID: 4189210156150919149, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00005574695
+      value: 0.00014678227
       objectReference: {fileID: 0}
     - target: {fileID: 4611888462836921626, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
@@ -1586,6 +1601,11 @@ PrefabInstance:
     - target: {fileID: 8718212891588771017, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718212891588771017, guid: 9cc7346c8e36ec6448622053966222c2,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2313,41 +2333,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: orthographic size
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: positionSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: AreaDetailsHUD
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: worldOrthoSize
-      value: 130
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: doubleClickStep
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: regionObserveSizeSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: regionObserveTranSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: AreaDetailsHUDGameObject
@@ -2358,16 +2343,6 @@ PrefabInstance:
       propertyPath: RegionDetailsHUDGameObject
       value: 
       objectReference: {fileID: 195633224}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: areaToRegionSpeedChangeStep
-      value: 0.008
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: areaToRegionSpeedChangeOffset
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094655, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: m_RootOrder
