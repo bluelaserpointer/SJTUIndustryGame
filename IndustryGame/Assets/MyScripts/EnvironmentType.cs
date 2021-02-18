@@ -1,8 +1,23 @@
 ﻿using System.ComponentModel;
+using UnityEngine;
 
-public enum EnvironmentType
+[CreateAssetMenu(menuName = "Add ScriptableObjects/Environment")]
+public class EnvironmentType : ScriptableObject
 {
-    [Description("湖泊/河流")]
+    public string environmentName;
+    public NameTemplates usingNameTemplates;
+    public Sprite icon;
+
+    public static EnvironmentType[] GetAllTypes()
+    {
+        return Resources.LoadAll<EnvironmentType>("Environment");
+    }
+    public static EnvironmentType PickRandomOne()
+    {
+        EnvironmentType[] types = GetAllTypes();
+        return types[UnityEngine.Random.Range(0, types.Length)];
+    }
+    /*[Description("湖泊/河流")]
     Water,
     [Description("草原")]
     Grassland,
@@ -23,13 +38,5 @@ public enum EnvironmentType
     [Description("受污染")]
     Polluted,
     [Description("保护区")]
-    Preserve
-}
-
-public static class EnvironmentTypeDescription
-{
-    public static string GetEnvironmentTypeDescription(EnvironmentType environmentType)
-    {
-        return EnumHelper.GetDescription(environmentType);
-    }
+    Preserve*/
 }

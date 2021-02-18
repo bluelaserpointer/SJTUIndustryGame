@@ -38,11 +38,7 @@ public class Area : MonoBehaviour
     public GameObject basementTooltip;
     private void Start()
     {
-        environmentType = (EnvironmentType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(EnvironmentType)).Length);
-        if (environmentType.Equals(EnvironmentType.Mountains))
-            areaName = Resources.Load<NameTemplates>("NameTemplates/MountainName").pickRandomOne();
-        else
-            areaName = Resources.Load<NameTemplates>("NameTemplates/PlainName").pickRandomOne();
+        areaName = (environmentType = EnvironmentType.PickRandomOne()).usingNameTemplates.PickRandomOne();
 
         HexCell cell = GetHexCell();
         weather = new Weather(cell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);

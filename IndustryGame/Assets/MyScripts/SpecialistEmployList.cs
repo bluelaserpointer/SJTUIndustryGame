@@ -20,9 +20,9 @@ public static class SpecialistEmployList {
         {
             Ability speciality = EnumHelper.GetRandomValue<Ability>();
             Specialist specialist = new Specialist();
-            specialist.name = Resources.Load<NameTemplates>("NameTemplates/SpecialistName").pickRandomOne();
+            specialist.name = Resources.Load<NameTemplates>("NameTemplates/SpecialistName").PickRandomOne();
             specialist.birthday = "randomBirthDay";
-            specialist.birthplace = Resources.Load<NameTemplates>("NameTemplates/CityName").pickRandomOne();
+            specialist.birthplace = Resources.Load<NameTemplates>("NameTemplates/CityName").PickRandomOne();
             int abilityLevelTotal = 0;
             if (random.NextDouble() < 0.5f) { //indoor
                 specialist.specialistTemplate = indoorSpecialistTemplates[random.Next(0, indoorSpecialistTemplates.Length)];

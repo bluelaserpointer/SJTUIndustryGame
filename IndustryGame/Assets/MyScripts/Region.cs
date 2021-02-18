@@ -42,7 +42,7 @@ public class Region
     public Region(int regionId)
     {
         this.regionId = regionId;
-        name = regionId == -1 ? "海洋" : regionNameTemplates.pickRandomOne();
+        name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
     }
     /// <summary>
     /// 每帧流程

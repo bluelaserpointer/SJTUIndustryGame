@@ -40,7 +40,7 @@ public class AreaDetailsPanelUI : MonoBehaviour
         {
 
             AreaNameText.text = OrthographicCamera.GetMousePointingArea().areaName;
-            EnvironmentTypeText.text = EnvironmentTypeDescription.GetEnvironmentTypeDescription(OrthographicCamera.GetMousePointingArea().environmentType);
+            EnvironmentTypeText.text = OrthographicCamera.GetMousePointingArea().environmentType.environmentName;
             RegionText.text = OrthographicCamera.GetMousePointingArea().region.name;
             DescriptionText.text = OrthographicCamera.GetMousePointingArea().description;
 

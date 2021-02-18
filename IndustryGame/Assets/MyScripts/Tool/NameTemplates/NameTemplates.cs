@@ -8,7 +8,7 @@ public class NameTemplates : ScriptableObject
     private bool backupTaken = false;
     private List<string> originalNames;
     private NameTemplates() {}
-    public string pickRandomOne()
+    public string PickRandomOne()
     {
         if(!backupTaken)
         {

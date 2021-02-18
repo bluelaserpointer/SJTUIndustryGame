@@ -135,7 +135,8 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
     public static void SetAreaBgmList(Area area)
     {
-        SetAreaAudioClipsIdx((int)area.environmentType);
+        //TODO: update to newest environmentType class form
+        //SetAreaAudioClipsIdx((int)area.environmentType);
     }
 
     public static void SetGlobalBgmList()

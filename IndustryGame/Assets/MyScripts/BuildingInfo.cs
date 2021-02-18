@@ -32,7 +32,7 @@ public class BuildingInfo : ScriptableObject
     
     public static BuildingInfo[] GetAllTypes()
     {
-        return ResourcesLoader.GetAllBuildingTypes();
+        return Resources.LoadAll<BuildingInfo>("Building");
     }
     public bool CanConstructIn(Area area)
     {

@@ -33,7 +33,7 @@ public class EnvironmentStatType : ScriptableObject
 
     public static EnvironmentStatType[] GetAllTypes()
     {
-        return ResourcesLoader.GetAllEnvironmentStatTypes();
+        return Resources.LoadAll<EnvironmentStatType>("EnvironmentStat");
     }
 }
 
