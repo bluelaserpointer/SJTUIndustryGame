@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalName: "\u6742\u8349"
   description: "\u6DF7\u5408\u7684\u591A\u79CD\u6742\u8349\uFF0C\u8986\u76D6\u5730\u7403\u5927\u90E8\u5206\u533A\u57DF"
-  bestEnvironmentType: 1
+  bestEnvironmentType: {fileID: 0}
   environmentPreferences:
-  - environment: 1
+  - environment: {fileID: 11400000, guid: a2b24bcc8d9291048861a90ab8d1bc0e, type: 2}
     preference: 1
   model: {fileID: 0}
   reproductionSpeed: 100
+  foods: []
   energyNeeds: 0
   energyAsFood: 1
   minTempreture: 15

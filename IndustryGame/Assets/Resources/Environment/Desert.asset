@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Desert
   m_EditorClassIdentifier: 
   environmentName: "\u6C99\u6F20"
-  usingNameTemplates: {fileID: 0}
+  usingNameTemplates: {fileID: 11400000, guid: 21fd1be7d306c4d4a969cdd74886ddfe, type: 2}
   icon: {fileID: 0}
