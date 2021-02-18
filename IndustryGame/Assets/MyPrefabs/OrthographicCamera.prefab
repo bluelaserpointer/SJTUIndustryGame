@@ -60,7 +60,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 130
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -101,16 +101,17 @@ MonoBehaviour:
   keyAreaOrthoSize: 9
   maskAreaOrthoSize: 15
   minObserveRegionSize: 30
-  actualScrollSize: 0
-  sizeSpeed: 7.5
+  operatableSizeOffset: 10
+  actualScrollSize: 130
+  sizeSpeed: 5
   positionSpeed: 0.2
   regionObserveTranSpeed: 4
   regionObserveSizeSpeed: 10
-  areaToRegionSpeedChangeOffset: 30
-  areaToRegionSpeedChangeStep: 0.025
-  worldPosition: {x: 0, y: 0, z: 0}
+  areaToRegionSpeedChangeOffset: 45
+  areaToRegionSpeedChangeStep: 0.3
+  worldPosition: {x: 203.51596, y: 150, z: 127.5}
   areaPositionOffset: {x: 0, y: 12.8, z: -11.7}
-  worldRotation: {x: 0, y: 0, z: 0, w: 0}
+  worldRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   rotationSpeed: 0.1
   orthoRegionRotationX: 85
   orthoAreaRotationX: 45

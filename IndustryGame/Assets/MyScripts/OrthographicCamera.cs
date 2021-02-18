@@ -14,7 +14,7 @@ public class OrthographicCamera : MonoBehaviour
     public float keyAreaOrthoSize = 9f;
     public float maskAreaOrthoSize = 20f;
     public float minObserveRegionSize = 30f;
-    private float observeRegionSizeOffset = 5f;
+    public float operatableSizeOffset = 10f;
     public float actualScrollSize;
     private float maxObserveRegionSize;
     private float currentSize;
@@ -53,6 +53,7 @@ public class OrthographicCamera : MonoBehaviour
     [Header("Focus Flags")]
     private bool regionFocus = false;
     private bool areaFocus = false;
+    private bool focusFlag = false;
 
     [Header("Current Components")]
     private HexGrid hexGrid;
@@ -128,6 +129,9 @@ public class OrthographicCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(Mathf.Abs(mainCamera.orthographicSize - currentSize) < operatableSizeOffset)
+            focusFlag = false;
+
         mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, currentSize, Time.deltaTime * sizeSpeed);
 
 
@@ -282,6 +286,12 @@ public class OrthographicCamera : MonoBehaviour
             return;
 
         Area area = hexCell.transform.GetComponentInChildren<Area>();
+        
+        if(area.region.GetRegionId() == -1)
+            return;
+
+        focusFlag = true;
+
 
         currentHexCell = hexCell;
         currentArea = area;
@@ -312,6 +322,7 @@ public class OrthographicCamera : MonoBehaviour
 
         SetCurrentCameraParam(OrthoSize, GetAreaFocusPosition(focusPosition), orthoAreaRotation, false);
 
+        regionFocus = false;
         SetAreaFocus(true);
     }
 
@@ -359,6 +370,8 @@ public class OrthographicCamera : MonoBehaviour
             // Focusing with mouse
             Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+
+            if(focusFlag == false)
             if (Physics.Raycast(inputRay, out hit))
             {
                 if (Input.GetMouseButtonDown(0))
@@ -368,10 +381,10 @@ public class OrthographicCamera : MonoBehaviour
 
                     if (timeSinceLastClick < doubleClickStep)
                     {
-                        FocusOnAreaByRaycast(hit, mouseAreaOrthoSize);
-
-                        regionFocus = false;
-                        SetAreaFocus(true);
+                        if(regionFocus == true)
+                            FocusOnAreaByRaycast(hit, mouseAreaOrthoSize);
+                    }else{
+                        SetCurrentAreaByRaycast(hit);
                     }
                     // else{
                     //     SetCurrentAreaByRaycast(hit);
@@ -389,7 +402,7 @@ public class OrthographicCamera : MonoBehaviour
 
         if (area.region.GetRegionId() == -1)
             return;
-        // Debug.Log("Setting current area by raycast");
+
         currentHexCell = hexCell;
         currentArea = area;
         currentRegion = area.region;
@@ -439,7 +452,7 @@ public class OrthographicCamera : MonoBehaviour
         if(region == null || region.GetRegionId() == -1)
             return;
 
-        Debug.Log("From " + currentRegion.GetRegionId() + " to " + region.GetRegionId());
+        focusFlag = true;
 
         regionFocus = true;
         SetAreaFocus(false);
@@ -473,6 +486,7 @@ public class OrthographicCamera : MonoBehaviour
 
 
         // Handling Mouse Click Region
+        if(focusFlag == false)
         if (!IsPointerOverUIObject())
         {
             if (raycasted)
@@ -485,7 +499,7 @@ public class OrthographicCamera : MonoBehaviour
                         Area area = hexCell.transform.GetComponentInChildren<Area>();
                         if (area != null)
                         {
-                            SetCurrentAreaByRaycast(hit);
+                            // SetCurrentAreaByRaycast(hit);
                             if(regionFocus == false)
                                 FocusOnRegion(area.region, true);
                         }
@@ -516,9 +530,6 @@ public class OrthographicCamera : MonoBehaviour
                 if (currentArea != null)
                 {
                     FocusOnAreaByHexCell(currentArea.GetComponentInParent<HexCell>(), mouseAreaOrthoSize, true);
-
-                    regionFocus = false;
-                    SetAreaFocus(true);
                 }
 
             }
