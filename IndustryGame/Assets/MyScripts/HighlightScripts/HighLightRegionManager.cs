@@ -44,7 +44,9 @@ public class HighLightRegionManager : MonoBehaviour
 
         }
 
-        transform.position = pivot.transform.position;
+        //transform.position = pivot.transform.position;
+        transform.position = new Vector3(pivot.transform.position.x, pivot.transform.position.y + 10, pivot.transform.position.z);
+        
         for (int z = 0; z < hexGrid.cellCountZ; z+=HexMetrics.chunkSizeZ)
         {
             for (int x = 0; x < hexGrid.cellCountX; x+=HexMetrics.chunkSizeX)
@@ -67,4 +69,5 @@ public class HighLightRegionManager : MonoBehaviour
         }
 
     }
+
 }
