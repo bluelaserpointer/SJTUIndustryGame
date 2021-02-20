@@ -337,9 +337,17 @@ public class Region
     /// </summary>
     public void CalculateCenter()
     {
-        center = new Vector3((left.transform.position.x + right.transform.position.x) / 2, 150f, (top.transform.position.z + bottom.transform.position.z) / 2);
+        float cx = (left.transform.position.x + right.transform.position.x) / 2, cy = (top.transform.position.z + bottom.transform.position.z) / 2;
+        center = new Vector3(cx, 150f, cy);
+        if (regionId != -1)
+        {
+            GameObject nameDisplay = Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
+            nameDisplay.GetComponentInChildren<Text>().text = name;
+            Transform nameDisplayTransform = nameDisplay.transform;
+            nameDisplayTransform.position = new Vector3(cx, 130f, cy);
+            nameDisplayTransform.GetComponentInChildren<RectTransform>().sizeDelta = 0.8f * new Vector2(Mathf.Abs(left.transform.position.x - right.transform.position.x), Mathf.Abs(top.transform.position.z - bottom.transform.position.z));
+        }
     }
-
     /// <summary>
     /// 重新计算洲最高点
     /// </summary>
