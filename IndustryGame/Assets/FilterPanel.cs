@@ -60,6 +60,9 @@ public class FilterPanel : MonoBehaviour
 
     public static void RefreshEventsDueToRegionSelection(Region region)
     {
+        Destroy(instance.GeneratedAnimalSelectionPanel);
+        Stage.ShowAnimalNumberPop(null);
+
         Helper.ClearList(instance.GeneratedEventSelections);
         foreach (MainEvent mainEvent in region.GetRevealedEvents())
         {
