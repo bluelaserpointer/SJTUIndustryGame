@@ -4,7 +4,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class InGameLog : MonoBehaviour
 {
-    private bool hide;
+    private bool hide = true;
     private string searchText = "";
     private Vector2 scrollViewVector = Vector2.zero;
     private static LinkedList<Log> logs = new LinkedList<Log>();
