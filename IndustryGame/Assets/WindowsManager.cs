@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class WindowsManager : MonoBehaviour
 {
-    private static WindowsManager instance;
+    public static WindowsManager instance;
 
     public GameObject SpecialistWindowPrefab;
     public GameObject ReportWindowPrefab;
     public GameObject SettingsWindowPrefab;
 
 
-    public static GameObject OpenWindow;
+    private GameObject OpenWindow;
 
     public Color SelectedColor;
     public Color NormalColor;
@@ -45,7 +45,7 @@ public class WindowsManager : MonoBehaviour
             return false;
         }
 
-        return OpenWindow != null || GameObject.FindGameObjectWithTag("PopUpWindow") != null;
+        return instance.OpenWindow != null || GameObject.FindGameObjectWithTag("PopUpWindow") != null;
     }
 
     public void GenerateReportWindow()
@@ -54,7 +54,7 @@ public class WindowsManager : MonoBehaviour
         {
             ClearWindow();
         }
-        OpenWindow = Instantiate(instance.ReportWindowPrefab, instance.gameObject.transform, true);
+        OpenWindow = Instantiate(instance.ReportWindowPrefab, instance.gameObject.transform, false);
         // ResetButtons(WindowType.Report);
     }
 
@@ -64,7 +64,7 @@ public class WindowsManager : MonoBehaviour
         {
             ClearWindow();
         }
-        OpenWindow = Instantiate(instance.SpecialistWindowPrefab, instance.gameObject.transform, true);
+        OpenWindow = Instantiate(instance.SpecialistWindowPrefab, instance.gameObject.transform, false);
         // ResetButtons(WindowType.Specialist);
     }
 
@@ -74,13 +74,14 @@ public class WindowsManager : MonoBehaviour
         {
             ClearWindow();
         }
-        OpenWindow = Instantiate(instance.SettingsWindowPrefab, instance.gameObject.transform, true);
+        OpenWindow = Instantiate(instance.SettingsWindowPrefab, instance.gameObject.transform, false);
         // ResetButtons(WindowType.Settings);
     }
 
     public void ClearWindow()
     {
         // ClearButtons();
+        ReportUI.instance = null;
         Destroy(OpenWindow);
     }
 
