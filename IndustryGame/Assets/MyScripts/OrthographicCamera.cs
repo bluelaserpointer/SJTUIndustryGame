@@ -56,7 +56,6 @@ public class OrthographicCamera : MonoBehaviour
     private bool focusFlag = false;
 
     [Header("Current Components")]
-    private HexGrid hexGrid;
     private HexCell currentHexCell;
     private Area currentArea;
     private Region currentRegion;
@@ -195,14 +194,6 @@ public class OrthographicCamera : MonoBehaviour
         AreaWeatherSFXRandomPlayer.Silence();
         AreaBGMRandomPlayer.SetGlobalBgmList();
     }
-
-
-
-    public void SetHexGrid(HexGrid hexGrid)
-    {
-        this.hexGrid = hexGrid;
-    }
-
     /// <summary>
     /// 判断鼠标是否悬浮于UI元素
     /// </summary>
@@ -308,7 +299,7 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     public void FocusOnAreaByRaycast(RaycastHit hit, float OrthoSize)
     {
-        HexCell hexCell = hexGrid.GetCell(hit.point);
+        HexCell hexCell = Stage.GetHexGrid().GetCell(hit.point);
 
         Area area = hexCell.transform.GetComponentInChildren<Area>();
 
@@ -399,7 +390,7 @@ public class OrthographicCamera : MonoBehaviour
 
     private void SetCurrentAreaByRaycast(RaycastHit hit)
     {
-        HexCell hexCell = hexGrid.GetCell(hit.point);
+        HexCell hexCell = Stage.GetHexGrid().GetCell(hit.point);
 
         Area area = hexCell.transform.GetComponentInChildren<Area>();
 
@@ -505,23 +496,27 @@ public class OrthographicCamera : MonoBehaviour
 
 
         // Handling Mouse Click Region
-        if(focusFlag == false)
-        if (!IsPointerOverUIObject())
+        if (focusFlag == false)
         {
-            if (raycasted)
+            if (!IsPointerOverUIObject())
             {
-                if (Input.GetMouseButtonDown(0))
+                if (raycasted)
                 {
-                    HexCell hexCell = hexGrid.GetCell(hit.point);
-                    if (hexCell != null)
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        Area area = hexCell.transform.GetComponentInChildren<Area>();
-                        if (area != null)
+                        HexCell hexCell = Stage.GetHexGrid().GetCell(hit.point);
+                        if (hexCell != null)
                         {
-                            FocusOnAreaByRaycast(hit, mouseAreaOrthoSize);
-                            // SetCurrentAreaByRaycast(hit);
-                            // if(regionFocus == false)
-                            //     FocusOnRegion(area.region, true);
+                            Area area = hexCell.transform.GetComponentInChildren<Area>();
+                            InGameLog.AddLog("check area null: " + hexCell.transform.position.x + ", " + hexCell.transform.position.z + ", area null: " + (area == null));
+                            if (area != null)
+                            {
+                                InGameLog.AddLog("area not null");
+                                FocusOnAreaByRaycast(hit, mouseAreaOrthoSize);
+                                // SetCurrentAreaByRaycast(hit);
+                                // if(regionFocus == false)
+                                //     FocusOnRegion(area.region, true);
+                            }
                         }
                     }
                 }

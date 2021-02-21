@@ -146,7 +146,7 @@ public class Region
         concernedAnimals.Clear();
         foreach (MainEvent mainEvent in includedEvents)
         {
-            if (mainEvent.IsAppeared() && !mainEvent.IsFinished())
+            if (mainEvent.IsAppeared && !mainEvent.IsFinished)
             {
                 foreach (Animal animal in mainEvent.concernedAnimals)
                 {
@@ -308,7 +308,7 @@ public class Region
     /// <returns></returns>
     public List<MainEvent> GetRevealedEvents()
     {
-        return includedEvents.FindAll(anEvent => anEvent.IsAppeared());
+        return includedEvents.FindAll(anEvent => anEvent.IsAppeared);
     }
     /// <summary>
     /// 统计指定类型已建设建筑物数量

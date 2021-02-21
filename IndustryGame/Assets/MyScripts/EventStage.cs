@@ -113,7 +113,7 @@ public class EventStage
         }
         else
         {
-            if (so.CanAppear(mainEvent))
+            if (so.CanAppear(this))
             {
                 _isAppeared = true;
                 PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(mainEvent.name + " - " + name, description));

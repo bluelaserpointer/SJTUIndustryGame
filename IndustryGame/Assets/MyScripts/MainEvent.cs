@@ -46,8 +46,8 @@ public class MainEvent
     /// </summary>
     public int contribution { get { return so.contribution; } }
 
-    private bool _isAppeared;
-    private bool _isFinished;
+    private bool isAppeared;
+    private bool isFinished;
     //calculate after event finish
     private int wildReservated;
     public int WildReservated { get { return wildReservated; } }
@@ -65,9 +65,6 @@ public class MainEvent
         {
             eventStages.Add(new EventStage(eventStageSO, this));
         }
-        //auto reveal
-        if (hideLevel == 0)
-            Reveal();
         //generate initial animals
         foreach (Area area in region.GetAreas())
         {
@@ -78,8 +75,22 @@ public class MainEvent
     }
     public void DayIdle()
     {
-        if (!IsFinished())
+        if (!isFinished)
         {
+            if(isAppeared)
+            {
+                //judge finish
+                if (eventStages.Find(eventStage => !eventStage.IsFinished()) == null)
+                {
+                    Finish();
+                }
+            }
+            else
+            {
+                //judge reveal
+                if (hideLevel == 0)
+                    Reveal();
+            }
             foreach (EventStage eventStage in eventStages)
             {
                 eventStage.DayIdle();
@@ -92,60 +103,44 @@ public class MainEvent
     /// <returns><see cref="IsFinished"/> ? <see cref="descriptionAfterFinish"/> : <see cref="description"/></returns>
     public string GetDescription()
     {
-        return _isFinished ? descriptionAfterFinish : description;
+        return isFinished ? descriptionAfterFinish : description;
     }
     /// <summary>
     /// 变为可见
     /// </summary>
     public void Reveal()
     {
-        _isAppeared = true;
+        isAppeared = true;
         PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, description));
+        region.UpdateConcernedSpecies();
+    }
+    /// <summary>
+    /// 完成事件
+    /// </summary>
+    public void Finish()
+    {
+        isFinished = true;
+        //calculate rewards
+        wildReservated = Stage.GetSpeciesAmount(concernedAnimals[0]);
+        mamMadeEnvReservated = 0;
+        totalReward = contribution + wildReservated + mamMadeEnvReservated;
+        //show popUpWindow
+        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, descriptionAfterFinish));
+        PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
+        //add rewards
+        Stage.AddResourceValue(ResourceType.contribution, totalReward);
         region.UpdateConcernedSpecies();
     }
     /// <summary>
     /// 该事件流是否已完成
     /// </summary>
     /// <returns></returns>
-    public bool IsFinished()
-    {
-        if (_isFinished)
-            return true;
-        if (!_isAppeared)
-            return false;
-        bool judge = true;
-        foreach (EventStage eventStage in eventStages)
-        {
-            if (!eventStage.IsFinished())
-            {
-                judge = false;
-                break;
-            }
-        }
-        if (judge)
-        {
-            _isFinished = true;
-            //calculate rewards
-            wildReservated = Stage.GetSpeciesAmount(concernedAnimals[0]);
-            mamMadeEnvReservated = 0;
-            totalReward = contribution + wildReservated + mamMadeEnvReservated;
-            //show popUpWindow
-            PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, descriptionAfterFinish));
-            PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
-            //add rewards
-            Stage.AddResourceValue(ResourceType.contribution, totalReward);
-            region.UpdateConcernedSpecies();
-        }
-        return judge;
-    }
+    public bool IsFinished { get { return isFinished; } }
     /// <summary>
     /// 该事件流是否可见
     /// </summary>
     /// <returns></returns>
-    public bool IsAppeared()
-    {
-        return _isAppeared;
-    }
+    public bool IsAppeared { get { return isAppeared; } }
     /// <summary>
     /// 获取可见的事件阶段
     /// </summary>
