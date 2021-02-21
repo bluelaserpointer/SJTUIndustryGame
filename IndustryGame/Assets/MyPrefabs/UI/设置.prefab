@@ -718,7 +718,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -341.50058, y: 249.99992}
+  m_AnchoredPosition: {x: -341.50058, y: 249.99997}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8678797723659596440
@@ -1087,6 +1087,7 @@ GameObject:
   - component: {fileID: 8678797724039775679}
   - component: {fileID: 8678797724039775678}
   - component: {fileID: 8678797724039775677}
+  - component: {fileID: 7150122004974936514}
   m_Layer: 5
   m_Name: "\u5173\u95ED\u6309\u94AE"
   m_TagString: Untagged
@@ -1192,19 +1193,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8678797724039775679}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
-          type: 3}
-        m_MethodName: ClearWindow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8678797724039775677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,6 +1209,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.19607843}
   m_EffectDistance: {x: 10, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &7150122004974936514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678797724039775667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02435740551568347b567d382a6c11e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8678797724138567628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,8 +1673,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8678797724138567630}
   m_HandleRect: {fileID: 8678797724138567629}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9985298
+  m_Value: 0
+  m_Size: 0.9991349
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

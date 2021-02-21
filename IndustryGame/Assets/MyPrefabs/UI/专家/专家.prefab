@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 906954704038259094}
   - component: {fileID: 906954704038259095}
   - component: {fileID: 906954704038259092}
+  - component: {fileID: 3921485062215717652}
   m_Layer: 5
   m_Name: "\u5173\u95ED\u6309\u94AE"
   m_TagString: Untagged
@@ -193,19 +194,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 906954704038259094}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
-          type: 3}
-        m_MethodName: ClearWindow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &906954704038259092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +210,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.19607843}
   m_EffectDistance: {x: 10, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &3921485062215717652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906954704038259098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02435740551568347b567d382a6c11e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &906954704196292173
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,8 +827,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 906954706091416551}
   m_HandleRect: {fileID: 906954706091416548}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.9999711
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
