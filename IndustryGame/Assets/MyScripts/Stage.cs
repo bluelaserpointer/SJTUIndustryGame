@@ -48,6 +48,9 @@ public class Stage : MonoBehaviour
     private Dictionary<Action, int> actionsFinishCount = new Dictionary<Action, int>();
     private List<Animal> concernedAnimals = new List<Animal>();
 
+    //摄像机聚焦最高位置
+    private Vector3 highestPosition;
+
     private Stage() { }
     void Awake()
     {
@@ -99,12 +102,16 @@ public class Stage : MonoBehaviour
 
         }
 
-
+        List<Vector3> regionHighestPositions = new List<Vector3>();
         foreach (Region region in instance.regions)
         {
             region.CalculateCenter();
             region.CalculateHighestPosition();
+            regionHighestPositions.Add(region.GetHighestPosition());
         }
+        List<Vector3> orderedPositions = regionHighestPositions.OrderByDescending(p => p.y).ToList();
+        instance.highestPosition = orderedPositions[0];
+        
 
         
         List<Region> xPos = instance.regions.GetRange(0, instance.regions.Count);
@@ -142,35 +149,7 @@ public class Stage : MonoBehaviour
             }
         }
 
-        // foreach(Region region in instance.regions)
-        // {
-        //     if(region.GetRegionId() != -1)
-        //     {
-        //         Debug.Log("Region " + region.GetRegionId().ToString() + " z: " + region.GetCenter().z + " x: " + region.GetCenter().x);
-        //         if((region.GetNorthRegion() != null))
-        //         {
-        //             Debug.Log("North");
-        //             Debug.Log(region.GetNorthRegion().GetCenter().z);
-        //         }
-        //         if((region.GetSouthRegion() != null))
-        //         {
-        //             Debug.Log("South");
-        //             Debug.Log(region.GetSouthRegion().GetCenter().z);
-        //         }
-        //         if((region.GetWestRegion() != null))
-        //         {
-        //             Debug.Log("West");
-        //             Debug.Log(region.GetWestRegion().GetCenter().x);
-        //         }
-        //         if((region.GetEastRegion() != null))
-        //         {
-        //             Debug.Log("East");
-        //             Debug.Log(region.GetEastRegion().GetCenter().x);
-        //         }
-        //     }
-        // }
 
-        
         //generate initial events
         foreach (MainEventSO definedEvent in instance.definedEvents)
         {
@@ -269,6 +248,14 @@ public class Stage : MonoBehaviour
     public static List<Region> GetRegions()
     {
         return instance.regions;
+    }
+    /// <summary>
+    /// 获取所有洲的最高聚焦位置
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetHighestPosition()
+    {
+        return instance.highestPosition;
     }
     /// <summary>
     /// 更新濒危动物列表
