@@ -49,7 +49,7 @@ public static class HexMetrics {
 
 	public const float noiseScale = 0.003f;
 
-	public const int chunkSizeX = 2, chunkSizeZ = 2;
+	public const int chunkSizeX = 1, chunkSizeZ = 1;
 
 	public const int hashGridSize = 256;
 
