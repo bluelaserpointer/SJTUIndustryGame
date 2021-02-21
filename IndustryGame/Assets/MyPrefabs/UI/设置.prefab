@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1254902, g: 0.7490196, b: 0.41960788, a: 1}
+  m_Color: {r: 0.9686275, g: 0.7176471, b: 0.19215688, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1673,8 +1673,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8678797724138567630}
   m_HandleRect: {fileID: 8678797724138567629}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.9991349
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
