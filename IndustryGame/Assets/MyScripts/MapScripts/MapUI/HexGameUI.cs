@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using HighlightingSystem;
 
 public class HexGameUI : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class HexGameUI : MonoBehaviour
 	public HexGrid grid;
 	HexCell currentCell;
 	bool activeMigrate;
+	int activeRegion;
+
 	HexUnit selectedUnit;
 	public void SetEditMode(bool toggle)
 	{
@@ -19,6 +22,15 @@ public class HexGameUI : MonoBehaviour
 	{
 		activeMigrate = toggle;
 	}
+	public void SetHighlightRegion(float regionIndex)
+	{
+		bool highlightRegionChanged = (activeRegion != (int)regionIndex);
+		activeRegion = (int)regionIndex;
+		if (highlightRegionChanged)
+			HandleHighlightChange();
+		
+	}
+
 
 	bool UpdateCurrentCell()
 	{
@@ -55,6 +67,18 @@ public class HexGameUI : MonoBehaviour
 			}
 		}
 	}
+	void HandleHighlightChange()
+	{
+			for (int z = 0; z < grid.cellCountZ; z++)
+				for (int x = 0; x < grid.cellCountX; x++)
+				{
+					HexCoordinates hexCoordinate = HexCoordinates.FromOffsetCoordinates(x, z);
+					HexCell cell = grid.GetCell(hexCoordinate);
+					cell.GetComponentInParent<Highlighter>().enabled = (cell.RegionId == activeRegion);
+				}
+		
+	}
+
 
 	void Update()
 	{
