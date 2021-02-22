@@ -33,9 +33,8 @@ public class FilterPanel : MonoBehaviour
     void Start()
     {
         RefreshRegions();
-        FilterPanelRegionSelect StartSelectedRegion = instance.GeneratedRegionSelections[0].GetComponent<FilterPanelRegionSelect>();
-        RefreshEventsDueToRegionSelection(StartSelectedRegion.region);
-        focusHelperForRegion.SelectImage(StartSelectedRegion.BackgroundImage, StartSelectedRegion.RegionName);
+        RefreshEventsDueToRegionSelection(instance.GeneratedRegionSelections[0].GetComponent<FilterPanelRegionSelect>().region);
+
     }
 
     void Update()
@@ -60,16 +59,28 @@ public class FilterPanel : MonoBehaviour
 
     public static void RefreshEventsDueToRegionSelection(Region region)
     {
+        // Debug.Log("Refreshing Events for region: " + region.name);
         Destroy(instance.GeneratedAnimalSelectionPanel);
         Stage.ShowAnimalNumberPop(null);
 
         Helper.ClearList(instance.GeneratedEventSelections);
         foreach (MainEvent mainEvent in region.GetRevealedEvents())
         {
+            // Debug.Log("Detected main event: " + mainEvent.name + " for region: " + region.name);
             GameObject clone = Instantiate(instance.EventSelectionPrefab, instance.EventSelectionGeneratePosition.transform, false);
             clone.GetComponent<FilterPanelEventSelect>().mainEvent = mainEvent;
             instance.GeneratedEventSelections.Add(clone);
         }
+        // FilterPanelRegionSelect StartSelectedRegion = instance.GeneratedRegionSelections.f .GetComponent<FilterPanelRegionSelect>();
+        foreach (GameObject gameObject in instance.GeneratedRegionSelections)
+        {
+            if (gameObject.GetComponent<FilterPanelRegionSelect>().region == region)
+            {
+                instance.focusHelperForRegion.SelectImage(gameObject.GetComponent<FilterPanelRegionSelect>().BackgroundImage, gameObject.GetComponent<FilterPanelRegionSelect>().RegionName);
+            }
+        }
+
+
     }
 
     public static void GenerateAnimalSelectionPanel(MainEvent mainEvent)

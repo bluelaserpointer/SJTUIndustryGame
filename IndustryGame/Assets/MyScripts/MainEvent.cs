@@ -68,7 +68,8 @@ public class MainEvent
         //generate initial animals
         foreach (Area area in region.GetAreas())
         {
-            foreach (Animal animal in concernedAnimals) {
+            foreach (Animal animal in concernedAnimals)
+            {
                 area.changeSpeciesAmount(animal, UnityEngine.Random.Range(100, 200));
             }
         }
@@ -77,7 +78,7 @@ public class MainEvent
     {
         if (!isFinished)
         {
-            if(isAppeared)
+            if (isAppeared)
             {
                 //judge finish
                 if (eventStages.Find(eventStage => !eventStage.IsFinished()) == null)
@@ -113,6 +114,7 @@ public class MainEvent
         isAppeared = true;
         PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, description));
         region.UpdateConcernedSpecies();
+        FilterPanel.RefreshEventsDueToRegionSelection(region);
     }
     /// <summary>
     /// 完成事件
