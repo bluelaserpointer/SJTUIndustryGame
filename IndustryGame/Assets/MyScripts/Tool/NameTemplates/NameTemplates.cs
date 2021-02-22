@@ -5,25 +5,37 @@ using UnityEngine;
 public class NameTemplates : ScriptableObject
 {
     [SerializeField] private List<string> names;
-    private bool backupTaken = false;
-    private List<string> originalNames;
+    private readonly List<string> unusedNames = new List<string>();
     private NameTemplates() {}
+    /// <summary>
+    /// Cause used names could reappear
+    /// </summary>
+    public void Reset()
+    {
+        unusedNames.Clear();
+        unusedNames.AddRange(names);
+    }
+    /// <summary>
+    /// Cause all <see cref="NameTemplates"/> used names could reappear
+    /// </summary>
+    public static void ResetAll()
+    {
+        foreach(NameTemplates nameTemplates in Resources.LoadAll<NameTemplates>("NameTemplates"))
+        {
+            nameTemplates.Reset();
+        }
+    }
     public string PickRandomOne()
     {
-        if(!backupTaken)
-        {
-            backupTaken = true;
-            originalNames = new List<string>(names);
-        }
-        if (originalNames.Count == 0)
+        if (names.Count == 0)
             return "defaultName";
-        if(names.Count > 0) //如果语料库充足则尽量返回不同单词，超过则随机返回
+        if(unusedNames.Count > 0) //如果语料库充足则尽量返回不同单词，超过则随机返回
         {
-            int randomIndex = Random.Range(0, names.Count);
-            string name = names[randomIndex];
-            names.RemoveAt(randomIndex);
+            int randomIndex = Random.Range(0, unusedNames.Count);
+            string name = unusedNames[randomIndex];
+            unusedNames.RemoveAt(randomIndex);
             return name;
         }
-        return originalNames[Random.Range(0, originalNames.Count)];
+        return names[Random.Range(0, names.Count)];
     }
 }

@@ -407,8 +407,9 @@ public class HexCell : MonoBehaviour {
 
 	public void DisableMigrate()
 	{
+		//TODO: 这行会导致HexCellChildren隐藏，需要修正 by izumi
 		//Debug.Log("DisableMigrate");
-		this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+		//this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 	}
 
 	public HexCell GetNeighbor (HexDirection direction) {

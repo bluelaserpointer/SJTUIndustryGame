@@ -56,8 +56,10 @@ public class Stage : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        //init NameTemplates
+        NameTemplates.ResetAll();
         //init resources
-        foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
+        foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
             resources.Add(resourceType, new AmountChange(0));
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecording(INITIAL_MONEY);

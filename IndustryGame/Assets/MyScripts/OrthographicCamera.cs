@@ -507,9 +507,6 @@ public class OrthographicCamera : MonoBehaviour
                         HexCell hexCell = Stage.GetHexGrid().GetCell(hit.point);
                         if (hexCell != null)
                         {
-                            hexCell.transform.GetChild(0).gameObject.SetActive(true); //TODO: need understand why this code is needed (after BUILD)
-                            Area area = hexCell.transform.GetComponentInChildren<Area>();
-                            InGameLog.AddLog("check area null: " + hexCell.transform.position.x + ", " + hexCell.transform.position.z + ", area null: " + (area == null));
                             FocusOnAreaByRaycast(hit, mouseAreaOrthoSize);
                             // SetCurrentAreaByRaycast(hit);
                             // if(regionFocus == false)
