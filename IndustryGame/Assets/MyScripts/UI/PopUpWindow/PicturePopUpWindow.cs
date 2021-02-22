@@ -17,9 +17,10 @@ public class PicturePopUpWindow : IPopUpWindow
 
     public void Generate ()
     {
-        GameObject clone = GameObject.Instantiate(PopUpCanvas.instance.PicturePopUpWindowPrefab, PopUpCanvas.instance.transform, false);
-        clone.GetComponent<SinglePopUpWindow>().TitleText.text = title;
-        clone.GetComponent<SinglePopUpWindow>().ContentsText.text = contents;
-        clone.GetComponent<SinglePopUpWindow>().Picture.sprite = picture;
+        GameObject window = Object.Instantiate(Object.Instantiate(Resources.Load<GameObject>("UI/PopUpWindow/PicturePopUpWindowPrefab")), PopUpCanvas.instance.transform, false);
+        SinglePopUpWindow script = window.GetComponent<SinglePopUpWindow>();
+        script.TitleText.text = title;
+        script.ContentsText.text = contents;
+        script.Picture.sprite = picture;
     }
 }

@@ -34,11 +34,15 @@ public class EventStageSO : ScriptableObject
     /// </summary>
     /// <param name="mainEvent"></param>
     /// <returns></returns>
-    public bool CanAppear(MainEvent mainEvent)
+    public bool CanAppear(EventStage eventStage)
     {
+        if(!eventStage.mainEvent.IsAppeared)
+        {
+            return false;
+        }
         foreach (EventStageSO eventStageSO in preFinishEventStages)
         {
-            if (!mainEvent.eventStages.Find(eventStage => eventStage.so.Equals(eventStageSO)).IsFinished())
+            if (!eventStage.mainEvent.eventStages.Find(eachEventStage => eachEventStage.so.Equals(eventStageSO)).IsFinished())
             {
                 return false;
             }

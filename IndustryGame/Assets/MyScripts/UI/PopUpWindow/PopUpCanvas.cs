@@ -9,16 +9,12 @@ public class PopUpCanvas : MonoBehaviour
 
     private static bool windowExists = false;
 
-    public GameObject SimplePopUpWindowPrefab;
-    public GameObject PicturePopUpWindowPrefab;
-
-    private Queue<IPopUpWindow> PopUpWindowQueue;
+    private static readonly Queue<IPopUpWindow> popUpWindowQueue = new Queue<IPopUpWindow>();
 
     void Awake()
     {
         if (instance == null)
             instance = this;
-        PopUpWindowQueue = new Queue<IPopUpWindow>();
     }
     public void Start ()
     {
@@ -27,9 +23,9 @@ public class PopUpCanvas : MonoBehaviour
 
     public static void GenerateNewPopUpWindow(IPopUpWindow window)
     {
-        instance.PopUpWindowQueue.Enqueue(window);
+        popUpWindowQueue.Enqueue(window);
 
-        //instance.PopUpWindowQueue.Enqueue(clone);
+        //PopUpWindowQueue.Enqueue(clone);
         if (!windowExists)
         {
             ShowPopUpWindowStack();
@@ -40,9 +36,9 @@ public class PopUpCanvas : MonoBehaviour
 
     public static void ShowPopUpWindowStack ()
     {
-        if (instance.PopUpWindowQueue.Count > 0)
+        if (popUpWindowQueue.Count > 0)
         {
-            IPopUpWindow topWindow = instance.PopUpWindowQueue.Dequeue();
+            IPopUpWindow topWindow = popUpWindowQueue.Dequeue();
             topWindow.Generate();
             windowExists = true;
         }

@@ -56,8 +56,10 @@ public class Stage : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        //init NameTemplates
+        NameTemplates.ResetAll();
         //init resources
-        foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
+        foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
             resources.Add(resourceType, new AmountChange(0));
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecording(INITIAL_MONEY);
@@ -168,7 +170,6 @@ public class Stage : MonoBehaviour
         //generate specialist employment list
         SpecialistEmployList.refresh();
         instance.hexGrid = instance.GetComponent<HexGrid>();
-        Camera.main.GetComponent<OrthographicCamera>().SetHexGrid(instance.hexGrid);
         instance.lastDay = Timer.GetDay();
         //union actions
         foreach (Region region in instance.regions)
@@ -363,7 +364,7 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public static List<MainEvent> GetRevealedEvents()
     {
-        return instance.events.FindAll(eachEvent => eachEvent.IsAppeared());
+        return instance.events.FindAll(eachEvent => eachEvent.IsAppeared);
     }
     /// <summary>
     /// 获取所有揭开未完事件流
@@ -371,7 +372,7 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public static List<MainEvent> GetRevealedUnfinishedEvents()
     {
-        return instance.events.FindAll(eachEvent => eachEvent.IsAppeared() && !eachEvent.IsFinished());
+        return instance.events.FindAll(eachEvent => eachEvent.IsAppeared && !eachEvent.IsFinished);
     }
     /// <summary>
     /// 获取与指定动物相关事件阶段(报告)
