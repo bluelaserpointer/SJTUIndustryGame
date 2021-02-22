@@ -397,9 +397,9 @@ public class HexCell : MonoBehaviour {
 	public void EnableMigrate(Color color,HexDirection hexDirection)
 	{
 		//Debug.Log("EnableMigrate");
-		this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-		RawImage arrow = this.gameObject.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<RawImage>();
-		RectTransform arrowCanvasTransform = this.gameObject.transform.GetChild(0).transform.GetComponent<RectTransform>();
+		this.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+		RawImage arrow = this.gameObject.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<RawImage>();
+		RectTransform arrowCanvasTransform = this.gameObject.transform.GetChild(1).transform.GetComponent<RectTransform>();
 		arrowCanvasTransform.rotation = Quaternion.Euler(new Vector3(90, 0, 150-60* (int)hexDirection));
 		arrow.color = color;
 		
@@ -407,9 +407,8 @@ public class HexCell : MonoBehaviour {
 
 	public void DisableMigrate()
 	{
-		//TODO: 这行会导致HexCellChildren隐藏，需要修正 by izumi
 		//Debug.Log("DisableMigrate");
-		//this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+		this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
 	}
 
 	public HexCell GetNeighbor (HexDirection direction) {
