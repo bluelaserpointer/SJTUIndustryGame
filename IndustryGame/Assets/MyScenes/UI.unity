@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1360,6 +1360,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1319866046, guid: 9cc7346c8e36ec6448622053966222c2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07acfea47614691479043853b198eb74,
+        type: 3}
     - target: {fileID: 837001741029361534, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1668,7 +1673,7 @@ PrefabInstance:
     - target: {fileID: 4189210156150919149, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000016126085
+      value: 0.00011050899
       objectReference: {fileID: 0}
     - target: {fileID: 4611888462836921626, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
@@ -2526,6 +2531,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.70980394
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.5647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.47058827
       objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
