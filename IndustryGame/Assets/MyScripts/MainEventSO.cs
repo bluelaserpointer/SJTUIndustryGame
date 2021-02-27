@@ -49,6 +49,8 @@ public class MainEventSO : ScriptableObject
     [Header("出现的所有地区措施")]
     public List<AreaAction> includedAreaActions = new List<AreaAction>();
 
+    public MainEvent generatedInstance;
+
     private MainEventSO() { } //prevent instantiate from code
     /// <summary>
     /// 判断指定<see cref="Region"/>是否满足该事件流生成条件
@@ -72,17 +74,17 @@ public class MainEventSO : ScriptableObject
     /// </summary>
     public MainEvent TryGenerate()
     {
-        MainEvent mainEvent = null;
+        generatedInstance = null;
         List<Region> regions = Stage.GetRegions().FindAll(region => CanGenrateInRegion(region));
         if (regions.Count > 0)
         {
             Region region = regions[UnityEngine.Random.Range(0, regions.Count)];
-            mainEvent = new MainEvent(this, region);
+            generatedInstance = new MainEvent(this, region);
         }
         else
         {
             InGameLog.AddLog("failed spawn: " + eventName, Color.red);
         }
-        return mainEvent;
+        return generatedInstance;
     }
 }

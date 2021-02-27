@@ -92,6 +92,10 @@ public class Animal : ScriptableObject
     /// 猜测: 危险级别划分数
     /// </summary>
     public int mostDangerLimit;
+    /// <summary>
+    /// 相关的主事件
+    /// </summary>
+    public MainEventSO relatedMainEvent;
 
     private void Start()
     {

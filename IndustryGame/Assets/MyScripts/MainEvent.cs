@@ -55,6 +55,10 @@ public class MainEvent
     public int MamMadeEnvReservated { get { return mamMadeEnvReservated; } }
     private int totalReward;
     public int TotalReward { get { return totalReward; } }
+    /// <summary>
+    /// 累计环境伤害
+    /// </summary>
+    public float totalEnvironmentDamage;
     public MainEvent(MainEventSO so, Region region)
     {
         this.so = so;
