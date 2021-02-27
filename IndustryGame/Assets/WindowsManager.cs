@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +9,7 @@ public class WindowsManager : MonoBehaviour
     public GameObject SpecialistWindowPrefab;
     public GameObject ReportWindowPrefab;
     public GameObject SettingsWindowPrefab;
+    public GameObject CommitmentWindowPrefab;
 
 
     private GameObject OpenWindow;
@@ -21,6 +22,7 @@ public class WindowsManager : MonoBehaviour
         Report,
         Specialist,
         Settings,
+        Commitment,
         NULL
     }
 
@@ -75,6 +77,16 @@ public class WindowsManager : MonoBehaviour
             ClearWindow();
         }
         OpenWindow = Instantiate(instance.SettingsWindowPrefab, instance.gameObject.transform, false);
+        // ResetButtons(WindowType.Settings);
+    }
+
+    public void GenerateCommitmentWindow()
+    {
+        if (OpenWindow != null)
+        {
+            ClearWindow();
+        }
+        OpenWindow = Instantiate(instance.CommitmentWindowPrefab, instance.gameObject.transform, false);
         // ResetButtons(WindowType.Settings);
     }
 

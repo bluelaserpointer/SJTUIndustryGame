@@ -1425,6 +1425,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2258770949564733921, guid: 9cc7346c8e36ec6448622053966222c2,
+        type: 3}
+      propertyPath: m_Name
+      value: "\u5BA3\u8A00"
+      objectReference: {fileID: 0}
     - target: {fileID: 3432363058510227194, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1673,7 +1678,7 @@ PrefabInstance:
     - target: {fileID: 4189210156150919149, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00011050899
+      value: -0.000003319113
       objectReference: {fileID: 0}
     - target: {fileID: 4611888462836921626, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
@@ -1764,6 +1769,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7179147032566623197, guid: 9cc7346c8e36ec6448622053966222c2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1410842066}
+    - target: {fileID: 7179147032566623197, guid: 9cc7346c8e36ec6448622053966222c2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GenerateCommitmentWindow
       objectReference: {fileID: 0}
     - target: {fileID: 7859042998421402105, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
@@ -1797,6 +1812,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cc7346c8e36ec6448622053966222c2, type: 3}
+--- !u!114 &1553054504 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4225170455289923792, guid: 9cc7346c8e36ec6448622053966222c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1553054503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1621912625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8824729838562318859, guid: b369bcf63f3d73849b6fc7027e178794,
@@ -2445,6 +2472,17 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
         type: 3}
+      propertyPath: CommitmentWindowPrefab
+      value: 
+      objectReference: {fileID: 3728750443369285343, guid: b970a115b2ab2e0489fecb20947e676b,
+        type: 3}
+    - target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
+        type: 3}
+      propertyPath: NavbarButtons.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
+        type: 3}
       propertyPath: NavbarButtons.Array.data[0].image
       value: 
       objectReference: {fileID: 2029751219}
@@ -2458,6 +2496,16 @@ PrefabInstance:
       propertyPath: NavbarButtons.Array.data[2].image
       value: 
       objectReference: {fileID: 344468163}
+    - target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
+        type: 3}
+      propertyPath: NavbarButtons.Array.data[3].image
+      value: 
+      objectReference: {fileID: 1553054504}
+    - target: {fileID: 1767832767113770568, guid: 8ee4dec29fa55484792f344299781f10,
+        type: 3}
+      propertyPath: NavbarButtons.Array.data[3].windowType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1767832767113770569, guid: 8ee4dec29fa55484792f344299781f10,
         type: 3}
       propertyPath: m_RootOrder
