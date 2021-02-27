@@ -354,7 +354,30 @@ public class OrthographicCamera : MonoBehaviour
                 // Debug.Log("Escaped from area control " + maxObserveRegionSize);
                 areaToRegionFlag = true;
                 // SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, false);
+                Vector3 prevPos = currentPosition;
+
                 FocusOnRegion(currentRegion, true);
+
+
+                float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
+                float ratio = 0.5f;
+                if(ratio < 1f)
+                {
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                    
+                    float highestY = GetAreaFocusPosition(Stage.GetHighestPosition()).y;
+                    float dstY = currentPosition.y - (currentPosition.y - highestY) * ratio;
+
+                    currentPosition = prevPos;
+
+                    if(dstY < highestY)
+                        currentPosition.y = highestY;
+                    else
+                        currentPosition.y = dstY;
+
+                    currentSize -= 0.5f * (currentSize - mouseAreaOrthoSize);
+                }
+
             }
         }
         else if (!IsPointerOverUIObject())
@@ -443,7 +466,7 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void FocusOnRegion(Region region, bool modeChange)
     {   
-        Debug.Log("Focus on region");
+        // Debug.Log("Focus on region");
 
         if(region == null || region.GetRegionId() == -1)
             return;
