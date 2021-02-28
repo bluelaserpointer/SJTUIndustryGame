@@ -339,11 +339,11 @@ public class HexMapEditor : MonoBehaviour {
 		cell.PlantLevel = 0;
 		cell.UrbanLevel = 0;
 		cell.FarmLevel = 0;
-		cell.TerrainTypeIndex = (activeLandformIndex-1); //改变地貌颜色
+		//cell.TerrainTypeIndex = (activeLandformIndex-1); //改变地貌颜色
 
-		switch (activeLandformIndex-1)
+		/*switch (activeLandformIndex-1)
 		{
-			case 0://water
+			case 0://sea
 				
 				cell.Elevation = -1;
 				cell.WaterLevel =0;
@@ -385,7 +385,16 @@ public class HexMapEditor : MonoBehaviour {
 				cell.Elevation = 0;
 				break;
 
-		}
+		}*/
+
+		EnvironmentType type = EnvironmentType.PickOne(EnvironmentType.indexMap[activeLandformIndex - 1]);
+		cell.TerrainTypeIndex = type.landformIndex;
+		cell.Elevation = Random.Range(type.elevationMin, type.elevationMax + 1);
+		cell.WaterLevel = type.waterLevel;
+		cell.PlantLevel = Random.Range(type.plantLevelMin, type.plantLevelMax + 1);
+		cell.UrbanLevel = Random.Range(type.urbanLevelMin, type.urbanLevelMax+1);
+		cell.FarmLevel = Random.Range(type.farmLevelMin, type.farmLevelMax + 1);
+		
 
 	}
 }

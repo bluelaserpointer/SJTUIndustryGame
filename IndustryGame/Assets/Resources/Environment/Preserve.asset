@@ -10,8 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 519ddedea2be6074d8e306f07817d12e, type: 3}
-  m_Name: Plain
+  m_Name: Preserve
   m_EditorClassIdentifier: 
-  environmentName: "\u5E73\u539F"
+  environmentName: "\u4FDD\u62A4"
   usingNameTemplates: {fileID: 11400000, guid: 21fd1be7d306c4d4a969cdd74886ddfe, type: 2}
   icon: {fileID: 0}
+  landformIndex: 10
+  elevationMax: 0
+  elevationMin: 0
+  waterLevel: 0
+  plantLevelMax: 0
+  plantLevelMin: 0
+  urbanLevelMax: 0
+  urbanLevelMin: 0
+  farmLevelMax: 0
+  farmLevelMin: 0

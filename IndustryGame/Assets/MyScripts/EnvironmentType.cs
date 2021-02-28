@@ -7,6 +7,16 @@ public class EnvironmentType : ScriptableObject
     public string environmentName;
     public NameTemplates usingNameTemplates;
     public Sprite icon;
+    public int landformIndex;
+    public int elevationMax;
+    public int elevationMin;
+    public int waterLevel;
+    public int plantLevelMax;
+    public int plantLevelMin;
+    public int urbanLevelMax;
+    public int urbanLevelMin;
+    public int farmLevelMax;
+    public int farmLevelMin;
 
     public static EnvironmentType[] GetAllTypes()
     {
@@ -17,6 +27,15 @@ public class EnvironmentType : ScriptableObject
         EnvironmentType[] types = GetAllTypes();
         return types[UnityEngine.Random.Range(0, types.Length)];
     }
+
+    public static EnvironmentType PickOne(int terrainTypeIndex)
+    {
+        EnvironmentType[] types = GetAllTypes();
+        return types[terrainTypeIndex];
+    }
+
+    public static int[] indexMap = { 10,5,4,9,0,2,6,1,3,7,8}; 
+
     /*[Description("湖泊/河流")]
     Water,
     [Description("草原")]
