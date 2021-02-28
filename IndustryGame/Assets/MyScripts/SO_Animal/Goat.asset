@@ -34,3 +34,4 @@ MonoBehaviour:
   migrateLimit: 5
   sfxAudio: {fileID: 11400000, guid: 15e6a4ec3ab724d45baebb0c61e93516, type: 2}
   mostDangerLimit: 5
+  relatedMainEvent: {fileID: 11400000, guid: 2120b392985132d44b52d0bfd44d4c72, type: 2}

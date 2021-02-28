@@ -125,7 +125,12 @@ public class Area : MonoBehaviour
     {
         if (animalAmounts.ContainsKey(animal))
         {
-            animalAmounts[animal].Add(change);
+            float oldValue = animalAmounts[animal].GetCurrentValue();
+            float newValue = animalAmounts[animal].Add(change);
+            if(newValue < oldValue)
+            {
+                animal.relatedMainEvent.generatedInstance.totalEnvironmentDamage += oldValue - newValue;
+            }
         }
         else if (change > 0)
         {

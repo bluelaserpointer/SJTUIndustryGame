@@ -375,6 +375,24 @@ public class Stage : MonoBehaviour
         return instance.events.FindAll(eachEvent => eachEvent.IsAppeared && !eachEvent.IsFinished);
     }
     /// <summary>
+    /// 获取累计环境危害最大的事件
+    /// </summary>
+    /// <returns></returns>
+    public static MainEvent GetMostHarmfulRevealedUnfinishedEvent()
+    {
+        MainEvent mostHarmful = null;
+        float value = 0;
+        foreach(MainEvent eachEvent in instance.events)
+        {
+            if(eachEvent.IsAppeared && !eachEvent.IsFinished && eachEvent.totalEnvironmentDamage > value)
+            {
+                mostHarmful = eachEvent;
+                value = eachEvent.totalEnvironmentDamage;
+            }
+        }
+        return mostHarmful;
+    }
+    /// <summary>
     /// 获取与指定动物相关事件阶段(报告)
     /// </summary>
     /// <param name="animal"></param>
