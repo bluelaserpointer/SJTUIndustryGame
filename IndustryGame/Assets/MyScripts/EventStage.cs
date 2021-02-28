@@ -27,8 +27,9 @@ public class EventStage
     /// </summary>
     public string descriptionAfterFinish { get { return so.descriptionAfterFinish; } }
     /// <summary>
-    /// 事件阶段完成功劳奖励
+    /// 事件阶段图片
     /// </summary>
+    public Sprite image { get { return so.image; } }
     public int contribution { get { return so.contribution; } }
     /// <summary>
     /// 在以下动物报告内显示<see cref="description"/>，仅该事件阶段已发现且未解决时
@@ -116,7 +117,7 @@ public class EventStage
             if (so.CanAppear(this))
             {
                 _isAppeared = true;
-                PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, so.image));
+                PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, image));
             }
         }
     }

@@ -28,6 +28,14 @@ public class MainEvent
     /// </summary>
     public string descriptionAfterFinish { get { return so.descriptionAfterFinish; } }
     /// <summary>
+    /// 事件图片
+    /// </summary>
+    public Sprite image { get { return so.image; } }
+    /// <summary>
+    /// 事件图片 - 完成后
+    /// </summary>
+    public Sprite imageAfterFinish {  get { return so.imageAfterFinish; } }
+    /// <summary>
     /// 事件流隐藏级别 (0 ~ 5)
     /// </summary>
     public int hideLevel { get { return so.hideLevel; } }
@@ -116,7 +124,7 @@ public class MainEvent
     public void Reveal()
     {
         isAppeared = true;
-        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, description, so.image));
+        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, description, image));
         region.UpdateConcernedSpecies();
         FilterPanel.RefreshEventsDueToRegionSelection(region);
     }
@@ -131,7 +139,7 @@ public class MainEvent
         mamMadeEnvReservated = 0;
         totalReward = contribution + wildReservated + mamMadeEnvReservated;
         //show popUpWindow
-        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, descriptionAfterFinish, so.imageAfterFinish));
+        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, descriptionAfterFinish, imageAfterFinish));
         PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
         //add rewards
         Stage.AddResourceValue(ResourceType.contribution, totalReward);
