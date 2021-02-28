@@ -116,7 +116,7 @@ public class MainEvent
     public void Reveal()
     {
         isAppeared = true;
-        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, description));
+        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, description, so.image));
         region.UpdateConcernedSpecies();
         FilterPanel.RefreshEventsDueToRegionSelection(region);
     }
@@ -131,7 +131,7 @@ public class MainEvent
         mamMadeEnvReservated = 0;
         totalReward = contribution + wildReservated + mamMadeEnvReservated;
         //show popUpWindow
-        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name + " @ " + region.name, descriptionAfterFinish));
+        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, descriptionAfterFinish, so.imageAfterFinish));
         PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
         //add rewards
         Stage.AddResourceValue(ResourceType.contribution, totalReward);

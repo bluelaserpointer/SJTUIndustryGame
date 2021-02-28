@@ -116,7 +116,7 @@ public class EventStage
             if (so.CanAppear(this))
             {
                 _isAppeared = true;
-                PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(mainEvent.name + " - " + name, description));
+                PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, so.image));
             }
         }
     }
