@@ -15,3 +15,13 @@ MonoBehaviour:
   environmentName: "\u57CE\u5E02"
   usingNameTemplates: {fileID: 11400000, guid: 21fd1be7d306c4d4a969cdd74886ddfe, type: 2}
   icon: {fileID: 0}
+  landformIndex: 7
+  elevationMax: 0
+  elevationMin: 0
+  waterLevel: 0
+  plantLevelMax: 0
+  plantLevelMin: 0
+  urbanLevelMax: 2
+  urbanLevelMin: 3
+  farmLevelMax: 0
+  farmLevelMin: 0

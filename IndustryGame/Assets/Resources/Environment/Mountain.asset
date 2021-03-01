@@ -15,3 +15,6 @@ MonoBehaviour:
   environmentName: "\u5C71"
   usingNameTemplates: {fileID: 11400000, guid: 5f3e940b1c91f974db9eb1a7343995a4, type: 2}
   icon: {fileID: 0}
+  landformIndex: 6
+  elevationMax: 3
+  elevationMin: 5
