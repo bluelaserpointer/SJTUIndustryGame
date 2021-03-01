@@ -29,6 +29,10 @@ public class Animal : ScriptableObject
     [TextArea]
     public string description;
     /// <summary>
+    /// 物种图片
+    /// </summary>
+    public Sprite image;
+    /// <summary>
     /// 物种首要栖息环境
     /// </summary>
     public EnvironmentType bestEnvironmentType;
