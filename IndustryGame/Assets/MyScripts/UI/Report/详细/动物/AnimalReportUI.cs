@@ -78,7 +78,7 @@ public class AnimalReportUI : MonoBehaviour
 
         animalNameText.text = animal.animalName;
         animalDescriptionText.text = animal.description;
-        animalImage.sprite = animal.image;
+        animalImage.sprite = animal.image == null ? null : animal.image;
         animalBestEnvironmentText.text = "最适合环境: " + animal.bestEnvironmentType.ToString();
         animalReproductionSpeedText.text = "自然生长速度: " + animal.reproductionSpeed.ToString();
         animalEnergyNeedsText.text = "动物所需能量: " + animal.energyNeeds.ToString();
