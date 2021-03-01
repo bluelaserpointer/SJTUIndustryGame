@@ -49,6 +49,7 @@ public class SingleEventReport : MonoBehaviour
     {
         this.mainEvent = mainEvent;
         EventName.text = mainEvent.name;
+        EventImage.sprite = mainEvent.image;
         windowType = ReportSelectionWindowType.EventType;
     }
 
@@ -56,6 +57,7 @@ public class SingleEventReport : MonoBehaviour
     {
         this.animal = animal;
         EventName.text = animal.animalName;
+        EventImage.sprite = animal.image;
         windowType = ReportSelectionWindowType.AnimalType;
     }
     public void ShowSingleEnvironment(Region region)

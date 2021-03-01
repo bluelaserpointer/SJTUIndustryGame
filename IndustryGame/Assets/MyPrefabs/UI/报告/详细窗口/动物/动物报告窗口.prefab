@@ -521,6 +521,7 @@ MonoBehaviour:
   animal: {fileID: 0}
   animalNameText: {fileID: 912642947593917644}
   animalDescriptionText: {fileID: 2778802657468713581}
+  animalImage: {fileID: 2778802656994298376}
   animalBestEnvironmentText: {fileID: 8924775928559912977}
   animalReproductionSpeedText: {fileID: 8820715244956605874}
   animalEnergyNeedsText: {fileID: 1628192026801576339}
@@ -2551,7 +2552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98823535, g: 0.36078432, b: 0.39607847, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
