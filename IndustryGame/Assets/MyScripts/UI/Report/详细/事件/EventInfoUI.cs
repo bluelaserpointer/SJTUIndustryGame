@@ -11,12 +11,15 @@ public class EventInfoUI : MonoBehaviour
     public Text InfoName;
     [Header("显示EventInfo描述的Text")]
     public Text Description;
+    [Header("显示EventInfo图片的Image")]
+    public Image InfoImage;
 
     public void Generate(EventStage eventInfo)
     {
         this.eventInfo = eventInfo;
         InfoName.text = eventInfo.name;
         Description.text = eventInfo.description;
+        InfoImage.sprite = eventInfo.image;
     }
 
 }
