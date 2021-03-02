@@ -10,6 +10,8 @@ public class AnimalReportUI : MonoBehaviour
     public Text animalNameText;
     [Header("动物描述的Text")]
     public Text animalDescriptionText;
+    [Header("动物的Image")]
+    public Image animalImage;
     [Header("动物最适合的环境的Text")]
     public Text animalBestEnvironmentText;
     [Header("动物自然生长速度的Text")]
@@ -76,6 +78,7 @@ public class AnimalReportUI : MonoBehaviour
 
         animalNameText.text = animal.animalName;
         animalDescriptionText.text = animal.description;
+        animalImage.sprite = animal.image == null ? null : animal.image;
         animalBestEnvironmentText.text = "最适合环境: " + animal.bestEnvironmentType.ToString();
         animalReproductionSpeedText.text = "自然生长速度: " + animal.reproductionSpeed.ToString();
         animalEnergyNeedsText.text = "动物所需能量: " + animal.energyNeeds.ToString();
