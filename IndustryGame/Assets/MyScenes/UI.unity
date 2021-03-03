@@ -1678,7 +1678,7 @@ PrefabInstance:
     - target: {fileID: 4189210156150919149, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00001772015
+      value: 0.0001475516
       objectReference: {fileID: 0}
     - target: {fileID: 4611888462836921626, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
@@ -2601,26 +2601,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: m_BackGroundColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.70980394
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.5647059
-      objectReference: {fileID: 0}
-    - target: {fileID: 4816972299502094652, guid: 0a43c9a9a1883e6478113623d0997a20,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.47058827
-      objectReference: {fileID: 0}
     - target: {fileID: 4816972299502094654, guid: 0a43c9a9a1883e6478113623d0997a20,
         type: 3}
       propertyPath: AreaDetailsHUDGameObject
@@ -2688,90 +2668,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a43c9a9a1883e6478113623d0997a20, type: 3}
---- !u!1 &4816972298898461778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4816972299502094650, guid: 0a43c9a9a1883e6478113623d0997a20,
-    type: 3}
-  m_PrefabInstance: {fileID: 4816972298898461777}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4816972298898461779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4816972298898461778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b765e0b5af3bcf4a9deb5895e477da8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fillAlpha: 0
-  _downsampleFactor: 4
-  _iterations: 2
-  _blurMinSpread: 0.65
-  _blurSpread: 0.25
-  _blurIntensity: 0.3
-  _blurDirections: 0
-  _blitter: {fileID: 0}
-  _antiAliasing: 0
-  _presets:
-  - _name: Default
-    _fillAlpha: 0
-    _downsampleFactor: 4
-    _iterations: 2
-    _blurMinSpread: 0.65
-    _blurSpread: 0.25
-    _blurIntensity: 0.3
-    _blurDirections: 0
-  - _name: Wide
-    _fillAlpha: 0
-    _downsampleFactor: 4
-    _iterations: 4
-    _blurMinSpread: 0.65
-    _blurSpread: 0.25
-    _blurIntensity: 0.3
-    _blurDirections: 0
-  - _name: Strong
-    _fillAlpha: 0
-    _downsampleFactor: 4
-    _iterations: 2
-    _blurMinSpread: 0.5
-    _blurSpread: 0.15
-    _blurIntensity: 0.325
-    _blurDirections: 0
-  - _name: Speed
-    _fillAlpha: 0
-    _downsampleFactor: 4
-    _iterations: 1
-    _blurMinSpread: 0.75
-    _blurSpread: 0
-    _blurIntensity: 0.35
-    _blurDirections: 0
-  - _name: Quality
-    _fillAlpha: 0
-    _downsampleFactor: 2
-    _iterations: 3
-    _blurMinSpread: 0.5
-    _blurSpread: 0.5
-    _blurIntensity: 0.28
-    _blurDirections: 0
-  - _name: Solid 1px
-    _fillAlpha: 0
-    _downsampleFactor: 1
-    _iterations: 1
-    _blurMinSpread: 1
-    _blurSpread: 0
-    _blurIntensity: 1
-    _blurDirections: 2
-  - _name: Solid 2px
-    _fillAlpha: 0
-    _downsampleFactor: 1
-    _iterations: 2
-    _blurMinSpread: 1
-    _blurSpread: 0
-    _blurIntensity: 1
-    _blurDirections: 2
 --- !u!1001 &5192479984753478377
 PrefabInstance:
   m_ObjectHideFlags: 0
