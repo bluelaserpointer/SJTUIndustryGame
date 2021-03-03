@@ -17,6 +17,7 @@ TagManager:
   - RegionHUD
   - Canvas
   - MigrateArrow
+  - AnimalParent
   layers:
   - Default
   - TransparentFX

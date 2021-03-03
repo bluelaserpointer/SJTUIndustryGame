@@ -27,6 +27,10 @@ public class HexGrid : MonoBehaviour {
 	bool currentPathExists;
 	List<HexUnit> units = new List<HexUnit>();
 	public HexUnit unitPrefab;
+
+	//public GameObject[] animalPrefabs;
+	public Dictionary<Animal, GameObject> animalModel = new Dictionary<Animal, GameObject>();
+
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
@@ -45,6 +49,9 @@ public class HexGrid : MonoBehaviour {
 				Debug.LogWarning("Unknown map format " + header);
 			}
 		}
+
+		
+
 	}
 	public bool HasPath
 	{
@@ -500,5 +507,41 @@ public class HexGrid : MonoBehaviour {
 		path.Add(currentPathFrom);
 		path.Reverse();
 		return path;
+	}
+
+
+	public void UpdateAnimals()
+	{
+		
+		/*for(int i=0;i< cells.Length; i++)
+		{
+			cells[i].UpdateAnimals();
+		}
+
+
+		/*for (int i = 0; i < cells.Length; i++)
+		{
+			Area area = cells[i].GetComponentInChildren<Area>();
+			ICollection<Animal>  animals = area.GetSpecies();
+			foreach (Animal a in animals)
+			{
+				if (!animalModel.ContainsKey(a)) animalModel.Add(a, animalPrefabs[0]);
+			}
+			
+			foreach (Animal a in animals)
+			{
+				int spieciesAmount = area.GetSpeciesAmount(a);
+				for(int j = transform.GetChild(2).childCount; j < spieciesAmount/10; j++)
+				{
+					GameObject myAnimal = GameObject.Instantiate(animalModel[a], cells[i].Position, new Quaternion(0, 0, 0, 0));
+					myAnimal.transform.SetParent(this.transform.GetChild(2));
+				}
+				for(int j= spieciesAmount / 10;j < transform.GetChild(2).childCount; j++)
+				{
+					Destroy(transform.GetChild(2).GetChild(j).gameObject);
+				}
+			}
+
+		}*/
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 
 public class HexCell : MonoBehaviour {
 
@@ -668,5 +670,28 @@ public class HexCell : MonoBehaviour {
 	{
 		UnityEngine.UI.Text label = uiRect.GetComponent<Text>();
 		label.text = text;
+	}
+	void Update()
+	{
+		UpdateAnimals();
+	}
+	public void UpdateAnimals()
+	{
+		Area area = GetComponentInChildren<Area>();
+		ICollection <Animal> animals = area.GetSpecies();
+		foreach(Animal a in animals)
+		{
+			int spieciesAmount = area.GetSpeciesAmount(a);
+			for(int j = transform.GetChild(2).childCount; j < spieciesAmount / 10; j++)
+			{
+				GameObject myAnimal = GameObject.Instantiate(area.animalPrefabs[0], this.Position, new Quaternion(0, 0, 0, 0));
+				myAnimal.transform.SetParent(this.transform.GetChild(2));
+			}
+			
+			for (int j = spieciesAmount / 10; j < transform.GetChild(2).childCount; j++)
+			{
+				Destroy(transform.GetChild(2).GetChild(0).gameObject);
+			}
+		}
 	}
 }
