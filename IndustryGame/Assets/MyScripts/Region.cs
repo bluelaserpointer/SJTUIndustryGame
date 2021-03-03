@@ -100,7 +100,7 @@ public class Region
                 lastHighLightedCellAndTime.Add(lastHighLightedCells, 3.0f);
             }
             //show progress circle on top of basement area
-            baseArea.reservationProgressCircle.GetComponent<Image>().fillAmount = (float)reservatedAreaCount / areas.Count;
+            baseArea.reservationProgressCircle.fillAmount = (float)reservatedAreaCount / areas.Count;
             //basement tooltip
             if (baseArea.basementTooltip.activeSelf)
             {
@@ -243,8 +243,8 @@ public class Region
         baseArea = area;
         basementLevel = 1;
         area.basementLabel.SetActive(true);
-        area.basementNameText.GetComponent<Text>().text = name + "基地";
-        area.basementLevelText.GetComponent<Text>().text = RomanNumerals.convert(basementLevel);
+        area.basementNameText.text = name + "基地";
+        area.basementLevelText.text = RomanNumerals.convert(basementLevel);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
