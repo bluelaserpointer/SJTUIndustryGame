@@ -37,8 +37,8 @@ public class Area : MonoBehaviour
     public Text basementLevelText;
     public Image reservationProgressCircle;
     public GameObject basementTooltip;
-    public CircleObjectPlacement areaButtons;
 
+    [HideInInspector]
     public GameObject[] animalPrefabs;
     private void Start()
     {
@@ -63,6 +63,10 @@ public class Area : MonoBehaviour
         basementLabel.SetActive(false);
         animalNumberPop.SetActive(false);
         markSpecialist.SetActive(false);
+        if(UnityEngine.Random.Range(0, 10) > 8) //TEST: randomly makes one show the action buttons
+        {
+            ShowSpecialistActionButtons(null);
+        }
     }
     /// <summary>
     /// 获取指定动物数量
@@ -588,7 +592,7 @@ public class Area : MonoBehaviour
     /// 洲中的Y坐标
     /// </summary>
     public float regionPositionY { get { return worldPosition.z - region.GetTop(); } }
-    public void ShowAreaButtons()
+    public void ShowSpecialistActionButtons(Specialist specialist)
     {
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //public actions
@@ -605,6 +609,10 @@ public class Area : MonoBehaviour
             copy.GetComponentInChildren<Button>().onClick.AddListener(nameAndEvent.Value);
             buttons.Add(copy);
         }
-        areaButtons.Set(buttons);
+        HUDManager.instance.areaSpecialistActionButtons.SetObjects(transform, buttons);
+    }
+    public void HideSpecialistActionButtons()
+    {
+        HUDManager.instance.areaSpecialistActionButtons.Clear();
     }
 }

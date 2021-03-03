@@ -169,7 +169,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4549656758955250628}
   - component: {fileID: 1236498791452956358}
-  - component: {fileID: 2635271825909114945}
   m_Layer: 0
   m_Name: HexCellChildren
   m_TagString: Untagged
@@ -226,23 +225,9 @@ MonoBehaviour:
   basementLevelText: {fileID: 155527381684365307}
   reservationProgressCircle: {fileID: 5950802141696759761}
   basementTooltip: {fileID: 2837552365604620751}
-  areaButtons: {fileID: 2635271825909114945}
   animalPrefabs: []
   actionProgressSlider: {fileID: 7456440533689471675}
   constructionProgressSlider: {fileID: 8665624932165051029}
---- !u!114 &2635271825909114945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2179056758125969511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 845136a31d09719458b55349c8bfd382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 100
 --- !u!1 &2363680573973813867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,12 +1484,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5279190785176412938}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1163084084999741836 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6442239684652647046, guid: 84790c9d6f6b65e40a290a4dbeaee710,
-    type: 3}
-  m_PrefabInstance: {fileID: 5279190785176412938}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8665624932165051029 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3531121153102037407, guid: 84790c9d6f6b65e40a290a4dbeaee710,
@@ -1517,6 +1496,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1163084084999741836 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6442239684652647046, guid: 84790c9d6f6b65e40a290a4dbeaee710,
+    type: 3}
+  m_PrefabInstance: {fileID: 5279190785176412938}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5796589477348353051
 PrefabInstance:
   m_ObjectHideFlags: 0

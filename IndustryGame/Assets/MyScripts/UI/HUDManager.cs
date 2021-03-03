@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     public static HUDManager instance;
+    [HideInInspector]
+    public CirclePlacement areaSpecialistActionButtons;
     public Text Date;
     public Text Money;
     public Text Contributions;
@@ -16,6 +18,7 @@ public class HUDManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        areaSpecialistActionButtons = GetComponent<CirclePlacement>();
     }
 
     void Update()
