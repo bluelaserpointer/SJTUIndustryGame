@@ -19,7 +19,7 @@ public class ProfileManage : MonoBehaviour
     public GameObject SingleAbility;
     public GameObject AbilityList;
 
-    private void OnDisable ()
+    private void OnDisable()
     {
         if (HireMode)
         {
@@ -27,13 +27,13 @@ public class ProfileManage : MonoBehaviour
         }
     }
 
-    void Update ()
+    void Update()
     {
         clearAbilityList();
         UpdateProfile();
     }
 
-    public void UpdateProfile ()
+    public void UpdateProfile()
     {
         if (specialist == null)
         {
@@ -60,20 +60,21 @@ public class ProfileManage : MonoBehaviour
         }
     }
 
-    public void clearAbilityList ()
+    public void clearAbilityList()
     {
         abilitiesUI[] list = gameObject.GetComponentsInChildren<abilitiesUI>();
-        for (int i = 0 ; i < list.Length ; i++)
+        for (int i = 0; i < list.Length; i++)
         {
             list[i].delete();
         }
     }
 
-    public void HireSpecialist ()
+    public void HireSpecialist()
     {
         SpecialistEmployList.hireSpecialist(specialist);
         specialist = null;
         gameObject.SetActive(false);
+        SpecialistBar.instance.RefreshList();
 
     }
 }
