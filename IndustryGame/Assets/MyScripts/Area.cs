@@ -36,6 +36,8 @@ public class Area : MonoBehaviour
     public GameObject basementLevelText;
     public GameObject reservationProgressCircle;
     public GameObject basementTooltip;
+
+    public GameObject[] animalPrefabs;
     private void Start()
     {
         areaName = (environmentType = EnvironmentType.PickRandomOne()).usingNameTemplates.PickRandomOne();
