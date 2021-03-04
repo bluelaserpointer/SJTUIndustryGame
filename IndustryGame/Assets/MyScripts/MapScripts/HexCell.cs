@@ -40,8 +40,9 @@ public class HexCell : MonoBehaviour {
 		{
 			if (highLighted != value)
 			{
-				
 				highLighted = value;
+				if (terrainTypeIndex < HexMetrics.TerrainTypeTotal && highLighted) terrainTypeIndex += HexMetrics.TerrainTypeTotal;
+				else if (terrainTypeIndex >= HexMetrics.TerrainTypeTotal && !highLighted) terrainTypeIndex -= HexMetrics.TerrainTypeTotal;
 				RefreshSelfOnly();
 			}
 		}
@@ -301,14 +302,20 @@ public class HexCell : MonoBehaviour {
 	}
 	public int TerrainTypeIndex {
 		get {
-			return terrainTypeIndex;
+			return highLighted? terrainTypeIndex : terrainTypeIndex;
 		}
 		set {
-			if (terrainTypeIndex != value) {
+			/*if (terrainTypeIndex != value)
+			{
 				terrainTypeIndex = value;
-				if (highLighted && terrainTypeIndex<=10) terrainTypeIndex += HexMetrics.TerrainTypeTotal;
-				Refresh();
 			}
+			if (highLighted && terrainTypeIndex <= 10)
+			{
+				terrainTypeIndex += HexMetrics.TerrainTypeTotal;
+			}*/
+			terrainTypeIndex = highLighted ? value + HexMetrics.TerrainTypeTotal:value;
+				Refresh();
+			
 		}
 	}
 
