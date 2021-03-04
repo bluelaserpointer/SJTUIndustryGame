@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-    private static HUDManager instance;
+    public static HUDManager instance;
+    [HideInInspector]
+    public CirclePlacement areaSpecialistActionButtons;
     public Text Date;
     public Text Money;
     public Text Contributions;
     public Text Opinion;
     public Text Reputation;
 
-
-
-
-
     private void Awake()
     {
         if (instance == null)
             instance = this;
+        areaSpecialistActionButtons = GetComponent<CirclePlacement>();
     }
 
     void Update()

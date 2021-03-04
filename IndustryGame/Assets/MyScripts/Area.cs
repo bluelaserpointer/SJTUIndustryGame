@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
@@ -32,11 +33,12 @@ public class Area : MonoBehaviour
     public GameObject animalNumberPop;
     public GameObject animalNumberTooltip;
     public GameObject basementLabel;
-    public GameObject basementNameText;
-    public GameObject basementLevelText;
-    public GameObject reservationProgressCircle;
+    public Text basementNameText;
+    public Text basementLevelText;
+    public Image reservationProgressCircle;
     public GameObject basementTooltip;
 
+    [HideInInspector]
     public GameObject[] animalPrefabs;
     private void Start()
     {
@@ -61,6 +63,10 @@ public class Area : MonoBehaviour
         basementLabel.SetActive(false);
         animalNumberPop.SetActive(false);
         markSpecialist.SetActive(false);
+        if(UnityEngine.Random.Range(0, 10) > 8) //TEST: randomly makes one show the action buttons
+        {
+            ShowSpecialistActionButtons(null);
+        }
     }
     /// <summary>
     /// 获取指定动物数量
@@ -586,4 +592,27 @@ public class Area : MonoBehaviour
     /// 洲中的Y坐标
     /// </summary>
     public float regionPositionY { get { return worldPosition.z - region.GetTop(); } }
+    public void ShowSpecialistActionButtons(Specialist specialist)
+    {
+        Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
+        //public actions
+        buttonNameAndEvent.Add("调查该洲", () => Debug.Log("调查该洲"));
+        buttonNameAndEvent.Add("集中观察", () => Debug.Log("集中观察"));
+        buttonNameAndEvent.Add("管理研究", () => Debug.Log("管理研究"));
+        //generate
+        GameObject origin = Resources.Load<GameObject>("UI/Area/HexButton");
+        List<GameObject> buttons = new List<GameObject>();
+        foreach (var nameAndEvent in buttonNameAndEvent)
+        {
+            GameObject copy = Instantiate(origin);
+            copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
+            copy.GetComponentInChildren<Button>().onClick.AddListener(nameAndEvent.Value);
+            buttons.Add(copy);
+        }
+        HUDManager.instance.areaSpecialistActionButtons.SetObjects(transform, buttons);
+    }
+    public void HideSpecialistActionButtons()
+    {
+        HUDManager.instance.areaSpecialistActionButtons.Clear();
+    }
 }
