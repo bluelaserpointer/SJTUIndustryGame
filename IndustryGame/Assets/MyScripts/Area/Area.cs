@@ -607,12 +607,13 @@ public class Area : MonoBehaviour
         foreach (var nameAndEvent in buttonNameAndEvent)
         {
             GameObject copy = Instantiate(origin);
+            copy.transform.parent = HUDManager.instance.transform;
             copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
             copy.GetComponentInChildren<Button>().onClick.AddListener(nameAndEvent.Value);
             buttons.Add(copy);
         }
         specialistActionButtonsHolder.DestroySurrounders();
-        specialistActionButtonsHolder.AddSurrounders(HUDManager.canvas, buttons);
+        specialistActionButtonsHolder.AddSurrounders(buttons);
     }
     public void HideSpecialistActionButtons()
     {

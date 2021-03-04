@@ -46,6 +46,7 @@ public class Region
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
         basementLabelHUD = Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
+        basementLabelHUD.transform.parent = HUDManager.instance.transform;
     }
     /// <summary>
     /// 每帧流程
@@ -245,7 +246,7 @@ public class Region
     {
         baseArea = area;
         basementLevel = 1;
-        area.basementLabelHolder.AddSurrounders(HUDManager.canvas, basementLabelHUD.gameObject);
+        area.basementLabelHolder.AddSurrounders(basementLabelHUD.gameObject);
         basementLabelHUD.nameText.text = name + "基地";
         basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
@@ -345,7 +346,6 @@ public class Region
         if (regionId != -1)
         {
             GameObject nameDisplay = Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
-            nameDisplay.transform.parent = HUDManager.instance.transform;
             nameDisplay.GetComponentInChildren<Text>().text = name;
             Transform nameDisplayTransform = nameDisplay.transform;
             nameDisplayTransform.position = new Vector3(cx, 130f, cy);
