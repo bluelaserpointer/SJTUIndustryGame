@@ -39,10 +39,13 @@ public class Region
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
 
+    private BasementLabelHUD basementLabelHUD;
+
     public Region(int regionId)
     {
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
+        basementLabelHUD = Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
     }
     /// <summary>
     /// 每帧流程
@@ -100,11 +103,11 @@ public class Region
                 lastHighLightedCellAndTime.Add(lastHighLightedCells, 3.0f);
             }
             //show progress circle on top of basement area
-            baseArea.reservationProgressCircle.fillAmount = (float)reservatedAreaCount / areas.Count;
+            basementLabelHUD.reservationProgressImage.fillAmount = (float)reservatedAreaCount / areas.Count;
             //basement tooltip
-            if (baseArea.basementTooltip.activeSelf)
+            if (basementLabelHUD.tooltip.activeSelf)
             {
-                baseArea.basementTooltip.GetComponentInChildren<Text>().text = "基地等级: " + RomanNumerals.convert(basementLevel) + "\n调查进度: " + reservatedAreaCount + " / " + areas.Count;
+                basementLabelHUD.tooltipText.text = "基地等级: " + RomanNumerals.convert(basementLevel) + "\n调查进度: " + reservatedAreaCount + " / " + areas.Count;
             }
         }
     }
@@ -242,9 +245,9 @@ public class Region
     {
         baseArea = area;
         basementLevel = 1;
-        area.basementLabel.SetActive(true);
-        area.basementNameText.text = name + "基地";
-        area.basementLevelText.text = RomanNumerals.convert(basementLevel);
+        area.basementLabelHolder.AddSurrounders(HUDManager.canvas, basementLabelHUD.gameObject);
+        basementLabelHUD.nameText.text = name + "基地";
+        basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }
@@ -342,6 +345,7 @@ public class Region
         if (regionId != -1)
         {
             GameObject nameDisplay = Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
+            nameDisplay.transform.parent = HUDManager.instance.transform;
             nameDisplay.GetComponentInChildren<Text>().text = name;
             Transform nameDisplayTransform = nameDisplay.transform;
             nameDisplayTransform.position = new Vector3(cx, 130f, cy);
