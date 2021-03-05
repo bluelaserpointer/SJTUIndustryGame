@@ -39,6 +39,15 @@ public class Area : MonoBehaviour
     //data
     [HideInInspector]
     public GameObject[] animalPrefabs;
+
+    [Header("正增长取色")]
+    public Color IncreaseColor;
+    [Header("负增长取色")]
+    public Color DecreaseColor;
+    [Header("灭绝取色")]
+    public Color ExtinctColor;
+    [Header("安全取色")]
+    public Color SafeColor;
     private void Start()
     {
         areaName = (environmentType = EnvironmentType.PickRandomOne()).usingNameTemplates.PickRandomOne();
@@ -136,7 +145,7 @@ public class Area : MonoBehaviour
         {
             float oldValue = animalAmounts[animal].GetCurrentValue();
             float newValue = animalAmounts[animal].Add(change);
-            if(newValue < oldValue)
+            if (newValue < oldValue)
             {
                 animal.relatedMainEvent.generatedInstance.totalEnvironmentDamage += oldValue - newValue;
             }
@@ -258,21 +267,21 @@ public class Area : MonoBehaviour
         Color backgroundColor;
         if (amount == 0)
         {
-            backgroundColor = Color.gray;
+            backgroundColor = ExtinctColor;
         }
         else if (change < 0)
         {
-            backgroundColor = Color.red;
+            backgroundColor = DecreaseColor;
         }
         else if (change > 0)
         {
-            backgroundColor = Color.green;
+            backgroundColor = IncreaseColor;
         }
         else
         {
-            backgroundColor = Color.white;
+            backgroundColor = SafeColor;
         }
-        animalNumberPop.gameObject.GetComponent<Image>().color = backgroundColor;
+        animalNumberPop.gameObject.GetComponentInChildren<Image>().color = backgroundColor;
         animalNumberPop.gameObject.GetComponentInChildren<Text>().text = animalNumberStr + "\n" + animalChangeStr;
         animalNumberPop.SetActive(true);
         animalNumberTooltip.gameObject.GetComponentInChildren<Text>().text = "现有个体数: " + animalNumberStr + ", 距上次统计变化" + animalChangeStr;
