@@ -277,7 +277,7 @@ public class HexMapEditor : MonoBehaviour {
 			if (activeTerrainTypeIndex >= 0) {
 				cell.TerrainTypeIndex = activeTerrainTypeIndex;
 			}
-
+			cell.HighLighted = highLighted;
 			if (applyElevation) {
 				cell.Elevation = activeElevation;
 			}
