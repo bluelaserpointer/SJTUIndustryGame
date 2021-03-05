@@ -22,6 +22,8 @@ public class Area : MonoBehaviour
     private List<AreaAction> finishedActions = new List<AreaAction>();
     private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
     private Dictionary<Animal, AmountChangeRecords> animalRecords = new Dictionary<Animal, AmountChangeRecords>();
+    private int lastRecordedDay;
+    public int DaysFromLastRecord { get { return lastRecordedDay; } }
 
     // Weather params
     private Weather weather;
@@ -232,6 +234,7 @@ public class Area : MonoBehaviour
     /// </summary>
     public void AddReservation()
     {
+        lastRecordedDay = Timer.TotalDaysPassed;
         foreach (var pair in animalAmounts)
         {
             Animal animal = pair.Key;
@@ -246,6 +249,11 @@ public class Area : MonoBehaviour
                     animalRecords.Add(animal, new AmountChangeRecords(pair.Value));
                 }
             }
+        }
+        //update number pops
+        if (Stage.ShowingNumberPopsAnimal != null)
+        {
+            Stage.ShowAnimalNumberPop(Stage.ShowingNumberPopsAnimal);
         }
     }
     /// <summary>
@@ -264,6 +272,7 @@ public class Area : MonoBehaviour
         int? change = animalRecords[animal].GetChangeInLatestRecord();
         string animalNumberStr = amount.HasValue ? amount.ToString() : "-";
         string animalChangeStr = change.HasValue ? (change.Value > 0 ? "+" + change.ToString() : change.ToString()) : "+0";
+        // change pop color depends on amount increse/decrese
         Color backgroundColor;
         if (amount == 0)
         {
@@ -281,6 +290,9 @@ public class Area : MonoBehaviour
         {
             backgroundColor = SafeColor;
         }
+        // change brightness depends on days passed from last record
+        float darkness = 1 - Mathf.Clamp(DaysFromLastRecord / 30f, 0, 1);
+        backgroundColor = Color.Lerp(backgroundColor, Color.black, darkness);
         animalNumberPop.gameObject.GetComponentInChildren<Image>().color = backgroundColor;
         animalNumberPop.gameObject.GetComponentInChildren<Text>().text = animalNumberStr + "\n" + animalChangeStr;
         animalNumberPop.SetActive(true);
