@@ -7,7 +7,7 @@ public class SurroundWithUI : MonoBehaviour
     public Camera defaultCamera;
     public float radius;
     public float deltaAngle;
-    public readonly List<GameObject> surrounders = new List<GameObject>();
+    public List<GameObject> surrounders = new List<GameObject>();
     public void AddSurrounders(params GameObject[] surrounders)
     {
         AddSurrounders(surrounders as IEnumerable<GameObject>);
