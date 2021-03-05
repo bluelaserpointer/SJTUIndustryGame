@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.79818785, b: 0, a: 1}
+  m_Color: {r: 0.3682139, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -87,6 +87,8 @@ GameObject:
   - component: {fileID: 8134183581523395088}
   - component: {fileID: 3531121153102037407}
   - component: {fileID: 6479317746132787276}
+  - component: {fileID: 6893000103862017505}
+  - component: {fileID: 5779948325436782605}
   m_Layer: 5
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -101,7 +103,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2606266701649486849}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -216,6 +218,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2606266701649486849}
   m_CullTransparentMesh: 0
+--- !u!114 &6893000103862017505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2606266701649486849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582ff40ed03a8ea4fb65e1a19e483c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iso: 1
+--- !u!114 &5779948325436782605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2606266701649486849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582ff40ed03a8ea4fb65e1a19e483c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iso: 1
 --- !u!1 &5083527041020423917
 GameObject:
   m_ObjectHideFlags: 0
