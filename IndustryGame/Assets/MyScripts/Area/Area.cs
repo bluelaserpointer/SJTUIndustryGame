@@ -10,18 +10,20 @@ public class Area : MonoBehaviour
     [SerializeField]
     public GameObject rainFX, snowFX, markSpecialist;
     [HideInInspector] public string areaName;
-    [TextArea]
+    [HideInInspector]
     public string description;
+    [HideInInspector]
     public EnvironmentType environmentType;
 
     public readonly List<Building> buildings = new List<Building>();
-    private List<EnvironmentStat> environmentStats = new List<EnvironmentStat>();
+    public readonly List<EnvironmentStatFactor> environmentStatFactors = new List<EnvironmentStatFactor>();
+    public Habitat habitat;
 
     public Region region;
-    Dictionary<HexDirection, Area> neibors = new Dictionary<HexDirection, Area>();
-    private List<AreaAction> finishedActions = new List<AreaAction>();
-    private Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
-    private Dictionary<Animal, AmountChangeRecords> animalRecords = new Dictionary<Animal, AmountChangeRecords>();
+    private readonly Dictionary<HexDirection, Area> neibors = new Dictionary<HexDirection, Area>();
+    private readonly List<AreaAction> finishedActions = new List<AreaAction>();
+    private readonly Dictionary<Animal, AmountChange> animalAmounts = new Dictionary<Animal, AmountChange>();
+    private readonly Dictionary<Animal, AmountChangeRecords> animalRecords = new Dictionary<Animal, AmountChangeRecords>();
     private int lastRecordedDay;
     public int DaysFromLastRecord { get { return lastRecordedDay; } }
 
@@ -33,6 +35,8 @@ public class Area : MonoBehaviour
     public float rainFallRatio = 0.3f;
 
     //HUD
+    public Image habitatMarkImage;
+    public Image environmentFactorMarkImage;
     public GameObject animalNumberPop;
     public GameObject animalNumberTooltip;
     public SurroundWithUI basementLabelHolder;
@@ -70,9 +74,11 @@ public class Area : MonoBehaviour
         {
             building.FinishConstruction();
         }
+        //HUD
+        habitatMarkImage.gameObject.SetActive(false);
+        environmentFactorMarkImage.gameObject.SetActive(false);
         animalNumberPop.SetActive(false);
         markSpecialist.SetActive(false);
-        //HUD
         /* //TEST: randomly show the action buttons
         if (UnityEngine.Random.Range(0, 25) == 0)
         {
@@ -196,8 +202,11 @@ public class Area : MonoBehaviour
         {
             markSpecialist.SetActive(false);
         }
-        //environment effect
-        environmentStats.ForEach(stat => stat.DayIdle());
+        //colony
+        if (habitat != null)
+            habitat.DayIdle();
+        //environment effect factors
+        environmentStatFactors.ForEach(stat => stat.DayIdle());
     }
 
     public void setWeatherFX(GameObject weatherFX, bool active)
@@ -230,10 +239,16 @@ public class Area : MonoBehaviour
         return Equals(region.GetBaseArea());
     }
     /// <summary>
-    /// 添加动物统计记录
+    /// 添加动物统计记录,同时揭开当地的栖息地
     /// </summary>
     public void AddReservation()
     {
+        if (habitat != null)
+            habitat.Reveal();
+        foreach (EnvironmentStatFactor environmentStatFactor in environmentStatFactors)
+        {
+            environmentStatFactor.Reveal();
+        }
         lastRecordedDay = Timer.TotalDaysPassed;
         foreach (var pair in animalAmounts)
         {
@@ -543,10 +558,10 @@ public class Area : MonoBehaviour
     /// </summary>
     /// <param name="environmentStatType"></param>
     /// <param name="value"></param>
-    public float GetEnviromentStat(EnvironmentStatType environmentStatType)
+    public float GetEnviromentStatFactor(EnvironmentStatType environmentStatType)
     {
-        EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.IsType(environmentStatType));
-        return stat == null ? 0 : stat.value;
+        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
+        return factor == null ? 0 : factor.value;
     }
     /// <summary>
     /// 获取指定环境指标
@@ -555,24 +570,8 @@ public class Area : MonoBehaviour
     /// <param name="value"></param>
     public float GetEnviromentStatWithString(string environmentStatType)
     {
-        EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.name.Equals(environmentStatType));
-        return stat == null ? 0 : stat.value;
-    }
-    /// <summary>
-    /// 获取所有负面环境指标
-    /// </summary>
-    /// <returns></returns>
-    public List<EnvironmentStat> GetNegativeEnvironmentStats()
-    {
-        return environmentStats.FindAll(eachStat => eachStat.isNegative);
-    }
-    /// <summary>
-    /// 是否含任何负面环境指标
-    /// </summary>
-    /// <returns></returns>
-    public bool HasNegativeEnvironmentStats()
-    {
-        return GetNegativeEnvironmentStats().Count == 0;
+        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.name.Equals(environmentStatType));
+        return factor == null ? 0 : factor.value;
     }
     /// <summary>
     /// 生成指定环境指标（取值参照该种类初始值设定）
@@ -590,16 +589,16 @@ public class Area : MonoBehaviour
     /// <param name="value"></param>
     public void AddEnvironmentStat(EnvironmentStatType environmentStatType, float value)
     {
-        EnvironmentStat stat = environmentStats.Find(eachStat => eachStat.IsType(environmentStatType));
+        EnvironmentStatFactor stat = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
         if (stat != null)
         {
-            stat.value = Mathf.Clamp(stat.value + value, 0.0f, 1.0f);
+            stat.value = Mathf.Clamp(stat.value + value, -0.5f, 0.5f);
         }
         else
         {
-            stat = new EnvironmentStat(environmentStatType, this);
-            stat.value = Mathf.Clamp(stat.value + value, 0.0f, 1.0f);
-            environmentStats.Add(stat);
+            stat = new EnvironmentStatFactor(environmentStatType, this);
+            stat.value = Mathf.Clamp(stat.value + value, -0.5f, 0.5f);
+            environmentStatFactors.Add(stat);
         }
     }
     /// <summary>

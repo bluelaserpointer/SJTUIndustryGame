@@ -23,6 +23,16 @@ public abstract class RegionCondition
             return Judge();
         }
     }
+    public class CheckRegionColonyTotalLevel : RegionCondition
+    {
+        public Animal animal;
+        public int totalColonyLevel;
+        public NumCompare.Type compareType;
+        public override bool Judge(Region region)
+        {
+            return NumCompare.Judge(compareType, region.TotalRevealedColonyLevel(animal), totalColonyLevel);
+        }
+    }
     public class CheckRegionAnimalCount : RegionCondition
     {
         public enum CheckType { amount, change }

@@ -25,6 +25,7 @@ MonoBehaviour:
   showInAnimalsReport: []
   relatedEnvironmentStat: {fileID: 11400000, guid: 057e0443fa4152c4c967121c9dac4ee0,
     type: 2}
+  relatedEnvironmentStatGenerateAmount: 4
   references:
     version: 1
     00000000:

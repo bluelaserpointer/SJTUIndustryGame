@@ -40,13 +40,16 @@ public class AnimalSelection : MonoBehaviour
 
     public void OpenFilter()
     {
+        Debug.Log("OpenFilter");
         if (Stage.ShowingNumberPopsAnimal == null)
         {
+            Debug.Log("OpenFilter A");
             Stage.ShowAnimalNumberPop(animal);
             BackgroundImage.color = SelectedColor;
         }
         else
         {
+            Debug.Log("OpenFilter B");
             Stage.ShowAnimalNumberPop(null);
             BackgroundImage.color = NormalColor;
         }
