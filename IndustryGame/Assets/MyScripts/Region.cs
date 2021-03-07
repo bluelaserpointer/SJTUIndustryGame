@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,8 @@ public class Region
     /// 是否为海洋
     /// </summary>
     public bool IsOcean { get { return regionId == -1; } }
+
+    //data
     private readonly List<Area> areas = new List<Area>();
     private readonly List<MainEvent> includedEvents = new List<MainEvent>();
     private readonly List<Animal> concernedAnimals = new List<Animal>();
@@ -45,7 +48,7 @@ public class Region
     {
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
-        basementLabelHUD = Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
+        basementLabelHUD = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
         basementLabelHUD.transform.parent = HUDManager.instance.transform;
     }
     /// <summary>
@@ -147,11 +150,8 @@ public class Region
         {
             if (mainEvent.IsAppeared && !mainEvent.IsFinished)
             {
-                foreach (Animal animal in mainEvent.concernedAnimals)
-                {
-                    if (!concernedAnimals.Contains(animal))
-                        concernedAnimals.Add(animal);
-                }
+                if (!concernedAnimals.Contains(mainEvent.concernedAnimal))
+                    concernedAnimals.Add(mainEvent.concernedAnimal);
             }
         }
         Stage.UpdateConcernedSpecies();
@@ -340,7 +340,7 @@ public class Region
         center = new Vector3(cx, 150f, cy);
         if (regionId != -1)
         {
-            GameObject nameDisplay = Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
+            GameObject nameDisplay = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
             nameDisplay.GetComponentInChildren<Text>().text = name;
             Transform nameDisplayTransform = nameDisplay.transform;
             nameDisplayTransform.position = new Vector3(cx, 130f, cy);
@@ -490,5 +490,20 @@ public class Region
         List<EventStage> eventStages = new List<EventStage>();
         includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
         return eventStages;
+    }
+    /// <summary>
+    /// 全部栖息地等级总和
+    /// </summary>
+    /// <param name="animal"></param>
+    /// <returns></returns>
+    public int TotalRevealedColonyLevel(Animal animal)
+    {
+        int totalColonyLevel = 0;
+        foreach (Area area in areas)
+        {
+            if (area.habitat != null && area.habitat.IsRevealed && area.habitat.animal.Equals(animal))
+                totalColonyLevel += area.habitat.Level;
+        }
+        return totalColonyLevel;
     }
 }

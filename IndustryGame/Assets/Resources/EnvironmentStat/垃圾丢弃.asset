@@ -14,17 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statName: "\u5783\u573E\u4E22\u5F03"
   description: "\u975E\u6CD5\u7684\u5783\u573E\u4E22\u5F03\uFF0C\u5F71\u54CD\u5230\u91CE\u751F\u52A8\u7269\u751F\u5B58"
-  isNegative: 1
-  buffs:
-    List:
-    - id: 0
+  weight: 1
   maxGrowRate: 0
-  initialValueRange: {x: 0.3, y: 0.7}
-  animalChanged: -54679
-  references:
-    version: 1
-    00000000:
-      type: {class: AreaBuff/BuffAnimalAmount, ns: , asm: Assembly-CSharp}
-      data:
-        animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
-        change: -3
+  initialValueRange: {x: -0.03, y: -0.06}

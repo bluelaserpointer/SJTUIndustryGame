@@ -14,11 +14,8 @@ public class FilterPanelAnimalPanel : MonoBehaviour
     public void RefreshUI()
     {
         Helper.ClearList(GeneratedAnimalSelectionPrefabs);
-        foreach (Animal animal in mainEvent.concernedAnimals)
-        {
-            GameObject clone = Instantiate(AnimalSelectionPrefab, AnimalSelectionGenerationPosition.transform, false);
-            clone.GetComponent<AnimalSelection>().animal = animal;
-            GeneratedAnimalSelectionPrefabs.Add(clone);
-        }
+        GameObject clone = Instantiate(AnimalSelectionPrefab, AnimalSelectionGenerationPosition.transform, false);
+        clone.GetComponent<AnimalSelection>().animal = mainEvent.concernedAnimal;
+        GeneratedAnimalSelectionPrefabs.Add(clone);
     }
 }

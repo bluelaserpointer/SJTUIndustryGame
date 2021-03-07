@@ -29,7 +29,8 @@ public class EventStageSO : ScriptableObject
     public List<Animal> showInAnimalsReport;
     [Header("相关的环境指标(所属事件流发生时生效其效果)")]
     public EnvironmentStatType relatedEnvironmentStat;
-    
+    public int relatedEnvironmentStatGenerateAmount;
+
     /// <summary>
     /// 是否已完成所有前置阶段
     /// </summary>
