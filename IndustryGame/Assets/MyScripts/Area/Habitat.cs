@@ -53,6 +53,11 @@ public class Habitat
     /// 是否已发现
     /// </summary>
     public bool IsRevealed { get { return isRevealed; } }
+    private bool isVisible;
+    /// <summary>
+    /// 是否可见（看到最新数据）
+    /// </summary>
+    public bool IsVisible { get { return isVisible; } }
     public void DayIdle()
     {
         //TODO: calcurate habitability depends on nearby environment problems
@@ -77,7 +82,17 @@ public class Habitat
                 area.habitatMarkImage.color = Color.Lerp(Color.red, Color.white, habitability / 0.5f);
             else
                 area.habitatMarkImage.color = Color.Lerp(Color.white, Color.green, (habitability - 0.5f) / 0.5f);
+            int min = animal.minHabitatPopulation(Level), max = animal.maxHabitatPopulation(Level);
+            float fillAmount = (float)(amount - min) / (max - min);
+            area.habitatHealthImage.fillAmount = fillAmount;
+            area.habitatHealthImage.color = Color.Lerp(Color.red, Color.green, fillAmount);
         }
+    }
+    public void SetIfVisible(bool visible)
+    {
+        if (isVisible == visible)
+            return;
+        area.habitatIsVisibleImage.gameObject.SetActive(isVisible = visible);
     }
     public void Reveal()
     {
