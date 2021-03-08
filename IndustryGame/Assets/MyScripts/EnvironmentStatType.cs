@@ -10,26 +10,13 @@ public class EnvironmentStatType : ScriptableObject
     public string statName;
     [Header("环境指标说明")]
     public string description;
-    [Header("是否是造成坏影响的指标")]
-    public bool isNegative;
-    [Header("造成的影响")]
-    [Reorderable(generatablesNestClass: typeof(AreaBuff))]
-    public AreaBuff.ReorderableList buffs;
+    [Header("适居性影响比重")]
+    public float weight = 1.0f ;
     [Header("影响每日最大增长比")]
     [Min(0.0f)]
     public float maxGrowRate;
     [Header("初始数值区间(min, max)")]
     public Vector2 initialValueRange;
-    /// <summary>
-    /// 累计动物数改变
-    /// </summary>
-    [HideInInspector]
-    public float animalChanged;
-
-    private void Awake()
-    {
-        animalChanged = 0;
-    }
 
     public static EnvironmentStatType[] GetAllTypes()
     {
@@ -37,10 +24,15 @@ public class EnvironmentStatType : ScriptableObject
     }
 }
 
-public class EnvironmentStat
+public class EnvironmentStatFactor
 {
     private readonly EnvironmentStatType type;
-    public readonly Area area;
+    public Area area;
+    /// <summary>
+    /// 累计动物数改变
+    /// </summary>
+    [HideInInspector]
+    public float totalHabitationAffect;
 
     /// <summary>
     /// 环境指标名称
@@ -51,26 +43,38 @@ public class EnvironmentStat
     /// </summary>
     public string description { get { return type.description; } }
     /// <summary>
-    /// 是否是造成坏影响的指标
-    /// </summary>
-    public bool isNegative { get { return type.isNegative; } }
-    /// <summary>
     /// 每日最大增长值
     /// </summary>
     public float maxGrowRate { get { return type.maxGrowRate; } }
     /// <summary>
-    /// 造成的影响
+    /// 适居性影响比重
     /// </summary>
-    public List<AreaBuff> buffs { get { return type.buffs.List; } }
+    public float weight { get { return type.weight; } }
     /// <summary>
     /// 指标值
     /// </summary>
     public float value;
-    public EnvironmentStat(EnvironmentStatType environmentStatType, Area area)
+    private bool isRevealed;
+    /// <summary>
+    /// 是否已发现
+    /// </summary>
+    public bool IsRevealed { get { return isRevealed; } }
+    public EnvironmentStatFactor(EnvironmentStatType environmentStatType, Area area)
     {
         type = environmentStatType;
         this.area = area;
-        buffs.ForEach(buff => buff.Applied(area, value));
+    }
+    public void Reveal()
+    {
+        if (isRevealed)
+            return;
+        isRevealed = true;
+        //change appearance on area HUD
+        if (value < 0)
+            area.environmentFactorMarkImage.color = Color.Lerp(Color.red, Color.white, value*2 + 1.0f);
+        else
+            area.environmentFactorMarkImage.color = Color.Lerp(Color.white, Color.green, value*2);
+        area.environmentFactorMarkImage.gameObject.SetActive(true);
     }
     /// <summary>
     /// 判断指标种类
@@ -87,12 +91,6 @@ public class EnvironmentStat
     public void DayIdle()
     {
         //affect current area
-        buffs.ForEach(buff => buff.Idle(area, value));
-        AreaBuff buffAnimalAmount = buffs.Find(buff => buff is AreaBuff.BuffAnimalAmount);
-        if(buffAnimalAmount != null)
-        {
-            type.animalChanged += ((AreaBuff.BuffAnimalAmount)buffAnimalAmount).change;
-        }
         //grow and spread
         if(value > 0.0f && maxGrowRate > 0)
         {
@@ -108,11 +106,16 @@ public class EnvironmentStat
             }
         }
     }
+    public float ReceiveAffect(int areaDistance)
+    {
+        float effect = value * weight / (areaDistance + 1);
+        totalHabitationAffect += effect;
+        return effect;
+    }
     /// <summary>
     /// 清除环境指标
     /// </summary>
     public void Removed()
     {
-        buffs.ForEach(buff => buff.Removed(area, value));
     }
 }

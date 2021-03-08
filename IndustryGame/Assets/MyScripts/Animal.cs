@@ -32,6 +32,16 @@ public class Animal : ScriptableObject
     /// 物种图片
     /// </summary>
     public Sprite image;
+    [Min(1)]
+    public int habitat1MinPopulation;
+    [Min(1)]
+    public int habitat2MinPopulation;
+    [Min(1)]
+    public int habitat3MinPopulation;
+    [Min(1)]
+    public int habitat4MinPopulation;
+    [Min(1)]
+    public int habitat5MinPopulation;
     /// <summary>
     /// 物种首要栖息环境
     /// </summary>
@@ -101,6 +111,24 @@ public class Animal : ScriptableObject
     /// </summary>
     public MainEventSO relatedMainEvent;
 
+    public int minHabitatPopulation(int colonyLevel)
+    {
+        switch(colonyLevel)
+        {
+            case 1: return habitat1MinPopulation;
+            case 2: return habitat2MinPopulation;
+            case 3: return habitat3MinPopulation;
+            case 4: return habitat4MinPopulation;
+            case 5: return habitat5MinPopulation;
+            default:
+                if (colonyLevel <= 0) return 0;
+                else return habitat5MinPopulation * 2;
+        }
+    }
+    public int maxHabitatPopulation(int colonyLevel)
+    {
+        return minHabitatPopulation(colonyLevel + 1);
+    }
     private void Start()
     {
         int mostDangerType = EnumHelper.GetMaxEnum<SpeciesDangerType>();

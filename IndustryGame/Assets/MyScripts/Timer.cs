@@ -9,6 +9,7 @@ public enum SeasonType
 }
 public static class Timer
 {
+    public static int TotalDaysPassed { get { return (int)currentTime; } }
     public static float secondsOneDay = 1f; //更改游戏速度 (1 sec = 1 game day)
     public static float secondsOneMonth = secondsOneDay * 30;
     public static float secondsOneYear = secondsOneMonth * 12;

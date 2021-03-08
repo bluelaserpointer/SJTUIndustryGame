@@ -48,7 +48,7 @@ public class MainEvent
     /// <summary>
     /// 事件流关注动物（该事件流可见时调查会进行统计的动物）
     /// </summary>
-    public List<Animal> concernedAnimals { get { return so.concernedAnimals; } }
+    public Animal concernedAnimal { get { return so.concernedAnimal; } }
     /// <summary>
     /// 事件流完成功劳奖励
     /// </summary>
@@ -77,14 +77,22 @@ public class MainEvent
         {
             eventStages.Add(new EventStage(eventStageSO, this));
         }
-        //generate initial animals
-        foreach (Area area in region.GetAreas())
+        //decide amount of initial animal habitat and each level
+        List<int> habitatsLevel = new List<int>();
+        int totalhabitatLevel = 0;
+        while (totalhabitatLevel < so.leastTotalHabitatLevel)
         {
-            foreach (Animal animal in concernedAnimals)
-            {
-                area.changeSpeciesAmount(animal, UnityEngine.Random.Range(100, 200));
-            }
+            int randomLevel = UnityEngine.Random.Range(2, 5); //initial level range
+            totalhabitatLevel += randomLevel;
+            habitatsLevel.Add(randomLevel);
         }
+        //choose area and generate habitats
+        List<Area> habitatAreas = ListLogic.GetUniqueRandomElements(region.GetAreas().FindAll(area => area.habitat == null), habitatsLevel.Count);
+        for(int i = 0; i < habitatAreas.Count; ++i)
+        {
+            new Habitat(habitatAreas[i], concernedAnimal, habitatsLevel[i]);
+        }
+        Debug.Log("habitatAreaWanted: " + habitatsLevel.Count + "habitatAreaGenerated: " + habitatAreas.Count);
     }
     public void DayIdle()
     {
@@ -135,7 +143,7 @@ public class MainEvent
     {
         isFinished = true;
         //calculate rewards
-        wildReservated = Stage.GetSpeciesAmount(concernedAnimals[0]);
+        wildReservated = Stage.GetSpeciesAmount(concernedAnimal);
         mamMadeEnvReservated = 0;
         totalReward = contribution + wildReservated + mamMadeEnvReservated;
         //show popUpWindow

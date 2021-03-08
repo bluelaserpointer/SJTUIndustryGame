@@ -23,13 +23,10 @@ public class AnimalReportWindow : MonoBehaviour, BasicReportWindow
         ClearList();
         foreach (MainEvent mainEvent in Stage.GetRegions()[RegionSelection.value].GetRevealedEvents())
         {
-            foreach (Animal animal in mainEvent.concernedAnimals)
-            {
-                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-                clone.GetComponent<SingleEventReport>().ShowSingleAnimal(animal);
-                AnimalReports.Add(clone);
-                Debug.Log("Species: " + animal.animalName);
-            }
+            GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+            clone.GetComponent<SingleEventReport>().ShowSingleAnimal(mainEvent.concernedAnimal);
+            AnimalReports.Add(clone);
+            Debug.Log("Species: " + mainEvent.concernedAnimal.animalName);
         }
     }
 

@@ -37,8 +37,9 @@ public class MainEventSO : ScriptableObject
     [Header("出现所需要的地区环境")]
     public List<AreaRequirement> areaRequirements;
     [Header("关键物种")]
-    public List<Animal> concernedAnimals;
-
+    public Animal concernedAnimal;
+    [Header("初始栖息地总规模")]
+    public float leastTotalHabitatLevel;
     [Header("完成功劳奖励")]
     [Min(0)]
     public int contribution;
