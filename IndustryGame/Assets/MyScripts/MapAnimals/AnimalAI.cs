@@ -11,7 +11,7 @@ public class AnimalAI : MonoBehaviour
     public float wanderRadius;
 
     public float walkSpeed;
-    public float turnSpeed;
+    public float turnSpeed=0.1f;
 
     public enum AnimalState
     {
@@ -26,7 +26,7 @@ public class AnimalAI : MonoBehaviour
 
     
     public float distanceToInitial;
-    private Quaternion targetRotation;
+    private Vector3 targetPosition;
 
 
 
@@ -37,6 +37,7 @@ public class AnimalAI : MonoBehaviour
     {
         initialPosition = gameObject.GetComponent<Transform>().position;
         thisAnimator = GetComponent<Animator>();
+        targetPosition = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
         RandomAction();
     }
 
@@ -66,27 +67,28 @@ public class AnimalAI : MonoBehaviour
                 {
                     RandomAction();
                 }
-                WanderRadiusCheck();
+                ReachCheck();
                 break;
             case AnimalState.WANDER:
                 transform.Translate(Vector3.forward * Time.deltaTime * walkSpeed);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed);
+                transform.LookAt(targetPosition);
                 if (Time.time-lastActTime >actRestTime)
                 {
                     RandomAction();
                 }
-                WanderRadiusCheck();
+                ReachCheck();
                 break;
 
         }
     }
 
-    void WanderRadiusCheck()
+    void ReachCheck()
     {
-        distanceToInitial = Vector3.Distance(transform.position, initialPosition);
-        if(distanceToInitial > wanderRadius)
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        if(distanceToTarget < 0.01)
         {
-            targetRotation = Quaternion.LookRotation(initialPosition);
+            targetPosition = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y , initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
         }
+        
     }
 }

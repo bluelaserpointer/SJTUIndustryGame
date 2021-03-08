@@ -296,6 +296,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DuckAI
       objectReference: {fileID: 0}
+    - target: {fileID: 2773786311742894499, guid: 892de7ece3aaf3f4e8ebe17e73418704,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3257693905243007769, guid: 892de7ece3aaf3f4e8ebe17e73418704,
         type: 3}
       propertyPath: m_RootOrder
@@ -471,7 +476,7 @@ PrefabInstance:
     - target: {fileID: 1444855696475610295, guid: 574c1631daf9e924980b5549aa324773,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 1444855696475610295, guid: 574c1631daf9e924980b5549aa324773,
         type: 3}
@@ -517,6 +522,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CamelAI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874193769534664588, guid: 574c1631daf9e924980b5549aa324773,
+        type: 3}
+      propertyPath: turnSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874193769534664588, guid: 574c1631daf9e924980b5549aa324773,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 574c1631daf9e924980b5549aa324773, type: 3}
@@ -606,6 +621,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ChickenAI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225917471351854536, guid: 4cf574d81cfaeb64f956c0d0354878fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8746981101520228210, guid: 4cf574d81cfaeb64f956c0d0354878fc,
         type: 3}
