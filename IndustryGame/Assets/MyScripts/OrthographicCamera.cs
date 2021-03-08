@@ -569,8 +569,8 @@ public class OrthographicCamera : MonoBehaviour
             currentPosition.x += regionObserveTranSpeed;
         }
 
-        if (!IsPointerOverUIObject())
-        {
+        // if (!IsPointerOverUIObject())
+        // {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
                 if (currentSize > maskAreaOrthoSize)
@@ -614,7 +614,7 @@ public class OrthographicCamera : MonoBehaviour
 
                 }
             }
-        }
+        // }
 
 
         // Exiting with esc
