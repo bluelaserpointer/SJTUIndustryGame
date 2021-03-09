@@ -477,7 +477,7 @@ public class Region
     {
         return Stage.GetSpecialists().FindAll(specialist =>
         {
-            Area area = specialist.GetCurrentArea();
+            Area area = specialist.Area;
             return area != null && area.region.Equals(this);
         });
     }

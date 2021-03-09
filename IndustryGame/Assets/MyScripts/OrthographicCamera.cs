@@ -236,13 +236,14 @@ public class OrthographicCamera : MonoBehaviour
             mainCamera.cullingMask |= (1 << 8);
         }
 
-        if (!areaFocus && !regionFocus)
-        {
-            currentSize = actualScrollSize;
+        // if (!areaFocus && !regionFocus)
+        // {
+            // currentSize = actualScrollSize;
+        // }
 
-        }
+        // HandleRegionFocus();
 
-        HandleRegionFocus();
+        HandleGlobalViewControl();
     }
 
     /// <summary>
@@ -322,38 +323,35 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 管理地区聚焦
     /// </summary>
-    private void HandleAreaFocus(ref bool areaToRegionFlag)
+    private void HandleAreaFocus()
     {
-        if (areaFocus)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            Vector3 prevPos = currentPosition;
+
+            FocusOnRegion(currentRegion, true);
+
+            float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
+            float ratio = 0.5f;
+            if(ratio < 1f)
             {
-                areaToRegionFlag = true;
-                Vector3 prevPos = currentPosition;
+                currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                
+                float highestY = GetAreaFocusPosition(Stage.GetHighestPosition()).y;
+                float dstY = currentPosition.y - (currentPosition.y - highestY) * ratio;
 
-                FocusOnRegion(currentRegion, true);
+                currentPosition = prevPos;
 
-                float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
-                float ratio = 0.5f;
-                if(ratio < 1f)
-                {
-                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
-                    
-                    float highestY = GetAreaFocusPosition(Stage.GetHighestPosition()).y;
-                    float dstY = currentPosition.y - (currentPosition.y - highestY) * ratio;
+                if(dstY < highestY)
+                    currentPosition.y = highestY;
+                else
+                    currentPosition.y = dstY;
 
-                    currentPosition = prevPos;
+                currentSize -= 0.5f * (currentSize - mouseAreaOrthoSize);
 
-                    if(dstY < highestY)
-                        currentPosition.y = highestY;
-                    else
-                        currentPosition.y = dstY;
+                currentPosition.z += areaEscapePositionOffset.z;
 
-                    currentSize -= 0.5f * (currentSize - mouseAreaOrthoSize);
-
-                    currentPosition.z += areaEscapePositionOffset.z;
-                }
-
+                SetAreaFocus(false);
             }
         }
     }
@@ -446,30 +444,18 @@ public class OrthographicCamera : MonoBehaviour
     /// </summary>
     private void HandleRegionFocus()
     {
-        // Handling mouse scroll
-        // HandleGlobalFocusScrollControl();        
-        bool areaToRegionFlag = false;
-        HandleAreaFocus(ref areaToRegionFlag);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, true);
+        }
 
-        if (areaToRegionFlag)
-            return;
-
-
-        Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool raycasted = Physics.Raycast(inputRay, out hit);
-
-        // Handling RegionFocus Control
-        if (regionFocus == true)
-            HandleRegionFocusControl();
-
-
-
-        // Handling Mouse Click Region
         if (focusFlag == false)
         {
             if (!IsPointerOverUIObject())
             {
+                Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                bool raycasted = Physics.Raycast(inputRay, out hit);
                 if (raycasted)
                 {
                     if (Input.GetMouseButtonDown(0))
@@ -531,6 +517,126 @@ public class OrthographicCamera : MonoBehaviour
         }
     }
 
+    private void HandleGlobalViewControl()
+    {
+        // bool areaToRegionFlag = false;
+
+        // HandleAreaFocus(ref areaToRegionFlag);
+
+        // if (areaToRegionFlag)
+        //     return;
+
+        if(currentSize >= mouseAreaOrthoSize && currentSize < minObserveRegionSize){
+            HandleAreaFocus();
+
+        }else if(currentSize >= minObserveRegionSize){
+            HandleRegionFocus();            
+        }
+
+        float speed = regionObserveTranSpeed * ((currentSize - mouseAreaOrthoSize) / worldOrthoSize);
+
+        if(Input.GetKey(KeyCode.S))
+        {
+            currentPosition.z -= speed;
+        }
+
+        if(Input.GetKey(KeyCode.W))
+        {
+            currentPosition.z += speed;
+        }
+
+        if(Input.GetKey(KeyCode.A))
+        {
+            currentPosition.x -= speed;
+        }
+
+        if(Input.GetKey(KeyCode.D))
+        {
+            currentPosition.x += speed;
+        }
+
+        RaycastHit centerHit;
+        Physics.Raycast(mainCamera.transform.position,mainCamera.transform.forward, out centerHit);
+        HexCell centerHexCell = Stage.GetHexGrid().GetCell(centerHit.point);
+        // centerHexCell.GetComponentInParent<Highlighter>().enabled = true;
+        Vector3 centerPosition = GetAreaFocusPosition(centerHexCell.transform.position);
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            if (currentSize > mouseAreaOrthoSize)
+            {
+                float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
+                float ratio = regionObserveSizeSpeed / (currentSize - mouseAreaOrthoSize);
+                if(ratio < 1f)
+                {
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                    
+                    float centerY = centerPosition.y;
+                    float dstY = currentPosition.y - (currentPosition.y - centerY) * ratio;
+
+                    // If dstY is smaller than focusPositionY, reposition
+                    if(dstY < centerY)
+                    {
+                        // SetCurrentCameraParam(mouseAreaOrthoSize, centerPosition, orthoAreaRotation, false);
+                    }
+                    else
+                    {
+                        currentPosition.y = dstY;
+
+                        float zChange = Mathf.Abs((currentPosition.z - centerPosition.z) * ratio);
+                        if(currentPosition.z < centerPosition.z)
+                        {
+                            currentPosition.z += zChange;
+                        }else{
+                            currentPosition.z -= zChange;
+                        }
+                        currentSize -= regionObserveSizeSpeed;
+                    }
+
+                }else
+                {
+                    // If ratio is larger than 1.0f, reposition
+
+                    // currentSize = mouseAreaOrthoSize;
+                    // SetCurrentCameraParam(mouseAreaOrthoSize, centerPosition, orthoAreaRotation, false);
+                }
+
+
+            }else{
+                // If currentSize is accidentally smaller than mouseAreaOrthoSize, reposition
+
+                // SetCurrentCameraParam(mouseAreaOrthoSize, centerPosition, orthoAreaRotation, false);
+            }
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            if (currentSize < worldOrthoSize)
+            {
+                float angle = Quaternion.Angle(currentRotation, worldRotation);
+                float ratio = regionObserveSizeSpeed / (worldOrthoSize - currentSize);
+                if(ratio < 1f)
+                {
+                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.right);
+                    currentPosition.y += (worldPosition.y - currentPosition.y) * ratio;
+
+
+                    currentPosition.z += (worldPosition.z - currentPosition.z) * ratio;
+                    float zChange = Mathf.Abs((worldPosition.z - currentPosition.z) * ratio);
+                    if(currentPosition.z > worldPosition.z)
+                    {
+                        currentPosition.z -= zChange;
+                    }else{
+                        currentPosition.z += zChange;
+                    }
+
+                    currentSize += regionObserveSizeSpeed;
+                }
+                // else
+                    // currentSize = worldOrthoSize;
+            }
+        }
+    }
 
     /// <summary>
     /// 设置洲聚焦时的键鼠操作
@@ -548,74 +654,6 @@ public class OrthographicCamera : MonoBehaviour
         // float currTime = Time.time;
 
         // Vector3 prevPosition = currentPosition;
-
-        if(Input.GetKey(KeyCode.S))
-        {
-            currentPosition.z -= regionObserveTranSpeed;
-        }
-
-        if(Input.GetKey(KeyCode.W))
-        {
-            currentPosition.z += regionObserveTranSpeed;
-        }
-
-        if(Input.GetKey(KeyCode.A))
-        {
-            currentPosition.x -= regionObserveTranSpeed;
-        }
-
-        if(Input.GetKey(KeyCode.D))
-        {
-            currentPosition.x += regionObserveTranSpeed;
-        }
-
-        // if (!IsPointerOverUIObject())
-        // {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
-            {
-                if (currentSize > maskAreaOrthoSize)
-                {
-                    float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
-                    float ratio = regionObserveSizeSpeed / (currentSize - mouseAreaOrthoSize);
-                    if(ratio < 1f)
-                    {
-                        currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
-                        
-                        float highestY = GetAreaFocusPosition(Stage.GetHighestPosition()).y;
-                        float dstY = currentPosition.y - (currentPosition.y - highestY) * ratio;
-
-                        if(dstY < highestY)
-                            currentPosition.y = highestY;
-                        else
-                            currentPosition.y = dstY;
-
-                        currentSize -= regionObserveSizeSpeed;
-                    }else
-                    {
-                        currentSize = mouseAreaOrthoSize;
-                        currentPosition.y = Stage.GetHighestPosition().y;
-                    }
-                }
-            }
-
-            if (Input.GetAxis("Mouse ScrollWheel") < 0)
-            {
-                if (currentSize < worldOrthoSize)
-                {
-                    float angle = Quaternion.Angle(currentRotation, worldRotation);
-                    float ratio = regionObserveSizeSpeed / (worldOrthoSize - currentSize);
-                    if(ratio < 1f)
-                    {
-                        currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.right);
-                        currentPosition.y += (worldPosition.y - currentPosition.y) * ratio;
-                        currentSize += regionObserveSizeSpeed;
-                    }else
-                        currentSize = worldOrthoSize;
-
-                }
-            }
-        // }
-
 
         // Exiting with esc
         if (Input.GetKeyDown(KeyCode.Escape))

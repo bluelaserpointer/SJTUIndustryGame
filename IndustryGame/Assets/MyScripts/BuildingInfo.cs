@@ -29,11 +29,10 @@ public class BuildingInfo : ScriptableObject
     [Header("建筑物效果")]
     [Reorderable(generatablesNestClass: typeof(AreaBuff))]
     public AreaBuff.ReorderableList buffs;
-    
-    public static BuildingInfo[] GetAllTypes()
-    {
-        return Resources.LoadAll<BuildingInfo>("Building");
-    }
+    [Header("提供专家措施")]
+    public bool provideSpecialistAction;
+
+    public static BuildingInfo[] AllTypes { get { return Resources.LoadAll<BuildingInfo>("Building"); } }
     public bool CanConstructIn(Area area)
     {
         return !preventPlayerConstruct && area.CountBuilding(this) < areaLimit && (!hasRegionLimit || area.region.CountBuilding(this) < regionLimit)

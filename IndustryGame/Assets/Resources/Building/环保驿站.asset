@@ -32,6 +32,7 @@ MonoBehaviour:
   buffs:
     List:
     - id: 0
+  provideSpecialistAction: 1
   references:
     version: 1
     00000000:

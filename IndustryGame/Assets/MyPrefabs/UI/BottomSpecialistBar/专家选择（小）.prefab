@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5389259181225703851}
   - component: {fileID: 3005112315883212209}
   - component: {fileID: 4206522950928274020}
+  - component: {fileID: 4076640355925549702}
   m_Layer: 5
   m_Name: "\u4E13\u5BB6\u9009\u62E9\uFF08\u5C0F\uFF09"
   m_TagString: Untagged
@@ -107,6 +108,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   specialistName: {fileID: 2586476842550437630}
   avatar: {fileID: 3950531875408961190}
+--- !u!114 &4076640355925549702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118409514939227843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048442d17a87a234694f331638218207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2944098864660553716
 GameObject:
   m_ObjectHideFlags: 0

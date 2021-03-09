@@ -44,20 +44,22 @@ public class Specialist
     public static int[] expCaps = { 0, 100, 200, 500, 1000, 1600, 2500 };
 
     private Area currentArea;
-    private Action currentAction;
-    private float actionProgress;
+    /// <summary>
+    /// 当前所在地区
+    /// </summary>
+    public Area Area { get { return currentArea; } }
+    private SpecialistAction currentAction;
+    /// <summary>
+    /// 执行中措施
+    /// </summary>
+    public SpecialistAction Action { get { return currentAction; } }
 
     public void dayIdle()
     {
         if(currentAction != null)
         {
-            actionProgress += 1.0f * (1.0f + Stage.GetResourceValue(ResourceType.specialistTrainBoost));
-            if(actionProgress >= currentAction.timeCost)
-            {
-                currentAction.finishAction(currentArea);
-                currentAction = null;
-                exp += 10; //TODO; need experience info
-            }
+            Stage.AddResourceValue(ResourceType.money, -currentAction.DayMoneyCost);
+            currentAction.DayIdle();
         }
     }
     /// <summary>
@@ -95,12 +97,15 @@ public class Specialist
         }
         return newAbilityLevel - oldAbilityLevel;
     }
-    public void startAction(Action action)
+    public void SetAction(SpecialistAction action)
     {
+        if (currentAction != null)
+        {
+            currentAction.Stop();
+            Stage.AddResourceValue(ResourceType.money, currentAction.StartMoneyCost);
+        }
         currentAction = action;
-        actionProgress = 0;
-        Stage.AddResourceValue(ResourceType.money, action.moneyCost);
-        currentArea.StartProgressSlider(this);
+        Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
     }
     /// <summary>
     /// 指令专家移动到目标地点
@@ -109,14 +114,6 @@ public class Specialist
     public void MoveToArea(Area area)
     {
         currentArea = area;
-    }
-    /// <summary>
-    /// 获取当前地点
-    /// </summary>
-    /// <returns></returns>
-    public Area GetCurrentArea()
-    {
-        return currentArea;
     }
     /// <summary>
     /// 获取当前位置说明
@@ -132,15 +129,7 @@ public class Specialist
     /// <returns></returns>
     public float GetActionProgressRate()
     {
-        return currentAction != null ? actionProgress / currentAction.timeCost : 1.0f;
-    }
-    /// <summary>
-    /// 是否现在有工作
-    /// </summary>
-    /// <returns></returns>
-    public bool HasCurrentAction()
-    {
-        return currentAction != null;
+        return currentAction != null ? currentAction.ProgressRate : 1;
     }
     /// <summary>
     /// 获取等级
@@ -211,7 +200,7 @@ public class Specialist
     {
         if(exp + value > GetExpCap()) //level up
         {
-            string levelUpMessage = "在 " + GetCurrentArea().areaName + " 工作的 " + name + " 获得了经验";
+            string levelUpMessage = "在 " + currentArea.areaName + " 工作的 " + name + " 获得了经验";
             Ability ability = EnumHelper.GetRandomValue<Ability>();
             int oldLevel = GetAbilityLevel(ability);
             int increase = addSpeciality_randomRange_getIncrease(EnumHelper.GetRandomValue<Ability>(), 2, 2);
