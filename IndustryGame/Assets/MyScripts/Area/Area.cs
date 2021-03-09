@@ -42,7 +42,7 @@ public class Area : MonoBehaviour
     public GameObject animalNumberPop;
     public GameObject animalNumberTooltip;
     public SurroundWithUI basementLabelHolder;
-    public SurroundWithUI specialistActionButtonsHolder;
+    [SerializeField] private SurroundWithUI specialistActionButtonsHolder;
 
     //data
     [HideInInspector]
@@ -196,7 +196,7 @@ public class Area : MonoBehaviour
             animalAndAmount.Key.idle(this, (int)animalAndAmount.Value.GetRecordValue());
         }
         //show specialist mark // will be upgraded to show count in future
-        if (GetSpecialistsInArea().Count > 0)
+        if (Specialists.Count > 0)
         {
             markSpecialist.SetActive(true);
         }
@@ -227,19 +227,11 @@ public class Area : MonoBehaviour
     /// <summary>
     /// 获取在当地的专家列表
     /// </summary>
-    /// <returns></returns>
-    public List<Specialist> GetSpecialistsInArea()
-    {
-        return Stage.GetSpecialists().FindAll(specialist => Equals(specialist.GetCurrentArea()));
-    }
+    public List<Specialist> Specialists { get { return Stage.GetSpecialists().FindAll(specialist => Equals(specialist.Area)); } }
     /// <summary>
-    /// 是否有基地
+    /// 是否为基地
     /// </summary>
-    /// <returns></returns>
-    public bool IsBasement()
-    {
-        return Equals(region.GetBaseArea());
-    }
+    public bool IsBasement { get { return Equals(region.GetBaseArea()); } }
     /// <summary>
     /// 添加动物统计记录,同时揭开当地的栖息地
     /// </summary>
@@ -514,7 +506,7 @@ public class Area : MonoBehaviour
     {
         if (actionProgressSlider.gameObject.activeSelf)
         {
-            if (currentSpecialist != null && currentSpecialist.HasCurrentAction())
+            if (currentSpecialist != null && currentSpecialist.Action != null)
             {
                 actionProgressSlider.value = currentSpecialist.GetActionProgressRate();
             }
@@ -615,14 +607,25 @@ public class Area : MonoBehaviour
     /// 洲中的Y坐标
     /// </summary>
     public float regionPositionY { get { return worldPosition.z - region.GetTop(); } }
+    /// <summary>
+    /// 显示专家措施按钮列表
+    /// </summary>
+    /// <param name="specialist"></param>
     public void ShowSpecialistActionButtons(Specialist specialist)
     {
         specialistActionButtonsHolder.gameObject.SetActive(true);
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //public actions
-        buttonNameAndEvent.Add("调查该洲", () => Debug.Log("调查该洲"));
-        buttonNameAndEvent.Add("集中观察", () => Debug.Log("集中观察"));
+        buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist)));
+        if(habitat != null)
+            buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist)));
         buttonNameAndEvent.Add("管理研究", () => Debug.Log("管理研究"));
+        foreach(Building building in buildings) {
+            if(building.info.provideSpecialistAction)
+            {
+                buttonNameAndEvent.Add("指挥" + building.info.buildingName, () => specialist.SetAction(new BoostBuildingEffects(specialist, building)));
+            }
+        }
         //generate
         GameObject origin = Resources.Load<GameObject>("UI/Area/HexButton");
         List<GameObject> buttons = new List<GameObject>();

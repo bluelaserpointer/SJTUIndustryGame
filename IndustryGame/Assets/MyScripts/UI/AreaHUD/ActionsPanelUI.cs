@@ -62,7 +62,8 @@ public class ActionsPanelUI : MonoBehaviour
     public void StartAction()
     {
         Stage.GetSpecialists()[Specialists.value].MoveToArea(CurrentArea);
-        Stage.GetSpecialists()[Specialists.value].startAction(CurrentArea.GetEnabledActions()[Actions.value]);
+        //TODO: edit
+        //Stage.GetSpecialists()[Specialists.value].SetAction(CurrentArea.GetEnabledActions()[Actions.value]);
     }
 
 
