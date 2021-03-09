@@ -352,6 +352,8 @@ public class OrthographicCamera : MonoBehaviour
                     currentSize -= 0.5f * (currentSize - mouseAreaOrthoSize);
 
                     currentPosition.z += areaEscapePositionOffset.z;
+
+                    SetAreaFocus(false);
                 }
 
             }
