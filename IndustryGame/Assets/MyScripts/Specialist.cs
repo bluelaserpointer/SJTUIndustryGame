@@ -104,8 +104,8 @@ public class Specialist
             currentAction.Stop();
             Stage.AddResourceValue(ResourceType.money, currentAction.StartMoneyCost);
         }
-        Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
         currentAction = action;
+        Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
     }
     /// <summary>
     /// 指令专家移动到目标地点

@@ -43,6 +43,7 @@ public class Area : MonoBehaviour
     public GameObject animalNumberTooltip;
     public SurroundWithUI basementLabelHolder;
     [SerializeField] private SurroundWithUI specialistActionButtonsHolder;
+    private static Area showingSpecialistActionButtonsArea;
 
     //data
     [HideInInspector]
@@ -81,12 +82,6 @@ public class Area : MonoBehaviour
         environmentFactorMarkImage.gameObject.SetActive(false);
         animalNumberPop.SetActive(false);
         markSpecialist.SetActive(false);
-        /* //TEST: randomly show the action buttons
-        if (UnityEngine.Random.Range(0, 25) == 0)
-        {
-            ShowSpecialistActionButtons(null);
-        }
-        */
     }
     /// <summary>
     /// 获取指定动物数量
@@ -613,7 +608,9 @@ public class Area : MonoBehaviour
     /// <param name="specialist"></param>
     public void ShowSpecialistActionButtons(Specialist specialist)
     {
-        specialistActionButtonsHolder.gameObject.SetActive(true);
+        if (showingSpecialistActionButtonsArea != null)
+            showingSpecialistActionButtonsArea.HideSpecialistActionButtons();
+        showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //public actions
         buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist)));
@@ -634,7 +631,9 @@ public class Area : MonoBehaviour
             GameObject copy = Instantiate(origin);
             copy.transform.parent = HUDManager.instance.transform;
             copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
-            copy.GetComponentInChildren<Button>().onClick.AddListener(nameAndEvent.Value);
+            Button button = copy.GetComponentInChildren<Button>();
+            button.onClick.AddListener(nameAndEvent.Value);
+            button.onClick.AddListener(() => HideSpecialistActionButtons());
             buttons.Add(copy);
         }
         specialistActionButtonsHolder.DestroySurrounders();
@@ -642,6 +641,7 @@ public class Area : MonoBehaviour
     }
     public void HideSpecialistActionButtons()
     {
-        specialistActionButtonsHolder.gameObject.SetActive(false);
+        showingSpecialistActionButtonsArea = null;
+        specialistActionButtonsHolder.DestroySurrounders();
     }
 }
