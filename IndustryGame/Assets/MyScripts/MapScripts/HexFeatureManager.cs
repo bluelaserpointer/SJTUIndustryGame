@@ -340,10 +340,15 @@ public class HexFeatureManager : MonoBehaviour {
 		{
 			int currentindex = buildingPrefabs.IndexOf(building);
 			Transform instance = Instantiate(building).transform;
+			position.y += instance.localScale.y * 0.5f;
 			instance.localPosition = HexMetrics.Perturb(position);
-			position.x += HexMetrics.buildingOffset[currentindex][0];
-			position.y += instance.localScale.y * 0.5f + HexMetrics.buildingOffset[currentindex][1];
-			position.z += HexMetrics.buildingOffset[currentindex][2];
+			Vector3 adjustedPos = instance.localPosition + HexMetrics.buildingOffset[currentindex];
+			instance.localPosition = adjustedPos;
+			//position.x += HexMetrics.buildingOffset[currentindex][0];
+			//position.y += HexMetrics.buildingOffset[currentindex][1];
+			//position.z += HexMetrics.buildingOffset[currentindex][2];
+
+			//Debug.Log(HexMetrics.buildingOffset[currentindex][0] + HexMetrics.buildingOffset[currentindex][2]);
 
 			instance.localRotation = Quaternion.Euler(0f, 360f, 0f);
 			instance.SetParent(container, false);
