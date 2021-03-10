@@ -83,7 +83,6 @@ public class HexGridChunk : MonoBehaviour {
 
 		if (cell.BuildingPrefabs!=null)
 		{
-			Debug.Log(cell.BuildingPrefabs.Count);
 			features.AddBuildings(cell, cell.Position, cell.BuildingPrefabs);
 		}
 	}
