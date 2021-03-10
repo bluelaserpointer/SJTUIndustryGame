@@ -57,6 +57,13 @@ public static class HexMetrics {
 
 	public const int TerrainTypeTotal = 11;
 
+	public static float[][] buildingOffset =
+	{
+		new float[]{ -5.0f, 0.0f, 5.0f },
+		new float[]{ 5.0f, 0.0f, 5.0f },
+		new float[]{ 5.0f, 0.0f, -5.0f },
+	};
+
 	static HexHash[] hashGrid;
 	
 

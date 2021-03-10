@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 public class HexGridChunk : MonoBehaviour {
 	static Color color1 = new Color(1f, 0f, 0f);
 	static Color color2 = new Color(0f, 1f, 0f);
@@ -76,9 +76,15 @@ public class HexGridChunk : MonoBehaviour {
 		{
 			features.AddExpert(cell, cell.Position);
 		}
-		if (cell.BuildingPrefab != null)
+		/*if (cell.BuildingPrefab != null)
 		{
 			features.AddBuilding(cell, cell.Position, cell.BuildingPrefab);
+		}*/
+
+		if (cell.BuildingPrefabs!=null)
+		{
+			Debug.Log(cell.BuildingPrefabs.Count);
+			features.AddBuildings(cell, cell.Position, cell.BuildingPrefabs);
 		}
 	}
 
