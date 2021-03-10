@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class HexFeatureManager : MonoBehaviour {
 
@@ -332,5 +333,21 @@ public class HexFeatureManager : MonoBehaviour {
 		instance.localPosition = HexMetrics.Perturb(position);
 		instance.localRotation = Quaternion.Euler(0f, 360f, 0f);
 		instance.SetParent(container, false);
+	}
+	public void AddBuildings(HexCell cell, Vector3 position, List<GameObject> buildingPrefabs)
+	{
+		foreach (GameObject building in buildingPrefabs)
+		{
+			int currentindex = buildingPrefabs.IndexOf(building);
+			Transform instance = Instantiate(building).transform;
+			instance.localPosition = HexMetrics.Perturb(position);
+			position.x += HexMetrics.buildingOffset[currentindex][0];
+			position.y += instance.localScale.y * 0.5f + HexMetrics.buildingOffset[currentindex][1];
+			position.z += HexMetrics.buildingOffset[currentindex][2];
+
+			instance.localRotation = Quaternion.Euler(0f, 360f, 0f);
+			instance.SetParent(container, false);
+
+		}
 	}
 }

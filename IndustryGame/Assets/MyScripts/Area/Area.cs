@@ -181,10 +181,14 @@ public class Area : MonoBehaviour
         //         setWeatherFX(snowFX, false);
         //         break;
         // }
+        HexCell cell = GetHexCell();
+        cell.BuildingPrefabs.Clear();
         foreach (Building building in buildings)
         {
+
             building.DayIdle();
         }
+        cell.Refresh();
         foreach (KeyValuePair<Animal, AmountChange> animalAndAmount in animalAmounts)
         {
             animalAndAmount.Value.RecordChange();

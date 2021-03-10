@@ -58,6 +58,10 @@ public class Building
         if(IsConstructed())
         {
             buffs.ForEach(buff => buff.Idle(area));
+            if (constructionModels.Count > 0)
+            {
+                area.GetHexCell().BuildingPrefabs.Add(constructionModels[constructionModels.Count - 1]);
+            }
         } else
         {
             constructionProgress += 1;
@@ -67,7 +71,11 @@ public class Building
             } else
             {
                 if(constructionModels.Count > 0)
-                    area.GetHexCell().BuildingPrefab = constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))];
+                {
+                    //area.GetHexCell().BuildingPrefab = constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))];
+                    area.GetHexCell().BuildingPrefabs.Add(constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))]);
+                }
+                    
             }
         }
     }
@@ -76,7 +84,12 @@ public class Building
         constructionProgress = info.timeCost;
         buffs.ForEach(buff => buff.Applied(area));
         if (constructionModels.Count > 0)
-            area.GetHexCell().BuildingPrefab = constructionModels[constructionModels.Count - 1];
+        {
+            //area.GetHexCell().BuildingPrefab = constructionModels[constructionModels.Count - 1];
+
+            area.GetHexCell().BuildingPrefabs.Add(constructionModels[constructionModels.Count - 1]);
+            
+        }
         if (info.isBasement)
         {
             area.region.SetBaseArea(area);
