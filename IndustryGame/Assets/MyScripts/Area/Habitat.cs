@@ -60,18 +60,7 @@ public class Habitat
     public bool IsVisible { get { return isVisible; } }
     public void DayIdle()
     {
-        //TODO: calcurate habitability depends on nearby environment problems
-        habitability = 0.5f;
-        foreach (Area eachArea in area.GetNeighborAreas()) {
-            foreach(EnvironmentStatFactor factor in eachArea.environmentStatFactors)
-            {
-                habitability += factor.ReceiveAffect(1);
-            }
-        }
-        foreach (EnvironmentStatFactor factor in area.environmentStatFactors)
-        {
-            habitability += factor.ReceiveAffect(0);
-        }
+        habitability = area.CalcurateHabitability();
         //calcurate amount decrease depends on habitability
         amount *= Random.Range(1.0f, habitability + 0.5f);
         //change appearance of habitat mark
@@ -92,7 +81,7 @@ public class Habitat
     {
         if (isVisible == visible)
             return;
-        area.habitatIsVisibleImage.gameObject.SetActive(isVisible = visible);
+        area.habitatIsVisibleImage.gameObject.SetActive(!(isVisible = visible));
     }
     public void Reveal()
     {
@@ -102,5 +91,12 @@ public class Habitat
         area.habitatMarkImage.sprite = sprites[Level];
         area.habitatMarkImage.gameObject.SetActive(true);
         NewsPanel.instance.AddNews(area.region.name + area.areaName + "地区 发现了新的栖息地 " + Level + "级", Resources.Load<Sprite>("UI/Icon/Habitat"));
+    }
+    public string TooltipDescription
+    {
+        get
+        {
+            return animal.animalName + "的" + Level + "级栖息地";
+        }
     }
 }

@@ -33,10 +33,12 @@ public class WatchHabitat : SpecialistAction
 {
     public WatchHabitat(Specialist specialist) : base(specialist)
     {
+        specialist.Area.habitat.SetIfVisible(true);
     }
     public override string Name => "观察栖息地";
     public override void Stop()
     {
+        specialist.Area.habitat.SetIfVisible(false);
     }
     public override void DayIdle()
     {

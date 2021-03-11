@@ -39,6 +39,6 @@ MonoBehaviour:
       type: {class: AreaBuff/BuffStatChange, ns: , asm: Assembly-CSharp}
       data:
         statType: {fileID: 11400000, guid: 057e0443fa4152c4c967121c9dac4ee0, type: 2}
-        change: -0.2
+        change: 0.2
         distanceAttenuation: 0.75
         maxDistance: 5
