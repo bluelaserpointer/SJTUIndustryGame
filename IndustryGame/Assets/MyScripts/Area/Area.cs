@@ -37,7 +37,6 @@ public class Area : MonoBehaviour
     //HUD
     public Image habitatMarkImage;
     public Image habitatHealthImage;
-    public Image habitatIsVisibleImage;
     [SerializeField] private Image environmentFactorMarkImage;
     public GameObject animalNumberPop;
     public Text mainTooltipText;
@@ -662,9 +661,9 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //public actions
-        buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist)));
+        buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist, this)));
         if(habitat != null)
-            buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist)));
+            buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist, this)));
         buttonNameAndEvent.Add("管理研究", () => Debug.Log("管理研究"));
         foreach(Building building in buildings) {
             if(building.info.provideSpecialistAction)
@@ -681,7 +680,6 @@ public class Area : MonoBehaviour
             copy.transform.parent = HUDManager.instance.transform;
             copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
             Button button = copy.GetComponentInChildren<Button>();
-            button.onClick.AddListener(() => specialist.MoveToArea(this));
             button.onClick.AddListener(nameAndEvent.Value);
             button.onClick.AddListener(() => HideSpecialistActionButtons());
             buttons.Add(copy);

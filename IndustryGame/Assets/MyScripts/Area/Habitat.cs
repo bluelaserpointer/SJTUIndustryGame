@@ -2,12 +2,14 @@
 
 public class Habitat
 {
-    private static readonly Sprite[] sprites = new Sprite[6];
+    private static readonly Sprite[] habitatSprites = new Sprite[6];
+    private static readonly Sprite[] unknownHabitatSprites = new Sprite[6];
     static Habitat()
     {
         for(int i = 0; i <= 5; ++i)
         {
-            sprites[i] = Resources.Load<Sprite>("UI/Area/Habitat" + i);
+            habitatSprites[i] = Resources.Load<Sprite>("UI/Area/Habitat" + i);
+            unknownHabitatSprites[i] = Resources.Load<Sprite>("UI/Area/UnknownHabitat" + i);
         }
     }
     public Habitat(Area area, Animal animal, int level)
@@ -46,6 +48,8 @@ public class Habitat
             return 5;
         }
     }
+    private int lastCheckedLevel;
+    public int LastCheckedLevel { get { return lastCheckedLevel; } }
     private float habitability = 0.5f;
     public float Habitability { get { return habitability; } }
     private bool isRevealed;
@@ -60,35 +64,48 @@ public class Habitat
     public bool IsVisible { get { return isVisible; } }
     public void DayIdle()
     {
-        habitability = area.CalcurateHabitability();
-        //calcurate amount decrease depends on habitability
-        amount *= Random.Range(1.0f, habitability + 0.5f);
-        //change appearance of habitat mark
-        if (isRevealed)
-        {
-            area.habitatMarkImage.sprite = sprites[Level];
-            if (habitability < 0.5f)
-                area.habitatMarkImage.color = Color.Lerp(Color.red, Color.white, habitability / 0.5f);
-            else
-                area.habitatMarkImage.color = Color.Lerp(Color.white, Color.green, (habitability - 0.5f) / 0.5f);
-            int min = animal.minHabitatPopulation(Level), max = animal.maxHabitatPopulation(Level);
-            float fillAmount = (float)(amount - min) / (max - min);
-            area.habitatHealthImage.fillAmount = fillAmount;
-            area.habitatHealthImage.color = Color.Lerp(Color.red, Color.green, fillAmount);
-        }
+        amount *= Random.Range(1.0f, area.CalcurateHabitability() + 0.5f); //calcurate amount change referencing its habitability
+        if (isVisible)
+            lastCheckedLevel = Level;
+        UpdateHUD();
     }
     public void SetIfVisible(bool visible)
     {
         if (isVisible == visible)
             return;
-        area.habitatIsVisibleImage.gameObject.SetActive(!(isVisible = visible));
+        isVisible = visible;
+        UpdateHUD();
+    }
+    private void UpdateHUD()
+    {
+        if (isRevealed)
+        {
+            if (isVisible) {
+                area.habitatHealthImage.gameObject.SetActive(true);
+                area.habitatMarkImage.sprite = habitatSprites[Level];
+                if (habitability < 0.5f)
+                    area.habitatMarkImage.color = Color.Lerp(Color.red, Color.white, habitability / 0.5f);
+                else
+                    area.habitatMarkImage.color = Color.Lerp(Color.white, Color.green, (habitability - 0.5f) / 0.5f);
+                int min = animal.minHabitatPopulation(Level), max = animal.maxHabitatPopulation(Level);
+                float fillAmount = (float)(amount - min) / (max - min);
+                area.habitatHealthImage.fillAmount = fillAmount;
+                area.habitatHealthImage.color = Color.Lerp(Color.red, Color.green, fillAmount);
+            }
+            else
+            {
+                area.habitatHealthImage.gameObject.SetActive(false);
+                area.habitatMarkImage.sprite = unknownHabitatSprites[lastCheckedLevel];
+            }
+        }
     }
     public void Reveal()
     {
         if (isRevealed)
             return;
         isRevealed = true;
-        area.habitatMarkImage.sprite = sprites[Level];
+        lastCheckedLevel = Level;
+        area.habitatMarkImage.sprite = habitatSprites[Level];
         area.habitatMarkImage.gameObject.SetActive(true);
         NewsPanel.instance.AddNews(area.region.name + area.areaName + "地区 发现了新的栖息地 " + Level + "级", Resources.Load<Sprite>("UI/Icon/Habitat"));
     }
