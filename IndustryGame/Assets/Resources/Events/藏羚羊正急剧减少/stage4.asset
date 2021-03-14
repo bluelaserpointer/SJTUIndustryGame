@@ -25,12 +25,10 @@ MonoBehaviour:
     - id: 0
   showInAnimalsReport: []
   relatedEnvironmentStat: {fileID: 0}
+  relatedEnvironmentStatGenerateAmount: 0
   references:
     version: 1
     00000000:
-      type: {class: RegionCondition/CheckRegionAnimalCount, ns: , asm: Assembly-CSharp}
+      type: {class: RegionCondition/CheckHabitatsRestored, ns: , asm: Assembly-CSharp}
       data:
-        type: 1
         animal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
-        value: 0
-        compareType: 1
