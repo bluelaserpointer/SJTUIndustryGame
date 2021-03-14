@@ -57,6 +57,8 @@ public class Area : MonoBehaviour
     [Header("安全取色")]
     public Color SafeColor;
 
+    private static readonly GameObject hexButton = Resources.Load<GameObject>("UI/Area/HexButton");
+
     public string TooltipDescription
     {
         get
@@ -654,6 +656,32 @@ public class Area : MonoBehaviour
     /// </summary>
     public float regionPositionY { get { return worldPosition.z - region.GetTop(); } }
     /// <summary>
+    /// 显示建设确认按钮列表（只有确认/取消）
+    /// </summary>
+    public void ShowConstructionButtons(BuildingInfo buildingInfo)
+    {
+        if (showingSpecialistActionButtonsArea != null)
+            showingSpecialistActionButtonsArea.HideSpecialistActionButtons();
+        showingSpecialistActionButtonsArea = this;
+        Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
+        buttonNameAndEvent.Add("取消", () => { });
+        buttonNameAndEvent.Add("建设(" + buildingInfo.moneyCost + "$)", () => { StartConstruction(buildingInfo); });
+        //generate
+        List<GameObject> buttons = new List<GameObject>();
+        foreach (var nameAndEvent in buttonNameAndEvent)
+        {
+            GameObject copy = Instantiate(hexButton);
+            copy.transform.parent = HUDManager.instance.transform;
+            copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
+            Button button = copy.GetComponentInChildren<Button>();
+            button.onClick.AddListener(nameAndEvent.Value);
+            button.onClick.AddListener(() => HideSpecialistActionButtons());
+            buttons.Add(copy);
+        }
+        specialistActionButtonsHolder.DestroySurrounders();
+        specialistActionButtonsHolder.AddSurrounders(buttons);
+    }
+    /// <summary>
     /// 显示专家措施按钮列表
     /// </summary>
     /// <param name="specialist"></param>
@@ -674,11 +702,10 @@ public class Area : MonoBehaviour
             }
         }
         //generate
-        GameObject origin = Resources.Load<GameObject>("UI/Area/HexButton");
         List<GameObject> buttons = new List<GameObject>();
         foreach (var nameAndEvent in buttonNameAndEvent)
         {
-            GameObject copy = Instantiate(origin);
+            GameObject copy = Instantiate(hexButton);
             copy.transform.parent = HUDManager.instance.transform;
             copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
             Button button = copy.GetComponentInChildren<Button>();
