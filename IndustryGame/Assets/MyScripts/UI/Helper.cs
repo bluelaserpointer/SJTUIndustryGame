@@ -26,15 +26,26 @@ public class Helper : MonoBehaviour
 
         if (Stage.GetRegions().Count > 0)
         {
+            Dropdown.OptionData alltempData = new Dropdown.OptionData();
+            alltempData.text = "全部";
+            dropdown.options.Add(alltempData);
             foreach (Region region in Stage.GetRegions())
             {
+                if (region.IsOcean) continue;
                 Dropdown.OptionData tempData = new Dropdown.OptionData();
                 tempData.text = region.name;
                 //tempData.image = CurrentArea.GetEnabledActions()[i].actionName;
                 dropdown.options.Add(tempData);
                 //InGameLog.AddLog(Stage.GetSpecialists()[i].name);
             }
-            dropdown.captionText.text = Stage.GetRegions()[dropdown.value].name;
+            if (dropdown.options[dropdown.value].text == "全部")
+            {
+                dropdown.captionText.text = "全部";
+            }
+            else
+            {
+                dropdown.captionText.text = Stage.GetRegions()[dropdown.value].name;
+            }
         }
     }
 

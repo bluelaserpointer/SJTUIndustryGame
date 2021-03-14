@@ -21,11 +21,26 @@ public class EventReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-        foreach (MainEvent mainEvent in Stage.GetRegions()[RegionSelection.value].GetRevealedEvents())
+        if (RegionSelection.options[RegionSelection.value].text == "全部")
         {
-            GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-            clone.GetComponent<SingleEventReport>().ShowSingleEvent(mainEvent);
-            EventReports.Add(clone);
+            foreach (Region region in Stage.GetRegions())
+            {
+                foreach (MainEvent mainEvent in region.GetRevealedEvents())
+                {
+                    GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+                    clone.GetComponent<SingleEventReport>().ShowSingleEvent(mainEvent);
+                    EventReports.Add(clone);
+                }
+            }
+        }
+        else
+        {
+            foreach (MainEvent mainEvent in Stage.GetRegions()[RegionSelection.value].GetRevealedEvents())
+            {
+                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+                clone.GetComponent<SingleEventReport>().ShowSingleEvent(mainEvent);
+                EventReports.Add(clone);
+            }
         }
     }
 
