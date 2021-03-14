@@ -57,7 +57,18 @@ public class Area : MonoBehaviour
     [Header("安全取色")]
     public Color SafeColor;
 
-    private static readonly GameObject hexButton = Resources.Load<GameObject>("UI/Area/HexButton");
+    private static GameObject _hexButton;
+    private static GameObject hexButton
+    {
+        get
+        {
+            if(_hexButton == null)
+            {
+                _hexButton = Resources.Load<GameObject>("UI/Area/HexButton");
+            }
+            return _hexButton;
+        }
+    }
 
     public string TooltipDescription
     {
