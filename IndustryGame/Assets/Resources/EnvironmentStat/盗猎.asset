@@ -16,4 +16,4 @@ MonoBehaviour:
   description: "\u975E\u6CD5\u7684\u76D7\u730E\u884C\u4E3A\uFF0C\u5371\u5BB3\u6FD2\u5371\u52A8\u7269\u7684\u751F\u5B58"
   habitabilityAffectRange: {x: -0.2, y: 0}
   initialAffectRange: {x: -0.1, y: -0.05}
-  dayAffectMultiply: 1.02
+  dayAffectMultiply: 1.005

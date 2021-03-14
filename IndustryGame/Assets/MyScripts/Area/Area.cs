@@ -77,14 +77,6 @@ public class Area : MonoBehaviour
         HexCell cell = GetHexCell();
         weather = new Weather(cell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
 
-        foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
-        {
-            HexCell neighborCell = cell.GetNeighbor(direction);
-            if (neighborCell != null)
-            {
-                neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
-            }
-        }
         //initial buildings
         foreach (Building building in buildings)
         {
@@ -452,6 +444,17 @@ public class Area : MonoBehaviour
     }
     public ICollection<Area> GetNeighborAreas()
     {
+        if (neibors.Values.Count == 0)
+        {
+            foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
+            {
+                HexCell neighborCell = GetHexCell().GetNeighbor(direction);
+                if (neighborCell != null)
+                {
+                    neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
+                }
+            }
+        }
         return neibors.Values;
     }
     public Area GetNeighborArea(HexDirection direction)
