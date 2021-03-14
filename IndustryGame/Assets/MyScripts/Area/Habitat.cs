@@ -48,6 +48,8 @@ public class Habitat
             return 5;
         }
     }
+    private float lastCheckedHabitability = 0.5f;
+    public float LastCheckedHabitability { get { return lastCheckedHabitability; } }
     private int lastCheckedLevel;
     public int LastCheckedLevel { get { return lastCheckedLevel; } }
     private float habitability = 0.5f;
@@ -91,6 +93,8 @@ public class Habitat
                 float fillAmount = (float)(amount - min) / (max - min);
                 area.habitatHealthImage.fillAmount = fillAmount;
                 area.habitatHealthImage.color = Color.Lerp(Color.red, Color.green, fillAmount);
+                lastCheckedLevel = Level;
+                lastCheckedHabitability = habitability;
             }
             else
             {
@@ -105,6 +109,7 @@ public class Habitat
             return;
         isRevealed = true;
         lastCheckedLevel = Level;
+        lastCheckedHabitability = habitability;
         area.habitatMarkImage.sprite = habitatSprites[Level];
         area.habitatMarkImage.gameObject.SetActive(true);
         NewsPanel.instance.AddNews(area.region.name + area.areaName + "地区 发现了新的栖息地 " + Level + "级", Resources.Load<Sprite>("UI/Icon/Habitat"));

@@ -29,11 +29,11 @@ public class EnvironmentStatFactor
 {
     private readonly EnvironmentStatType type;
     public Area area;
+    private float totalHabitabilityAffect;
     /// <summary>
     /// 累计动物数改变
     /// </summary>
-    [HideInInspector]
-    public float totalHabitationAffect;
+    public float TotalHabitabilityAffect { get { return totalHabitabilityAffect; } }
 
     /// <summary>
     /// 环境指标名称
@@ -128,7 +128,7 @@ public class EnvironmentStatFactor
     public float ReceiveAffect(int areaDistance)
     {
         float effect = SeekAffect(areaDistance);
-        totalHabitationAffect += effect;
+        totalHabitabilityAffect += effect;
         return effect;
     }
     public float SeekAffect(int areaDistance)
