@@ -26,6 +26,7 @@ public class SpecialistBar : MonoBehaviour
     public void RefreshList()
     {
         Helper.ClearList(GeneratedSpecialists);
+        if (Stage.GetSpecialists() == null) return;
         foreach (Specialist specialist in Stage.GetSpecialists())
         {
             GameObject clone = Instantiate(SpecialistImagePrefab, GenerateSpecialistImagePosition.transform, false);
