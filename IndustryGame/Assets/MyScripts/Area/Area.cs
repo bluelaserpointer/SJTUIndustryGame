@@ -664,14 +664,13 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //public actions
-        buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist, this)));
+        buttonNameAndEvent.Add("取消", () => { }) ;
         if(habitat != null)
             buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist, this)));
-        buttonNameAndEvent.Add("管理研究", () => Debug.Log("管理研究"));
         foreach(Building building in buildings) {
             if(building.info.provideSpecialistAction)
             {
-                buttonNameAndEvent.Add("指挥" + building.info.buildingName, () => specialist.SetAction(new BoostBuildingEffects(specialist, building)));
+                buttonNameAndEvent.Add(building.info.buildingName, () => specialist.SetAction(new BoostBuildingEffects(specialist, building)));
             }
         }
         //generate
