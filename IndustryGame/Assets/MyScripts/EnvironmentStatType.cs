@@ -16,6 +16,8 @@ public class EnvironmentStatType : ScriptableObject
     public Vector2 initialAffectRange;
     [Header("适居性每日变化比率")]
     public float dayAffectMultiply = 1;
+    public bool destroyWhenReachMax;
+    public bool destroyWhenReachMin;
 
     public static EnvironmentStatType[] GetAllTypes()
     {
@@ -116,6 +118,11 @@ public class EnvironmentStatFactor
             {
                 habitabilityAffect = newValue;
             }*/
+        }
+        if(type.destroyWhenReachMin && habitabilityAffect == type.habitabilityAffectRange.x
+            || type.destroyWhenReachMax && habitabilityAffect == type.habitabilityAffectRange.y)
+        {
+            area.environmentStatFactors.Remove(this);
         }
     }
     public float ReceiveAffect(int areaDistance)
