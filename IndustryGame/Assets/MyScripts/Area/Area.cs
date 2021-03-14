@@ -37,10 +37,9 @@ public class Area : MonoBehaviour
     //HUD
     public Image habitatMarkImage;
     public Image habitatHealthImage;
-    public Image habitatIsVisibleImage;
-    public Image environmentFactorMarkImage;
+    [SerializeField] private Image environmentFactorMarkImage;
     public GameObject animalNumberPop;
-    public GameObject animalNumberTooltip;
+    public Text mainTooltipText;
     public SurroundWithUI basementLabelHolder;
     [SerializeField] private SurroundWithUI specialistActionButtonsHolder;
     private static Area showingSpecialistActionButtonsArea;
@@ -57,6 +56,20 @@ public class Area : MonoBehaviour
     public Color ExtinctColor;
     [Header("安全取色")]
     public Color SafeColor;
+
+    public string TooltipDescription
+    {
+        get
+        {
+            string description = (habitat == null ? "无栖息地" : (habitat.TooltipDescription));
+            foreach(EnvironmentStatFactor factor in environmentStatFactors)
+            {
+                description += "\n" + factor.TooltipDescription;
+            }
+            return description;
+        }
+    }
+
     private void Start()
     {
         areaName = (environmentType = EnvironmentType.PickRandomOne()).usingNameTemplates.PickRandomOne();
@@ -64,14 +77,6 @@ public class Area : MonoBehaviour
         HexCell cell = GetHexCell();
         weather = new Weather(cell.Elevation, totalWater, groundSkyRatio, rainSnowRatio, rainFallRatio);
 
-        foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
-        {
-            HexCell neighborCell = cell.GetNeighbor(direction);
-            if (neighborCell != null)
-            {
-                neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
-            }
-        }
         //initial buildings
         foreach (Building building in buildings)
         {
@@ -208,6 +213,21 @@ public class Area : MonoBehaviour
             habitat.DayIdle();
         //environment effect factors
         environmentStatFactors.ForEach(stat => stat.DayIdle());
+        List<EnvironmentStatFactor> revealedFactors = environmentStatFactors.FindAll(factor => factor.IsRevealed);
+        //HUD
+        if (revealedFactors.Count == 0)
+        {
+            environmentFactorMarkImage.gameObject.SetActive(false);
+        } else
+        {
+            float sumHabitabilityAffect = SumHabitabilityAffect(revealedFactors);
+            if (sumHabitabilityAffect < 0)
+                environmentFactorMarkImage.color = Color.Lerp(Color.red, Color.white, sumHabitabilityAffect * 2 + 1.0f);
+            else
+                environmentFactorMarkImage.color = Color.Lerp(Color.white, Color.green, sumHabitabilityAffect * 2);
+            environmentFactorMarkImage.gameObject.SetActive(true);
+        }
+        mainTooltipText.text = TooltipDescription;
     }
 
     public void setWeatherFX(GameObject weatherFX, bool active)
@@ -273,7 +293,6 @@ public class Area : MonoBehaviour
         if (animal == null || !animalRecords.ContainsKey(animal))
         {
             animalNumberPop.SetActive(false);
-            animalNumberTooltip.SetActive(false);
             return;
         }
         int? amount = animalRecords[animal].GetAmountInLatestRecord();
@@ -304,7 +323,7 @@ public class Area : MonoBehaviour
         animalNumberPop.gameObject.GetComponentInChildren<Image>().color = backgroundColor;
         animalNumberPop.gameObject.GetComponentInChildren<Text>().text = animalNumberStr + "\n" + animalChangeStr;
         animalNumberPop.SetActive(true);
-        animalNumberTooltip.gameObject.GetComponentInChildren<Text>().text = "现有个体数: " + animalNumberStr + ", 距上次统计变化" + animalChangeStr;
+        //mainTooltipText.text = "现有个体数: " + animalNumberStr + ", 距上次统计变化" + animalChangeStr;
     }
     /// <summary>
     /// 获取最新统计下指定动物数量
@@ -425,6 +444,17 @@ public class Area : MonoBehaviour
     }
     public ICollection<Area> GetNeighborAreas()
     {
+        if (neibors.Values.Count == 0)
+        {
+            foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
+            {
+                HexCell neighborCell = GetHexCell().GetNeighbor(direction);
+                if (neighborCell != null)
+                {
+                    neibors.Add(direction, neighborCell.transform.GetComponentInChildren<Area>());
+                }
+            }
+        }
         return neibors.Values;
     }
     public Area GetNeighborArea(HexDirection direction)
@@ -554,7 +584,7 @@ public class Area : MonoBehaviour
     public float GetEnviromentStatFactor(EnvironmentStatType environmentStatType)
     {
         EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
-        return factor == null ? 0 : factor.value;
+        return factor == null ? 0 : factor.HabitabilityAffect;
     }
     /// <summary>
     /// 获取指定环境指标
@@ -564,35 +594,52 @@ public class Area : MonoBehaviour
     public float GetEnviromentStatWithString(string environmentStatType)
     {
         EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.name.Equals(environmentStatType));
-        return factor == null ? 0 : factor.value;
+        return factor == null ? 0 : factor.HabitabilityAffect;
     }
     /// <summary>
-    /// 生成指定环境指标（取值参照该种类初始值设定）
+    /// 生成指定环境指标, 取值参照该种类初始值设定
     /// </summary>
     /// <param name="environmentStatType"></param>
-    public void AddEnvironmentStat(EnvironmentStatType environmentStatType)
-    {
-        float initialvalue = UnityEngine.Random.Range(environmentStatType.initialValueRange.x, environmentStatType.initialValueRange.y);
-        AddEnvironmentStat(environmentStatType, initialvalue);
-    }
-    /// <summary>
-    /// 增加指定环境指标
-    /// </summary>
-    /// <param name="environmentStatType"></param>
-    /// <param name="value"></param>
-    public void AddEnvironmentStat(EnvironmentStatType environmentStatType, float value)
+    public void AddEnvironmentFactor(EnvironmentStatType environmentStatType)
     {
         EnvironmentStatFactor stat = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
-        if (stat != null)
+        if (stat == null)
         {
-            stat.value = Mathf.Clamp(stat.value + value, -0.5f, 0.5f);
+            environmentStatFactors.Add(new EnvironmentStatFactor(environmentStatType, this));
         }
-        else
+    }
+    public EnvironmentStatFactor ChangeEnvironmentFactorAffection(EnvironmentStatType environmentStatType, float value)
+    {
+        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
+        if (factor != null)
         {
-            stat = new EnvironmentStatFactor(environmentStatType, this);
-            stat.value = Mathf.Clamp(stat.value + value, -0.5f, 0.5f);
-            environmentStatFactors.Add(stat);
+            factor.HabitabilityAffect += value;
+            return factor;
         }
+        return null;
+    }
+    public float CalcurateHabitability()
+    {
+        //TODO: calcurate environmentFactors farther than distance 1
+        float habitability = 0.5f;
+        foreach (EnvironmentStatFactor factor in environmentStatFactors)
+        {
+            habitability += factor.ReceiveAffect(0);
+        }
+        foreach (Area eachArea in GetNeighborAreas())
+        {
+            foreach (EnvironmentStatFactor factor in eachArea.environmentStatFactors)
+            {
+                habitability += factor.ReceiveAffect(1);
+            }
+        }
+        return habitability;
+    }
+    public static float SumHabitabilityAffect(List<EnvironmentStatFactor> factors)
+    {
+        float sumAffect = 0;
+        factors.ForEach(factor => sumAffect += factor.HabitabilityAffect);
+        return sumAffect;
     }
     /// <summary>
     /// 世界地图中的坐标
@@ -617,9 +664,9 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //public actions
-        buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist)));
+        buttonNameAndEvent.Add("调查该洲", () => specialist.SetAction(new FindHabitats(specialist, this)));
         if(habitat != null)
-            buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist)));
+            buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist, this)));
         buttonNameAndEvent.Add("管理研究", () => Debug.Log("管理研究"));
         foreach(Building building in buildings) {
             if(building.info.provideSpecialistAction)

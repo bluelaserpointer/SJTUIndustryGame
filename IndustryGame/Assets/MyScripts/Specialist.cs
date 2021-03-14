@@ -104,6 +104,10 @@ public class Specialist
             currentAction.Stop();
             Stage.AddResourceValue(ResourceType.money, currentAction.StartMoneyCost);
         }
+        if (!currentArea != action.area)
+        {
+            MoveToArea(action.area);
+        }
         currentAction = action;
         Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
     }

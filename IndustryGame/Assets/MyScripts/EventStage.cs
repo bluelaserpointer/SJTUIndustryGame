@@ -56,7 +56,11 @@ public class EventStage
         this.so = so;
         this.mainEvent = mainEvent;
         //generate environment stat (problems);
-        ListLogic.GetUniqueRandomElements(mainEvent.region.GetAreas(), so.relatedEnvironmentStatGenerateAmount).ForEach(area => area.AddEnvironmentStat(relatedEnvironmentStat));
+        foreach(Habitat habitat in mainEvent.generatedHabitats)
+        {
+            List<Area> areas = new List<Area>(habitat.Area.GetNeighborAreas()).FindAll(area => area.region.Equals(mainEvent.region));
+            ListLogic.GetUniqueRandomElements(areas, so.relatedEnvironmentStatGenerateAmount).ForEach(area => area.AddEnvironmentFactor(relatedEnvironmentStat));
+        }
     }
     /// <summary>
     /// 完成该事件阶段
