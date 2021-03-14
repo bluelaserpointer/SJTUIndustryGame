@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2273673181186147268}
   - component: {fileID: 2454810366203178039}
   - component: {fileID: 7975481362743526649}
+  - component: {fileID: 2866943426907663697}
   m_Layer: 5
   m_Name: RegionNameText
   m_TagString: Untagged
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 200
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
@@ -159,6 +160,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Region Name
+--- !u!114 &2866943426907663697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745395031867848246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.19607843}
+  m_EffectDistance: {x: 15, y: -24}
+  m_UseGraphicAlpha: 1
 --- !u!1 &6298259498147726565
 GameObject:
   m_ObjectHideFlags: 0
