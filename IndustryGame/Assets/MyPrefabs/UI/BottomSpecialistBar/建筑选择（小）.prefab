@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 1664344573419232677}
   - component: {fileID: 8387606325372529087}
   - component: {fileID: 1197432907769366175}
+  - component: {fileID: 3703289174227940068}
   m_Layer: 5
   m_Name: "\u5EFA\u7B51\u9009\u62E9\uFF08\u5C0F\uFF09"
   m_TagString: Untagged
@@ -257,6 +258,18 @@ MonoBehaviour:
   buildingInfo: {fileID: 0}
   buildingName: {fileID: 9094892753355457264}
   buildingPhoto: {fileID: 7710608924627647144}
+--- !u!114 &3703289174227940068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662514256237460173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71204500bf919a64f801b2687ce0b05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8433276622257388538
 GameObject:
   m_ObjectHideFlags: 0

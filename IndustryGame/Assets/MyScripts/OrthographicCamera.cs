@@ -70,8 +70,11 @@ public class OrthographicCamera : MonoBehaviour
     public float lastRegionBorderChangeTime;
     public float totalRegionBorderChangeTime;
 
+    [Header("AreaDetails HUD")]
+    public GameObject AreaDetailsHUDGameObject;
     [Header("RegionDetails HUD")]
     public GameObject RegionDetailsHUDGameObject;
+    private AreaDetailsHUD AreaDetailsHUD;
 
     private void Awake()
     {
@@ -99,6 +102,8 @@ public class OrthographicCamera : MonoBehaviour
 
         focusMask = LayerMask.GetMask("FocusMask");
 
+        AreaDetailsHUD = AreaDetailsHUDGameObject.GetComponent<AreaDetailsHUD>();
+
         List<Region> regions = Stage.GetRegions();
         float maxSize = 0f;
         for (int i = 0; i < regions.Count; i++)
@@ -116,7 +121,7 @@ public class OrthographicCamera : MonoBehaviour
     void Update()
     {
         HandleCameraFocus();
-        // AreaDetailsHUDGameObject.SetActive(currentSize < minObserveRegionSize);
+        // AreaDetailsHUDGameObject.SetActive(areaFocus);
         // AreaDetailsHUD.SetMousePointingArea();
         RegionDetailsHUDGameObject.SetActive(regionFocus);
         RegionDetailsHUD.SetMousePointingRegion();
