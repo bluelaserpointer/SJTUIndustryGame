@@ -17,7 +17,7 @@ public class OrthographicCamera : MonoBehaviour
     public float operatableSizeOffset = 10f;
     public float actualScrollSize;
     private float maxObserveRegionSize;
-    private float currentSize;
+    public float currentSize;
 
 
     [Header("Speed for different lerps")]
@@ -121,8 +121,8 @@ public class OrthographicCamera : MonoBehaviour
     void Update()
     {
         HandleCameraFocus();
-        AreaDetailsHUDGameObject.SetActive(areaFocus);
-        AreaDetailsHUD.SetMousePointingArea();
+        // AreaDetailsHUDGameObject.SetActive(currentSize < minObserveRegionSize);
+        // AreaDetailsHUD.SetMousePointingArea();
         RegionDetailsHUDGameObject.SetActive(regionFocus);
         RegionDetailsHUD.SetMousePointingRegion();
     }
@@ -318,6 +318,9 @@ public class OrthographicCamera : MonoBehaviour
 
         regionFocus = false;
         SetAreaFocus(true);
+
+        AreaDetailsHUDGameObject.SetActive(true);
+        AreaDetailsHUD.SetMousePointingArea();
     }
 
     /// <summary>
@@ -327,12 +330,17 @@ public class OrthographicCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("Pressed Escape");
+
             Vector3 prevPos = currentPosition;
 
             FocusOnRegion(currentRegion, true);
 
             float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
-            float ratio = 0.5f;
+            float dstRatio = currentSize - Mathf.Abs(currentSize - minObserveRegionSize) / Mathf.Abs(minObserveRegionSize - mouseAreaOrthoSize);
+
+            float ratio = Mathf.Max(0.5f, dstRatio);
+
             if(ratio < 1f)
             {
                 currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
@@ -347,12 +355,17 @@ public class OrthographicCamera : MonoBehaviour
                 else
                     currentPosition.y = dstY;
 
-                currentSize -= 0.5f * (currentSize - mouseAreaOrthoSize);
+                currentSize -= ratio * (currentSize - mouseAreaOrthoSize);
 
                 currentPosition.z += areaEscapePositionOffset.z;
 
                 SetAreaFocus(false);
+
+                Debug.Log("SetAreaFocus(false)");
             }
+
+            AreaDetailsHUDGameObject.SetActive(false);
+            AreaDetailsHUD.SetMousePointingArea();
         }
     }
 
@@ -425,20 +438,6 @@ public class OrthographicCamera : MonoBehaviour
         SetCurrentCameraParam(region.observeOrthoSize , region.GetCenter(), orthoRegionRotation, modeChange);
     }
 
-    private void ChangeFocusRegion(Region region, bool modeChange)
-    {
-        if(region == null || region.GetRegionId() == -1)
-            return;
-
-        focusFlag = true;
-
-        regionFocus = true;
-        SetAreaFocus(false);
-        currentArea = null;
-        currentRegion = region;
-        SetCurrentCameraParam(region.observeOrthoSize , region.GetCenter(), orthoRegionRotation, modeChange);
-    }
-
     /// <summary>
     /// 管理洲聚焦
     /// </summary>
@@ -472,47 +471,6 @@ public class OrthographicCamera : MonoBehaviour
                         }
                     }
                 }
-            }
-        }
-    }
-
-    /// <summary>
-    /// 设置摄像机全局的键鼠操作
-    /// </summary>
-    private void HandleGlobalFocusScrollControl()
-    {
-        if (!IsPointerOverUIObject())
-        {
-
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
-                if (actualScrollSize > mouseAreaOrthoSize)
-                    actualScrollSize -= regionObserveSizeSpeed;
-
-            if (Input.GetAxis("Mouse ScrollWheel") < 0)
-                if (actualScrollSize < worldOrthoSize)
-                    actualScrollSize += regionObserveSizeSpeed;
-
-            if (actualScrollSize < minObserveRegionSize)
-            {
-                if (currentArea != null)
-                {
-                    FocusOnAreaByHexCell(currentArea.GetComponentInParent<HexCell>(), mouseAreaOrthoSize, true);
-                }
-
-            }
-            else if (actualScrollSize >= minObserveRegionSize && actualScrollSize < maxObserveRegionSize)
-            {
-                FocusOnRegion(currentRegion, true);
-
-
-            }
-            else if (actualScrollSize >= maxObserveRegionSize)
-            {
-                // Switch to world
-                SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, true);
-
-                regionFocus = false;
-                SetAreaFocus(false);
             }
         }
     }
@@ -563,6 +521,12 @@ public class OrthographicCamera : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
+            if (currentSize < minObserveRegionSize)
+            {
+                AreaDetailsHUDGameObject.SetActive(true);
+                AreaDetailsHUD.SetMousePointingArea();
+            }
+
             if (currentSize > mouseAreaOrthoSize)
             {
                 float angle = Quaternion.Angle(currentRotation, orthoAreaRotation);
@@ -622,15 +586,20 @@ public class OrthographicCamera : MonoBehaviour
 
 
                     currentPosition.z += (worldPosition.z - currentPosition.z) * ratio;
+                    
                     float zChange = Mathf.Abs((worldPosition.z - currentPosition.z) * ratio);
+
                     if(currentPosition.z > worldPosition.z)
                     {
                         currentPosition.z -= zChange;
                     }else{
                         currentPosition.z += zChange;
                     }
-
+                    
                     currentSize += regionObserveSizeSpeed;
+
+                    AreaDetailsHUDGameObject.SetActive(true);
+                    AreaDetailsHUD.SetMousePointingArea();
                 }
                 // else
                     // currentSize = worldOrthoSize;
