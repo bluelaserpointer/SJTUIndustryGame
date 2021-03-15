@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b880e452ecc494cbd9456cddae236c, type: 3}
+  m_Name: FrogEvent
+  m_EditorClassIdentifier: 
+  eventName: "\u81F4\u547D\u771F\u83CC"
+  description: "\u4E00\u79CD\u81F4\u547D\u7684\u771F\u83CC\u5A01\u80C1\u7740\u6240\u6709\u7684\u9752\u86D9\uFF01\u9752\u86D9\u957F\u671F\u6709\u5229\u4E8E\u6211\u4EEC\u7684\u533B\u7597\u9886\u57DF\u7684\u53D1\u5C55\uFF0C\u6211\u4EEC\u5E94\u8BE5\u7814\u53D1\u89E3\u836F\u5C3D\u5FEB\u5F00\u5C55\u62EF\u6551\u884C\u52A8\u3002"
+  descriptionAfterFinish: "\u6240\u6709\u9752\u86D9\u7684\u5371\u673A\u5DF2\u88AB\u56DE\u907F\uFF01"
+  image: {fileID: 21300000, guid: f6f23dfe2b6443e448ac0e3afaa88b81, type: 3}
+  hideLevel: 0
+  onlyGenerateAtBeginning: 0
+  generateChanceOneDay: 0
+  areaRequirements: []
+  concernedAnimal: {fileID: 11400000, guid: 5b9020fb610c4324889935d4c08065ae, type: 2}
+  leastTotalHabitatLevel: 12
+  contribution: 300
+  eventStages:
+  - {fileID: 11400000, guid: fe70fef0a563d194e88c09d265cddb10, type: 2}
+  - {fileID: 11400000, guid: 0774ce1ad8f1708498d7d1141b69ca39, type: 2}
+  - {fileID: 11400000, guid: bcfb1959cb04a134bad211a733f3bfc4, type: 2}
+  includedGlobalActions: []
+  includedAreaActions: []

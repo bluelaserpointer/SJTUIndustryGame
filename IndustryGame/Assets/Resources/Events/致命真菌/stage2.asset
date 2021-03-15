@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f865e30df96441446b67ccfd0ff71495, type: 3}
+  m_Name: stage2
+  m_EditorClassIdentifier: 
+  infoName: "\u53D1\u653E\u6291\u5236\u5242"
+  description: "\u6211\u4EEC\u5148\u524D\u5F00\u53D1\u7684\u836F\u53EF\u4EE5\u6291\u5236\u771F\u83CC\u7684\u611F\u67D3\u901F\u5EA6\uFF0C\u4F46\u65E0\u6CD5\u6839\u9664\u3002\u4E0D\u8FC7\u73B0\u5728\u6563\u5E03\u5B83\u53EF\u4EE5\u4E3A\u6211\u4EEC\u627E\u51FA\u5176\u5B83\u65B9\u6CD5\u4E89\u53D6\u65F6\u95F4\u3002"
+  descriptionAfterFinish: "\u7B2C\u4E00\u6B21\u53D1\u653E\u5DF2\u5B8C\u6BD5\uFF0C\u6211\u4EEC\u6025\u7740\u524D\u5F80\u4E86\u4E0B\u4E00\u4E2A\u6816\u606F\u5730\u3002"
+  image: {fileID: 0}
+  contribution: 0
+  preFinishEventStages:
+  - {fileID: 11400000, guid: fe70fef0a563d194e88c09d265cddb10, type: 2}
+  successCondition:
+    List: []
+  showInAnimalsReport: []
+  relatedEnvironmentStat: {fileID: 0}
+  relatedEnvironmentStatGenerateAmount: 0
+  references:
+    version: 1
