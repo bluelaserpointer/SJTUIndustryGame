@@ -32,10 +32,6 @@ public class MainEvent
     /// </summary>
     public Sprite image { get { return so.image; } }
     /// <summary>
-    /// 事件图片 - 完成后
-    /// </summary>
-    public Sprite imageAfterFinish {  get { return so.imageAfterFinish; } }
-    /// <summary>
     /// 事件流隐藏级别 (0 ~ 5)
     /// </summary>
     public int hideLevel { get { return so.hideLevel; } }
@@ -149,7 +145,7 @@ public class MainEvent
         mamMadeEnvReservated = 0;
         totalReward = contribution + wildReservated + mamMadeEnvReservated;
         //show popUpWindow
-        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, descriptionAfterFinish, imageAfterFinish));
+        PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, descriptionAfterFinish, image));
         PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
         //add rewards
         Stage.AddResourceValue(ResourceType.contribution, totalReward);

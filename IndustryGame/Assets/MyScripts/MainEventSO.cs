@@ -13,7 +13,7 @@ public class MainEventSO : ScriptableObject
     public string description;
     [TextArea]
     public string descriptionAfterFinish;
-    public Sprite image, imageAfterFinish;
+    public Sprite image;
 
     [Header("隐藏级别")]
     [Range(0, 5)]

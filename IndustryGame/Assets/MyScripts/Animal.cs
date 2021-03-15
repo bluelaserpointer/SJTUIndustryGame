@@ -50,11 +50,13 @@ public class Animal : ScriptableObject
     public struct EnvironmentPreference
     {
         public EnvironmentType environment;
-        public double preference;
+        [Range(-1, 1)]
+        public float preference;
     }
     /// <summary>
     /// 物种各环境适应度
     /// </summary>
+    [Header("物种各环境适应度")]
     public List<EnvironmentPreference> environmentPreferences;
     /// <summary>
     /// 物种模型
@@ -181,20 +183,26 @@ public class Animal : ScriptableObject
         dst.changeSpeciesAmount(this, +migrationAmount);
     }
 
-    public double getAreaDislikeness(Area area, int amount)
+    public float getAreaDislikeness(Area area, int amount)
     {
-        double dislikeness = 0.0;
+        float dislikeness = 0.0f;
         //food affection
         if (energyNeeds > 0)
-            dislikeness += 1.0 - (double)area.GetProvidableFoodEnergy(foods, energyNeeds) / (amount * energyNeeds);
+            dislikeness += 1.0f - (float)area.GetProvidableFoodEnergy(foods, energyNeeds) / (amount * energyNeeds);
         //environmentType affection
+        bool foundInSetting = false;
         foreach (EnvironmentPreference environmentAndPreference in environmentPreferences)
         {
             if (environmentAndPreference.environment.Equals(area.environmentType))
             {
                 dislikeness -= environmentAndPreference.preference;
+                foundInSetting = true;
                 break;
             }
+        }
+        if(!foundInSetting && bestEnvironmentType.Equals(area.environmentType))
+        {
+            dislikeness -= 1.0f;
         }
         //TODO: tempreture affection
         return dislikeness;

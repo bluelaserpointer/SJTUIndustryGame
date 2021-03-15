@@ -50,6 +50,7 @@ public class Region
         name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
         basementLabelHUD = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
         basementLabelHUD.transform.parent = HUDManager.instance.transform;
+        basementLabelHUD.gameObject.SetActive(false);
     }
     /// <summary>
     /// 每帧流程
@@ -244,6 +245,7 @@ public class Region
         area.basementLabelHolder.AddSurrounders(basementLabelHUD.gameObject);
         basementLabelHUD.nameText.text = name + "基地";
         basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
+        basementLabelHUD.gameObject.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 1; //base area is always reservated
     }

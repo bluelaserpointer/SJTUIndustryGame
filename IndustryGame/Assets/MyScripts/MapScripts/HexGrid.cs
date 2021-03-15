@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 public class HexGrid : MonoBehaviour {
+	public string mapName = "TestMap";
 
 	public int cellCountX = 20, cellCountZ = 15;
 
@@ -28,6 +29,7 @@ public class HexGrid : MonoBehaviour {
 	List<HexUnit> units = new List<HexUnit>();
 	public HexUnit unitPrefab;
 
+
 	//public GameObject[] animalPrefabs;
 	public Dictionary<Animal, GameObject> animalModel = new Dictionary<Animal, GameObject>();
 
@@ -38,7 +40,7 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.colors = colors;
 		CreateMap(cellCountX, cellCountZ);
 		
-		string path = Path.Combine("Assets/MyMaps/",  "TestMap" + ".map");
+		string path = Path.Combine("Assets/MyMaps/",  mapName + ".map");
 		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
 			int header = reader.ReadInt32();
 			if (header <= 1) {

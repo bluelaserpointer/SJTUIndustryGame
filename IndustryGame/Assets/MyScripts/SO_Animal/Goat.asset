@@ -20,7 +20,8 @@ MonoBehaviour:
   habitat3MinPopulation: 160
   habitat4MinPopulation: 280
   habitat5MinPopulation: 500
-  bestEnvironmentType: {fileID: 0}
+  bestEnvironmentType: {fileID: 11400000, guid: 8f6f8277a4691014c9241f2db966d086,
+    type: 2}
   environmentPreferences:
   - environment: {fileID: 11400000, guid: 01117ff54a9708245927c307dea7e665, type: 2}
     preference: -1
