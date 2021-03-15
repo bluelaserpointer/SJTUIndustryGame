@@ -54,6 +54,7 @@ public class MainEvent
     /// </summary>
     public int contribution { get { return so.contribution; } }
 
+    //data
     private bool isAppeared;
     private bool isFinished;
     //calculate after event finish
@@ -63,6 +64,7 @@ public class MainEvent
     public int MamMadeEnvReservated { get { return mamMadeEnvReservated; } }
     private int totalReward;
     public int TotalReward { get { return totalReward; } }
+    public List<Habitat> generatedHabitats = new List<Habitat>();
     /// <summary>
     /// 累计环境伤害
     /// </summary>
@@ -72,11 +74,6 @@ public class MainEvent
         this.so = so;
         this.region = region;
         region.AddEvent(this);
-        //generate eventStages
-        foreach (EventStageSO eventStageSO in so.eventStages)
-        {
-            eventStages.Add(new EventStage(eventStageSO, this));
-        }
         //decide amount of initial animal habitat and each level
         List<int> habitatsLevel = new List<int>();
         int totalhabitatLevel = 0;
@@ -90,9 +87,14 @@ public class MainEvent
         List<Area> habitatAreas = ListLogic.GetUniqueRandomElements(region.GetAreas().FindAll(area => area.habitat == null), habitatsLevel.Count);
         for(int i = 0; i < habitatAreas.Count; ++i)
         {
-            new Habitat(habitatAreas[i], concernedAnimal, habitatsLevel[i]);
+            generatedHabitats.Add(new Habitat(habitatAreas[i], concernedAnimal, habitatsLevel[i]));
         }
         Debug.Log("habitatAreaWanted: " + habitatsLevel.Count + "habitatAreaGenerated: " + habitatAreas.Count);
+        //generate eventStages
+        foreach (EventStageSO eventStageSO in so.eventStages)
+        {
+            eventStages.Add(new EventStage(eventStageSO, this));
+        }
     }
     public void DayIdle()
     {

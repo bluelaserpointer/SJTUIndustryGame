@@ -48,6 +48,8 @@ public class Habitat
             return 5;
         }
     }
+    private float lastCheckedHabitability = 0.5f;
+    public float LastCheckedHabitability { get { return lastCheckedHabitability; } }
     private int lastCheckedLevel;
     public int LastCheckedLevel { get { return lastCheckedLevel; } }
     private float habitability = 0.5f;
@@ -64,9 +66,10 @@ public class Habitat
     public bool IsVisible { get { return isVisible; } }
     public void DayIdle()
     {
-        amount *= Random.Range(1.0f, area.CalcurateHabitability() + 0.5f); //calcurate amount change referencing its habitability
+        habitability = area.CalcurateHabitability();
+        amount *= Random.Range(1.0f, habitability + 0.5f); //calcurate amount change referencing its habitability
         if (isVisible)
-            lastCheckedLevel = Level;
+            UpdateVisibleData();
         UpdateHUD();
     }
     public void SetIfVisible(bool visible)
@@ -80,7 +83,8 @@ public class Habitat
     {
         if (isRevealed)
         {
-            if (isVisible) {
+            if (isVisible)
+            {
                 area.habitatHealthImage.gameObject.SetActive(true);
                 area.habitatMarkImage.sprite = habitatSprites[Level];
                 if (habitability < 0.5f)
@@ -104,10 +108,15 @@ public class Habitat
         if (isRevealed)
             return;
         isRevealed = true;
-        lastCheckedLevel = Level;
+        UpdateVisibleData();
         area.habitatMarkImage.sprite = habitatSprites[Level];
         area.habitatMarkImage.gameObject.SetActive(true);
         NewsPanel.instance.AddNews(area.region.name + area.areaName + "地区 发现了新的栖息地 " + Level + "级", Resources.Load<Sprite>("UI/Icon/Habitat"));
+    }
+    public void UpdateVisibleData()
+    {
+        lastCheckedLevel = Level;
+        lastCheckedHabitability = habitability;
     }
     public string TooltipDescription
     {

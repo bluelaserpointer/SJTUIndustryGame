@@ -288,6 +288,8 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public static int GetSpeciesAmount(Animal species)
     {
+        if (instance == null)
+            return 0;
         int total = 0;
         foreach(Area area in instance.areas) {
             total += area.GetSpeciesAmount(species);
@@ -301,6 +303,8 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public static int GetSpeciesChange(Animal species)
     {
+        if (instance == null)
+            return 0;
         int total = 0;
         foreach (Area area in instance.areas)
         {
@@ -314,6 +318,8 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public static List<Specialist> GetSpecialists()
     {
+        if (instance == null)
+            return new List<Specialist>();
         return instance.specialists;
     }
     /// <summary>

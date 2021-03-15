@@ -103,4 +103,16 @@ public abstract class RegionCondition
             return false;
         }
     }
+    public class CheckHabitatsRestored : RegionCondition
+    {
+        public Animal animal;
+        public override bool Judge(Region region)
+        {
+            return region.GetAreas().Find(area =>
+            {
+                Habitat habitat = area.habitat;
+                return habitat != null && habitat.animal.Equals(animal) && habitat.IsVisible && habitat.LastCheckedHabitability < 0.5f;
+            }) == null;
+        }
+    }
 }

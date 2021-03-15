@@ -70,11 +70,8 @@ public class OrthographicCamera : MonoBehaviour
     public float lastRegionBorderChangeTime;
     public float totalRegionBorderChangeTime;
 
-    [Header("AreaDetails HUD")]
-    public GameObject AreaDetailsHUDGameObject;
     [Header("RegionDetails HUD")]
     public GameObject RegionDetailsHUDGameObject;
-    private AreaDetailsHUD AreaDetailsHUD;
 
     private void Awake()
     {
@@ -101,8 +98,6 @@ public class OrthographicCamera : MonoBehaviour
         orthoRegionRotation = Quaternion.Euler(orthoRegionRotationX, orthoRegionRotation.y, orthoRegionRotation.z);
 
         focusMask = LayerMask.GetMask("FocusMask");
-
-        AreaDetailsHUD = AreaDetailsHUDGameObject.GetComponent<AreaDetailsHUD>();
 
         List<Region> regions = Stage.GetRegions();
         float maxSize = 0f;
