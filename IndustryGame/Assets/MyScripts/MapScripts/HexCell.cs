@@ -680,11 +680,11 @@ public class HexCell : MonoBehaviour {
 	}
 	void Update()
 	{
-		UpdateAnimals();
+		//UpdateAnimals();
 	}
 	public void UpdateAnimals()
 	{
-		Area area = GetComponentInChildren<Area>();
+		/*Area area = GetComponentInChildren<Area>();
 		ICollection <Animal> animals = area.GetSpecies();
 		foreach(Animal a in animals)
 		{
@@ -699,6 +699,19 @@ public class HexCell : MonoBehaviour {
 			{
 				Destroy(transform.GetChild(2).GetChild(0).gameObject);
 			}
+		}*/
+
+		Area area = GetComponentInChildren<Area>();
+		int habitatLevel = area.habitat.Level;
+		Animal habitatAnimal = area.habitat.animal;
+		for(int i = transform.GetChild(2).childCount; i <= habitatLevel * 10; i++)
+		{
+			GameObject myAnimal = GameObject.Instantiate(area.animalPrefabs[0], this.Position, new Quaternion(0, 0, 0, 0));
+			myAnimal.transform.SetParent(this.transform.GetChild(2));
+		}
+		for(int j = habitatLevel * 10;j<= transform.GetChild(2).childCount; j++)
+		{
+			Destroy(transform.GetChild(2).GetChild(0).gameObject);
 		}
 	}
 }
