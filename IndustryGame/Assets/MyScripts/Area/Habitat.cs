@@ -70,6 +70,8 @@ public class Habitat
         amount *= Random.Range(1.0f, habitability + 0.5f); //calcurate amount change referencing its habitability
         if (isVisible)
             UpdateVisibleData();
+        HexCell cell= area.GetHexCell();
+        cell.UpdateAnimals();
         UpdateHUD();
     }
     public void SetIfVisible(bool visible)

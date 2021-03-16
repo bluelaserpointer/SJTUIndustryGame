@@ -523,16 +523,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CamelAI
       objectReference: {fileID: 0}
-    - target: {fileID: 6874193769534664588, guid: 574c1631daf9e924980b5549aa324773,
-        type: 3}
-      propertyPath: turnSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6874193769534664588, guid: 574c1631daf9e924980b5549aa324773,
-        type: 3}
-      propertyPath: walkSpeed
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 574c1631daf9e924980b5549aa324773, type: 3}
 --- !u!4 &583576114 stripped
