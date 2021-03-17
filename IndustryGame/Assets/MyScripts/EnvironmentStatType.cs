@@ -12,12 +12,15 @@ public class EnvironmentStatType : ScriptableObject
     public string description;
     [Header("适居性影响值区间(min, max))")]
     public Vector2 habitabilityAffectRange;
-    [Header("适居性初始数值区间(min, max)")]
+    [Header("适居性影响初始值区间(min, max)")]
     public Vector2 initialAffectRange;
     [Header("适居性每日变化比率")]
     public float dayAffectMultiply = 1;
+    [Header("达到最大/最小值时是否消失")]
     public bool destroyWhenReachMax;
     public bool destroyWhenReachMin;
+    [Header("专家措施对因素的变化(0则无法干涉)")]
+    public float dayAffectChangeBySpecialistAction;
 
     public static EnvironmentStatType[] GetAllTypes()
     {
@@ -47,6 +50,10 @@ public class EnvironmentStatFactor
     /// 每日最大增长值
     /// </summary>
     public float dayAffectMultiply { get { return type.dayAffectMultiply; } }
+    /// <summary>
+    /// 专家措施对因素的影响(0则无法干涉)
+    /// </summary>
+    public float DayAffectChangeBySpecialistAction { get { return type.dayAffectChangeBySpecialistAction; } }
     private float habitabilityAffect;
     /// <summary>
     /// 指标值
@@ -119,11 +126,19 @@ public class EnvironmentStatFactor
                 habitabilityAffect = newValue;
             }*/
         }
-        if(type.destroyWhenReachMin && habitabilityAffect == type.habitabilityAffectRange.x
-            || type.destroyWhenReachMax && habitabilityAffect == type.habitabilityAffectRange.y)
+        if(ShouldDestroy())
         {
             area.environmentStatFactors.Remove(this);
         }
+    }
+    public bool ShouldDestroy()
+    {
+        return type.destroyWhenReachMin && habitabilityAffect == type.habitabilityAffectRange.x
+            || type.destroyWhenReachMax && habitabilityAffect == type.habitabilityAffectRange.y;
+    }
+    public bool IsDestroied()
+    {
+        return !area.environmentStatFactors.Contains(this);
     }
     public float ReceiveAffect(int areaDistance)
     {

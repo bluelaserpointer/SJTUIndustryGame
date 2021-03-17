@@ -702,17 +702,27 @@ public class Area : MonoBehaviour
             showingSpecialistActionButtonsArea.HideSpecialistActionButtons();
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
-        //public actions
+        //cancel
         buttonNameAndEvent.Add("取消", () => { }) ;
+        //watch habitat
         if(habitat != null)
             buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist, this)));
-        foreach(Building building in buildings) {
+        //work with environment problem
+        foreach (EnvironmentStatFactor factor in environmentStatFactors)
+        {
+            if(factor.DayAffectChangeBySpecialistAction != 0)
+            {
+                buttonNameAndEvent.Add("对策" + factor.name, () => specialist.SetAction(new WorkEnvironmentProblem(specialist, factor)));
+            }
+        }
+        //work with building
+        foreach (Building building in buildings) {
             if(building.info.provideSpecialistAction)
             {
                 buttonNameAndEvent.Add(building.info.buildingName, () => specialist.SetAction(new BoostBuildingEffects(specialist, building)));
             }
         }
-        //generate
+        //generate above buttons
         List<GameObject> buttons = new List<GameObject>();
         foreach (var nameAndEvent in buttonNameAndEvent)
         {

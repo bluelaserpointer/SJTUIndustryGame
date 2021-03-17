@@ -53,10 +53,14 @@ public class Specialist
     /// 执行中措施
     /// </summary>
     public SpecialistAction Action { get { return currentAction; } }
+    /// <summary>
+    /// 是否存在执行中措施
+    /// </summary>
+    public bool HasAction { get { return currentAction != null; } }
 
     public void dayIdle()
     {
-        if(currentAction != null)
+        if(HasAction)
         {
             Stage.AddResourceValue(ResourceType.money, -currentAction.DayMoneyCost);
             currentAction.DayIdle();
@@ -99,17 +103,23 @@ public class Specialist
     }
     public void SetAction(SpecialistAction action)
     {
-        if (currentAction != null)
+        if (HasAction)
         {
             currentAction.Stop();
             Stage.AddResourceValue(ResourceType.money, currentAction.StartMoneyCost);
         }
+        if (action == null)
+            return;
         if (!currentArea != action.area)
         {
             MoveToArea(action.area);
         }
         currentAction = action;
         Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
+    }
+    public void StopAction()
+    {
+        SetAction(null);
     }
     /// <summary>
     /// 指令专家移动到目标地点
@@ -133,7 +143,7 @@ public class Specialist
     /// <returns></returns>
     public float GetActionProgressRate()
     {
-        return currentAction != null ? currentAction.ProgressRate : 1;
+        return HasAction ? currentAction.ProgressRate : 1;
     }
     /// <summary>
     /// 获取等级

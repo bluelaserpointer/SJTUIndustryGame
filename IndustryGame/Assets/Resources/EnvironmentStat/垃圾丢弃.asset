@@ -19,3 +19,4 @@ MonoBehaviour:
   dayAffectMultiply: 1
   destroyWhenReachMax: 1
   destroyWhenReachMin: 0
+  dayAffectChangeBySpecialistAction: 0.02

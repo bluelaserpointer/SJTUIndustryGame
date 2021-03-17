@@ -77,12 +77,12 @@ public class BoostBuildingEffects : SpecialistAction //TODO: edit
 }
 public class WorkEnvironmentProblem : SpecialistAction
 {
-    public WorkEnvironmentProblem(Specialist specialist, Area area, EnvironmentStatType environmentStatType) : base(specialist, area)
+    public WorkEnvironmentProblem(Specialist specialist, EnvironmentStatFactor environmentStatFactor) : base(specialist, environmentStatFactor.area)
     {
-        this.environmentStatType = environmentStatType;
+        this.environmentStatFactor = environmentStatFactor;
     }
-    private readonly EnvironmentStatType environmentStatType;
-    public override string Name => "对策" + environmentStatType.statName;
+    private readonly EnvironmentStatFactor environmentStatFactor;
+    public override string Name => "对策" + environmentStatFactor.name;
 
     public override void Stop()
     {
@@ -90,5 +90,12 @@ public class WorkEnvironmentProblem : SpecialistAction
 
     public override void DayIdle()
     {
+        if (environmentStatFactor.IsDestroied())
+        {
+            if (specialist.Action.Equals(this)) //for safe
+                specialist.StopAction();
+            return;
+        }
+        environmentStatFactor.HabitabilityAffect += environmentStatFactor.DayAffectChangeBySpecialistAction;
     }
 }
