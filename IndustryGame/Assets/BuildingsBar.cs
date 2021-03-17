@@ -19,13 +19,19 @@ public class BuildingsBar : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    void Start()
+    {
         RefreshList();
     }
 
     public void RefreshList()
     {
         Helper.ClearList(GeneratedBuildingss);
-        // if (OrthographicCamera.GetMousePointingArea() == null || OrthographicCamera.GetMousePointingArea().GetEnabledBuildings() == null) return;
+
+        while (Stage.getAreas() == null) { continue; }
+
         foreach (BuildingInfo building in Stage.GetEnabledBuildings(Stage.getAreas()[0])[0].AllTypes)
         {
             Debug.Log(building.buildingName);
