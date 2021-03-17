@@ -13,10 +13,23 @@ public class SingleBarSpecialist : MonoBehaviour
     [Header("专家头像")]
     public Image avatar;
 
+    [Header("专家正在工作图标")]
+    public GameObject working;
+
+    
+
     public void RefreshUI(Specialist specialist)
     {
         this.specialist = specialist;
         specialistName.text = specialist.name;
         avatar.sprite = specialist.specialistTemplate.icon;
+        if(specialist.HasAction){
+            working.SetActive(true);
+        }
+        else{
+            working.SetActive(false);
+        }
     }
+
+    
 }

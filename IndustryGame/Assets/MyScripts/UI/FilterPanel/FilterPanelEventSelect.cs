@@ -5,27 +5,27 @@ using UnityEngine.UI;
 
 public class FilterPanelEventSelect : MonoBehaviour
 {
-    public MainEvent mainEvent;
+    // public MainEvent mainEvent;
 
-    public Text EventName;
+    // public Text EventName;
 
-    public Image BackgroundImage;
+    // public Image BackgroundImage;
 
-    private Button button;
-    void Start()
-    {
-        button = gameObject.GetComponent<Button>();
-        button.onClick.AddListener(() => FilterPanel.instance.focusHelperForEvent.SelectImage(BackgroundImage));
-        button.onClick.AddListener(() => FilterPanel.GenerateAnimalSelectionPanel(mainEvent));
-    }
+    // private Button button;
+    // void Start()
+    // {
+    //     button = gameObject.GetComponent<Button>();
+    //     button.onClick.AddListener(() => FilterPanel.instance.focusHelperForEvent.SelectImage(BackgroundImage));
+    //     button.onClick.AddListener(() => FilterPanel.GenerateAnimalSelectionPanel(mainEvent));
+    // }
 
-    void Update()
-    {
-        RefreshUI();
-    }
+    // void Update()
+    // {
+    //     RefreshUI();
+    // }
 
-    private void RefreshUI()
-    {
-        EventName.text = mainEvent.name;
-    }
+    // private void RefreshUI()
+    // {
+    //     EventName.text = mainEvent.name;
+    // }
 }

@@ -22,16 +22,11 @@ public class BuildingsBar : MonoBehaviour
         RefreshList();
     }
 
-    void Update()
-    {
-        RefreshList();
-    }
-
     public void RefreshList()
     {
         Helper.ClearList(GeneratedBuildingss);
-        if (OrthographicCamera.GetMousePointingArea() == null || OrthographicCamera.GetMousePointingArea().GetEnabledBuildings() == null) return;
-        foreach (BuildingInfo building in OrthographicCamera.GetMousePointingArea().GetEnabledBuildings())
+        // if (OrthographicCamera.GetMousePointingArea() == null || OrthographicCamera.GetMousePointingArea().GetEnabledBuildings() == null) return;
+        foreach (BuildingInfo building in Stage.GetEnabledBuildings(Stage.getAreas()[0])[0].AllTypes)
         {
             Debug.Log(building.buildingName);
             GameObject clone = Instantiate(BuildingsImagePrefab, GenerateBuildingsImagePosition.transform, false);
