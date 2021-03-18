@@ -111,7 +111,7 @@ public abstract class RegionCondition
             return region.GetAreas().Find(area =>
             {
                 Habitat habitat = area.habitat;
-                return habitat != null && habitat.animal.Equals(animal) && habitat.IsVisible && habitat.LastCheckedHabitability < 0.5f;
+                return habitat != null && habitat.animal.Equals(animal) && (!habitat.IsRevealed || habitat.Habitability < 0.5f);
             }) == null;
         }
     }
