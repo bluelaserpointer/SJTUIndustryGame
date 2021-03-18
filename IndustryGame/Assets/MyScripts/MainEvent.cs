@@ -85,7 +85,6 @@ public class MainEvent
         {
             generatedHabitats.Add(new Habitat(habitatAreas[i], concernedAnimal, habitatsLevel[i]));
         }
-        Debug.Log("habitatAreaWanted: " + habitatsLevel.Count + "habitatAreaGenerated: " + habitatAreas.Count);
         //generate eventStages
         foreach (EventStageSO eventStageSO in so.eventStages)
         {

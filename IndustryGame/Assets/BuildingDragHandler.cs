@@ -30,7 +30,7 @@ public class BuildingDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
             //     }else{
             //     }
 
-            //     SpecialistBar.instance.RefreshList();
+                BuildingsBar.instance.RefreshList();
             // }
                         
         }

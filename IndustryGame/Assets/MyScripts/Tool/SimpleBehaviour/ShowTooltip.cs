@@ -13,7 +13,11 @@ public class ShowTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// 受控的ToolTip
     /// </summary>
     public GameObject Tooltip { get { return tooltip; } }
-    void Awake()
+    private void Awake()
+    {
+        tooltip.SetActive(false);
+    }
+    private void OnDisable()
     {
         tooltip.SetActive(false);
     }

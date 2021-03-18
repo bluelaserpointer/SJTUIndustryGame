@@ -6,28 +6,39 @@
     int edgeLocation;
     public void setCoordinates(HexCoordinates hexCoordinates)
     {
-        this.hexCoordinates = move(hexCoordinates, HexDirection.W, 1);
+        this.hexCoordinates = hexCoordinates;
         edge = 0;
         edgeLocation = 0;
-        radius = 1;
+        radius = -1;
     }
     public HexCoordinates next()
     {
-        HexDirection moveDirection = (HexDirection)edge;
-        if (++edgeLocation >= radius)
-        {  
-            edgeLocation = 0;
-            if(edge < 5)
-            {
-                ++edge;
-            } else
-            {
-                hexCoordinates = move(hexCoordinates, HexDirection.W, 1);
-                edge = 0;
-                ++radius;
-            }
+        switch(radius)
+        {
+            case -1:
+                radius = 0; 
+                return hexCoordinates;
+            case 0:
+                radius = 1;
+                return hexCoordinates = move(hexCoordinates, HexDirection.W, 1);
+            default:
+                HexDirection moveDirection = (HexDirection)edge;
+                if (++edgeLocation >= radius)
+                {
+                    edgeLocation = 0;
+                    if (edge < 5)
+                    {
+                        ++edge;
+                    }
+                    else
+                    {
+                        hexCoordinates = move(hexCoordinates, HexDirection.W, 1);
+                        edge = 0;
+                        ++radius;
+                    }
+                }
+                return hexCoordinates = move(hexCoordinates, moveDirection, 1);
         }
-        return hexCoordinates = move(hexCoordinates, moveDirection, 1);
     }
     public HexCoordinates GetCoordinates()
     {
