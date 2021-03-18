@@ -60,6 +60,7 @@ public class EnvironmentStatFactor
     /// 适居性影响倍率
     /// </summary>
     public float HabitalityAffectRate { get { return type.habitabilityAffectRate; } }
+    private float oldFactorValue;
     private float factorValue;
     /// <summary>
     /// 指标值
@@ -67,11 +68,11 @@ public class EnvironmentStatFactor
     public float FactorValue {
         get
         {
-            return factorValue;
+            return oldFactorValue;
         }
         set
         {
-            factorValue = Mathf.Clamp(value, type.valueRange.x, type.valueRange.y);
+            factorValue = value;
         }
     }
     private bool isRevealed;
@@ -87,7 +88,7 @@ public class EnvironmentStatFactor
     public string TooltipDescription {
         get
         {
-            return Name + " : " + factorValue.ToString("#0.0");
+            return Name + " : " + FactorValue.ToString("#0.0");
         }
     }
     public EnvironmentStatFactor(EnvironmentStatType environmentStatType, Area area)
@@ -117,15 +118,19 @@ public class EnvironmentStatFactor
     public void DayIdle()
     {
         factorValue += DayAffectChange;
-        if(ShouldRemove())
+        if (factorValue <= type.valueRange.x)
         {
-            Remove();
+            factorValue = type.valueRange.x;
+            if (type.removeWhenReachMin)
+                Remove();
         }
-    }
-    public bool ShouldRemove()
-    {
-        return type.removeWhenReachMin && factorValue <= type.valueRange.x
-            || type.removeWhenReachMax && factorValue >= type.valueRange.y;
+        else if (factorValue >= type.valueRange.y)
+        {
+            factorValue = type.valueRange.y;
+            if (type.removeWhenReachMax)
+                Remove();
+        }
+        oldFactorValue = factorValue;
     }
     public float ReceiveAffect(int areaDistance)
     {

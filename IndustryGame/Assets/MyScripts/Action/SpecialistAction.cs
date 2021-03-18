@@ -99,10 +99,5 @@ public class WorkEnvironmentProblem : SpecialistAction
         }
         float change = environmentStatFactor.DayValueChangeBySpecialistAction;
         environmentStatFactor.FactorValue += change;
-        // remove the regeneratable factor
-        if(change < 0 && environmentStatFactor.HabitalityAffectRate < 0 && environmentStatFactor.ShouldRemove())
-        {
-            environmentStatFactor.Remove();
-        }
     }
 }
