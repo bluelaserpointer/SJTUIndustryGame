@@ -597,7 +597,7 @@ public class Area : MonoBehaviour
     public float GetEnviromentStatFactor(EnvironmentStatType environmentStatType)
     {
         EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
-        return factor == null ? 0 : factor.HabitabilityAffect;
+        return factor == null ? 0 : factor.FactorValue;
     }
     /// <summary>
     /// 获取指定环境指标
@@ -606,8 +606,8 @@ public class Area : MonoBehaviour
     /// <param name="value"></param>
     public float GetEnviromentStatWithString(string environmentStatType)
     {
-        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.name.Equals(environmentStatType));
-        return factor == null ? 0 : factor.HabitabilityAffect;
+        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.Name.Equals(environmentStatType));
+        return factor == null ? 0 : factor.FactorValue;
     }
     /// <summary>
     /// 生成指定环境指标, 取值参照该种类初始值设定
@@ -626,7 +626,7 @@ public class Area : MonoBehaviour
         EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
         if (factor != null)
         {
-            factor.HabitabilityAffect += value;
+            factor.FactorValue += value;
             return factor;
         }
         return null;
@@ -651,7 +651,7 @@ public class Area : MonoBehaviour
     public static float SumHabitabilityAffect(List<EnvironmentStatFactor> factors)
     {
         float sumAffect = 0;
-        factors.ForEach(factor => sumAffect += factor.HabitabilityAffect);
+        factors.ForEach(factor => sumAffect += factor.SeekAffect(0));
         return sumAffect;
     }
     /// <summary>
@@ -710,9 +710,9 @@ public class Area : MonoBehaviour
         //work with environment problem
         foreach (EnvironmentStatFactor factor in environmentStatFactors)
         {
-            if(factor.DayAffectChangeBySpecialistAction != 0)
+            if(factor.DayValueChangeBySpecialistAction != 0)
             {
-                buttonNameAndEvent.Add("对策" + factor.name, () => specialist.SetAction(new WorkEnvironmentProblem(specialist, factor)));
+                buttonNameAndEvent.Add("对策" + factor.Name, () => specialist.SetAction(new WorkEnvironmentProblem(specialist, factor)));
             }
         }
         //work with building
