@@ -74,10 +74,12 @@ public class Area : MonoBehaviour
     {
         get
         {
-            string description = (habitat == null ? "无栖息地" : (habitat.TooltipDescription));
+            string description = "";
+            if (habitat != null && habitat.IsRevealed)
+                description += habitat.TooltipDescription + "\n";
             foreach(EnvironmentStatFactor factor in environmentStatFactors)
             {
-                description += "\n" + factor.TooltipDescription;
+                description += factor.TooltipDescription + "\n";
             }
             return description;
         }
@@ -225,7 +227,7 @@ public class Area : MonoBehaviour
         if (habitat != null)
             habitat.DayIdle();
         //environment effect factors
-        environmentStatFactors.ForEach(stat => stat.DayIdle());
+        new List<EnvironmentStatFactor>(environmentStatFactors).ForEach(stat => stat.DayIdle());
         List<EnvironmentStatFactor> revealedFactors = environmentStatFactors.FindAll(factor => factor.IsRevealed);
         //HUD
         if (revealedFactors.Count == 0)
@@ -597,7 +599,7 @@ public class Area : MonoBehaviour
     public float GetEnviromentStatFactor(EnvironmentStatType environmentStatType)
     {
         EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
-        return factor == null ? 0 : factor.HabitabilityAffect;
+        return factor == null ? 0 : factor.FactorValue;
     }
     /// <summary>
     /// 获取指定环境指标
@@ -606,8 +608,8 @@ public class Area : MonoBehaviour
     /// <param name="value"></param>
     public float GetEnviromentStatWithString(string environmentStatType)
     {
-        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.name.Equals(environmentStatType));
-        return factor == null ? 0 : factor.HabitabilityAffect;
+        EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.Name.Equals(environmentStatType));
+        return factor == null ? 0 : factor.FactorValue;
     }
     /// <summary>
     /// 生成指定环境指标, 取值参照该种类初始值设定
@@ -626,7 +628,7 @@ public class Area : MonoBehaviour
         EnvironmentStatFactor factor = environmentStatFactors.Find(eachStat => eachStat.IsType(environmentStatType));
         if (factor != null)
         {
-            factor.HabitabilityAffect += value;
+            factor.FactorValue += value;
             return factor;
         }
         return null;
@@ -651,7 +653,7 @@ public class Area : MonoBehaviour
     public static float SumHabitabilityAffect(List<EnvironmentStatFactor> factors)
     {
         float sumAffect = 0;
-        factors.ForEach(factor => sumAffect += factor.HabitabilityAffect);
+        factors.ForEach(factor => sumAffect += factor.SeekAffect(0));
         return sumAffect;
     }
     /// <summary>
@@ -705,14 +707,14 @@ public class Area : MonoBehaviour
         //cancel
         buttonNameAndEvent.Add("取消", () => { }) ;
         //watch habitat
-        if(habitat != null)
+        if(habitat != null && habitat.IsRevealed)
             buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist, this)));
         //work with environment problem
         foreach (EnvironmentStatFactor factor in environmentStatFactors)
         {
-            if(factor.DayAffectChangeBySpecialistAction != 0)
+            if(factor.IsRevealed && factor.DayValueChangeBySpecialistAction != 0)
             {
-                buttonNameAndEvent.Add("对策" + factor.name, () => specialist.SetAction(new WorkEnvironmentProblem(specialist, factor)));
+                buttonNameAndEvent.Add("对策" + factor.Name, () => specialist.SetAction(new WorkEnvironmentProblem(specialist, factor)));
             }
         }
         //work with building

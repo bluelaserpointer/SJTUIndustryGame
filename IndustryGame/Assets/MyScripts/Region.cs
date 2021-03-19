@@ -77,30 +77,27 @@ public class Region
             while (reservationProgress >= reservationCostOfOneArea)
             {
                 reservationProgress -= reservationCostOfOneArea;
-                if (++reservatedAreaCount >= areas.Count)
+                HexCell cell = null;
+                int loops = 0;
+                while (++loops < 512)
                 {
-                    reservationCompleted();
+                    cell = Stage.GetHexGrid().GetCell(hexSpiral.next());
+                    if (cell != null && cell.RegionId == regionId)
+                        break;
+                }
+                if (cell == null)
+                {
+                    InGameLog.AddLog("an area is missing", Color.red);
+                    reservationInit();
                 }
                 else
                 {
-                    HexCell cell = null;
-                    int loops = 0;
-                    while (++loops < 512)
+                    cell.HighLighted = true;
+                    lastHighLightedCells.Push(cell);
+                    cell.GetComponentInChildren<Area>().AddReservation();
+                    if (++reservatedAreaCount >= areas.Count)
                     {
-                        cell = Stage.GetHexGrid().GetCell(hexSpiral.next());
-                        if (cell != null && cell.RegionId == regionId)
-                            break;
-                    }
-                    if (cell == null)
-                    {
-                        InGameLog.AddLog("an area is missing", Color.red);
-                        reservationCompleted();
-                    } else
-                    {
-                        //reservate progress debug
-                        cell.HighLighted = true;
-                        cell.GetComponentInChildren<Area>().AddReservation();
-                        lastHighLightedCells.Push(cell);
+                        reservationInit();
                     }
                 }
             }
@@ -134,11 +131,11 @@ public class Region
         }
     }
     /// <summary>
-    /// 结束调查
+    /// 初始化调查
     /// </summary>
-    private void reservationCompleted()
+    private void reservationInit()
     {
-        reservatedAreaCount = 1; // base area is always reservated
+        reservatedAreaCount = 0; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
     }
     /// <summary>
@@ -247,7 +244,7 @@ public class Region
         basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
         basementLabelHUD.gameObject.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
-        reservatedAreaCount = 1; //base area is always reservated
+        reservatedAreaCount = 0;
     }
     /// <summary>
     /// 获取基地地区

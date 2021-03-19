@@ -113,24 +113,22 @@ public class Specialist
         if (HasAction)
         {
             currentAction.Stop();
-            Stage.AddResourceValue(ResourceType.money, currentAction.StartMoneyCost);
+            currentAction = null;
         }
-        if (action == null)
-            return;
-        if (!currentArea != action.area)
+        if (action != null)
         {
-            MoveToArea(action.area);
+            if (!currentArea != action.area)
+            {
+                MoveToArea(action.area);
+            }
+            currentAction = action;
+            Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
         }
-        currentAction = action;
-        Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
-
         SpecialistBar.instance.RefreshList();
     }
     public void StopAction()
     {
         SetAction(null);
-        SpecialistBar.instance.RefreshList();
-
     }
     /// <summary>
     /// 指令专家移动到目标地点
