@@ -39,6 +39,7 @@ public class Region
     private Vector3 highestPosition;
     public float observeOrthoSize;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
+    private GameObject nameDisplay;
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
 
@@ -53,10 +54,19 @@ public class Region
         basementLabelHUD.gameObject.SetActive(false);
     }
     /// <summary>
+    /// 更新洲名显示
+    /// </summary>
+    public void UpdateNameDisplay()
+    {
+        if(nameDisplay != null)
+            nameDisplay.GetComponentInChildren<Text>().color = new Color(1f, 1f, 1f, 1f - OrthographicCamera.ZoomRate);
+    }
+    /// <summary>
     /// 每帧流程
     /// </summary>
     public void FrameIdle()
     {
+        //reservation
         foreach(var pair in lastHighLightedCellAndTime.ToList())
         {
             Stack<HexCell> cells = pair.Key;
@@ -337,12 +347,12 @@ public class Region
     {
         float cx = (left.transform.position.x + right.transform.position.x) / 2, cy = (top.transform.position.z + bottom.transform.position.z) / 2;
         center = new Vector3(cx, 150f, cy);
-        if (regionId != -1)
+        if (regionId != -1 && nameDisplay == null)
         {
-            GameObject nameDisplay = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
+            nameDisplay = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Region/RegionNameDisplay"));
             nameDisplay.GetComponentInChildren<Text>().text = name;
             Transform nameDisplayTransform = nameDisplay.transform;
-            nameDisplayTransform.position = new Vector3(cx, 130f, cy);
+            nameDisplayTransform.position = new Vector3(cx, 50f, cy);
             nameDisplayTransform.GetComponentInChildren<RectTransform>().sizeDelta = 0.8f * new Vector2(Mathf.Abs(left.transform.position.x - right.transform.position.x), Mathf.Abs(top.transform.position.z - bottom.transform.position.z));
         }
     }
