@@ -50,7 +50,6 @@ public class Region
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
         basementLabelHUD = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
-        basementLabelHUD.transform.parent = HUDManager.instance.transform;
         basementLabelHUD.gameObject.SetActive(false);
     }
     /// <summary>
@@ -252,6 +251,7 @@ public class Region
         area.basementLabelHolder.AddSurrounders(basementLabelHUD.gameObject);
         basementLabelHUD.nameText.text = name + "基地";
         basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
+        basementLabelHUD.transform.parent = HUDManager.instance.transform;
         basementLabelHUD.gameObject.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 0;
