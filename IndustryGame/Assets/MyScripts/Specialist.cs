@@ -53,10 +53,14 @@ public class Specialist
     /// 执行中措施
     /// </summary>
     public SpecialistAction Action { get { return currentAction; } }
+    /// <summary>
+    /// 是否存在执行中措施
+    /// </summary>
+    public bool HasAction { get { return currentAction != null; } }
 
     public void dayIdle()
     {
-        if(currentAction != null)
+        if (HasAction)
         {
             Stage.AddResourceValue(ResourceType.money, -currentAction.DayMoneyCost);
             currentAction.DayIdle();
@@ -71,26 +75,33 @@ public class Specialist
     {
         int oldAbilityLevel, newAbilityLevel;
         int increase = Random.Range(minValueInclude, maxValueInclude + 1);
-        if (abilities.ContainsKey(ability)) {
+        if (abilities.ContainsKey(ability))
+        {
             oldAbilityLevel = abilities[ability];
             int result = oldAbilityLevel + increase;
             if (result <= 0)
             {
                 abilities.Remove(ability);
                 newAbilityLevel = 0;
-            } else {
+            }
+            else
+            {
                 if (result > 10)
                 {
                     result = 10;
                 }
                 newAbilityLevel = abilities[ability] = result;
             }
-        } else {
+        }
+        else
+        {
             oldAbilityLevel = 0;
             if (increase <= 0)
             {
                 newAbilityLevel = 0;
-            } else {
+            }
+            else
+            {
                 abilities.Add(ability, increase);
                 newAbilityLevel = increase;
             }
@@ -99,17 +110,25 @@ public class Specialist
     }
     public void SetAction(SpecialistAction action)
     {
-        if (currentAction != null)
+        if (HasAction)
         {
             currentAction.Stop();
-            Stage.AddResourceValue(ResourceType.money, currentAction.StartMoneyCost);
+            currentAction = null;
         }
-        if (!currentArea != action.area)
+        if (action != null)
         {
-            MoveToArea(action.area);
+            if (!currentArea != action.area)
+            {
+                MoveToArea(action.area);
+            }
+            currentAction = action;
+            Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
         }
-        currentAction = action;
-        Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
+        SpecialistBar.instance.RefreshList();
+    }
+    public void StopAction()
+    {
+        SetAction(null);
     }
     /// <summary>
     /// 指令专家移动到目标地点
@@ -133,7 +152,7 @@ public class Specialist
     /// <returns></returns>
     public float GetActionProgressRate()
     {
-        return currentAction != null ? currentAction.ProgressRate : 1;
+        return HasAction ? currentAction.ProgressRate : 1;
     }
     /// <summary>
     /// 获取等级
@@ -174,7 +193,7 @@ public class Specialist
     public float GetExpRate()
     {
         int level = GetLevel();
-        if(level == GetMaxLevel())
+        if (level == GetMaxLevel())
             return 1.0f;
         int prevExpCap = expCaps[level - 1];
         return (exp - prevExpCap) / (expCaps[level] - prevExpCap);
@@ -202,13 +221,13 @@ public class Specialist
     /// <param name="value"></param>
     public void AddExp(int value)
     {
-        if(exp + value > GetExpCap()) //level up
+        if (exp + value > GetExpCap()) //level up
         {
             string levelUpMessage = "在 " + currentArea.areaName + " 工作的 " + name + " 获得了经验";
             Ability ability = EnumHelper.GetRandomValue<Ability>();
             int oldLevel = GetAbilityLevel(ability);
             int increase = addSpeciality_randomRange_getIncrease(EnumHelper.GetRandomValue<Ability>(), 2, 2);
-            if(increase > 0)
+            if (increase > 0)
             {
                 levelUpMessage += "\n" + AbilityDescription.GetAbilityDescription(ability) + ": " + oldLevel + " -> " + GetAbilityLevel(ability);
             }

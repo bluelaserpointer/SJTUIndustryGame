@@ -81,11 +81,10 @@ public class MainEvent
         }
         //choose area and generate habitats
         List<Area> habitatAreas = ListLogic.GetUniqueRandomElements(region.GetAreas().FindAll(area => area.habitat == null), habitatsLevel.Count);
-        for(int i = 0; i < habitatAreas.Count; ++i)
+        for (int i = 0; i < habitatAreas.Count; ++i)
         {
             generatedHabitats.Add(new Habitat(habitatAreas[i], concernedAnimal, habitatsLevel[i]));
         }
-        Debug.Log("habitatAreaWanted: " + habitatsLevel.Count + "habitatAreaGenerated: " + habitatAreas.Count);
         //generate eventStages
         foreach (EventStageSO eventStageSO in so.eventStages)
         {
@@ -132,7 +131,7 @@ public class MainEvent
         isAppeared = true;
         PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, description, image));
         region.UpdateConcernedSpecies();
-        FilterPanel.RefreshEventsDueToRegionSelection(region);
+        // FilterPanel.RefreshEventsDueToRegionSelection(region);
     }
     /// <summary>
     /// 完成事件

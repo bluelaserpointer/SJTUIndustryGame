@@ -39,6 +39,7 @@ public class Region
     private Vector3 highestPosition;
     public float observeOrthoSize;
     private Dictionary<Stack<HexCell>, float> lastHighLightedCellAndTime = new Dictionary<Stack<HexCell>, float>();
+    private GameObject nameDisplay;
 
     private static readonly NameTemplates regionNameTemplates = Resources.Load<NameTemplates>("NameTemplates/RegionName");
 
@@ -49,14 +50,22 @@ public class Region
         this.regionId = regionId;
         name = regionId == -1 ? "海洋" : regionNameTemplates.PickRandomOne();
         basementLabelHUD = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Area/BasementLabel").GetComponent<BasementLabelHUD>());
-        basementLabelHUD.transform.parent = HUDManager.instance.transform;
         basementLabelHUD.gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// 更新洲名显示
+    /// </summary>
+    public void UpdateNameDisplay()
+    {
+        if(nameDisplay != null)
+            nameDisplay.GetComponentInChildren<Text>().color = new Color(1f, 1f, 1f, 1f - OrthographicCamera.ZoomRate);
     }
     /// <summary>
     /// 每帧流程
     /// </summary>
     public void FrameIdle()
     {
+        //reservation
         foreach(var pair in lastHighLightedCellAndTime.ToList())
         {
             Stack<HexCell> cells = pair.Key;
@@ -77,30 +86,27 @@ public class Region
             while (reservationProgress >= reservationCostOfOneArea)
             {
                 reservationProgress -= reservationCostOfOneArea;
-                if (++reservatedAreaCount >= areas.Count)
+                HexCell cell = null;
+                int loops = 0;
+                while (++loops < 512)
                 {
-                    reservationCompleted();
+                    cell = Stage.GetHexGrid().GetCell(hexSpiral.next());
+                    if (cell != null && cell.RegionId == regionId)
+                        break;
+                }
+                if (cell == null)
+                {
+                    InGameLog.AddLog("an area is missing", Color.red);
+                    reservationInit();
                 }
                 else
                 {
-                    HexCell cell = null;
-                    int loops = 0;
-                    while (++loops < 512)
+                    cell.HighLighted = true;
+                    lastHighLightedCells.Push(cell);
+                    cell.GetComponentInChildren<Area>().AddReservation();
+                    if (++reservatedAreaCount >= areas.Count)
                     {
-                        cell = Stage.GetHexGrid().GetCell(hexSpiral.next());
-                        if (cell != null && cell.RegionId == regionId)
-                            break;
-                    }
-                    if (cell == null)
-                    {
-                        InGameLog.AddLog("an area is missing", Color.red);
-                        reservationCompleted();
-                    } else
-                    {
-                        //reservate progress debug
-                        cell.HighLighted = true;
-                        cell.GetComponentInChildren<Area>().AddReservation();
-                        lastHighLightedCells.Push(cell);
+                        reservationInit();
                     }
                 }
             }
@@ -134,11 +140,11 @@ public class Region
         }
     }
     /// <summary>
-    /// 结束调查
+    /// 初始化调查
     /// </summary>
-    private void reservationCompleted()
+    private void reservationInit()
     {
-        reservatedAreaCount = 1; // base area is always reservated
+        reservatedAreaCount = 0; // base area is always reservated
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
     }
     /// <summary>
@@ -245,9 +251,10 @@ public class Region
         area.basementLabelHolder.AddSurrounders(basementLabelHUD.gameObject);
         basementLabelHUD.nameText.text = name + "基地";
         basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
+        basementLabelHUD.transform.parent = HUDManager.instance.transform;
         basementLabelHUD.gameObject.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
-        reservatedAreaCount = 1; //base area is always reservated
+        reservatedAreaCount = 0;
     }
     /// <summary>
     /// 获取基地地区
@@ -340,12 +347,12 @@ public class Region
     {
         float cx = (left.transform.position.x + right.transform.position.x) / 2, cy = (top.transform.position.z + bottom.transform.position.z) / 2;
         center = new Vector3(cx, 150f, cy);
-        if (regionId != -1)
+        if (regionId != -1 && nameDisplay == null)
         {
-            GameObject nameDisplay = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Text/RegionNameDisplay"));
+            nameDisplay = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("UI/Region/RegionNameDisplay"));
             nameDisplay.GetComponentInChildren<Text>().text = name;
             Transform nameDisplayTransform = nameDisplay.transform;
-            nameDisplayTransform.position = new Vector3(cx, 130f, cy);
+            nameDisplayTransform.position = new Vector3(cx, 50f, cy);
             nameDisplayTransform.GetComponentInChildren<RectTransform>().sizeDelta = 0.8f * new Vector2(Mathf.Abs(left.transform.position.x - right.transform.position.x), Mathf.Abs(top.transform.position.z - bottom.transform.position.z));
         }
     }

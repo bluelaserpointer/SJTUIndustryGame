@@ -64,7 +64,7 @@ public class Stage : MonoBehaviour
         //set stage money objective
         resources[ResourceType.money].AddWithoutRecording(INITIAL_MONEY);
         //load actions
-        foreach(AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
+        foreach (AreaAction areaAction in Resources.LoadAll<AreaAction>("Action/AreaAction"))
         {
             includedAreaActions.Add(areaAction);
         }
@@ -73,10 +73,11 @@ public class Stage : MonoBehaviour
             includedGlobalActions.Add(globalAction);
         }
         //load buldings
-        foreach(BuildingInfo building in Resources.LoadAll<BuildingInfo>("Building"))
+        foreach (BuildingInfo building in Resources.LoadAll<BuildingInfo>("Building"))
         {
             includedBuildings.Add(building);
         }
+        // BuildingsBar.instance.RefreshList();
     }
     public static void Init(HexCell[] hexCells)
     {
@@ -89,10 +90,10 @@ public class Stage : MonoBehaviour
         }
 
         //generate regions
-        foreach(Area area in instance.areas)
+        foreach (Area area in instance.areas)
         {
             int regionId = area.GetHexCell().RegionId;
-           
+
             Region region = instance.regions.Find(eachRegion => eachRegion.GetRegionId() == regionId);
             // Debug.Log("Region: " + area.region.GetRegionId() + " " + area.transform.position);
             if (region == null)
@@ -113,9 +114,9 @@ public class Stage : MonoBehaviour
         }
         List<Vector3> orderedPositions = regionHighestPositions.OrderByDescending(p => p.y).ToList();
         instance.highestPosition = orderedPositions[0];
-        
 
-        
+
+
         List<Region> xPos = instance.regions.GetRange(0, instance.regions.Count);
         List<Region> zPos = instance.regions.GetRange(0, instance.regions.Count);
         xPos.RemoveAll(r => r.GetRegionId() == -1);
@@ -126,25 +127,25 @@ public class Stage : MonoBehaviour
 
         String xIds = "";
         String zIds = "";
-        foreach(Region region in xPos)
+        foreach (Region region in xPos)
             xIds += region.GetRegionId() + ": " + region.GetCenter().x + ", ";
-        foreach(Region region in zPos)
+        foreach (Region region in zPos)
             zIds += region.GetRegionId() + ": " + region.GetCenter().z + ", ";
 
-        
+
 
         // Debug.Log(xIds);
         // Debug.Log(zIds);
 
-        if(instance.regions.Count > 1)
+        if (instance.regions.Count > 1)
         {
-            for(int i = 0; i < xPos.Count - 1; i++)
+            for (int i = 0; i < xPos.Count - 1; i++)
             {
                 xPos[i].SetEastRegion(xPos[i + 1]);
                 xPos[i + 1].SetWestRegion(xPos[i]);
             }
 
-            for(int i = 0; i < zPos.Count - 1; i++)
+            for (int i = 0; i < zPos.Count - 1; i++)
             {
                 zPos[i].SetNorthRegion(zPos[i + 1]);
                 zPos[i + 1].SetSouthRegion(zPos[i]);
@@ -155,14 +156,14 @@ public class Stage : MonoBehaviour
         //generate initial events
         foreach (MainEventSO definedEvent in instance.definedEvents)
         {
-            if(definedEvent.onlyGenerateAtBeginning)
+            if (definedEvent.onlyGenerateAtBeginning)
             {
                 MainEvent mainEvent = definedEvent.TryGenerate();
                 if (mainEvent != null)
                     instance.events.Add(mainEvent);
             }
         }
-        
+
         //debug
         //foreach(Region region in regions) {
         //    InGameLog.AddLog("region id " + region.GetRegionId() + " area " + region.GetAreas().Count + " from " + areas.Length);
@@ -192,12 +193,11 @@ public class Stage : MonoBehaviour
     void Update()
     {
         //region reservation
-        if (!Timer.IsPaused())
+        foreach (Region region in regions)
         {
-            foreach (Region region in regions)
-            {
+            if (!Timer.IsPaused())
                 region.FrameIdle();
-            }
+            region.UpdateNameDisplay();
         }
         //check time
         Timer.idle();
@@ -291,7 +291,8 @@ public class Stage : MonoBehaviour
         if (instance == null)
             return 0;
         int total = 0;
-        foreach(Area area in instance.areas) {
+        foreach (Area area in instance.areas)
+        {
             total += area.GetSpeciesAmount(species);
         }
         return total;
@@ -388,9 +389,9 @@ public class Stage : MonoBehaviour
     {
         MainEvent mostHarmful = null;
         float value = 0;
-        foreach(MainEvent eachEvent in instance.events)
+        foreach (MainEvent eachEvent in instance.events)
         {
-            if(eachEvent.IsAppeared && !eachEvent.IsFinished && eachEvent.totalEnvironmentDamage > value)
+            if (eachEvent.IsAppeared && !eachEvent.IsFinished && eachEvent.totalEnvironmentDamage > value)
             {
                 mostHarmful = eachEvent;
                 value = eachEvent.totalEnvironmentDamage;
@@ -472,7 +473,7 @@ public class Stage : MonoBehaviour
     public static List<Animal> GetSpecies()
     {
         List<Animal> animals = new List<Animal>();
-        foreach(Area area in instance.areas)
+        foreach (Area area in instance.areas)
         {
             animals.Union(area.GetSpecies());
         }

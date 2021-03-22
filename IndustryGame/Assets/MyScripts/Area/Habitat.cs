@@ -49,10 +49,19 @@ public class Habitat
         }
     }
     private float lastCheckedHabitability = 0.5f;
+    /// <summary>
+    /// 最后确认适居性
+    /// </summary>
     public float LastCheckedHabitability { get { return lastCheckedHabitability; } }
     private int lastCheckedLevel;
+    /// <summary>
+    /// 最后确认等级
+    /// </summary>
     public int LastCheckedLevel { get { return lastCheckedLevel; } }
     private float habitability = 0.5f;
+    /// <summary>
+    /// 适居性
+    /// </summary>
     public float Habitability { get { return habitability; } }
     private bool isRevealed;
     /// <summary>

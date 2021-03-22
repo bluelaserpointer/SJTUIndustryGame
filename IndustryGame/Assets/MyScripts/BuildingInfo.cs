@@ -32,7 +32,7 @@ public class BuildingInfo : ScriptableObject
     [Header("提供专家措施")]
     public bool provideSpecialistAction;
 
-    public static BuildingInfo[] AllTypes { get { return Resources.LoadAll<BuildingInfo>("Building"); } }
+    public BuildingInfo[] AllTypes { get { return Resources.LoadAll<BuildingInfo>("Building"); } }
     public bool CanConstructIn(Area area)
     {
         return !preventPlayerConstruct && area.CountBuilding(this) < areaLimit && (!hasRegionLimit || area.region.CountBuilding(this) < regionLimit)
@@ -46,7 +46,7 @@ public class Building
     public readonly Area area;
     private int constructionProgress;
 
-    public List<AreaBuff> buffs { get { return info.buffs.List; }}
+    public List<AreaBuff> buffs { get { return info.buffs.List; } }
     public List<GameObject> constructionModels { get { return info.constructionModels; } }
     public Building(BuildingInfo info, Area area)
     {
@@ -55,27 +55,29 @@ public class Building
     }
     public void DayIdle()
     {
-        if(IsConstructed())
+        if (IsConstructed())
         {
             buffs.ForEach(buff => buff.Idle(area));
             if (constructionModels.Count > 0)
             {
                 area.GetHexCell().BuildingPrefabs.Add(constructionModels[constructionModels.Count - 1]);
             }
-        } else
+        }
+        else
         {
             constructionProgress += 1;
             if (IsConstructed())
             {
                 FinishConstruction();
-            } else
+            }
+            else
             {
-                if(constructionModels.Count > 0)
+                if (constructionModels.Count > 0)
                 {
                     //area.GetHexCell().BuildingPrefab = constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))];
                     area.GetHexCell().BuildingPrefabs.Add(constructionModels[(int)(constructionModels.Count * ((float)constructionProgress / info.timeCost))]);
                 }
-                    
+
             }
         }
     }
@@ -88,7 +90,7 @@ public class Building
             //area.GetHexCell().BuildingPrefab = constructionModels[constructionModels.Count - 1];
 
             area.GetHexCell().BuildingPrefabs.Add(constructionModels[constructionModels.Count - 1]);
-            
+
         }
         if (info.isBasement)
         {
@@ -102,7 +104,7 @@ public class Building
     }
     public float GetConstructionRate()
     {
-        return info.timeCost > 0 ? ((float) constructionProgress / info.timeCost) : 1.0f;
+        return info.timeCost > 0 ? ((float)constructionProgress / info.timeCost) : 1.0f;
     }
     public void Removed()
     {

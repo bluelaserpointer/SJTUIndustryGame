@@ -18,20 +18,20 @@ public class BuildingDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
 
         if(raycasted)
         {
-            // HexCell hexCell = Stage.GetHexGrid().GetCell(hit.point);
-            // if(hexCell != null)
-            // {
-            //     Area area = hexCell.transform.GetComponentInChildren<Area>();
-            //     if(area != null)
-            //     {
-            //         if(area.region.regionId != -1)
-            //             area.ShowSpecialistActionButtons(GetComponentInParent<SingleBarSpecialist>().specialist);
+            HexCell hexCell = Stage.GetHexGrid().GetCell(hit.point);
+            if(hexCell != null)
+            {
+                Area area = hexCell.transform.GetComponentInChildren<Area>();
+                if(area != null)
+                {
+                    if(area.region.regionId != -1)
+                        area.ShowConstructionButtons(GetComponentInParent<SingleBarBuildings>().buildingInfo);
 
-            //     }else{
-            //     }
+                }else{
+                }
 
-            //     SpecialistBar.instance.RefreshList();
-            // }
+                BuildingsBar.instance.RefreshList();
+            }
                         
         }
     }

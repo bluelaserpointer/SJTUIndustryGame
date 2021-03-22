@@ -62,6 +62,11 @@ public class OrthographicCamera : MonoBehaviour
     [Header("AreaDetails HUD")]
     public GameObject AreaDetailsHUDGameObject;
 
+    /// <summary>
+    /// 缩放倍率(0: min 1: max)
+    /// </summary>
+    public static float ZoomRate { get { return (instance.currentSize - instance.worldOrthoSize) / (instance.mouseAreaOrthoSize - instance.worldOrthoSize); } }
+
     private void Awake()
     {
         if (instance == null)

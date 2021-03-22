@@ -10,14 +10,19 @@ public class EnvironmentStatType : ScriptableObject
     public string statName;
     [Header("环境指标说明")]
     public string description;
-    [Header("适居性影响值区间(min, max))")]
-    public Vector2 habitabilityAffectRange;
-    [Header("适居性初始数值区间(min, max)")]
-    public Vector2 initialAffectRange;
-    [Header("适居性每日变化比率")]
-    public float dayAffectMultiply = 1;
-    public bool destroyWhenReachMax;
-    public bool destroyWhenReachMin;
+    [Header("指标值区间(min, max))")]
+    public Vector2 valueRange;
+    [Header("指标初始值区间(min, max)")]
+    public Vector2 initialValueRange;
+    [Header("指标值每日变化")]
+    public float dayValueChange;
+    [Header("适居性影响倍率")]
+    public float habitabilityAffectRate;
+    [Header("达到最大/最小值时是否消失")]
+    public bool removeWhenReachMax;
+    public bool removeWhenReachMin;
+    [Header("专家措施每日对因素的变化(0则无法干涉)")]
+    public float dayValueChangeBySpecialistAction;
 
     public static EnvironmentStatType[] GetAllTypes()
     {
@@ -38,27 +43,36 @@ public class EnvironmentStatFactor
     /// <summary>
     /// 环境指标名称
     /// </summary>
-    public string name { get { return type.statName; } }
+    public string Name { get { return type.statName; } }
     /// <summary>
     /// 环境指标说明
     /// </summary>
-    public string description { get { return type.description; } }
+    public string Description { get { return type.description; } }
     /// <summary>
-    /// 每日最大增长值
+    /// 指标值每日变化
     /// </summary>
-    public float dayAffectMultiply { get { return type.dayAffectMultiply; } }
-    private float habitabilityAffect;
+    public float DayAffectChange { get { return type.dayValueChange; } }
+    /// <summary>
+    /// 专家措施对因素的影响(0则无法干涉)
+    /// </summary>
+    public float DayValueChangeBySpecialistAction { get { return type.dayValueChangeBySpecialistAction; } }
+    /// <summary>
+    /// 适居性影响倍率
+    /// </summary>
+    public float HabitalityAffectRate { get { return type.habitabilityAffectRate; } }
+    private float oldFactorValue;
+    private float factorValue;
     /// <summary>
     /// 指标值
     /// </summary>
-    public float HabitabilityAffect {
+    public float FactorValue {
         get
         {
-            return habitabilityAffect;
+            return oldFactorValue;
         }
         set
         {
-            habitabilityAffect = Mathf.Clamp(value, type.habitabilityAffectRange.x, type.habitabilityAffectRange.y);
+            factorValue = value;
         }
     }
     private bool isRevealed;
@@ -66,17 +80,22 @@ public class EnvironmentStatFactor
     /// 是否已发现
     /// </summary>
     public bool IsRevealed { get { return isRevealed; } }
+    private bool isDestroied;
+    /// <summary>
+    /// 是否已被清除
+    /// </summary>
+    public bool IsDestroied { get { return isDestroied; } }
     public string TooltipDescription {
         get
         {
-            return name + " 每日适居性影响: " + habitabilityAffect.ToString("#0.0");
+            return Name + " : " + FactorValue.ToString("#0.0");
         }
     }
     public EnvironmentStatFactor(EnvironmentStatType environmentStatType, Area area)
     {
         type = environmentStatType;
         this.area = area;
-        habitabilityAffect = UnityEngine.Random.Range(type.initialAffectRange.x, type.initialAffectRange.y);
+        factorValue = UnityEngine.Random.Range(type.initialValueRange.x, type.initialValueRange.y);
     }
     public void Reveal()
     {
@@ -98,32 +117,20 @@ public class EnvironmentStatFactor
     /// </summary>
     public void DayIdle()
     {
-        //affect current area
-        //grow and spread
-        if(habitabilityAffect != 0.0f)
+        factorValue += DayAffectChange;
+        if (factorValue <= type.valueRange.x)
         {
-            habitabilityAffect *= dayAffectMultiply;
-            //TODO: case of overflow
-            /*float newValue = habitabilityAffect * (1.0f + UnityEngine.Random.Range(0.0f, maxGrowRate));
-            if(newValue > 1.0f) {
-                float overflow = newValue - 1.0f;
-                habitabilityAffect = 1.0f;
-                //randomly spreads to nearby area
-                if (UnityEngine.Random.Range(0, 1) < overflow)
-                {
-                    List<Area> neighborAreas = new List<Area>(area.GetNeighborAreas());
-                    neighborAreas[UnityEngine.Random.Range(0, neighborAreas.Count)].AddEnvironmentFactor(type);
-                }
-            } else
-            {
-                habitabilityAffect = newValue;
-            }*/
+            factorValue = type.valueRange.x;
+            if (type.removeWhenReachMin)
+                Remove();
         }
-        if(type.destroyWhenReachMin && habitabilityAffect == type.habitabilityAffectRange.x
-            || type.destroyWhenReachMax && habitabilityAffect == type.habitabilityAffectRange.y)
+        else if (factorValue >= type.valueRange.y)
         {
-            area.environmentStatFactors.Remove(this);
+            factorValue = type.valueRange.y;
+            if (type.removeWhenReachMax)
+                Remove();
         }
+        oldFactorValue = factorValue;
     }
     public float ReceiveAffect(int areaDistance)
     {
@@ -133,12 +140,14 @@ public class EnvironmentStatFactor
     }
     public float SeekAffect(int areaDistance)
     {
-        return habitabilityAffect / (areaDistance + 1);
+        return factorValue * type.habitabilityAffectRate / (areaDistance + 1);
     }
     /// <summary>
     /// 清除环境指标
     /// </summary>
-    public void Removed()
+    public void Remove()
     {
+        area.environmentStatFactors.Remove(this);
+        isDestroied = true;
     }
 }

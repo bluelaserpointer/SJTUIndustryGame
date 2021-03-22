@@ -19,10 +19,9 @@ public class BuildingsBar : MonoBehaviour
         {
             instance = this;
         }
-        RefreshList();
     }
 
-    void Update()
+    void Start()
     {
         RefreshList();
     }
@@ -30,8 +29,10 @@ public class BuildingsBar : MonoBehaviour
     public void RefreshList()
     {
         Helper.ClearList(GeneratedBuildingss);
-        if (OrthographicCamera.GetMousePointingArea() == null || OrthographicCamera.GetMousePointingArea().GetEnabledBuildings() == null) return;
-        foreach (BuildingInfo building in OrthographicCamera.GetMousePointingArea().GetEnabledBuildings())
+
+        while (Stage.getAreas() == null) { continue; }
+
+        foreach (BuildingInfo building in Stage.GetEnabledBuildings(Stage.getAreas()[0])[0].AllTypes)
         {
             Debug.Log(building.buildingName);
             GameObject clone = Instantiate(BuildingsImagePrefab, GenerateBuildingsImagePosition.transform, false);

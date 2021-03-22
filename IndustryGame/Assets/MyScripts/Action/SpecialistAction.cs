@@ -1,4 +1,6 @@
-﻿public abstract class SpecialistAction
+﻿using UnityEngine;
+
+public abstract class SpecialistAction
 {
     public SpecialistAction(Specialist specialist, Area area)
     {
@@ -77,12 +79,12 @@ public class BoostBuildingEffects : SpecialistAction //TODO: edit
 }
 public class WorkEnvironmentProblem : SpecialistAction
 {
-    public WorkEnvironmentProblem(Specialist specialist, Area area, EnvironmentStatType environmentStatType) : base(specialist, area)
+    public WorkEnvironmentProblem(Specialist specialist, EnvironmentStatFactor environmentStatFactor) : base(specialist, environmentStatFactor.area)
     {
-        this.environmentStatType = environmentStatType;
+        this.environmentStatFactor = environmentStatFactor;
     }
-    private readonly EnvironmentStatType environmentStatType;
-    public override string Name => "对策" + environmentStatType.statName;
+    private readonly EnvironmentStatFactor environmentStatFactor;
+    public override string Name => "对策" + environmentStatFactor.Name;
 
     public override void Stop()
     {
@@ -90,5 +92,12 @@ public class WorkEnvironmentProblem : SpecialistAction
 
     public override void DayIdle()
     {
+        if (environmentStatFactor.IsDestroied)
+        {
+            specialist.StopAction();
+            return;
+        }
+        float change = environmentStatFactor.DayValueChangeBySpecialistAction;
+        environmentStatFactor.FactorValue += change;
     }
 }
