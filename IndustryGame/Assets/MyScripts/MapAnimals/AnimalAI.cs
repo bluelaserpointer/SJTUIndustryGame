@@ -7,12 +7,12 @@ public class AnimalAI : MonoBehaviour
     // Start is called before the first frame update
     private Animator thisAnimator;
     private Vector3 initialPosition;
-
     public float wanderRadius;
 
     public float walkSpeed;
     public float turnSpeed=0.1f;
-
+    public int cellCountX = 24;
+    public int cellCountZ = 18;
     public enum AnimalState
     {
         EAT,
@@ -36,9 +36,11 @@ public class AnimalAI : MonoBehaviour
     void Start()
     {
         initialPosition = gameObject.GetComponent<Transform>().position;
+        this.transform.position = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
+        RefreshTargetPosition();
         thisAnimator = GetComponent<Animator>();
-        targetPosition = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
         RandomAction();
+
     }
 
     void RandomAction()
@@ -87,8 +89,18 @@ public class AnimalAI : MonoBehaviour
         float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
         if(distanceToTarget < 0.01)
         {
-            targetPosition = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y , initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
+            RefreshTargetPosition();
         }
         
+    }
+
+    void RefreshTargetPosition()
+    {
+        Vector3 tmpPos = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
+        while(Vector3.Distance(tmpPos,this.transform.position) < 1) { 
+            tmpPos = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
+            
+        }
+        targetPosition = tmpPos;
     }
 }

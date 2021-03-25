@@ -18,6 +18,7 @@ TagManager:
   - Canvas
   - MigrateArrow
   - AnimalParent
+  - Grid
   layers:
   - Default
   - TransparentFX

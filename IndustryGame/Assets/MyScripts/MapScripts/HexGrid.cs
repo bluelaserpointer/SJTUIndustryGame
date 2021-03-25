@@ -19,8 +19,8 @@ public class HexGrid : MonoBehaviour {
 	public Color[] colors;
 
 	HexGridChunk[] chunks;
-	HexCell[] cells;
-
+	public HexCell[] cells;
+	public Material terrainMaterial;
 	int chunkCountX, chunkCountZ;
 	HexCellPriorityQueue searchFrontier;
 	int searchFrontierPhase;
@@ -39,7 +39,7 @@ public class HexGrid : MonoBehaviour {
 		HexUnit.unitPrefab = unitPrefab;
 		HexMetrics.colors = colors;
 		CreateMap(cellCountX, cellCountZ);
-		
+		terrainMaterial.DisableKeyword("GRID_ON");
 		string path = Path.Combine("Assets/MyMaps/",  mapName + ".map");
 		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
 			int header = reader.ReadInt32();
