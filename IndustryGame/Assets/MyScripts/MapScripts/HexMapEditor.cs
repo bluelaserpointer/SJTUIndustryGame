@@ -40,8 +40,8 @@ public class HexMapEditor : MonoBehaviour {
 
 	void Awake()
 	{
-		//terrainMaterial.DisableKeyword("GRID_ON");
-		terrainMaterial.EnableKeyword("GRID_ON");
+		terrainMaterial.DisableKeyword("GRID_ON");
+		//terrainMaterial.EnableKeyword("GRID_ON");
 		SetEditMode(false);
 	}
 	public void ShowGrid(bool visible)
