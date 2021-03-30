@@ -69,7 +69,7 @@ public class MainEvent
     {
         this.so = so;
         this.region = region;
-        region.AddEvent(this);
+        region.SetEvent(this);
         //decide amount of initial animal habitat and each level
         List<int> habitatsLevel = new List<int>();
         int totalhabitatLevel = 0;

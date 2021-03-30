@@ -19,14 +19,6 @@ public class MainEventSO : ScriptableObject
     [Range(0, 5)]
     public int hideLevel;
 
-    [Header("是否只在游戏开头生成")]
-    public bool onlyGenerateAtBeginning;
-    [SerializeField]
-    [Range(0, 1)]
-    private float generateChanceOneDay;
-    [SerializeField]
-    private RegionCondition generateCondition;
-
     [Serializable]
     public class AreaRequirement
     {
@@ -59,17 +51,7 @@ public class MainEventSO : ScriptableObject
     /// </summary>
     public bool CanGenrateInRegion(Region region)
     {
-        return !region.IsOcean && (generateCondition == null || generateCondition.Judge(region)) && areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
-    }
-    /// <summary>
-    /// 每日流程，概率满足时寻找条件满足的<see cref="Region"/>并生成该事件流
-    /// </summary>
-    public void DayIdle()
-    {
-        if (!onlyGenerateAtBeginning && generateChanceOneDay > (float)new System.Random().NextDouble())
-        {
-            TryGenerate();
-        }
+        return !region.IsOcean && region.MainEvent == null && areaRequirements.Find(requirement => region.CountEnvironmentType(requirement.type) < requirement.count) == null;
     }
     /// <summary>
     /// 尝试寻找一个条件满足的<see cref="Region"/>并生成该事件流

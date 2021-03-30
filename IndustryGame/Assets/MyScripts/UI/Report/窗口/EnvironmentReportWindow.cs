@@ -25,9 +25,9 @@ public class EnvironmentReportWindow : MonoBehaviour, BasicReportWindow
         ClearList();
         foreach (Region region in Stage.GetRegions())
         {
-            if (region.GetEvents().Count > 0)
+            if (region.MainEvent != null)
             {
-                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EnvironmentReportList.transform, false);
+                GameObject clone = Instantiate(SingleEventReportPrefab, EnvironmentReportList.transform, false);
                 clone.GetComponent<SingleEventReport>().ShowSingleEnvironment(region);
                 EnvironmentReports.Add(clone);
             }

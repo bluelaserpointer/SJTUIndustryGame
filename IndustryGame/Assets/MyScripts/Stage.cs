@@ -31,6 +31,7 @@ public class Stage : MonoBehaviour
     public string stageName;
     [TextArea]
     public string description;
+    [Header("初始事件")]
     public List<MainEventSO> definedEvents;
     public List<MainEvent> events = new List<MainEvent>();
     [Header("Money allowed for this stage")]
@@ -156,12 +157,9 @@ public class Stage : MonoBehaviour
         //generate initial events
         foreach (MainEventSO definedEvent in instance.definedEvents)
         {
-            if (definedEvent.onlyGenerateAtBeginning)
-            {
-                MainEvent mainEvent = definedEvent.TryGenerate();
-                if (mainEvent != null)
-                    instance.events.Add(mainEvent);
-            }
+            MainEvent mainEvent = definedEvent.TryGenerate();
+            if (mainEvent != null)
+                instance.events.Add(mainEvent);
         }
 
         //debug
@@ -175,14 +173,14 @@ public class Stage : MonoBehaviour
         //union actions
         foreach (Region region in instance.regions)
         {
-            foreach (MainEvent anEvent in region.GetEvents())
+            if (region.MainEvent != null)
             {
-                foreach (GlobalAction action in anEvent.includedGlobalActions)
+                foreach (GlobalAction action in region.MainEvent.includedGlobalActions)
                 {
                     if (!instance.includedGlobalActions.Contains(action))
                         instance.includedGlobalActions.Add(action);
                 }
-                foreach (AreaAction action in anEvent.includedAreaActions)
+                foreach (AreaAction action in region.MainEvent.includedAreaActions)
                 {
                     if (!instance.includedAreaActions.Contains(action))
                         instance.includedAreaActions.Add(action);
@@ -220,7 +218,7 @@ public class Stage : MonoBehaviour
                 specialist.dayIdle();
             }
             //defined events dayIdle(generate etc)
-            foreach (MainEventSO so in definedEvents)
+            foreach (MainEvent so in events)
             {
                 so.DayIdle();
             }
