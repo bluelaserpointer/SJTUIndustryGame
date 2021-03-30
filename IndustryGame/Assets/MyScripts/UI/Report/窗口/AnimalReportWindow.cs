@@ -21,27 +21,23 @@ public class AnimalReportWindow : MonoBehaviour, BasicReportWindow
     public void GenerateList()
     {
         ClearList();
-
+        List<Region> regions;
         if (RegionSelection.options[RegionSelection.value].text == "全部")
         {
-            foreach (Region region in Stage.GetRegions())
-            {
-                foreach (MainEvent mainEvent in region.GetRevealedEvents())
-                {
-                    GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-                    clone.GetComponent<SingleEventReport>().ShowSingleAnimal(mainEvent.concernedAnimal);
-                    AnimalReports.Add(clone);
-                }
-            }
+            regions = Stage.GetRegions();
         }
         else
         {
-            foreach (MainEvent mainEvent in Stage.GetRegions()[RegionSelection.value].GetRevealedEvents())
+            regions = new List<Region>();
+            regions.Add(Stage.GetRegions()[RegionSelection.value]);
+        }
+        foreach (Region region in regions)
+        {
+            if(region.MainEvent != null && region.MainEvent.IsAppeared)
             {
-                GameObject clone = GameObject.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
-                clone.GetComponent<SingleEventReport>().ShowSingleAnimal(mainEvent.concernedAnimal);
+                GameObject clone = Object.Instantiate(SingleEventReportPrefab, EventReportList.transform, false);
+                clone.GetComponent<SingleEventReport>().ShowSingleAnimal(region.MainEvent.concernedAnimal);
                 AnimalReports.Add(clone);
-                // Debug.Log("Species: " + mainEvent.concernedAnimal.animalName);
             }
         }
     }

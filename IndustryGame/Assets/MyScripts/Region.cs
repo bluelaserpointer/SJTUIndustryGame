@@ -24,7 +24,11 @@ public class Region
 
     //data
     private readonly List<Area> areas = new List<Area>();
-    private readonly List<MainEvent> includedEvents = new List<MainEvent>();
+    private MainEvent mainEvent;
+    /// <summary>
+    /// 目前发送中的事件
+    /// </summary>
+    public MainEvent MainEvent { get { return mainEvent; } }
     private readonly List<Animal> concernedAnimals = new List<Animal>();
     private readonly HexSpiral hexSpiral = new HexSpiral();
     private int basementLevel;
@@ -134,9 +138,9 @@ public class Region
         {
             area.dayIdle();
         }
-        foreach (MainEvent anEvent in includedEvents)
+        if(mainEvent != null)
         {
-            anEvent.DayIdle();
+            mainEvent.DayIdle();
         }
     }
     /// <summary>
@@ -153,13 +157,10 @@ public class Region
     public void UpdateConcernedSpecies()
     {
         concernedAnimals.Clear();
-        foreach (MainEvent mainEvent in includedEvents)
+        if (mainEvent != null && mainEvent.IsAppeared && !mainEvent.IsFinished)
         {
-            if (mainEvent.IsAppeared && !mainEvent.IsFinished)
-            {
-                if (!concernedAnimals.Contains(mainEvent.concernedAnimal))
-                    concernedAnimals.Add(mainEvent.concernedAnimal);
-            }
+            if (!concernedAnimals.Contains(mainEvent.concernedAnimal))
+                concernedAnimals.Add(mainEvent.concernedAnimal);
         }
         Stage.UpdateConcernedSpecies();
     }
@@ -299,24 +300,8 @@ public class Region
     /// 添加事件流
     /// </summary>
     /// <param name="anEvent"></param>
-    public void AddEvent(MainEvent anEvent) {
-        includedEvents.Add(anEvent);
-    }
-    /// <summary>
-    /// 获取事件流
-    /// </summary>
-    /// <returns></returns>
-    public List<MainEvent> GetEvents()
-    {
-        return includedEvents;
-    }
-    /// <summary>
-    /// 获取已揭开事件流
-    /// </summary>
-    /// <returns></returns>
-    public List<MainEvent> GetRevealedEvents()
-    {
-        return includedEvents.FindAll(anEvent => anEvent.IsAppeared);
+    public void SetEvent(MainEvent anEvent) {
+        mainEvent = anEvent;
     }
     /// <summary>
     /// 统计指定类型已建设建筑物数量
@@ -496,9 +481,7 @@ public class Region
     /// <returns></returns>
     public List<EventStage> GetEventInfosRelatedToEnvironment() //TODO: optimize this code
     {
-        List<EventStage> eventStages = new List<EventStage>();
-        includedEvents.ForEach(anEvent => eventStages.AddRange(anEvent.GetRevealedStagesRelatedToEnvironment()));
-        return eventStages;
+        return mainEvent != null ? mainEvent.GetRevealedStagesRelatedToEnvironment() : new List<EventStage>();
     }
     /// <summary>
     /// 全部栖息地等级总和
