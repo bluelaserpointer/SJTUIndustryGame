@@ -624,7 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wanderRadius: 20
-  walkSpeed: 1
+  walkSpeed: 0.02
   turnSpeed: 0.1
   cellCountX: 24
   cellCountZ: 18
@@ -634,6 +634,8 @@ MonoBehaviour:
   actRestTime: 2
   lastActTime: 0
   distanceToInitial: 0
+  currentCell: {fileID: 0}
+  targetCell: {fileID: 0}
 --- !u!114 &8827509931315330515
 MonoBehaviour:
   m_ObjectHideFlags: 0
