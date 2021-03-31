@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class AnimalAI : MonoBehaviour
     public float wanderRadius;
 
     public float walkSpeed;
-    public float turnSpeed=0.1f;
+    public float turnSpeed = 0.1f;
     public int cellCountX = 24;
     public int cellCountZ = 18;
     public enum AnimalState
@@ -23,11 +24,27 @@ public class AnimalAI : MonoBehaviour
     public float[] actionWeight = { 3000, 3000 };
     public float actRestTime;
     public float lastActTime;
+    public HexCell CurrentCell{
+        get { return currentCell; }
+        set { currentCell = value; }
+    }
+    public HexCell InitialCell
+    {
+        get { return initialCell; }
+        set { initialCell = value; }
+    }
+    public HexCell TargetCell
+    {
+        get { return targetCell; }
+        set { targetCell = value; }
+    }
 
-    
+
     public float distanceToInitial;
     private Vector3 targetPosition;
-
+    public HexCell currentCell;
+    public HexCell targetCell;
+    private HexCell initialCell;
 
 
 
@@ -35,10 +52,11 @@ public class AnimalAI : MonoBehaviour
 
     void Start()
     {
-        initialPosition = gameObject.GetComponent<Transform>().position;
-        this.transform.position = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
-        RefreshTargetPosition();
         thisAnimator = GetComponent<Animator>();
+        initialPosition = gameObject.GetComponent<Transform>().position;
+        RefreshTargetPosition();
+        this.transform.position = targetCell.Position;
+        RefreshTargetPosition();
         RandomAction();
 
     }
@@ -72,7 +90,8 @@ public class AnimalAI : MonoBehaviour
                 ReachCheck();
                 break;
             case AnimalState.WANDER:
-                transform.Translate(Vector3.forward * Time.deltaTime * walkSpeed);
+                Vector3 currentDirection =new Vector3(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y, targetPosition.z - transform.position.z);
+                transform.position = transform.position + currentDirection * Time.deltaTime;
                 transform.LookAt(targetPosition);
                 if (Time.time-lastActTime >actRestTime)
                 {
@@ -89,6 +108,7 @@ public class AnimalAI : MonoBehaviour
         float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
         if(distanceToTarget < 0.01)
         {
+            currentCell = targetCell;
             RefreshTargetPosition();
         }
         
@@ -96,11 +116,41 @@ public class AnimalAI : MonoBehaviour
 
     void RefreshTargetPosition()
     {
-        Vector3 tmpPos = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
-        while(Vector3.Distance(tmpPos,this.transform.position) < 1) { 
-            tmpPos = new Vector3(initialPosition.x + Random.Range(0, wanderRadius), initialPosition.y, initialPosition.z + Random.Range(-wanderRadius, wanderRadius));
-            
+        List<HexCell> possibleTargetCells = GetTargetCells();
+        targetCell = possibleTargetCells[Random.Range(0, possibleTargetCells.Count)];
+        targetPosition = targetCell.transform.position;
+    }
+
+    List<HexCell> GetTargetCells()
+    {
+        List<HexCell> t = new List<HexCell>();
+        for (int i = 0; i <= 5; i++)
+        {
+            if(initialCell.GetNeighbor((HexDirection)i) == currentCell)
+            {
+                t.Add(initialCell);
+                HexCell c = initialCell.GetNeighbor(((HexDirection)i).Next());
+                if(!c.IsUnderwater && Mathf.Abs(c.Elevation - currentCell.Elevation) <=1)
+                    t.Add(c);
+                c = initialCell.GetNeighbor(((HexDirection)i).Previous());
+                if (!c.IsUnderwater && Mathf.Abs(c.Elevation - currentCell.Elevation) <= 1)
+                    t.Add(c);
+                return t;
+            }
         }
-        targetPosition = tmpPos;
+
+        for(int i = 0; i <= 5; i++)
+        {
+            HexCell c = initialCell.GetNeighbor((HexDirection)i);
+            if(!c.IsUnderwater && Mathf.Abs(c.Elevation - currentCell.Elevation) <=1)
+                t.Add(c);
+        }
+        return t;
+       
+    }
+
+    void SetNeighborIndex()
+    {
+        
     }
 }

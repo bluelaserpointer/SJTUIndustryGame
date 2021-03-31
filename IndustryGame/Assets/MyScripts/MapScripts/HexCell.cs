@@ -709,7 +709,10 @@ public class HexCell : MonoBehaviour {
 		{
 			GameObject myAnimal = GameObject.Instantiate(area.animalPrefabs[0], this.Position, new Quaternion(0, 0, 0, 0));
 			myAnimal.transform.SetParent(this.transform.GetChild(2));
-			
+			myAnimal.GetComponent<AnimalAI>().CurrentCell = area.GetHexCell();
+			myAnimal.GetComponent<AnimalAI>().InitialCell = area.GetHexCell();
+			myAnimal.GetComponent<AnimalAI>().TargetCell = area.GetHexCell();
+
 		}
 		for(int j = habitatLevel * 10;j<= transform.GetChild(2).childCount; j++)
 		{
