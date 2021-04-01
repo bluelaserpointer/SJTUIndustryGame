@@ -55,7 +55,7 @@ public class AnimalAI : MonoBehaviour
         thisAnimator = GetComponent<Animator>();
         initialPosition = gameObject.GetComponent<Transform>().position;
         RefreshTargetPosition();
-        this.transform.position = targetCell.Position;
+        this.transform.position = targetPosition;
         RefreshTargetPosition();
         RandomAction();
 
@@ -91,7 +91,7 @@ public class AnimalAI : MonoBehaviour
                 break;
             case AnimalState.WANDER:
                 Vector3 currentDirection =new Vector3(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y, targetPosition.z - transform.position.z);
-                transform.position = transform.position + currentDirection * Time.deltaTime;
+                transform.position = transform.position + currentDirection*walkSpeed * Time.deltaTime;
                 transform.LookAt(targetPosition);
                 if (Time.time-lastActTime >actRestTime)
                 {
@@ -118,7 +118,7 @@ public class AnimalAI : MonoBehaviour
     {
         List<HexCell> possibleTargetCells = GetTargetCells();
         targetCell = possibleTargetCells[Random.Range(0, possibleTargetCells.Count)];
-        targetPosition = targetCell.transform.position;
+        targetPosition = targetCell.transform.position + new Vector3(Random.Range(-HexMetrics.innerRadius+2,HexMetrics.innerRadius-2),0,Random.Range(-HexMetrics.innerRadius+2,HexMetrics.innerRadius-2));
     }
 
     List<HexCell> GetTargetCells()
