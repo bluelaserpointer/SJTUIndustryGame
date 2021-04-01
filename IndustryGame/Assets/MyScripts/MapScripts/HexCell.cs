@@ -705,7 +705,7 @@ public class HexCell : MonoBehaviour {
 		int habitatLevel = area.habitat.Level;
 		Animal habitatAnimal = area.habitat.animal;
 
-		for(int i = transform.GetChild(2).childCount; i <= habitatLevel * 10; i++)
+		for(int i = transform.GetChild(2).childCount; i <= habitatLevel * 4; i++)
 		{
 			GameObject myAnimal = GameObject.Instantiate(area.animalPrefabs[0], this.Position, new Quaternion(0, 0, 0, 0));
 			myAnimal.transform.SetParent(this.transform.GetChild(2));
