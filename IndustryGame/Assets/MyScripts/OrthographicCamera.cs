@@ -28,7 +28,9 @@ public class OrthographicCamera : MonoBehaviour
     public float areaToRegionSpeedChangeOffset = 30f;
     public float areaToRegionSpeedChangeStep = 0.025f;
     private bool modeChangeFlag = false;
-    private float currentPositionSpeed;
+    public float scrollSpeedChangeOffset;
+    private bool scrollFlag = false;
+    private float currentPositionSpeed = 0f;
 
 
     [Header("Transforms")]
@@ -48,6 +50,7 @@ public class OrthographicCamera : MonoBehaviour
     public float orthoRegionRotationX;
     public float orthoAreaRotationX;
     private Quaternion currentRotation;
+    private Quaternion lastRotation;
     private Quaternion orthoRegionRotation;
     private Quaternion orthoAreaRotation;
 
@@ -129,28 +132,28 @@ public class OrthographicCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        transform.rotation = Quaternion.Slerp(transform.rotation, currentRotation, Time.deltaTime * rotationSpeed);
+
         //摄像头的平滑移动
         mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, currentSize, Time.deltaTime * sizeSpeed);
 
-        if (modeChangeFlag)
+        if(scrollFlag)
         {
-            if (Quaternion.Angle(transform.rotation, currentRotation) < areaToRegionSpeedChangeOffset)
+            transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * positionSpeed);
+            scrollFlag = false;
+        }else{
+            // Keyboard movement controll
+            if (modeChangeFlag)
             {
-                currentPositionSpeed = Mathf.Lerp(currentPositionSpeed, positionSpeed, areaToRegionSpeedChangeStep);
-                transform.position = Vector3.Lerp(transform.position, currentPosition, currentPositionSpeed);
-            }
-            else
-            {
-                currentPositionSpeed = Time.deltaTime * positionSpeed;
                 transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * positionSpeed);
+            }else{    
+                float transX = Mathf.Lerp(transform.position.x, currentPosition.x, positionSpeed);
+                float transY = Mathf.Lerp(transform.position.y, currentPosition.y, positionSpeed);
+                float transZ = Mathf.Lerp(transform.position.z, currentPosition.z, Time.deltaTime * positionSpeed);
+
+                transform.position = new Vector3(transX, transY, transZ);
             }
         }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, currentPosition, positionSpeed);
-        }
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, currentRotation, rotationSpeed);
     }
 
     /// <summary>
@@ -224,10 +227,10 @@ public class OrthographicCamera : MonoBehaviour
     /// <summary>
     /// 执行地区聚焦
     /// </summary>
-    public void FocusOnArea(Area area, float OrthoSize)
+    public void FocusOnArea(Area area, float OrthoSize, bool modeChange)
     {
         Vector3 focusPosition = area.transform.position;
-        SetCurrentCameraParam(OrthoSize, GetAreaFocusPosition(focusPosition), orthoAreaRotation, false);
+        SetCurrentCameraParam(OrthoSize, GetAreaFocusPosition(focusPosition), orthoAreaRotation, true);
     }
 
     private void SetCurrentArea(Area area)
@@ -286,15 +289,17 @@ public class OrthographicCamera : MonoBehaviour
     private void HandleMouseScroll()
     {
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
         if (scrollInput == 0.0)
             return;
+
+        modeChangeFlag = true;
         RaycastHit centerHit;
         Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out centerHit);
         HexCell centerHexCell = Stage.GetHexGrid().GetCell(centerHit.point);
-        // centerHexCell.GetComponentInParent<Highlighter>().enabled = true;
         Vector3 centerPosition = GetAreaFocusPosition(centerHexCell.transform.position);
 
-        if (scrollInput > 0)
+        if (scrollInput > 0) // 放大
         {
             if (currentSize > mouseAreaOrthoSize)
             {
@@ -302,7 +307,7 @@ public class OrthographicCamera : MonoBehaviour
                 float ratio = regionObserveSizeSpeed / (currentSize - mouseAreaOrthoSize);
                 if (ratio < 1f)
                 {
-                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                    currentRotation = Quaternion.AngleAxis(angle * ratio, Vector3.left) * currentRotation;
 
                     float centerY = centerPosition.y;
                     float dstY = currentPosition.y - (currentPosition.y - centerY) * ratio;
@@ -346,7 +351,7 @@ public class OrthographicCamera : MonoBehaviour
                 // SetCurrentCameraParam(mouseAreaOrthoSize, centerPosition, orthoAreaRotation, false);
             }
         }
-        else //scrollInput < 0
+        else //scrollInput < 0 缩小
         {
             if (currentSize < worldOrthoSize)
             {
@@ -354,7 +359,7 @@ public class OrthographicCamera : MonoBehaviour
                 float ratio = regionObserveSizeSpeed / (worldOrthoSize - currentSize);
                 if (ratio < 1f)
                 {
-                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.right);
+                    currentRotation = Quaternion.AngleAxis(angle * ratio, Vector3.right) * currentRotation;
                     currentPosition.y += (worldPosition.y - currentPosition.y) * ratio;
 
 
@@ -389,6 +394,7 @@ public class OrthographicCamera : MonoBehaviour
         {
             if (currentSize >= minObserveRegionSize) //聚焦远时按ESC返回世界地图
             {
+                lastRotation = transform.rotation;
                 SetCurrentCameraParam(worldOrthoSize, worldPosition, worldRotation, true);
             }
             else //聚焦近时按ESC稍微远离
@@ -404,7 +410,7 @@ public class OrthographicCamera : MonoBehaviour
 
                 if (ratio < 1f)
                 {
-                    currentRotation *= Quaternion.AngleAxis(angle * ratio, Vector3.left);
+                    currentRotation = Quaternion.AngleAxis(angle * ratio, Vector3.left) * currentRotation;
 
                     float highestY = GetAreaFocusPosition(Stage.GetHighestPosition()).y;
                     float dstY = currentPosition.y - (currentPosition.y - highestY) * ratio;
@@ -445,7 +451,8 @@ public class OrthographicCamera : MonoBehaviour
                     // double click invokes focus
                     if (Time.time - lastClickTime < doubleClickStep)
                     {
-                        FocusOnArea(area, mouseAreaOrthoSize);
+                        lastRotation = currentRotation;
+                        FocusOnArea(area, mouseAreaOrthoSize, true);
                     }
                     lastClickTime = Time.time;
                 }
@@ -461,10 +468,12 @@ public class OrthographicCamera : MonoBehaviour
         float moveInput;
         if ((moveInput = Input.GetAxis("Horizontal")) != 0.0)
         {
+            modeChangeFlag = false;
             currentPosition.x += cameraMoveSpeed * moveInput;
         }
         if ((moveInput = Input.GetAxis("Vertical")) != 0.0)
         {
+            modeChangeFlag = false;
             currentPosition.z += cameraMoveSpeed * moveInput;
         }
     }
