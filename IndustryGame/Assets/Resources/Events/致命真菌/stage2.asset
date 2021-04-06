@@ -22,7 +22,8 @@ MonoBehaviour:
   successCondition:
     List: []
   showInAnimalsReport: []
-  relatedEnvironmentStat: {fileID: 0}
-  relatedEnvironmentStatGenerateAmount: 0
+  relatedEnvironmentStat: {fileID: 11400000, guid: 22c54d4ca342c8b4fa2f83a3b2e05d2e,
+    type: 2}
+  relatedEnvironmentStatGenerateAmount: 1
   references:
     version: 1
