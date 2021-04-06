@@ -20,9 +20,17 @@ MonoBehaviour:
   contribution: 0
   preFinishEventStages: []
   successCondition:
-    List: []
+    List:
+    - id: 0
   showInAnimalsReport: []
-  relatedEnvironmentStat: {fileID: 0}
-  relatedEnvironmentStatGenerateAmount: 0
+  relatedEnvironmentStat: {fileID: 11400000, guid: e2f20af8453a79d4aa764f7a91e1ae1f,
+    type: 2}
+  relatedEnvironmentStatGenerateAmount: 1
   references:
     version: 1
+    00000000:
+      type: {class: RegionCondition/CheckTotalActionFinish, ns: , asm: Assembly-CSharp}
+      data:
+        action: {fileID: 0}
+        value: 0
+        compareType: 0

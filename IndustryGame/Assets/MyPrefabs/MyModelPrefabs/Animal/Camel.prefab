@@ -566,6 +566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1444855696475610295}
   - component: {fileID: 1407253820011821905}
+  - component: {fileID: -8062251217753898424}
   m_Layer: 0
   m_Name: Camel
   m_TagString: Untagged
@@ -608,6 +609,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-8062251217753898424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2253761571514779149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1222de9405fe02348ae7251dbfc48f67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2578880183036450991
 GameObject:
   m_ObjectHideFlags: 0

@@ -466,14 +466,13 @@ public class OrthographicCamera : MonoBehaviour
     {
         float cameraMoveSpeed = regionObserveTranSpeed * ((currentSize - mouseAreaOrthoSize) / worldOrthoSize);
         float moveInput;
+
         if ((moveInput = Input.GetAxis("Horizontal")) != 0.0)
         {
-            modeChangeFlag = false;
             currentPosition.x += cameraMoveSpeed * moveInput;
         }
         if ((moveInput = Input.GetAxis("Vertical")) != 0.0)
         {
-            modeChangeFlag = false;
             currentPosition.z += cameraMoveSpeed * moveInput;
         }
     }
