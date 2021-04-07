@@ -9,4 +9,5 @@ public class SpecialistTemplate : ScriptableObject
     public enum Jender { Male, Female }
     public Jender jender;
     public Sprite icon;
+    public GameObject specialistPrefab;
 }

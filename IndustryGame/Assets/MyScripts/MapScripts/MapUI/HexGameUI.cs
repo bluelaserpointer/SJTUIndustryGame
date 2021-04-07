@@ -7,10 +7,47 @@ public class HexGameUI : MonoBehaviour
 
 	public HexGrid grid;
 	HexCell currentCell;
+
+	public HexCell CurrentCell
+	{
+		get
+		{
+			return currentCell;
+		}
+		set
+		{
+			if (currentCell == value)
+			{
+				return;
+			}
+			currentCell= value;
+		}
+
+	}
+
+
 	bool activeMigrate;
 	int activeRegion;
 
 	HexUnit selectedUnit;
+	public HexUnit SelectedUnit
+	{
+		get
+		{
+			return selectedUnit;
+		}
+		set
+		{
+			if (selectedUnit == value)
+			{
+				return;
+			}
+			selectedUnit = value;
+		}
+
+	}
+
+
 	public void SetEditMode(bool toggle)
 	{
 		enabled = !toggle;
@@ -43,6 +80,8 @@ public class HexGameUI : MonoBehaviour
 		}
 		return false;
 	}
+
+
 	void DoSelection()
 	{
 		grid.ClearPath();
@@ -103,7 +142,7 @@ public class HexGameUI : MonoBehaviour
 		}
 
 	}
-	void DoPathfinding()
+	public void DoPathfinding()
 	{
 		if (UpdateCurrentCell())
 		{
@@ -118,7 +157,7 @@ public class HexGameUI : MonoBehaviour
 		}
 	}
 
-	void DoMove()
+	public void DoMove()
 	{
 		if (grid.HasPath)
 		{

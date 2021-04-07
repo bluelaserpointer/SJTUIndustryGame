@@ -5,6 +5,7 @@ using System.IO;
 public class HexUnit : MonoBehaviour
 {
 	public static HexUnit unitPrefab;
+
 	List<HexCell> pathToTravel;
 	const float travelSpeed = 4f;
 	const float rotationSpeed = 180f;
