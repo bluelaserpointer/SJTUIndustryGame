@@ -26,7 +26,16 @@ public class SpecialistDragHandler : MonoBehaviour, IDragHandler, IEndDragHandle
                 if(area != null)
                 {
                     if(area.region.regionId != -1)
+                    {
+                        //if (hexCell == null) Debug.Log("Hexcell is null, can't move expert");
+                        //if (GetComponentInParent<SingleBarSpecialist>().specialist.Area.GetHexCell() == null) Debug.Log("specialist cell is null,can't remove expert");
+                        /*if (hexCell != GetComponentInParent<SingleBarSpecialist>().specialist.Area.GetHexCell())//需要转移区域
+                        {
+                            MoveExpert(GetComponentInParent<SingleBarSpecialist>().specialist.Area.GetHexCell(), hexCell);
+                        }*/
                         area.ShowSpecialistActionButtons(GetComponentInParent<SingleBarSpecialist>().specialist);
+                    }
+                        
 
                 }else{
                 }
@@ -36,4 +45,5 @@ public class SpecialistDragHandler : MonoBehaviour, IDragHandler, IEndDragHandle
                         
         }
     }
+
 }

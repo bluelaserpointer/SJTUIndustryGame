@@ -15,3 +15,5 @@ MonoBehaviour:
   specialistType: 1
   jender: 1
   icon: {fileID: 21300000, guid: 6538a44ed2643bc4cacd6b37b9c691b9, type: 3}
+  specialistPrefab: {fileID: 9004790178771132963, guid: 5b81adce4e225ae49b1fb79ab0219637,
+    type: 3}

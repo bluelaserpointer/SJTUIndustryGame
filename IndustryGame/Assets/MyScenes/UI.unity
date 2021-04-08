@@ -494,6 +494,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4000127133382623754, guid: 409294daef2f3b74b86c086b4779ed01,
+        type: 3}
+      propertyPath: m_TagString
+      value: HexGameUI
+      objectReference: {fileID: 0}
     - target: {fileID: 4000127133382623861, guid: 409294daef2f3b74b86c086b4779ed01,
         type: 3}
       propertyPath: m_RootOrder
@@ -1778,7 +1783,7 @@ PrefabInstance:
     - target: {fileID: 4189210156150919149, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0008651807
+      value: 0.00006277173
       objectReference: {fileID: 0}
     - target: {fileID: 4611888462836921626, guid: 9cc7346c8e36ec6448622053966222c2,
         type: 3}

@@ -47,6 +47,8 @@ public class Area : MonoBehaviour
     //data
     [HideInInspector]
     public GameObject[] animalPrefabs;
+    //[HideInInspector]
+    //public GameObject[] expertPrefabs;
 
     [Header("正增长取色")]
     public Color IncreaseColor;
