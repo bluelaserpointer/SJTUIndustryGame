@@ -117,10 +117,7 @@ public class Specialist
         }
         if (action != null)
         {
-            if (!currentArea != action.area)
-            {
-                MoveToArea(action.area);
-            }
+            MoveToArea(action.area);
             currentAction = action;
             Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
         }
