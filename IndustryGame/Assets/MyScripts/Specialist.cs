@@ -110,19 +110,28 @@ public class Specialist
     }
     public void SetAction(SpecialistAction action)
     {
-        if (HasAction)
+        if (HasAction)//已有专家，转移到其他cell
         {
             currentAction.Stop();
             currentAction = null;
+            MoveExpert(Area.GetHexCell(), action.area.GetHexCell());
+            
+        }
+        else//新派遣专家，在地图上生成
+        {
+            CreateUnit(action.area.GetHexCell());
         }
         if (action != null)
         {
+           
             MoveToArea(action.area);
             currentAction = action;
             Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
         }
         SpecialistBar.instance.RefreshList();
     }
+
+
     public void StopAction()
     {
         SetAction(null);
@@ -231,5 +240,25 @@ public class Specialist
             PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow("专家升级", levelUpMessage));
         }
         exp += value;
+    }
+
+    void CreateUnit(HexCell hexCell)
+    {
+        HexGrid hexGrid = (GameObject.FindWithTag("Grid")).GetComponent<HexGrid>();
+        hexGrid.AddUnit(
+                Object.Instantiate(specialistTemplate.specialistPrefab.GetComponent<HexUnit>()), hexCell, Random.Range(0f, 360f)
+                );
+        Debug.Log("Expert Prefab Created");
+    }
+    void MoveExpert(HexCell fromCell, HexCell toCell)
+    {
+
+        HexGameUI hexGameUI = GameObject.FindWithTag("HexGameUI").GetComponent<HexGameUI>();
+        HexGrid grid = hexGameUI.grid;
+        grid.ClearPath();
+        hexGameUI.SelectedUnit = fromCell.Unit;
+        hexGameUI.DoPathfinding();
+        hexGameUI.DoMove();
+
     }
 }
