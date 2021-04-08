@@ -405,6 +405,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
         type: 3}
+      propertyPath: expertPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
+        type: 3}
       propertyPath: animalPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 2253761571514779149, guid: 574c1631daf9e924980b5549aa324773,
@@ -438,6 +443,24 @@ PrefabInstance:
       propertyPath: animalPrefabs.Array.data[5]
       value: 
       objectReference: {fileID: 7017372418174414626, guid: ca54294e71864cb49ae0a6e6ab855809,
+        type: 3}
+    - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
+        type: 3}
+      propertyPath: expertPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 9004790178771132963, guid: 5b81adce4e225ae49b1fb79ab0219637,
+        type: 3}
+    - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
+        type: 3}
+      propertyPath: expertPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1171917777999234610, guid: d3f5ef45c19a3284c8c902c9679531b5,
+        type: 3}
+    - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
+        type: 3}
+      propertyPath: expertPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 3574829672704435400, guid: d08c7ee11f231e2469ea46cfcf780156,
         type: 3}
     - target: {fileID: 1748531207044089683, guid: 0d8180530b355ae45b71162d3944d8f7,
         type: 3}

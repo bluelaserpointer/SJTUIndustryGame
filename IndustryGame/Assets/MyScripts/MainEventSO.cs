@@ -42,8 +42,10 @@ public class MainEventSO : ScriptableObject
     public List<GlobalAction> includedGlobalActions = new List<GlobalAction>();
     [Header("出现的所有地区措施")]
     public List<AreaAction> includedAreaActions = new List<AreaAction>();
+    [Header("完成后连带出现的事件")]
+    public MainEventSO nextEventWhenFinish;
 
-    public MainEvent generatedInstance;
+    [HideInInspector] public MainEvent generatedInstance;
 
     private MainEventSO() { } //prevent instantiate from code
     /// <summary>

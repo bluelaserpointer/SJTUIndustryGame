@@ -149,6 +149,11 @@ public class MainEvent
         //add rewards
         Stage.AddResourceValue(ResourceType.contribution, totalReward);
         region.UpdateConcernedSpecies();
+        //generate next event
+        if(so.nextEventWhenFinish != null)
+        {
+            so.nextEventWhenFinish.TryGenerate();
+        }
     }
     /// <summary>
     /// 该事件流是否已完成

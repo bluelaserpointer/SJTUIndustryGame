@@ -19,6 +19,7 @@ TagManager:
   - MigrateArrow
   - AnimalParent
   - Grid
+  - HexGameUI
   layers:
   - Default
   - TransparentFX
