@@ -20,8 +20,12 @@ public class AnimalAnimationControl : MonoBehaviour
 
     IEnumerator AnimationStart()
     {
+        animator.speed = 0;
+        animator.enabled = false;
+        
         yield return new WaitForSeconds(startTime);
         
         animator.enabled = true;
+        animator.speed = 1;
     }
 }
