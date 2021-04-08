@@ -144,8 +144,8 @@ public class HexGameUI : MonoBehaviour
 	}
 	public void DoPathfinding()
 	{
-		if (UpdateCurrentCell())
-		{
+		//if (UpdateCurrentCell())
+		//{
 			if (currentCell && selectedUnit.IsValidDestination(currentCell))
 			{
 				grid.FindPath(selectedUnit.Location, currentCell, 4);
@@ -154,7 +154,7 @@ public class HexGameUI : MonoBehaviour
 			{
 				grid.ClearPath();
 			}
-		}
+		//}
 	}
 
 	public void DoMove()

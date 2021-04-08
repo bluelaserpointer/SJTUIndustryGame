@@ -257,6 +257,7 @@ public class Specialist
         HexGrid grid = hexGameUI.grid;
         grid.ClearPath();
         hexGameUI.SelectedUnit = fromCell.Unit;
+        hexGameUI.CurrentCell = toCell;
         hexGameUI.DoPathfinding();
         hexGameUI.DoMove();
 
