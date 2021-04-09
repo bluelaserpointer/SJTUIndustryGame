@@ -26,7 +26,7 @@ public class Region
     private readonly List<Area> areas = new List<Area>();
     private MainEvent mainEvent;
     /// <summary>
-    /// 目前发送中的事件
+    /// 这个州上被设定的事件（一个）
     /// </summary>
     public MainEvent MainEvent { get { return mainEvent; } }
     private readonly List<Animal> concernedAnimals = new List<Animal>();
