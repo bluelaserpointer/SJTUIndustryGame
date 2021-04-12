@@ -16,6 +16,7 @@ public class FilterPanelFocusHelper : MonoBehaviour
 
     public void SelectImage(Image SelectButton, Text SelectText)
     {
+        Debug.Log("Selected: " + SelectText.text);
         ClearSelection();
         SelectedButton = SelectButton;
         SelectedText = SelectText;
