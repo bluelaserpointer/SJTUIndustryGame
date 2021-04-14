@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7991839200175971149}
   - component: {fileID: 6737859295931445791}
   - component: {fileID: 6804860724461267246}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: ReservationProgressCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4770081016442564090}
   - component: {fileID: 3132557684404133504}
   - component: {fileID: 7742711851451313237}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TooltipText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 2527722671124118864}
   - component: {fileID: 5175363427793417400}
   - component: {fileID: 4977442876550663096}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 1590117419861539562}
   - component: {fileID: 6814671723812238834}
   - component: {fileID: 7851915895508688610}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 2436423096191970901}
   - component: {fileID: 3252830947113285447}
   - component: {fileID: 1068000272960837892}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 784286239446448843}
   - component: {fileID: 1332362358348315480}
   - component: {fileID: 2439508797402758863}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: BasementLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

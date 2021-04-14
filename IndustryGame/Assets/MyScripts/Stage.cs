@@ -158,7 +158,6 @@ public class Stage : MonoBehaviour
         foreach (MainEventSO definedEvent in instance.definedEvents)
         {
             MainEvent mainEvent = definedEvent.TryGenerate();
-            TaskManagerPanel.RefreshEventsDueToRegionSelection(mainEvent.region);
             if (mainEvent != null)
                 instance.events.Add(mainEvent);
         }
