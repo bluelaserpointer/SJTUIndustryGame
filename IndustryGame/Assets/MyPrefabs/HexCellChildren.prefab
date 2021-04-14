@@ -466,7 +466,14 @@ MonoBehaviour:
   mainTooltipText: {fileID: 1605353465411361135}
   basementLabelHolder: {fileID: 8067719412830464108}
   specialistActionButtonsHolder: {fileID: 2647065020927991833}
-  animalPrefabs: []
+  animalPrefabs:
+  - {fileID: 636519814259731238, guid: 64c6303977dde794ba8fb6e2f0f4ce57, type: 3}
+  - {fileID: 2253761571514779149, guid: 574c1631daf9e924980b5549aa324773, type: 3}
+  - {fileID: 8225917471351854536, guid: 4cf574d81cfaeb64f956c0d0354878fc, type: 3}
+  - {fileID: 2773786311742894499, guid: 892de7ece3aaf3f4e8ebe17e73418704, type: 3}
+  - {fileID: 5046610069358904197, guid: 1c9cba71c655a4f4781eb3c68c325fbd, type: 3}
+  - {fileID: 3680556136481641411, guid: 62f0e6e0acad8674f971263e0f2e4477, type: 3}
+  - {fileID: 7017372418174414626, guid: ca54294e71864cb49ae0a6e6ab855809, type: 3}
   IncreaseColor: {r: 0.51174796, g: 0.8679245, b: 0.6879005, a: 0.8627451}
   DecreaseColor: {r: 0.95294124, g: 0.58431375, b: 0.6117647, a: 0.8627451}
   ExtinctColor: {r: 0.29411766, g: 0.39607847, b: 0.5176471, a: 0.8627451}

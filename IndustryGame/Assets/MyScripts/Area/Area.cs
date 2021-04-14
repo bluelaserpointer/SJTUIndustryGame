@@ -45,7 +45,7 @@ public class Area : MonoBehaviour
     private static Area showingSpecialistActionButtonsArea;
 
     //data
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject[] animalPrefabs;
     //[HideInInspector]
     //public GameObject[] expertPrefabs;
