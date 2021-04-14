@@ -15,6 +15,10 @@ public class BuildingDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         bool raycasted = Physics.Raycast(inputRay, out hit);
+        BuildingsBar.instance.RefreshList();
+        
+        if(IsPointerOverUIObject())
+            return;
 
         if(raycasted)
         {
@@ -30,9 +34,17 @@ public class BuildingDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
                 }else{
                 }
 
-                BuildingsBar.instance.RefreshList();
             }
                         
         }
+    }
+    public static bool IsPointerOverUIObject()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        return results.Count > 0;
     }
 }

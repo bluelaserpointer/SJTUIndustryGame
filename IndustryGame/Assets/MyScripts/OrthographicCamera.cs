@@ -62,8 +62,8 @@ public class OrthographicCamera : MonoBehaviour
     public float doubleClickStep = 0.5f;
     private float lastClickTime = 0.0f;
 
-    [Header("AreaDetails HUD")]
-    public GameObject AreaDetailsHUDGameObject;
+    // [Header("AreaDetails HUD")]
+    // public GameObject AreaDetailsHUDGameObject;
 
     /// <summary>
     /// 缩放倍率(0: min 1: max)
@@ -106,7 +106,7 @@ public class OrthographicCamera : MonoBehaviour
         }
 
         maxObserveRegionSize = maxSize;
-        AreaDetailsHUDGameObject.SetActive(false);
+        // AreaDetailsHUDGameObject.SetActive(false);
     }
 
     void Update()
@@ -137,16 +137,20 @@ public class OrthographicCamera : MonoBehaviour
         //摄像头的平滑移动
         mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, currentSize, Time.deltaTime * sizeSpeed);
 
-        if(scrollFlag)
+        if (scrollFlag)
         {
             transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * positionSpeed);
             scrollFlag = false;
-        }else{
+        }
+        else
+        {
             // Keyboard movement controll
             if (modeChangeFlag)
             {
                 transform.position = Vector3.Lerp(transform.position, currentPosition, Time.deltaTime * positionSpeed);
-            }else{    
+            }
+            else
+            {
                 float transX = Mathf.Lerp(transform.position.x, currentPosition.x, positionSpeed);
                 float transY = Mathf.Lerp(transform.position.y, currentPosition.y, positionSpeed);
                 float transZ = Mathf.Lerp(transform.position.z, currentPosition.z, Time.deltaTime * positionSpeed);
@@ -277,8 +281,8 @@ public class OrthographicCamera : MonoBehaviour
     /// 执行洲聚焦
     /// </summary>
     private void FocusOnRegion(Region region, bool modeChange)
-    {   
-        if(region == null || region.GetRegionId() == -1)
+    {
+        if (region == null || region.GetRegionId() == -1)
             return;
         currentRegion = region;
         SetCurrentCameraParam(region.observeOrthoSize, region.GetCenter(), orthoRegionRotation, modeChange);
@@ -378,7 +382,7 @@ public class OrthographicCamera : MonoBehaviour
 
                     currentSize += regionObserveSizeSpeed;
 
-                    AreaDetailsHUDGameObject.SetActive(true);
+                    // AreaDetailsHUDGameObject.SetActive(true);
                 }
                 // else
                 // currentSize = worldOrthoSize;
@@ -427,7 +431,7 @@ public class OrthographicCamera : MonoBehaviour
                     currentPosition.z += areaEscapePositionOffset.z;
                 }
             }
-            AreaDetailsHUDGameObject.SetActive(false);
+            // AreaDetailsHUDGameObject.SetActive(false);
         }
     }
     /// <summary>
@@ -443,10 +447,10 @@ public class OrthographicCamera : MonoBehaviour
             if (Physics.Raycast(inputRay, out hit))
             {
                 Area area = Stage.GetHexGrid().GetCell(hit.point).transform.GetComponentInChildren<Area>();
-                if(!area.region.IsOcean && Input.GetMouseButtonDown(0)) // area click
+                if (!area.region.IsOcean && Input.GetMouseButtonDown(0)) // area click
                 {
                     //show area inspector
-                    AreaDetailsHUDGameObject.SetActive(true);
+                    // AreaDetailsHUDGameObject.SetActive(true);
                     SetCurrentArea(area);
                     // double click invokes focus
                     if (Time.time - lastClickTime < doubleClickStep)

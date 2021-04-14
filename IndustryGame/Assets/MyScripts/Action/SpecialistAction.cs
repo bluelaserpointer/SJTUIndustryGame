@@ -12,6 +12,7 @@ public abstract class SpecialistAction
     public abstract string Name { get; }
     public virtual float StartMoneyCost => 0;
     public virtual float DayMoneyCost => 0;
+    public virtual bool ShowProgressBar => false;
     /// <summary>
     /// 措施进度 没有进度上限时默认1
     /// </summary>
@@ -85,6 +86,7 @@ public class WorkEnvironmentProblem : SpecialistAction
     }
     private readonly EnvironmentStatFactor environmentStatFactor;
     public override string Name => "对策" + environmentStatFactor.Name;
+    public override bool ShowProgressBar => true;
     public override float ProgressRate => environmentStatFactor.ValueRate;
 
     public override void Stop()

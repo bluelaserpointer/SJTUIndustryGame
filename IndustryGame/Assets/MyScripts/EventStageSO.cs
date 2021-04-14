@@ -14,6 +14,8 @@ public class EventStageSO : ScriptableObject
     public string description;
     [TextArea]
     public string descriptionAfterFinish;
+    [TextArea]
+    public string descriptionForGuideText;
     public Sprite image;
 
     [Header("完成功劳奖励")]

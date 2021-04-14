@@ -112,6 +112,7 @@ public class Specialist
     {
         if (HasAction)//已有专家，转移到其他cell
         {
+            Action.area.currentSpecialist = null;
             currentAction.Stop();
             currentAction = null;
             //MoveExpert(Area.GetHexCell(), action.area.GetHexCell());
@@ -123,7 +124,8 @@ public class Specialist
         }
         if (action != null)
         {
-            action.area.StartProgressSlider(this);
+            if(action.ShowProgressBar)
+                action.area.StartProgressSlider(this);
             MoveToArea(action.area);
             currentAction = action;
             Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
@@ -134,10 +136,6 @@ public class Specialist
 
     public void StopAction()
     {
-        if(HasAction)
-        {
-            Action.area.currentSpecialist = null;
-        }
         SetAction(null);
     }
     /// <summary>
