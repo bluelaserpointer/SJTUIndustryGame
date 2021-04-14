@@ -114,7 +114,7 @@ public class Specialist
         {
             currentAction.Stop();
             currentAction = null;
-            MoveExpert(Area.GetHexCell(), action.area.GetHexCell());
+            //MoveExpert(Area.GetHexCell(), action.area.GetHexCell());
             
         }
         else//新派遣专家，在地图上生成
@@ -123,7 +123,7 @@ public class Specialist
         }
         if (action != null)
         {
-           
+            action.area.StartProgressSlider(this);
             MoveToArea(action.area);
             currentAction = action;
             Stage.AddResourceValue(ResourceType.money, -currentAction.StartMoneyCost);
@@ -134,6 +134,10 @@ public class Specialist
 
     public void StopAction()
     {
+        if(HasAction)
+        {
+            Action.area.currentSpecialist = null;
+        }
         SetAction(null);
     }
     /// <summary>
