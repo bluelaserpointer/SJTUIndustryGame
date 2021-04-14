@@ -56,7 +56,7 @@ public class EventStage
         this.so = so;
         this.mainEvent = mainEvent;
         //generate environment stat (problems);
-        foreach(Habitat habitat in mainEvent.generatedHabitats)
+        foreach (Habitat habitat in mainEvent.generatedHabitats)
         {
             List<Area> areas = new List<Area>(habitat.Area.GetNeighborAreas()).FindAll(area => area.region.Equals(mainEvent.region));
             ListLogic.GetUniqueRandomElements(areas, so.relatedEnvironmentStatGenerateAmount).ForEach(area => area.AddEnvironmentFactor(relatedEnvironmentStat));
@@ -110,6 +110,7 @@ public class EventStage
                     _isFinished = true;
                     PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));
                     Stage.AddResourceValue(ResourceType.contribution, contribution);
+                    GuideTextDisplay.instance.RemoveText(so.descriptionForGuideText);
                 }
             }
         }
@@ -118,6 +119,7 @@ public class EventStage
             if (so.CanAppear(this))
             {
                 _isAppeared = true;
+                GuideTextDisplay.instance.AddText(so.descriptionForGuideText);
                 PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, image));
             }
         }
