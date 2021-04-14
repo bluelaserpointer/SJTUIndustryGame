@@ -16,7 +16,7 @@ public class BottomBar : MonoBehaviour
 
     void Start()
     {
-        SpecialistBar.instance.gameObject.SetActive(true);
+        ActivateSpecialistBar();
     }
 
     public void ActivateSpecialistBar()
