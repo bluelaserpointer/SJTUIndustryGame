@@ -85,6 +85,7 @@ public class WorkEnvironmentProblem : SpecialistAction
     }
     private readonly EnvironmentStatFactor environmentStatFactor;
     public override string Name => "对策" + environmentStatFactor.Name;
+    public override float ProgressRate => environmentStatFactor.ValueRate;
 
     public override void Stop()
     {

@@ -8,8 +8,12 @@ public class EnvironmentStatType : ScriptableObject
 {
     [Header("环境指标名称")]
     public string statName;
-    [Header("环境指标说明")]
-    public string description;
+    [Header("环境指标说明-1级严重")]
+    public string description1;
+    [Header("环境指标说明-2级严重")]
+    public string description2;
+    [Header("环境指标说明-3级严重")]
+    public string description3;
     [Header("指标值区间(min, max))")]
     public Vector2 valueRange;
     [Header("指标初始值区间(min, max)")]
@@ -27,6 +31,10 @@ public class EnvironmentStatType : ScriptableObject
     public static EnvironmentStatType[] GetAllTypes()
     {
         return Resources.LoadAll<EnvironmentStatType>("EnvironmentStat");
+    }
+    public float GetValueRate(float value)
+    {
+        return (value - valueRange.x) / (valueRange.y - valueRange.x);
     }
 }
 
@@ -47,7 +55,16 @@ public class EnvironmentStatFactor
     /// <summary>
     /// 环境指标说明
     /// </summary>
-    public string Description { get { return type.description; } }
+    public string Description { get {
+            float valueRate = type.GetValueRate(FactorValue);
+            if(valueRate < 0.33)
+                return type.description1;
+            else if (valueRate < 0.66)
+                return type.description2;
+            else
+                return type.description3;
+        }
+    }
     /// <summary>
     /// 指标值每日变化
     /// </summary>
@@ -60,6 +77,7 @@ public class EnvironmentStatFactor
     /// 适居性影响倍率
     /// </summary>
     public float HabitalityAffectRate { get { return type.habitabilityAffectRate; } }
+    public float ValueRate => type.GetValueRate(FactorValue);
     private float oldFactorValue;
     private float factorValue;
     /// <summary>
@@ -88,7 +106,7 @@ public class EnvironmentStatFactor
     public string TooltipDescription {
         get
         {
-            return Name + " : " + FactorValue.ToString("#0.0");
+            return Name + " : 每日动物数量损害 " + FactorValue.ToString("#0.0") + " " + Description;
         }
     }
     public EnvironmentStatFactor(EnvironmentStatType environmentStatType, Area area)

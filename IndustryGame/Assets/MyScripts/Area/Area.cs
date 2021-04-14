@@ -539,7 +539,7 @@ public class Area : MonoBehaviour
 
     // 进度条显示
     [SerializeField] private Slider actionProgressSlider, constructionProgressSlider;
-    private Specialist currentSpecialist;
+    public Specialist currentSpecialist;
 
     public void StartProgressSlider(Specialist specialist)
     {
@@ -552,12 +552,13 @@ public class Area : MonoBehaviour
     {
         if (actionProgressSlider.gameObject.activeSelf)
         {
-            if (currentSpecialist != null && currentSpecialist.Action != null)
+            if (currentSpecialist != null)
             {
                 actionProgressSlider.value = currentSpecialist.GetActionProgressRate();
             }
             else
             {
+                currentSpecialist = null;
                 actionProgressSlider.gameObject.SetActive(false);
             }
         }

@@ -34,7 +34,7 @@ public class BuildingsBar : MonoBehaviour
 
         foreach (BuildingInfo building in Stage.GetEnabledBuildings(Stage.getAreas()[0])[0].AllTypes)
         {
-            Debug.Log(building.buildingName);
+            //Debug.Log(building.buildingName);
             GameObject clone = Instantiate(BuildingsImagePrefab, GenerateBuildingsImagePosition.transform, false);
             clone.GetComponent<SingleBarBuildings>().RefreshUI(building);
             GeneratedBuildingss.Add(clone);
