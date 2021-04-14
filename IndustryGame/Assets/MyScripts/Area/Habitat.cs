@@ -133,7 +133,15 @@ public class Habitat
     {
         get
         {
-            return animal.animalName + "的" + Level + "级栖息地";
+            string str;
+            if(isVisible)
+            {
+                str = animal.animalName + "的规模" + lastCheckedLevel + "级栖息地 正在实时观测最新状态...";
+            } else
+            {
+                str = animal.animalName + "的疑似规模" + lastCheckedLevel + "级栖息地 <!>缺少最新数据，雇佣专家，拖拽到这里观察当地最新数据";
+            }
+            return str;
         }
     }
 }
