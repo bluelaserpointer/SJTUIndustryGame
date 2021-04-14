@@ -64,7 +64,7 @@ public class Area : MonoBehaviour
     {
         get
         {
-            if(_hexButton == null)
+            if (_hexButton == null)
             {
                 _hexButton = Resources.Load<GameObject>("UI/Area/HexButton");
             }
@@ -79,7 +79,7 @@ public class Area : MonoBehaviour
             string description = "";
             if (habitat != null && habitat.IsRevealed)
                 description += habitat.TooltipDescription + "\n";
-            foreach(EnvironmentStatFactor factor in environmentStatFactors)
+            foreach (EnvironmentStatFactor factor in environmentStatFactors)
             {
                 description += factor.TooltipDescription + "\n";
             }
@@ -235,7 +235,8 @@ public class Area : MonoBehaviour
         if (revealedFactors.Count == 0)
         {
             environmentFactorMarkImage.gameObject.SetActive(false);
-        } else
+        }
+        else
         {
             float sumHabitabilityAffect = SumHabitabilityAffect(revealedFactors);
             if (sumHabitabilityAffect < 0)
@@ -681,7 +682,7 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         buttonNameAndEvent.Add("取消", () => { });
-        buttonNameAndEvent.Add("建设(" + buildingInfo.moneyCost + "$)", () => { StartConstruction(buildingInfo); });
+        buttonNameAndEvent.Add("建设:" + buildingInfo.moneyCost + "$", () => { StartConstruction(buildingInfo); });
         //generate
         List<GameObject> buttons = new List<GameObject>();
         foreach (var nameAndEvent in buttonNameAndEvent)
@@ -708,21 +709,22 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         //cancel
-        buttonNameAndEvent.Add("取消", () => { }) ;
+        buttonNameAndEvent.Add("取消", () => { });
         //watch habitat
-        if(habitat != null && habitat.IsRevealed)
+        if (habitat != null && habitat.IsRevealed)
             buttonNameAndEvent.Add("观察栖息地", () => specialist.SetAction(new WatchHabitat(specialist, this)));
         //work with environment problem
         foreach (EnvironmentStatFactor factor in environmentStatFactors)
         {
-            if(factor.IsRevealed && factor.DayValueChangeBySpecialistAction != 0)
+            if (factor.IsRevealed && factor.DayValueChangeBySpecialistAction != 0)
             {
                 buttonNameAndEvent.Add("对策" + factor.Name, () => specialist.SetAction(new WorkEnvironmentProblem(specialist, factor)));
             }
         }
         //work with building
-        foreach (Building building in buildings) {
-            if(building.info.provideSpecialistAction)
+        foreach (Building building in buildings)
+        {
+            if (building.info.provideSpecialistAction)
             {
                 buttonNameAndEvent.Add(building.info.buildingName, () => specialist.SetAction(new BoostBuildingEffects(specialist, building)));
             }
