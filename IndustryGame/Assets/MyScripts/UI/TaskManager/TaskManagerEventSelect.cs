@@ -32,6 +32,7 @@ public class TaskManagerEventSelect : MonoBehaviour
     private void RefreshUI()
     {
         EventName.text = mainEvent.name;
-        EventProgress.maxValue = mainEvent.GetRevealedUnfinishedEventStages().Count;
+        EventProgress.value = mainEvent.GetRevealedEventStages().Count;
+
     }
 }
