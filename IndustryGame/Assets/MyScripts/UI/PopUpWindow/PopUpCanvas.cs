@@ -24,29 +24,27 @@ public class PopUpCanvas : MonoBehaviour
     public static void GenerateNewPopUpWindow(IPopUpWindow window)
     {
         popUpWindowQueue.Enqueue(window);
+        ShowPopUpWindowStack();
 
-        //PopUpWindowQueue.Enqueue(clone);
-        if (!windowExists)
-        {
-            ShowPopUpWindowStack();
-        }
         //InGameLog.AddLog(GameObject.FindGameObjectWithTag("PopUpWindow").name);
-
     }
 
     public static void ShowPopUpWindowStack ()
     {
-        if (popUpWindowQueue.Count > 0)
+        if (!windowExists && popUpWindowQueue.Count > 0)
         {
             IPopUpWindow topWindow = popUpWindowQueue.Dequeue();
             topWindow.Generate();
             windowExists = true;
+            Timer.Pause();
         }
     }
 
-    public static void SetWindowExists (bool cond)
+    public static void anWindowClosed ()
     {
-        windowExists = cond;
+        windowExists = false;
+        Timer.Resume();
+        ShowPopUpWindowStack();
     }
 
 }
