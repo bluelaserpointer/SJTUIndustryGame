@@ -40,6 +40,7 @@ public class AreaAnimalSFXRandomPlayer : MonoBehaviour
         if(instance.audioSource != null && !instance.audioSource.isPlaying && loopTime <= 0f)
         {
             SFXChange();
+            instance.loopTime = 0f;
         }
     }
 
