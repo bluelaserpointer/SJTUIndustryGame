@@ -401,7 +401,7 @@ PrefabInstance:
     - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
         type: 3}
       propertyPath: animalPrefabs.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
         type: 3}
@@ -412,7 +412,7 @@ PrefabInstance:
         type: 3}
       propertyPath: animalPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 2253761571514779149, guid: 574c1631daf9e924980b5549aa324773,
+      objectReference: {fileID: 636519814259731238, guid: 64c6303977dde794ba8fb6e2f0f4ce57,
         type: 3}
     - target: {fileID: 1236498791452956358, guid: 0d8180530b355ae45b71162d3944d8f7,
         type: 3}
