@@ -44,6 +44,7 @@ public class StartSceneManager : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManager.LoadScene("UI");
+        //SceneManager.LoadScene("UI");
+        SceneManager.LoadScene("BookScene");
     }
 }

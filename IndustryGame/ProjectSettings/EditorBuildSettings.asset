@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MyScenes/UI.unity
     guid: 3c65729fd1f3a014586a12cf54533102
+  - enabled: 1
+    path: Assets/MyScenes/BookScene.unity
+    guid: dd5385e77065f8e4784023c2b527dd6e
   m_configObjects: {}
