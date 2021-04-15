@@ -17,16 +17,16 @@ public class SingleSpecialist : MonoBehaviour
     {
         Avatar.sprite = specialist.specialistTemplate.icon;
         Name.text = specialist.name;
-        Speciality.text = specialist.speciality.ToString();
+        Speciality.text = specialist.speciality.ToString() == "Indoor" ? "室内型" : "户外型";
         LevelSlider.value = specialist.GetExpRate();
     }
 
-    private void OnDisable ()
+    private void OnDisable()
     {
         Destroy(gameObject);
     }
 
-    public void DisplayProfile ()
+    public void DisplayProfile()
     {
         profile = GameObject.FindGameObjectWithTag("MyProfile").GetComponent<ProfileManage>();
         profile.specialist = this.specialist;
