@@ -1355,7 +1355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 4689167652492973325, guid: c962ceb7fb9587345ab9a700b23df6b4,
     type: 3}
-  buttons: []
+  buttons:
+  - {fileID: 3032644008892092173}
   highlightOnAwake: 1
   nextHighlights: []
   highlightEvent:
