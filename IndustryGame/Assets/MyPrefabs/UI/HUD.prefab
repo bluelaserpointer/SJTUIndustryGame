@@ -5410,7 +5410,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8718212891588771017}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999521
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5520,11 +5520,11 @@ RectTransform:
   m_Children:
   - {fileID: 9092046764693878136}
   m_Father: {fileID: 6605044604112674116}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 210, y: -15}
+  m_AnchoredPosition: {x: 232.9, y: -15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1900706696253497313
@@ -5697,8 +5697,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 583559552960674739}
   - {fileID: 6662097941163835090}
+  - {fileID: 583559552960674739}
   - {fileID: 5254894682029593412}
   - {fileID: 1755954134296942580}
   m_Father: {fileID: 3432363058889380701}
@@ -5758,6 +5758,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9f6185d3186774383a2f786b6fdda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BuildingsButton: {fileID: 315159704303917731}
+  SpecialistButton: {fileID: 5416602616352851348}
+  TabChosenColor: {r: 0, g: 0.735849, b: 0.33745936, a: 1}
+  TabUnchosenColor: {r: 0.47098613, g: 0.6792453, b: 0.56730604, a: 1}
 --- !u!1 &5137213210450117424
 GameObject:
   m_ObjectHideFlags: 0
@@ -5958,7 +5962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000039258342}
+  m_AnchoredPosition: {x: 0, y: 0.00014916339}
   m_SizeDelta: {x: 0, y: 312.57477}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6070006926839512193
@@ -8186,7 +8190,7 @@ RectTransform:
   m_Children:
   - {fileID: 3356524122829660612}
   m_Father: {fileID: 6605044604112674116}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
