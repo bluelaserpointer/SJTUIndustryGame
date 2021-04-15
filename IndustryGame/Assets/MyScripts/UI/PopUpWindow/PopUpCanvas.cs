@@ -16,7 +16,7 @@ public class PopUpCanvas : MonoBehaviour
         if (instance == null)
             instance = this;
     }
-    public void Start ()
+    public void Start()
     {
         //GenerateNewPopUpWindow("TEST", "TESTING");
     }
@@ -29,7 +29,7 @@ public class PopUpCanvas : MonoBehaviour
         //InGameLog.AddLog(GameObject.FindGameObjectWithTag("PopUpWindow").name);
     }
 
-    public static void ShowPopUpWindowStack ()
+    public static void ShowPopUpWindowStack()
     {
         if (!windowExists && popUpWindowQueue.Count > 0)
         {
@@ -40,7 +40,7 @@ public class PopUpCanvas : MonoBehaviour
         }
     }
 
-    public static void anWindowClosed ()
+    public static void anWindowClosed()
     {
         windowExists = false;
         Timer.Resume();

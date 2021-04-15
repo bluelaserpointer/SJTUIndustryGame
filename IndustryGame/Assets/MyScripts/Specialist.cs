@@ -116,7 +116,7 @@ public class Specialist
             currentAction.Stop();
             currentAction = null;
             //MoveExpert(Area.GetHexCell(), action.area.GetHexCell());
-            
+
         }
         else//新派遣专家，在地图上生成
         {
@@ -124,7 +124,7 @@ public class Specialist
         }
         if (action != null)
         {
-            if(action.ShowProgressBar)
+            if (action.ShowProgressBar)
                 action.area.StartProgressSlider(this);
             MoveToArea(action.area);
             currentAction = action;

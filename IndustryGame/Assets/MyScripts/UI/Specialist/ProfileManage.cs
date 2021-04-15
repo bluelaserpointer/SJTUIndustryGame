@@ -10,7 +10,7 @@ public class ProfileManage : MonoBehaviour
     public Image Avatar;
     public Text Name;
     public Text Birthplace;
-    public Text BirthDate;
+    // public Text BirthDate;
     public Text Speciality;
     public Text Gender;
     public Text HireCost;
@@ -42,9 +42,9 @@ public class ProfileManage : MonoBehaviour
         gameObject.SetActive(true);
         Name.text = specialist.name;
         Birthplace.text = specialist.birthplace;
-        BirthDate.text = specialist.birthday;
-        Speciality.text = specialist.speciality.ToString();
-        Gender.text = specialist.specialistTemplate.jender.ToString();
+        // BirthDate.text = specialist.birthday;
+        Speciality.text = specialist.speciality.ToString() == "Indoor" ? "室内型" : "户外型";
+        Gender.text = specialist.specialistTemplate.jender.ToString() == "Male" ? "男" : "女";
         Avatar.sprite = specialist.specialistTemplate.icon;
         if (HireMode)
         {
