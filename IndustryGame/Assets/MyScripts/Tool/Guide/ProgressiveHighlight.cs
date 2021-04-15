@@ -9,13 +9,13 @@ public class ProgressiveHighlight : MonoBehaviour
 {
     public GameObject highlightPrefab;
     [SerializeField]
-    private Button button;
+    private List<Button> buttons;
     [SerializeField]
     private bool highlightOnAwake;
     private bool isHighlighted;
-    [SerializeField]
-    private List<ProgressiveHighlight> nextHighlights;
-    public UnityEvent highlighted;
+    public List<ProgressiveHighlight> nextHighlights;
+    public UnityEvent highlightEvent;
+    public UnityEvent stopHighlightEvent;
 
     //data
     public bool IsHighlighted => isHighlighted;
@@ -26,7 +26,7 @@ public class ProgressiveHighlight : MonoBehaviour
     {
         if (highlightOnAwake)
             Highlight();
-        button.onClick.AddListener(Click);
+        buttons.ForEach(eachButton => eachButton.onClick.AddListener(Click));
     }
     public void Click()
     {
@@ -52,6 +52,7 @@ public class ProgressiveHighlight : MonoBehaviour
         {
             isHighlighted = true;
             generatedHighlight = Instantiate(highlightPrefab, transform);
+            highlightEvent.Invoke();
         }
     }
     public void StopHighlight()
@@ -59,6 +60,7 @@ public class ProgressiveHighlight : MonoBehaviour
         if(isHighlighted)
         {
             isHighlighted = false;
+            stopHighlightEvent.Invoke();
             Destroy(generatedHighlight);
         }
     }

@@ -827,7 +827,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 906954706091416551}
   m_HandleRect: {fileID: 906954706091416548}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1196,6 +1196,7 @@ GameObject:
   - component: {fileID: 3032644008892092172}
   - component: {fileID: 3032644008892092173}
   - component: {fileID: 3032644008892092170}
+  - component: {fileID: 460961193641224444}
   m_Layer: 5
   m_Name: "\u96C7\u4F63\u4E13\u5BB6"
   m_TagString: Untagged
@@ -1340,6 +1341,29 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.5372549}
   m_EffectDistance: {x: 10, y: -10}
   m_UseGraphicAlpha: 1
+--- !u!114 &460961193641224444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032644008892092168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04640d5d1d2ef9a4f932215d97860fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 4689167652492973325, guid: c962ceb7fb9587345ab9a700b23df6b4,
+    type: 3}
+  buttons: []
+  highlightOnAwake: 1
+  nextHighlights: []
+  highlightEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  stopHighlightEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3032644009060506013
 GameObject:
   m_ObjectHideFlags: 0

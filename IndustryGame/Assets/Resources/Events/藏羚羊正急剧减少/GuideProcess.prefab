@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9060404635330702562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9060404635330702561}
+  m_Layer: 0
+  m_Name: GuideProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9060404635330702561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635330702562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 9060404636743537623}
+  - {fileID: 9060404635536197574}
+  - {fileID: 9060404635568296242}
+  - {fileID: 9060404635408058654}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9060404635408058655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9060404635408058654}
+  - component: {fileID: 9060404635408058653}
+  m_Layer: 0
+  m_Name: Stage3bGuideProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9060404635408058654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635408058655}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9060404635330702561}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9060404635408058653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635408058655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3d5e37908c02438b41f0d4111e1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventStageSO: {fileID: 11400000, guid: e953e1676d255994ba08e1c3cd31493b, type: 2}
+  highlightAndTexts:
+  - highlightTarget: {fileID: 0}
+    guideText: "\u96C7\u4F63\u4E13\u5BB6\u4E5F\u80FD\u89E3\u51B3\u95EE\u9898"
+  - highlightTarget: {fileID: 0}
+    guideText: "\u8FD9\u91CC\u6709\u5DF2\u96C7\u4F63\u4E13\u5BB6\uFF0C\u62D6\u62FD\u81F3\"!\"\u6807\u8BB0\u5730\u56FE\u4E0A\u5BF9\u7B56\u95EE\u9898"
+--- !u!1 &9060404635536197575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9060404635536197574}
+  - component: {fileID: 9060404635536197573}
+  m_Layer: 0
+  m_Name: Stage2GuideProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9060404635536197574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635536197575}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9060404635330702561}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9060404635536197573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635536197575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3d5e37908c02438b41f0d4111e1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventStageSO: {fileID: 11400000, guid: 4cd21fed922f5ed48bec8e43611f2b1a, type: 2}
+  highlightAndTexts:
+  - highlightTarget: {fileID: 0}
+    guideText: "\u7B49\u5F85\u57FA\u5730\u7684\u8C03\u67E5\u8FDB\u5EA6\u6761\u4E0A\u5347"
+--- !u!1 &9060404635568296243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9060404635568296242}
+  - component: {fileID: 9060404635568296241}
+  m_Layer: 0
+  m_Name: Stage3aGuideProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9060404635568296242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635568296243}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9060404635330702561}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9060404635568296241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404635568296243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3d5e37908c02438b41f0d4111e1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventStageSO: {fileID: 11400000, guid: fd93f650e48081e498b2bae1d37d2206, type: 2}
+  highlightAndTexts:
+  - highlightTarget: {fileID: 0}
+    guideText: "\u5728\u5EFA\u7B51\u680F\u91CC\u9009\u62E9\u73AF\u5883\u4FDD\u62A4\u7C7B\u5EFA\u7B51\u7269\u63A8\u62FD\u81F3\"!\"\u6807\u8BB0\u5730\u56FE\u4E0A"
+--- !u!1 &9060404636743537617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9060404636743537623}
+  - component: {fileID: 9060404636743537616}
+  m_Layer: 0
+  m_Name: Stage1GuideProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9060404636743537623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404636743537617}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9060404635330702561}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9060404636743537616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060404636743537617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c3d5e37908c02438b41f0d4111e1f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventStageSO: {fileID: 11400000, guid: 79279c21cf4e20e4ba6e185c1e3b59d3, type: 2}
+  highlightAndTexts:
+  - highlightTarget: {fileID: 0}
+    guideText: "\u70B9\u51FB\u6253\u5F00\u5EFA\u7B51\u9762\u677F"
+  - highlightTarget: {fileID: 0}
+    guideText: "\u628A\"\u57FA\u5730\"\u62D6\u62FD\u81F3\u4E09\u4E2A\u6D32\u4E0A"
