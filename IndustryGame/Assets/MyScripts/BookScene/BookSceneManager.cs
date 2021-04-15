@@ -22,7 +22,7 @@ public class BookSceneManager : MonoBehaviour
 
     public void PlayFlippingSound()
     {
-        //AudioSource.PlayClipAtPoint(FlippingClip, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        AudioSource.PlayClipAtPoint(FlippingClip, Camera.main.ScreenToWorldPoint(Input.mousePosition));
         rightNext = GameObject.Find("RightNext").GetComponent<Image>().sprite;
         if (rightNext.name == "TransparentGraybackgtound")
         {
