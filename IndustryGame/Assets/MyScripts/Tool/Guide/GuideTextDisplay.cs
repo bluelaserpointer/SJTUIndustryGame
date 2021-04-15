@@ -12,7 +12,8 @@ public class GuideTextDisplay : MonoBehaviour
 
     private List<GameObject> GeneratedGuideLines = new List<GameObject>();
 
-    private List<string> texts = new List<string>();
+    public GameObject InProgressPanel;
+
     private void Awake()
     {
         if (instance == null)
@@ -28,6 +29,7 @@ public class GuideTextDisplay : MonoBehaviour
         clone.GetComponent<SingleGuideLinePrefab>().eventName.text = eventName;
         clone.GetComponent<SingleGuideLinePrefab>().actionDescription.text = actionDescription;
         GeneratedGuideLines.Add(clone);
+        InProgressPanel.SetActive(true);
     }
 
     public void RemoveGuideLine(string eventName, string actionDescription)
@@ -42,6 +44,11 @@ public class GuideTextDisplay : MonoBehaviour
                 Destroy(obj);
                 break;
             }
+        }
+
+        if (GeneratedGuideLines.Count == 0)
+        {
+            InProgressPanel.SetActive(false);
         }
     }
 

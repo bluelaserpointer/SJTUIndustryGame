@@ -251,12 +251,12 @@ GameObject:
   - component: {fileID: 5091244793231955438}
   - component: {fileID: 4767315939303180827}
   m_Layer: 5
-  m_Name: Panel (1)
+  m_Name: "\u6B63\u5728\u8FDB\u884CPanel"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7400022342451984135
 RectTransform:
   m_ObjectHideFlags: 0
@@ -429,3 +429,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SingleGuideLinePrefab: {fileID: 6839800532055690977, guid: 990e7d92ead0c404b951a1519fccd920,
     type: 3}
+  InProgressPanel: {fileID: 4039347583778656384}
