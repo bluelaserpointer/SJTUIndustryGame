@@ -252,7 +252,7 @@ public class Region
         area.basementLabelHolder.AddSurrounders(basementLabelHUD.gameObject);
         basementLabelHUD.nameText.text = name + "基地";
         basementLabelHUD.levelText.text = RomanNumerals.convert(basementLevel);
-        basementLabelHUD.transform.parent = HUDManager.instance.transform;
+        basementLabelHUD.transform.parent = Stage.CanvasForSurroundersHUD.transform;
         basementLabelHUD.gameObject.SetActive(true);
         hexSpiral.setCoordinates(baseArea.GetHexCell().coordinates);
         reservatedAreaCount = 0;
