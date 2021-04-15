@@ -12,6 +12,9 @@ public class SpecialistBar : MonoBehaviour
     [Header("生成的专家Prefab")]
     public GameObject SpecialistImagePrefab;
 
+    [Header("暂无界面")]
+    public GameObject EmptyPanel;
+
     private List<GameObject> GeneratedSpecialists = new List<GameObject>();
 
     void Awake()
@@ -26,7 +29,19 @@ public class SpecialistBar : MonoBehaviour
     public void RefreshList()
     {
         Helper.ClearList(GeneratedSpecialists);
-        if (Stage.GetSpecialists() == null) return;
+        if (Stage.GetSpecialists() == null)
+        {
+            return;
+        }
+
+        if (Stage.GetSpecialists().Count == 0)
+        {
+            EmptyPanel.SetActive(true);
+            return;
+        }
+
+        Debug.Log("Specialists is not null");
+        EmptyPanel.SetActive(false);
         foreach (Specialist specialist in Stage.GetSpecialists())
         {
             GameObject clone = Instantiate(SpecialistImagePrefab, GenerateSpecialistImagePosition.transform, false);
