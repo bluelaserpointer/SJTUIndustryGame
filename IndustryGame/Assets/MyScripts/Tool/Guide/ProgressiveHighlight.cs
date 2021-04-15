@@ -7,26 +7,34 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class ProgressiveHighlight : MonoBehaviour
 {
+    public string staticName;
     public GameObject highlightPrefab;
     [SerializeField]
-    private Button button;
+    private List<Button> buttons;
     [SerializeField]
     private bool highlightOnAwake;
     private bool isHighlighted;
-    [SerializeField]
-    private List<ProgressiveHighlight> nextHighlights;
-    public UnityEvent highlighted;
+    public List<ProgressiveHighlight> nextHighlights;
+    public UnityEvent highlightEvent;
+    public UnityEvent stopHighlightEvent;
 
     //data
+    private static List<ProgressiveHighlight> staticInstances = new List<ProgressiveHighlight>();
     public bool IsHighlighted => isHighlighted;
     private GameObject generatedHighlight;
     private List<ProgressiveHighlight> eraseHighlightsAfterClick = new List<ProgressiveHighlight>();
 
+    static ProgressiveHighlight()
+    {
+        staticInstances.Clear();
+    }
     private void Awake()
     {
+        if(staticName.Length > 0)
+            staticInstances.Add(this);
         if (highlightOnAwake)
             Highlight();
-        button.onClick.AddListener(Click);
+        buttons.ForEach(eachButton => eachButton.onClick.AddListener(Click));
     }
     public void Click()
     {
@@ -52,6 +60,7 @@ public class ProgressiveHighlight : MonoBehaviour
         {
             isHighlighted = true;
             generatedHighlight = Instantiate(highlightPrefab, transform);
+            highlightEvent.Invoke();
         }
     }
     public void StopHighlight()
@@ -59,6 +68,7 @@ public class ProgressiveHighlight : MonoBehaviour
         if(isHighlighted)
         {
             isHighlighted = false;
+            stopHighlightEvent.Invoke();
             Destroy(generatedHighlight);
         }
     }
