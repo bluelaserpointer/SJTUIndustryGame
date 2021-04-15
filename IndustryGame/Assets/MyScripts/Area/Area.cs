@@ -688,7 +688,7 @@ public class Area : MonoBehaviour
         foreach (var nameAndEvent in buttonNameAndEvent)
         {
             GameObject copy = Instantiate(hexButton);
-            copy.transform.parent = HUDManager.instance.transform;
+            copy.transform.parent = Stage.CanvasForSurroundersHUD.transform;
             copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
             Button button = copy.GetComponentInChildren<Button>();
             button.onClick.AddListener(nameAndEvent.Value);
@@ -734,7 +734,7 @@ public class Area : MonoBehaviour
         foreach (var nameAndEvent in buttonNameAndEvent)
         {
             GameObject copy = Instantiate(hexButton);
-            copy.transform.parent = HUDManager.instance.transform;
+            copy.transform.parent = Stage.CanvasForSurroundersHUD.transform;
             copy.GetComponentInChildren<Text>().text = nameAndEvent.Key;
             Button button = copy.GetComponentInChildren<Button>();
             button.onClick.AddListener(nameAndEvent.Value);
