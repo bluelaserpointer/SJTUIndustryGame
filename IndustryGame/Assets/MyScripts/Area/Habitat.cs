@@ -97,6 +97,7 @@ public class Habitat
             if (isVisible)
             {
                 area.habitatHealthImage.gameObject.SetActive(true);
+                area.habitatInvisibleImage.gameObject.SetActive(false);
                 area.habitatMarkImage.sprite = habitatSprites[Level];
                 if (habitability < 0.5f)
                     area.habitatMarkImage.color = Color.Lerp(Color.red, Color.white, habitability / 0.5f);
@@ -110,6 +111,7 @@ public class Habitat
             else
             {
                 area.habitatHealthImage.gameObject.SetActive(false);
+                area.habitatInvisibleImage.gameObject.SetActive(true);
                 area.habitatMarkImage.sprite = unknownHabitatSprites[lastCheckedLevel];
             }
         }

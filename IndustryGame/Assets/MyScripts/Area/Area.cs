@@ -37,6 +37,7 @@ public class Area : MonoBehaviour
     //HUD
     public Image habitatMarkImage;
     public Image habitatHealthImage;
+    public Image habitatInvisibleImage;
     [SerializeField] private Image environmentFactorMarkImage;
     public GameObject animalNumberPop;
     public Text mainTooltipText;
