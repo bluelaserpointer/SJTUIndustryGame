@@ -1355,7 +1355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 4689167652492973325, guid: c962ceb7fb9587345ab9a700b23df6b4,
     type: 3}
-  buttons: []
+  buttons:
+  - {fileID: 3032644008892092173}
   highlightOnAwake: 1
   nextHighlights: []
   highlightEvent:
@@ -1739,7 +1740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.13333334, g: 0.7490196, b: 0.4156863, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
