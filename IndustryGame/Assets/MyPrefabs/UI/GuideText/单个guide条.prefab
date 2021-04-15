@@ -113,7 +113,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -80, y: -40}
+  m_SizeDelta: {x: -80, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9052728515763632645
 CanvasRenderer:
@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 756919506735656093}
   - component: {fileID: 91388181038785990}
   - component: {fileID: 872473865082027269}
+  - component: {fileID: 2990376499575019719}
   m_Layer: 5
   m_Name: "\u5355\u4E2Aguide\u6761"
   m_TagString: Untagged
@@ -266,10 +267,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &756919506735656093
 CanvasRenderer:
@@ -323,6 +324,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0.47058824}
   m_EffectDistance: {x: 10, y: -10}
   m_UseGraphicAlpha: 1
+--- !u!114 &2990376499575019719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6839800532055690977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3df19d8fe0e84c4b828653a861c9a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventName: {fileID: 2622928530254068097}
+  actionDescription: {fileID: 667916104540915172}
 --- !u!1 &8390632060830576775
 GameObject:
   m_ObjectHideFlags: 0

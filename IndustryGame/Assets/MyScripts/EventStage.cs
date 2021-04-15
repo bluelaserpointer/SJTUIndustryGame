@@ -42,7 +42,7 @@ public class EventStage
     /// <summary>
     /// 相关的环境指标(问题)
     /// </summary>
-    public EnvironmentStatType relatedEnvironmentStat {  get { return so.relatedEnvironmentStat; } }
+    public EnvironmentStatType relatedEnvironmentStat { get { return so.relatedEnvironmentStat; } }
     /// <summary>
     /// 该事件阶段被发现前需要完成的阶段
     /// </summary>
@@ -110,7 +110,7 @@ public class EventStage
                     _isFinished = true;
                     PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));
                     Stage.AddResourceValue(ResourceType.contribution, contribution);
-                    GuideTextDisplay.instance.RemoveText(so.descriptionForGuideText);
+                    GuideTextDisplay.instance.RemoveGuideLine(so.infoName, so.descriptionForGuideText);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class EventStage
             if (so.CanAppear(this))
             {
                 _isAppeared = true;
-                GuideTextDisplay.instance.AddText(so.descriptionForGuideText);
+                GuideTextDisplay.instance.AddGuideLine(so.infoName, so.descriptionForGuideText);
                 PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, image));
             }
         }
