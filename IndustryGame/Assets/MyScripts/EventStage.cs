@@ -108,6 +108,7 @@ public class EventStage
                 if (so.IsFinished(mainEvent.region))
                 {
                     _isFinished = true;
+                    so.finishEvent.Invoke();
                     PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));
                     Stage.AddResourceValue(ResourceType.contribution, contribution);
                     GuideTextDisplay.instance.RemoveGuideLine(so.infoName, so.descriptionForGuideText);
@@ -119,6 +120,7 @@ public class EventStage
             if (so.CanAppear(this))
             {
                 _isAppeared = true;
+                so.appearEvent.Invoke();
                 GuideTextDisplay.instance.AddGuideLine(so.infoName, so.descriptionForGuideText);
                 PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, image));
             }

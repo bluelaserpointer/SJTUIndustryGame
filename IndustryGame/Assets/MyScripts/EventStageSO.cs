@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -32,6 +33,8 @@ public class EventStageSO : ScriptableObject
     [Header("相关的环境指标(所属事件流发生时生效其效果)")]
     public EnvironmentStatType relatedEnvironmentStat;
     public int relatedEnvironmentStatGenerateAmount;
+
+    public UnityEvent appearEvent, finishEvent;
 
     /// <summary>
     /// 是否已完成所有前置阶段
