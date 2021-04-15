@@ -22,9 +22,6 @@ public class ProgressiveHighlightStarterECO : MonoBehaviour
     {
         if (highlightAndTexts.Count == 0)
             return;
-        //highlight first one
-        if(highlightAndTexts[0].highlightTarget != null)
-            highlightAndTexts[0].highlightTarget.Highlight();
         for(int i = 0; i < highlightAndTexts.Count; ++i)
         {
             if (i != highlightAndTexts.Count - 1)
@@ -40,6 +37,9 @@ public class ProgressiveHighlightStarterECO : MonoBehaviour
                 highlightTarget.stopHighlightEvent.AddListener(() => GuideTextDisplay.instance.RemoveGuideLine("下一步操作", guideText));
             }
         }
+        //highlight first one
+        if (highlightAndTexts[0].highlightTarget != null)
+            highlightAndTexts[0].highlightTarget.Highlight();
     }
     public void End()
     {

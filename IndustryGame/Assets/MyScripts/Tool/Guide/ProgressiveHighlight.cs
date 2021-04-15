@@ -7,7 +7,6 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class ProgressiveHighlight : MonoBehaviour
 {
-    public string staticName;
     public GameObject highlightPrefab;
     [SerializeField]
     private List<Button> buttons;
@@ -19,19 +18,12 @@ public class ProgressiveHighlight : MonoBehaviour
     public UnityEvent stopHighlightEvent;
 
     //data
-    private static List<ProgressiveHighlight> staticInstances = new List<ProgressiveHighlight>();
     public bool IsHighlighted => isHighlighted;
     private GameObject generatedHighlight;
     private List<ProgressiveHighlight> eraseHighlightsAfterClick = new List<ProgressiveHighlight>();
 
-    static ProgressiveHighlight()
-    {
-        staticInstances.Clear();
-    }
     private void Awake()
     {
-        if(staticName.Length > 0)
-            staticInstances.Add(this);
         if (highlightOnAwake)
             Highlight();
         buttons.ForEach(eachButton => eachButton.onClick.AddListener(Click));
