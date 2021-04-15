@@ -11,6 +11,9 @@ public class BuildingsBar : MonoBehaviour
     [Header("生成的建筑Prefab")]
     public GameObject BuildingsImagePrefab;
 
+    [Header("暂无界面")]
+    public GameObject EmptyPanel;
+
     private List<GameObject> GeneratedBuildingss = new List<GameObject>();
 
     void Awake()
@@ -30,8 +33,10 @@ public class BuildingsBar : MonoBehaviour
     {
         Helper.ClearList(GeneratedBuildingss);
 
+        EmptyPanel.SetActive(true);
         while (Stage.getAreas() == null) { continue; }
 
+        EmptyPanel.SetActive(false);
         foreach (BuildingInfo building in Stage.GetEnabledBuildings(Stage.getAreas()[0])[0].AllTypes)
         {
             //Debug.Log(building.buildingName);

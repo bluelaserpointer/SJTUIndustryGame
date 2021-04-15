@@ -4,44 +4,81 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-[RequireComponent(typeof(Text))]
 public class GuideTextDisplay : MonoBehaviour
 {
     public static GuideTextDisplay instance;
-    private Text textUI;
-    private List<string> texts = new List<string>();
+
+    public GameObject SingleGuideLinePrefab;
+
+    private List<GameObject> GeneratedGuideLines = new List<GameObject>();
+
+    public GameObject InProgressPanel;
+
     private void Awake()
     {
-        textUI = GetComponent<Text>();
-        textUI.text = "";
         if (instance == null)
             instance = this;
     }
-    public void AddText(string text)
+
+    // eventName - 该操作出自哪一个事件流
+    // actionDescription - 应该做的操作提示描述
+    public void AddGuideLine(string eventName, string actionDescription)
     {
-        if (text.Length == 0)
-            return;
-        texts.Add(text);
-        UpdateTextUI();
+        Debug.Log("Adding guideline: " + eventName + " - " + actionDescription);
+        GameObject clone = Instantiate(SingleGuideLinePrefab, transform, false);
+        clone.GetComponent<SingleGuideLinePrefab>().eventName.text = eventName;
+        clone.GetComponent<SingleGuideLinePrefab>().actionDescription.text = actionDescription;
+        GeneratedGuideLines.Add(clone);
+        InProgressPanel.SetActive(true);
     }
-    public void RemoveText(string text)
+
+    public void RemoveGuideLine(string eventName, string actionDescription)
     {
-        if (text.Length == 0)
-            return;
-        foreach (string eachText in texts)
+        Debug.Log("Removing guideline: " + eventName + " - " + actionDescription);
+
+        foreach (GameObject obj in GeneratedGuideLines)
         {
-            if(eachText.Equals(text))
+            if (obj.GetComponent<SingleGuideLinePrefab>().actionDescription.text.Equals(actionDescription))
             {
-                texts.Remove(text);
-                UpdateTextUI();
+                GeneratedGuideLines.Remove(obj);
+                Destroy(obj);
                 break;
             }
         }
+
+        if (GeneratedGuideLines.Count == 0)
+        {
+            InProgressPanel.SetActive(false);
+        }
     }
-    private void UpdateTextUI()
-    {
-        string str = "";
-        texts.ForEach(eachText => str += "\n- " + eachText);
-        textUI.text = str;
-    }
+
+    // public void AddText(string text)
+    // {
+    //     if (text.Length == 0)
+    //         return;
+    //     texts.Add(text);
+    //     UpdateTextUI();
+    // }
+    // public void RemoveText(string text)
+    // {
+    //     if (text.Length == 0)
+    //         return;
+    //     foreach (string eachText in texts)
+    //     {
+    //         if (eachText.Equals(text))
+    //         {
+    //             texts.Remove(text);
+    //             UpdateTextUI();
+    //             break;
+    //         }
+    //     }
+    // }
+    // private void UpdateTextUI()
+    // {
+    //     string str = "";
+    //     texts.ForEach(eachText => str += "\n- " + eachText);
+    //     textUI.text = str;
+
+
+    // }
 }
