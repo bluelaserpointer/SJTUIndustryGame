@@ -419,6 +419,7 @@ public class Area : MonoBehaviour
     {
         if (buildings.Count >= 3) return;
 
+        GameObject.FindGameObjectWithTag("BuildingSfxPlayer").GetComponent<BuildingSfxPlayer>().StartConstruction();
         buildings.Add(new Building(buildingInfo, this));
         Stage.AddResourceValue(ResourceType.money, -buildingInfo.moneyCost);
         constructionProgressSlider.gameObject.SetActive(true);
@@ -429,6 +430,7 @@ public class Area : MonoBehaviour
     /// <param name="building"></param>
     public void StartDeConstruction(Building building)
     {
+        GameObject.FindGameObjectWithTag("BuildingSfxPlayer").GetComponent<BuildingSfxPlayer>().StartConstruction();
         buildings.Remove(building);
         building.Removed();
     }

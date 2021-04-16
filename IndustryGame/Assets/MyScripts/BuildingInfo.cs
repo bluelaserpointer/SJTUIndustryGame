@@ -96,6 +96,8 @@ public class Building
         {
             area.region.SetBaseArea(area);
         }
+
+        GameObject.FindGameObjectWithTag("BuildingSfxPlayer").GetComponent<BuildingSfxPlayer>().EndConstruction();
         NewsPanel.instance.AddNews(area.region.name + area.areaName + "地区 " + info.name + " 建设完成", Resources.Load<Sprite>("UI/Icon/Construction"));
     }
     public bool IsConstructed()
