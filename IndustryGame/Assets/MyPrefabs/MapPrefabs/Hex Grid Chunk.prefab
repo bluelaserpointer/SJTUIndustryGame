@@ -45,24 +45,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   urbanCollections:
   - prefabs:
-    - {fileID: 4000011812086372, guid: 21b1020286582424ab6d62085ed5ee87, type: 3}
-    - {fileID: 4000011812086372, guid: 5d26578fd32c84d1ab4d755ab7f23577, type: 3}
+    - {fileID: 8050922403567113066, guid: 3ba1bc9463c6a4242bd4d468f59cb6d2, type: 3}
+    - {fileID: 5826005556627139818, guid: c752a81f4c832934db1a9a34a13a0521, type: 3}
   - prefabs:
-    - {fileID: 4000013436407900, guid: 89adbf41f320f4141964bfa388ba2865, type: 3}
-    - {fileID: 4000013436407900, guid: 2fad1b4af64d84c8e810f040299dec1e, type: 3}
+    - {fileID: 2374776280968000576, guid: 638814d45c901b545acc814c05e12c92, type: 3}
+    - {fileID: 2910523726618815257, guid: a85dfdab023851c49801643c0c60ebb1, type: 3}
   - prefabs:
-    - {fileID: 4000013997932258, guid: bca46d0c670c447a0a5c7208498000ab, type: 3}
-    - {fileID: 4000013997932258, guid: 4c4b904516a814dc7b4433a49713c96f, type: 3}
+    - {fileID: 5316617231725778710, guid: 55f956deac12bdf429b93c04a6e2024c, type: 3}
+    - {fileID: 3812321583305016892, guid: d885c7745377d814aab977ed3cf63df8, type: 3}
   farmCollections:
   - prefabs:
-    - {fileID: 4000011812086372, guid: 694c4113acb734a299b240d50494600c, type: 3}
-    - {fileID: 4000011812086372, guid: 93fc8e728d60b44a28eac5ac0d4a0852, type: 3}
+    - {fileID: 7867761666314316589, guid: 03c943a882c142b429cd67c5ff200ab2, type: 3}
+    - {fileID: 7867761666314316589, guid: c03d64ab33525c64ea22bc48b312f5d5, type: 3}
   - prefabs:
-    - {fileID: 4000013436407900, guid: 2183fa930894243a69c8d48294482e53, type: 3}
-    - {fileID: 4000013436407900, guid: d0962edf5b6cf47f8b0a1fc7ae336c32, type: 3}
+    - {fileID: 2955900089142005669, guid: ad4b4824e71b60048a4cbce98f799d8b, type: 3}
+    - {fileID: 8764378052161242711, guid: f0ce649566b6f0149872b31e60f3a6c9, type: 3}
   - prefabs:
-    - {fileID: 4000013997932258, guid: 15bb05f82a5564326ae50111c46b898b, type: 3}
-    - {fileID: 4000013997932258, guid: 5c6c17863f6cc4021bdced61fe712fb1, type: 3}
+    - {fileID: 1778892543921382702, guid: 12c42e5095dda1940a3e97af5c427f8f, type: 3}
+    - {fileID: 4375592145424543268, guid: 1376d724833e58f4a8c12d1f4af52614, type: 3}
   plantCollections:
   - prefabs:
     - {fileID: 3156762518482045695, guid: 2fb41714352905e4f9e6dabef344745c, type: 3}
