@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameOverCanvas : MonoBehaviour
 {
     public static GameOverCanvas instance;
+    public GameObject GameOver;
     public Text DateScore;
     public Text AnimalText;
     public Image AnimalImage;
@@ -25,21 +26,21 @@ public class GameOverCanvas : MonoBehaviour
     {
         BackToMainMenuButton.onClick.AddListener(() => BackToMainMenu());
         QuitButton.onClick.AddListener(() => QuitGame());
-        gameObject.SetActive(false);
+        GameOver.SetActive(false);
     }
 
 
-    void ShowScore(string dateScore, string animalName, Sprite animalSprite)
+    public void ShowScore(string dateScore, string animalName, Sprite animalSprite)
     {
         DateScore.text = dateScore + "天";
         AnimalText.text = animalName;
         AnimalImage.sprite = animalSprite;
-        gameObject.SetActive(true);
+        GameOver.SetActive(true);
     }
 
     void BackToMainMenu()
     {
-        SceneManager.LoadScene("GameStart");
+        SceneManager.LoadScene("StartScene");
     }
 
     void QuitGame()
