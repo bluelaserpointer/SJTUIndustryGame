@@ -5,17 +5,29 @@ using UnityEngine.UI;
 
 public class SettingsManage : MonoBehaviour
 {
+    public static SettingsManage instance;
     public Slider VolumeSlider;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     void Start()
     {
-        VolumeSlider.value = AreaBGMRandomPlayer.getMaxVolume();
+        VolumeSlider.value = 0.3f;
     }
 
 
     void Update()
     {
-        AreaBGMRandomPlayer.setMaxVolume(VolumeSlider.value);
+        foreach (AudioSource obj in GameObject.FindObjectsOfType<AudioSource>())
+        {
+            obj.volume = VolumeSlider.value;
+        }
     }
 
     public void ExitGame()
