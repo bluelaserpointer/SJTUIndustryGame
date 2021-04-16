@@ -22,6 +22,7 @@ MonoBehaviour:
   leastTotalHabitatLevel: 5
   contribution: 100
   eventStages:
+  - {fileID: 11400000, guid: 8890c37eedeb56e4a900f00c90b1c62b, type: 2}
   - {fileID: 11400000, guid: 79279c21cf4e20e4ba6e185c1e3b59d3, type: 2}
   - {fileID: 11400000, guid: 4cd21fed922f5ed48bec8e43611f2b1a, type: 2}
   - {fileID: 11400000, guid: fd93f650e48081e498b2bae1d37d2206, type: 2}
