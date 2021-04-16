@@ -71,8 +71,8 @@ MonoBehaviour:
     - {fileID: 6726034056650852084, guid: ee89fb73edc91c147a4db31b163d1876, type: 3}
     - {fileID: 919548565662464997, guid: 63ecb6dde7cc243458af5343ce026cab, type: 3}
   - prefabs:
-    - {fileID: 4000013997932258, guid: eeb3748a5f0ed40f3ad86263ab781421, type: 3}
-    - {fileID: 4000013997932258, guid: 2fe8d139a980145f997e9f4c3e1c2606, type: 3}
+    - {fileID: 1174240223988785367, guid: 42390a1b701422b4e90911e55cd598ed, type: 3}
+    - {fileID: 2884128700327552686, guid: bc018b7a526c3ba47bbfa24ba1f5f862, type: 3}
   rainCollections:
   - prefabs:
     - {fileID: 8707130904020315937, guid: bb018be83b96f924c8ae73996bc223e8, type: 3}
