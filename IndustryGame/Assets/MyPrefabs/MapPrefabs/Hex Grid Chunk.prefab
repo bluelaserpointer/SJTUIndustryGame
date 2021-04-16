@@ -65,8 +65,8 @@ MonoBehaviour:
     - {fileID: 4000013997932258, guid: 5c6c17863f6cc4021bdced61fe712fb1, type: 3}
   plantCollections:
   - prefabs:
-    - {fileID: 4000011812086372, guid: e64480d9f2c5c42439cac262a22f542f, type: 3}
-    - {fileID: 4000011812086372, guid: 3b3f395112d654a6a85e97ebefaf4d91, type: 3}
+    - {fileID: 4059114952832066, guid: 43bbe6106d9602b418076e5e6955f800, type: 3}
+    - {fileID: 4458084449451178, guid: d18846c2d467b2c47b310be6e80b0434, type: 3}
   - prefabs:
     - {fileID: 4000013436407900, guid: db065bb94d2684adf9f80eb695f76fed, type: 3}
     - {fileID: 4000013436407900, guid: 0e9a5fa1d0db54bd09163d3d6509d210, type: 3}
