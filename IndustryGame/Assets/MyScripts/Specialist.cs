@@ -110,18 +110,30 @@ public class Specialist
     }
     public void SetAction(SpecialistAction action)
     {
+        HexCell fromCell, toCell;
+        if(action != null)
+        {
+            toCell = action.area.GetHexCell();
+            if (HasAction)
+            {
+                fromCell = Action.area.GetHexCell();
+                if(fromCell && toCell)
+                MoveExpert(fromCell, toCell);
+            }
+            else
+            {
+                CreateUnit(action.area.GetHexCell());
+            }
+        }
+
+
         if (HasAction)//已有专家，转移到其他cell
         {
             Action.area.currentSpecialist = null;
             currentAction.Stop();
             currentAction = null;
-            //MoveExpert(Area.GetHexCell(), action.area.GetHexCell());
+        }
 
-        }
-        else//新派遣专家，在地图上生成
-        {
-            CreateUnit(action.area.GetHexCell());
-        }
         if (action != null)
         {
             if (action.ShowProgressBar)
