@@ -2287,11 +2287,11 @@ PrefabInstance:
       objectReference: {fileID: 1712855090}
     - target: {fileID: 11400000, guid: 8eee713501911334aaad3d560db93ca7, type: 3}
       propertyPath: _maxScale
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 8eee713501911334aaad3d560db93ca7, type: 3}
       propertyPath: _minScale
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 8eee713501911334aaad3d560db93ca7, type: 3}
       propertyPath: _childAmount
