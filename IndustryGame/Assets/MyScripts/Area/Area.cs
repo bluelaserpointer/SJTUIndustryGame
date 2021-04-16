@@ -687,7 +687,8 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         buttonNameAndEvent.Add("取消", () => { });
-        buttonNameAndEvent.Add("建设:" + buildingInfo.moneyCost + "$", () => { StartConstruction(buildingInfo); });
+        if(buildingInfo.CanConstructIn(this))
+            buttonNameAndEvent.Add("建设:" + buildingInfo.moneyCost + "$", () => { StartConstruction(buildingInfo); });
         //generate
         List<GameObject> buttons = new List<GameObject>();
         foreach (var nameAndEvent in buttonNameAndEvent)
