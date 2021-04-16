@@ -65,11 +65,11 @@ MonoBehaviour:
     - {fileID: 4000013997932258, guid: 5c6c17863f6cc4021bdced61fe712fb1, type: 3}
   plantCollections:
   - prefabs:
-    - {fileID: 4059114952832066, guid: 43bbe6106d9602b418076e5e6955f800, type: 3}
-    - {fileID: 4458084449451178, guid: d18846c2d467b2c47b310be6e80b0434, type: 3}
+    - {fileID: 3156762518482045695, guid: 2fb41714352905e4f9e6dabef344745c, type: 3}
+    - {fileID: 2246638275112395581, guid: 99b0878e68ee2594d88f0c8bb23eb10e, type: 3}
   - prefabs:
-    - {fileID: 4000013436407900, guid: db065bb94d2684adf9f80eb695f76fed, type: 3}
-    - {fileID: 4000013436407900, guid: 0e9a5fa1d0db54bd09163d3d6509d210, type: 3}
+    - {fileID: 6726034056650852084, guid: ee89fb73edc91c147a4db31b163d1876, type: 3}
+    - {fileID: 919548565662464997, guid: 63ecb6dde7cc243458af5343ce026cab, type: 3}
   - prefabs:
     - {fileID: 4000013997932258, guid: eeb3748a5f0ed40f3ad86263ab781421, type: 3}
     - {fileID: 4000013997932258, guid: 2fe8d139a980145f997e9f4c3e1c2606, type: 3}
