@@ -21,6 +21,7 @@ TagManager:
   - Grid
   - HexGameUI
   - BuildingSfxPlayer
+  - EventSfxPlayer
   layers:
   - Default
   - TransparentFX

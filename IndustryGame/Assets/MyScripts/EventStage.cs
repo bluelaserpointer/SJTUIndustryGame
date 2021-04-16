@@ -109,7 +109,8 @@ public class EventStage
                 {
                     _isFinished = true;
                     so.finishEvent.Invoke();
-                    if(descriptionAfterFinish.Length > 0)
+                    GameObject.FindGameObjectWithTag("EventSfxPlayer").GetComponent<AudioSource>().Play();
+                    if (descriptionAfterFinish.Length > 0)
                         PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));
                     Stage.AddResourceValue(ResourceType.contribution, contribution);
                     if (so.descriptionForGuideText.Length > 0)
@@ -123,7 +124,7 @@ public class EventStage
             {
                 _isAppeared = true;
                 so.appearEvent.Invoke();
-                if(so.descriptionForGuideText.Length > 0)
+                if (so.descriptionForGuideText.Length > 0)
                     GuideTextDisplay.instance.AddGuideLine(so.infoName, so.descriptionForGuideText);
                 PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, image));
             }

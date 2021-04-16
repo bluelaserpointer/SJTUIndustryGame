@@ -41,15 +41,17 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
     public float maxVolume = 1f;
     public float minVolume = 0f;
-    private void Start() {
+    private void Start()
+    {
         // fadeTime = fadeLimit;
     }
-    private void Update() {
+    private void Update()
+    {
         // Debug.Log("In update of bgmRandomPlayer");
-        if(bgmFadeIn)
+        if (bgmFadeIn)
         {
             //Debug.Log("Fading in");
-            if(bgmChange)
+            if (bgmChange)
             {
                 bgmFadeOut = true;
                 bgmFadeIn = false;
@@ -59,17 +61,17 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             // fadeTime -= fadeParam * Time.deltaTime;
             audioSource.volume = Mathf.Lerp(audioSource.volume, maxVolume, Time.deltaTime * fadeParam);
 
-            if(audioSource.volume > maxVolume - 0.05f)
+            if (audioSource.volume > maxVolume - 0.05f)
             {
                 bgmFadeIn = false;
-                audioSource.volume = maxVolume;
+                // audioSource.volume = maxVolume;
 
                 // fadeTime = fadeLimit;
-                
+
             }
         }
 
-        if(bgmFadeOut)
+        if (bgmFadeOut)
         {
             bgmChange = false;
             //Debug.Log("Fading out");
@@ -78,7 +80,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
             audioSource.volume = Mathf.Lerp(audioSource.volume, minVolume, Time.deltaTime * fadeParam);
 
-            if(audioSource.volume < minVolume + 0.05f)
+            if (audioSource.volume < minVolume + 0.05f)
             {
                 bgmFadeOut = false;
                 bgmFadeIn = true;
@@ -89,11 +91,11 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
                 audioSource.clip = nextClip;
                 audioSource.Play();
-                
+
             }
         }
 
-        if(!bgmFadeOut && !bgmFadeIn)
+        if (!bgmFadeOut && !bgmFadeIn)
         {
             audioSource.volume = maxVolume;
         }
@@ -104,7 +106,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            if(audioSource == null)
+            if (audioSource == null)
                 audioSource = GetComponent<AudioSource>();
             audioSource.volume = maxVolume;
             // if(bgmAnimator == null)
@@ -112,7 +114,9 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             DontDestroyOnLoad(instance);
 
             SetGlobalBgmList();
-        }else{
+        }
+        else
+        {
             Destroy(gameObject);
         }
         //set stage money objective
@@ -123,7 +127,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
         instance.maxVolume = volume;
     }
 
-    public static float getMaxVolume ()
+    public static float getMaxVolume()
     {
         return instance.maxVolume;
     }
@@ -148,7 +152,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
     public static void SetAreaAudioClipsIdx(int areaType)
     {
-        if(instance.audioType != BgmAudioType.Area || instance.areaType != areaType || instance.areaType == -1)
+        if (instance.audioType != BgmAudioType.Area || instance.areaType != areaType || instance.areaType == -1)
         {
             instance.audioType = BgmAudioType.Area;
             instance.clips = instance.areaBgmLists[(int)instance.audioType].clips;
@@ -159,7 +163,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
     public static void SetDangerAudioClipsIdx(int dangerType)
     {
-        if(instance.audioType != BgmAudioType.Danger || instance.dangerType != dangerType || instance.dangerType == -1)
+        if (instance.audioType != BgmAudioType.Danger || instance.dangerType != dangerType || instance.dangerType == -1)
         {
             instance.audioType = BgmAudioType.Danger;
             instance.clips = instance.dangerBgmLists[(int)instance.audioType].clips;
@@ -175,17 +179,17 @@ public class AreaBGMRandomPlayer : MonoBehaviour
 
     public static void BgmChange()
     {
-        if(instance.clips == null || instance.clips.Count <= 0)
+        if (instance.clips == null || instance.clips.Count <= 0)
             return;
-            
+
         AudioClip clip = instance.clips[instance.clipIndex = Random.Range(0, instance.clips.Count)];
 
-        if(instance.audioSource.clip == null)
+        if (instance.audioSource.clip == null)
         {
             instance.audioSource.clip = clip;
             instance.audioSource.Play();
         }
-        if(instance.audioSource.clip != null && instance.audioSource.clip != clip)
+        if (instance.audioSource.clip != null && instance.audioSource.clip != clip)
         {
             instance.bgmChange = true;
             instance.bgmFadeOut = true;

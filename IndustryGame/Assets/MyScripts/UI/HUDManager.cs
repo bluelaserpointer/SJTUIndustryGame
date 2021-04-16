@@ -23,6 +23,15 @@ public class HUDManager : MonoBehaviour
             canvas = GetComponent<Canvas>();
         }
         areaSpecialistActionButtons = GetComponent<SurroundWithUI>();
+
+    }
+
+    void Start()
+    {
+        foreach (AudioSource audio in FindObjectsOfType<AudioSource>())
+        {
+            audio.volume = 0.3f;
+        }
     }
 
     void Update()
