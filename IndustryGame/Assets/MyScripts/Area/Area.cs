@@ -419,6 +419,7 @@ public class Area : MonoBehaviour
     {
         if (buildings.Count >= 3) return;
 
+        GameObject.FindGameObjectWithTag("BuildingSfxPlayer").GetComponent<BuildingSfxPlayer>().StartConstruction();
         buildings.Add(new Building(buildingInfo, this));
         Stage.AddResourceValue(ResourceType.money, -buildingInfo.moneyCost);
         constructionProgressSlider.gameObject.SetActive(true);
@@ -429,6 +430,7 @@ public class Area : MonoBehaviour
     /// <param name="building"></param>
     public void StartDeConstruction(Building building)
     {
+        GameObject.FindGameObjectWithTag("BuildingSfxPlayer").GetComponent<BuildingSfxPlayer>().StartConstruction();
         buildings.Remove(building);
         building.Removed();
     }
@@ -685,7 +687,8 @@ public class Area : MonoBehaviour
         showingSpecialistActionButtonsArea = this;
         Dictionary<string, UnityAction> buttonNameAndEvent = new Dictionary<string, UnityAction>();
         buttonNameAndEvent.Add("取消", () => { });
-        buttonNameAndEvent.Add("建设:" + buildingInfo.moneyCost + "$", () => { StartConstruction(buildingInfo); });
+        if(buildingInfo.CanConstructIn(this))
+            buttonNameAndEvent.Add("建设:" + buildingInfo.moneyCost + "$", () => { StartConstruction(buildingInfo); });
         //generate
         List<GameObject> buttons = new List<GameObject>();
         foreach (var nameAndEvent in buttonNameAndEvent)

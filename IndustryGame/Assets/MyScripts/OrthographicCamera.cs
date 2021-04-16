@@ -61,7 +61,7 @@ public class OrthographicCamera : MonoBehaviour
     [Header("Click Steps")]
     public float doubleClickStep = 0.5f;
     private float lastClickTime = 0.0f;
-
+    public int baseSpeedParam = 10;
     // [Header("AreaDetails HUD")]
     // public GameObject AreaDetailsHUDGameObject;
 
@@ -294,7 +294,7 @@ public class OrthographicCamera : MonoBehaviour
     {
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scrollInput == 0.0)
+        if (scrollInput == 0.0 || IsPointerOverUIObject())
             return;
 
         modeChangeFlag = true;
@@ -473,11 +473,21 @@ public class OrthographicCamera : MonoBehaviour
 
         if ((moveInput = Input.GetAxis("Horizontal")) != 0.0)
         {
-            currentPosition.x += cameraMoveSpeed * moveInput;
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                currentPosition.x += cameraMoveSpeed * moveInput * baseSpeedParam;
+            }
+            else
+                currentPosition.x += cameraMoveSpeed * moveInput;
         }
         if ((moveInput = Input.GetAxis("Vertical")) != 0.0)
         {
-            currentPosition.z += cameraMoveSpeed * moveInput;
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                currentPosition.z += cameraMoveSpeed * moveInput * baseSpeedParam;
+            }
+            else
+                currentPosition.z += cameraMoveSpeed * moveInput;
         }
     }
 

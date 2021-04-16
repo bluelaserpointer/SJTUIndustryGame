@@ -109,9 +109,11 @@ public class EventStage
                 {
                     _isFinished = true;
                     so.finishEvent.Invoke();
-                    PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));
+                    if(descriptionAfterFinish.Length > 0)
+                        PopUpCanvas.GenerateNewPopUpWindow(new SimplePopUpWindow(name, descriptionAfterFinish));
                     Stage.AddResourceValue(ResourceType.contribution, contribution);
-                    GuideTextDisplay.instance.RemoveGuideLine(so.infoName, so.descriptionForGuideText);
+                    if (so.descriptionForGuideText.Length > 0)
+                        GuideTextDisplay.instance.RemoveGuideLine(so.infoName, so.descriptionForGuideText);
                 }
             }
         }
@@ -121,7 +123,8 @@ public class EventStage
             {
                 _isAppeared = true;
                 so.appearEvent.Invoke();
-                GuideTextDisplay.instance.AddGuideLine(so.infoName, so.descriptionForGuideText);
+                if(so.descriptionForGuideText.Length > 0)
+                    GuideTextDisplay.instance.AddGuideLine(so.infoName, so.descriptionForGuideText);
                 PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(mainEvent.name + " - " + name, description, image));
             }
         }
