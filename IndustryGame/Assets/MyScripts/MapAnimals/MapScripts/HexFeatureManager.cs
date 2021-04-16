@@ -121,7 +121,7 @@ public class HexFeatureManager : MonoBehaviour {
 		{
 			return;
 		}
-
+		if (cell.UrbanLevel > 0) height_offset -=0.8f;
 		Transform instance = Instantiate(prefab);
 		position.y += instance.localScale.y * 0.5f + height_offset;
 		instance.localPosition = HexMetrics.Perturb(position);

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: French Palette
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: Flat Flesh
+    m_Color: {r: 0.9803922, g: 0.82745105, b: 0.5647059, a: 1}
+  - m_Name: Squash Blossom
+    m_Color: {r: 0.96470594, g: 0.7254902, b: 0.23137257, a: 1}
+  - m_Name: Iceland Poppy
+    m_Color: {r: 0.9803922, g: 0.59607846, b: 0.227451, a: 1}
+  - m_Name: Carrot Orange
+    m_Color: {r: 0.8980393, g: 0.5568628, b: 0.14901961, a: 1}
+  - m_Name: Melon Melody
+    m_Color: {r: 0.9725491, g: 0.7607844, b: 0.5686275, a: 1}
+  - m_Name: Mandarin Red
+    m_Color: {r: 0.8980393, g: 0.3137255, b: 0.22352943, a: 1}
+  - m_Name: Tomato Red
+    m_Color: {r: 0.9215687, g: 0.18431373, b: 0.023529414, a: 1}
+  - m_Name: Jalapeno Red
+    m_Color: {r: 0.7176471, g: 0.08235294, b: 0.2509804, a: 1}
+  - m_Name: Livid
+    m_Color: {r: 0.4156863, g: 0.5372549, b: 0.8000001, a: 1}
+  - m_Name: Azraq Blue
+    m_Color: {r: 0.2901961, g: 0.41176474, b: 0.7411765, a: 1}
+  - m_Name: Yue Guang Lan Blue
+    m_Color: {r: 0.11764707, g: 0.21568629, b: 0.6, a: 1}
+  - m_Name: Dark Sapphire
+    m_Color: {r: 0.04705883, g: 0.14117648, b: 0.3803922, a: 1}
+  - m_Name: Spray
+    m_Color: {r: 0.50980395, g: 0.8000001, b: 0.86666673, a: 1}
+  - m_Name: Dupain
+    m_Color: {r: 0.3803922, g: 0.6431373, b: 0.7372549, a: 1}
+  - m_Name: Good Samaritan
+    m_Color: {r: 0.23529413, g: 0.38823533, b: 0.50980395, a: 1}
+  - m_Name: Forest Blues
+    m_Color: {r: 0.039215688, g: 0.2392157, b: 0.38431376, a: 1}
+  - m_Name: Paradise Green
+    m_Color: {r: 0.72156864, g: 0.91372555, b: 0.5803922, a: 1}
+  - m_Name: Aurora Green
+    m_Color: {r: 0.47058827, g: 0.87843144, b: 0.56078434, a: 1}
+  - m_Name: Waterfall
+    m_Color: {r: 0.21960786, g: 0.6784314, b: 0.6627451, a: 1}
+  - m_Name: Reef Encounter
+    m_Color: {r: 0.027450982, g: 0.6, b: 0.57254905, a: 1}
+  - m_Name: 1
+    m_Color: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
+  - m_Name: 2
+    m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
+  - m_Name: Transparent
+    m_Color: {r: 1, g: 1, b: 1, a: 0}
+  - m_Name: MainButton
+    m_Color: {r: 0.4156863, g: 0.5372549, b: 0.8000001, a: 0.74509805}
+  - m_Name: MainButton2
+    m_Color: {r: 0.47058827, g: 0.87843144, b: 0.56078434, a: 0.74509805}
+  - m_Name: MainButton3
+    m_Color: {r: 0.8980393, g: 0.3137255, b: 0.22352943, a: 0.74509805}
+  - m_Name: MainButton4
+    m_Color: {r: 0.96470594, g: 0.7254902, b: 0.23137257, a: 0.74509805}
+  - m_Name: MainButton5
+    m_Color: {r: 0.9725491, g: 0.7607844, b: 0.5686275, a: 0.74509805}
+  - m_Name: Higlighted
+    m_Color: {r: 0.4156863, g: 0.5372549, b: 0.8000001, a: 0.78431374}
+  - m_Name: 
+    m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
