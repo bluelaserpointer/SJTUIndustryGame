@@ -111,7 +111,7 @@ public class AreaBGMRandomPlayer : MonoBehaviour
             audioSource.volume = maxVolume;
             // if(bgmAnimator == null)
             //     bgmAnimator = GetComponent<Animator>();
-            DontDestroyOnLoad(instance);
+            // DontDestroyOnLoad(instance);
 
             SetGlobalBgmList();
         }
