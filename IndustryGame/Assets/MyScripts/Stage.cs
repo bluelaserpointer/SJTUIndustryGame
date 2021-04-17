@@ -35,7 +35,7 @@ public class Stage : MonoBehaviour
     public List<MainEventSO> definedEvents;
     public List<MainEvent> events = new List<MainEvent>();
     [Header("Money allowed for this stage")]
-    public const int INITIAL_MONEY = 100;
+    public const int INITIAL_MONEY = 2000;
     [SerializeField]
     private Canvas canvasForSurroundersHUD;
     public static Canvas CanvasForSurroundersHUD => instance.canvasForSurroundersHUD;

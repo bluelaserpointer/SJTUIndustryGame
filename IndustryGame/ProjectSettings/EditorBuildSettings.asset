@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/LowPoly/ChosenPrefab/GameStart.unity
-    guid: 975bc1522f07aa343a27c9b4e363d0ed
-  - enabled: 1
-    path: Assets/MyScenes/UI.unity
-    guid: 3c65729fd1f3a014586a12cf54533102
+    path: Assets/MyScenes/StartScene.unity
+    guid: ff6ebefc3bd03854a8391e58d2b1b2ac
   - enabled: 1
     path: Assets/MyScenes/BookScene.unity
     guid: dd5385e77065f8e4784023c2b527dd6e
+  - enabled: 1
+    path: Assets/MyScenes/UI.unity
+    guid: 3c65729fd1f3a014586a12cf54533102
   m_configObjects: {}

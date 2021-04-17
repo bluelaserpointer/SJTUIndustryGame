@@ -169,7 +169,7 @@ public class MainEvent
         PopUpCanvas.GenerateNewPopUpWindow(new PicturePopUpWindow(name + " @ " + region.name, descriptionAfterFinish, image));
         PopUpCanvas.GenerateNewPopUpWindow(new EventClearPopUp.Data(this));
         //add rewards
-        Stage.AddResourceValue(ResourceType.contribution, totalReward);
+        Stage.AddResourceValue(ResourceType.money, totalReward);
         region.UpdateConcernedSpecies();
         //generate next event
         if (so.nextEventWhenFinish != null)
