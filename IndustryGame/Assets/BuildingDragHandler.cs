@@ -17,8 +17,8 @@ public class BuildingDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         bool raycasted = Physics.Raycast(inputRay, out hit);
         BuildingsBar.instance.RefreshList();
         
-        if(IsPointerOverUIObject())
-            return;
+        // if(IsPointerOverUIObject())
+        //     return;
 
         if(raycasted)
         {
