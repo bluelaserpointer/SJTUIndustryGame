@@ -54,8 +54,9 @@ public class TibetanAI : MonoBehaviour
     {
         thisAnimator = GetComponent<Animator>();
         initialPosition = gameObject.GetComponent<Transform>().position;
-        RefreshTargetPosition();
-        this.transform.position = targetPosition;
+        /*RefreshTargetPosition();
+        this.transform.position = targetPosition;*/
+        SetInitialPosition();
         RefreshTargetPosition();
         RandomAction();
 
@@ -68,12 +69,12 @@ public class TibetanAI : MonoBehaviour
         if (randNum <= actionWeight[0])
         {
             currentState = AnimalState.WANDER;
-            thisAnimator.SetInteger("AnimalState", 0);
+            //thisAnimator.SetInteger("AnimalState", 0);
         }
         else if (randNum < actionWeight[0] + actionWeight[1])
         {
             currentState = AnimalState.EAT;
-            thisAnimator.SetInteger("AnimalState", 1);
+            //thisAnimator.SetInteger("AnimalState", 1);
         }
     }
 
@@ -123,8 +124,8 @@ public class TibetanAI : MonoBehaviour
 
     void RefreshTargetPosition()
     {
-        List<HexCell> possibleTargetCells = GetTargetCells();
-        targetCell = possibleTargetCells[Random.Range(0, possibleTargetCells.Count)];
+        //List<HexCell> possibleTargetCells = GetTargetCells();
+        //targetCell = possibleTargetCells[Random.Range(0, possibleTargetCells.Count)];
         targetPosition = targetCell.transform.position + new Vector3(Random.Range(-HexMetrics.innerRadius+2,HexMetrics.innerRadius-2),0,Random.Range(-HexMetrics.innerRadius+2,HexMetrics.innerRadius-2));
     }
 
@@ -156,8 +157,19 @@ public class TibetanAI : MonoBehaviour
        
     }
 
-    void SetNeighborIndex()
+    void SetInitialPosition()
     {
-        
+        List<HexCell> t = new List<HexCell>();
+        for (int i = 0; i <= 5; i++) {
+            if (initialCell.GetNeighbor((HexDirection)i) !=null && initialCell.GetNeighbor((HexDirection)i).IsUnderwater == false)
+            {
+                t.Add(initialCell.GetNeighbor((HexDirection)i));
+            }
+        }
+        t.Add(initialCell);
+
+        targetCell = t[Random.Range(0, t.Count)];
+        targetPosition = targetCell.transform.position + new Vector3(Random.Range(-HexMetrics.innerRadius + 2, HexMetrics.innerRadius - 2), 0, Random.Range(-HexMetrics.innerRadius + 2, HexMetrics.innerRadius - 2));
+        this.transform.position = targetPosition;
     }
 }

@@ -273,7 +273,7 @@ public class HexGrid : MonoBehaviour {
 		currentPathFrom = fromCell;
 		currentPathTo = toCell;
 		currentPathExists = Search(fromCell, toCell, speed);
-		ShowPath(speed);
+		//ShowPath(speed);
 		sw.Stop();
 		//Debug.Log(sw.ElapsedMilliseconds);
 	}

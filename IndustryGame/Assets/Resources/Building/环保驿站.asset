@@ -20,7 +20,7 @@ MonoBehaviour:
   - {fileID: 8898428125421557509, guid: c4925f01666f0424987596c0c1391bfc, type: 3}
   - {fileID: 2839748915516054507, guid: 339a915c94b7a3448a4894dce5672447, type: 3}
   icon: {fileID: 21300000, guid: df76ec67de893644699d757aba7978d9, type: 3}
-  moneyCost: 10
+  moneyCost: 300
   timeCost: 10
   preventPlayerConstruct: 0
   isBasement: 0

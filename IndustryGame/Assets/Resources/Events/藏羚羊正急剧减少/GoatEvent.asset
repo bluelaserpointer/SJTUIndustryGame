@@ -20,7 +20,7 @@ MonoBehaviour:
   areaRequirements: []
   concernedAnimal: {fileID: 11400000, guid: db812ae6bb53ce549a4596dd7f3643c3, type: 2}
   leastTotalHabitatLevel: 5
-  contribution: 100
+  contribution: 1000
   eventStages:
   - {fileID: 11400000, guid: 8890c37eedeb56e4a900f00c90b1c62b, type: 2}
   - {fileID: 11400000, guid: 79279c21cf4e20e4ba6e185c1e3b59d3, type: 2}

@@ -49,10 +49,9 @@ public static class SpecialistEmployList {
     }
     public static void hireSpecialist(Specialist specialist)
     {
-        if(specialists.Remove(specialist))
+        if(specialists.Remove(specialist) && Stage.TryAddResourceValue(ResourceType.money, -specialist.hireCost))
         {
             Stage.GetSpecialists().Add(specialist);
-            Stage.AddResourceValue(ResourceType.money, -specialist.hireCost);
         } else
         {
             InGameLog.AddLog("hireSpecialist received a non-existent specialist", Color.red);
